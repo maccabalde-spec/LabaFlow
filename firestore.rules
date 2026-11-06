@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function callerRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function isStaff() {
+      return signedIn() && callerRole() in ['ADMIN', 'SELLER'];
+    }
+    function isAdmin() {
+      return signedIn() && callerRole() == 'ADMIN';
+    }
+
+    match /users/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || isStaff());
+      allow list: if isStaff();
+      allow create, delete: if false;
+      allow update: if signedIn() && (
+        (request.auth.uid == uid &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['name', 'email', 'phone', 'photoUrl', 'updatedAt'])) ||
+        (isAdmin() &&
+          request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['name', 'email', 'phone', 'role', 'points', 'photoUrl', 'updatedAt']))
+      );
+
+      match /devices/{deviceId} {
+        allow read, write, delete: if signedIn() && request.auth.uid == uid;
+      }
+      match /notifications/{notificationId} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow update: if signedIn() && request.auth.uid == uid &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']) &&
+          request.resource.data.read is bool;
+        allow create, delete: if false;
+      }
+    }
+
+    match /metadata/{document=**} { allow read, write: if false; }
+  }
+}

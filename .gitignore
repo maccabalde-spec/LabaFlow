@@ -23,8 +23,10 @@ functions/node_modules/
 flutter_mobile/build/
 labaflow_app/build/
 mobile/build/
+**/android/build/
 backend/target/
 **/android/.kotlin/
+LabaFlow_backup.html
 
 # Java / Gradle crash logs & temporary files
 hs_err_pid*.log
