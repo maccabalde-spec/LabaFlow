@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "432117023020",
+    "project_id": "labaflow-ebaa4",
+    "storage_bucket": "labaflow-ebaa4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432117023020:android:ac60f638826757259eac89",
+        "android_client_info": {
+          "package_name": "com.labaday.labaflow_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7mSFjuWtO06enrDEeqrCtSJKkuAtyMck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
