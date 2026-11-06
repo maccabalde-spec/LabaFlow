@@ -1,11 +1,11 @@
 abstract final class LabaFlowSupabaseOptions {
   static const url = String.fromEnvironment(
     'SUPABASE_URL',
-    defaultValue: 'https://ooycccupvxdfpnmqeims.supabase.co',
+    defaultValue: 'https://sesiygonrbthnwjlpggf.supabase.co',
   );
   static const publishableKey = String.fromEnvironment(
     'SUPABASE_PUBLISHABLE_KEY',
-    defaultValue: 'sb_publishable_QF1cx8VmpBWLyfo4OclA4w_piiamwyE',
+    defaultValue: 'sb_publishable_JeaEwOh7HldE8TTqfeDrnw_26Ph1-CB',
   );
 
   static bool get isConfigured =>
