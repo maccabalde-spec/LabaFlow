@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <circle cx="256" cy="256" r="256" fill="#0284c7"/>
+  <circle cx="256" cy="256" r="210" fill="#0369a1"/>
+  <path d="M 80 280 Q 130 240 180 280 Q 230 320 280 280 Q 330 240 380 280 Q 430 320 432 300 L 432 340 Q 380 370 330 330 Q 280 290 230 330 Q 180 370 130 330 Q 80 290 80 310 Z" fill="#38bdf8" opacity="0.6"/>
+  <path d="M 80 310 Q 130 270 180 310 Q 230 350 280 310 Q 330 270 380 310 Q 410 330 432 320 L 432 380 Q 380 410 330 370 Q 280 330 230 370 Q 180 410 130 370 Q 80 330 80 350 Z" fill="#7dd3fc" opacity="0.5"/>
+  <text x="256" y="290" font-family="'Segoe UI', Arial, sans-serif" font-size="160" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle" letter-spacing="-8">LF</text>
+  <circle cx="150" cy="160" r="20" fill="white" opacity="0.25"/>
+  <circle cx="200" cy="120" r="12" fill="white" opacity="0.2"/>
+  <circle cx="340" cy="150" r="16" fill="white" opacity="0.2"/>
+  <circle cx="390" cy="190" r="10" fill="white" opacity="0.15"/>
+  <circle cx="370" cy="120" r="22" fill="white" opacity="0.18"/>
+</svg>
