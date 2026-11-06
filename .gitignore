@@ -1,0 +1,39 @@
+# Firebase client app configuration stays outside source control.
+google-services.json
+GoogleService-Info.plist
+*service-account*.json
+serviceAccountKey.json
+functions/.env*
+supabase/.env*
+supabase/.temp/
+android/app/build/
+functions/lib/
+functions/node_modules/
+.firebase/
+
+# Dependencies & Build Caches
+**/node_modules/
+**/.dart_tool/
+**/.gradle/
+.flutter-plugins
+.flutter-plugins-dependencies
+**/pubspec.lock
+
+# Flutter & Mobile Build Artifacts
+flutter_mobile/build/
+labaflow_app/build/
+mobile/build/
+backend/target/
+**/android/.kotlin/
+
+# Java / Gradle crash logs & temporary files
+hs_err_pid*.log
+replay_pid*.log
+.idea/
+'
+10}
+DB.get('users')
+I'
+IIBBBBB'
+{dst_size}
+{src_size}
