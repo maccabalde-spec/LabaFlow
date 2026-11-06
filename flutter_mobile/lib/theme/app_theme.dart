@@ -42,15 +42,15 @@ class AppColors {
   static const lpAccent2 = Color(0xFF066C79);
   static const lpNavy = Color(0xFF123943);
 
-  // ── App/portal light palette ──
-  static const lightBg = Color(0xFFEDF7F8);
-  static const lightSidebar = Color(0xFFFFFFFF);
-  static const lightSurface = Color(0xFFFFFFFF);
-  static const lightCard = Color(0xFFFFFFFF);
-  static const lightBorder = Color(0xFFD6E8EA);
-  static const lightAccent = Color(0xFF078695);
-  static const lightAccent2 = Color(0xFF066C79);
-  static const lightBtn = Color(0xFF078695);
+  // ── App/portal light palette (Option 1: Aqua Glass & Ocean Mesh Aurora) ──
+  static const lightBg = Color(0xFFE2F7FA);
+  static const lightSidebar = Color(0xF0FFFFFF);
+  static const lightSurface = Color(0xF2FFFFFF);
+  static const lightCard = Color(0xE8FFFFFF);
+  static const lightBorder = Color(0xFFC8EBF0);
+  static const lightAccent = Color(0xFF06B6D4);
+  static const lightAccent2 = Color(0xFF0284C7);
+  static const lightBtn = Color(0xFF0891B2);
   static const lightText = Color(0xFF111827);
   static const lightMuted = Color(0xFF4B6870);
   static const lightDim = Color(0xFF718B91);

@@ -1231,6 +1231,296 @@ h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .l
   .stage-pill-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+
+/* ══════════════════════════════════════════════════════════════════════════
+   OPTION 1: AQUA GLASS & BENTO — FROSTED GLASSMORPHISM + OCEAN MESH AURORA
+══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --grad-primary: linear-gradient(135deg, #06b6d4 0%, #0284c7 52%, #0d9488 100%) !important;
+  --grad-aurora-hero:
+    radial-gradient(circle at 12% 18%, rgba(6, 182, 212, 0.30) 0%, transparent 38%),
+    radial-gradient(circle at 88% 16%, rgba(16, 185, 129, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 78% 82%, rgba(56, 189, 248, 0.28) 0%, transparent 42%),
+    radial-gradient(circle at 22% 85%, rgba(14, 165, 233, 0.22) 0%, transparent 38%),
+    linear-gradient(135deg, #dcf7fb 0%, #ebfcf6 48%, #dff1ff 100%);
+  --grad-aurora-dash:
+    radial-gradient(circle at 8% 14%, rgba(6, 182, 212, 0.25) 0%, transparent 34%),
+    radial-gradient(circle at 92% 12%, rgba(16, 185, 129, 0.22) 0%, transparent 36%),
+    radial-gradient(circle at 86% 86%, rgba(56, 189, 248, 0.24) 0%, transparent 38%),
+    radial-gradient(circle at 18% 88%, rgba(20, 184, 166, 0.18) 0%, transparent 36%),
+    radial-gradient(rgba(8, 145, 178, 0.11) 1px, transparent 1px),
+    linear-gradient(145deg, #dcf5f9 0%, #eafbf5 50%, #dff0fe 100%);
+  --glass-card-bg: rgba(255, 255, 255, 0.78);
+  --glass-card-border: rgba(255, 255, 255, 0.92);
+  --glass-shadow: 0 16px 36px -8px rgba(8, 145, 178, 0.14), 0 4px 12px -2px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-shadow-hover: 0 22px 44px -10px rgba(6, 182, 212, 0.24), 0 8px 20px -4px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
+}
+
+/* ── LANDING PAGE AQUA MESH AURORA & BENTO GLASS ── */
+#landing {
+  background: var(--grad-aurora-hero) !important;
+  background-attachment: fixed !important;
+  position: relative;
+}
+
+.lp-nav {
+  max-width: 1220px;
+  margin: 14px auto 0 !important;
+  width: calc(100% - 36px);
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(22px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 12px 32px -6px rgba(8, 145, 178, 0.15), inset 0 1px 0 #ffffff !important;
+  padding: 0 26px !important;
+  top: 12px !important;
+}
+
+.lp-hero {
+  background: transparent !important;
+  padding: 56px 5vw 68px !important;
+  max-width: 1260px;
+  margin: 0 auto;
+  gap: 40px !important;
+}
+
+.lp-hero::before {
+  content: "";
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  left: -80px;
+  top: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.24) 0%, rgba(16, 185, 129, 0.08) 60%, transparent 75%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lp-hero-eyebrow {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+  box-shadow: 0 6px 18px rgba(8, 145, 178, 0.12);
+  padding: 7px 16px !important;
+  border-radius: 999px !important;
+  color: #0e7490 !important;
+  font-weight: 800 !important;
+}
+
+.lp-hero h1 em {
+  font-style: normal !important;
+  background: linear-gradient(135deg, #0891b2 0%, #0284c7 48%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lp-bento-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.lp-bento-pill {
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 11px 13px;
+  box-shadow: 0 8px 20px -6px rgba(8, 145, 178, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lp-bento-pill-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(16, 185, 129, 0.18));
+  color: #0891b2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.lp-radar-card {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.94);
+  border-radius: 20px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--glass-shadow);
+}
+
+.lp-radar-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.lp-radar-step {
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(241, 245, 249, 0.85);
+  color: #64748b;
+  border: 1px solid rgba(203, 213, 225, 0.6);
+}
+
+.lp-radar-step.done {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.28);
+}
+
+.lp-radar-step.active {
+  background: var(--grad-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 6px 14px rgba(6, 182, 212, 0.35);
+  animation: pulseStage 2s infinite;
+}
+
+@keyframes pulseStage {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.lp-hero-card, .lp-step, .lp-svc, .lp-price-card, .lp-review, .lp-review-form, .lp-faq-item {
+  background: var(--glass-card-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--glass-card-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 20px !important;
+}
+
+.lp-price-card.featured {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(224, 247, 250, 0.88) 100%) !important;
+  border: 2px solid #06b6d4 !important;
+  box-shadow: 0 20px 44px -10px rgba(6, 182, 212, 0.25), inset 0 1px 0 #ffffff !important;
+}
+
+.lp-badges {
+  background: rgba(255, 255, 255, 0.62) !important;
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85) !important;
+}
+
+.lp-services-bg, #reviews {
+  background: rgba(255, 255, 255, 0.34) !important;
+  backdrop-filter: blur(8px);
+}
+
+.lp-cta-bg {
+  background: linear-gradient(135deg, #083344 0%, #0e7490 52%, #0d9488 100%) !important;
+  box-shadow: 0 22px 48px -12px rgba(8, 145, 178, 0.38) !important;
+}
+
+/* ── ALL USER DASHBOARDS (ADMIN, SELLER, CUSTOMER) OCEAN MESH AURORA BACKGROUND ── */
+#app, #portal, body .content, .content, .pt-wrap {
+  background: var(--grad-aurora-dash) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px, 100% 100% !important;
+  position: relative;
+}
+
+/* Floating Ambient Glass Orbs inside Dashboards */
+.content::before, .pt-wrap::before {
+  content: "";
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  right: -120px;
+  bottom: -120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, rgba(16, 185, 129, 0.10) 50%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content > *, .pt-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Frosted Glass Sidebar & Topbars */
+.sidebar {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(22px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.90) !important;
+  box-shadow: 6px 0 30px -6px rgba(8, 145, 178, 0.12) !important;
+}
+
+.topbar, .pt-nav {
+  background: rgba(255, 255, 255, 0.76) !important;
+  backdrop-filter: blur(22px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.90) !important;
+  box-shadow: 0 8px 24px -6px rgba(8, 145, 178, 0.10) !important;
+}
+
+.pt-tabs {
+  background: rgba(255, 255, 255, 0.64) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.88) !important;
+}
+
+/* Frosted Bento Cards in Admin, Seller, and Customer Dashboards */
+.sc, .card, .ord-card, .pt-quick-card, .loyalty-card, .dash-actions {
+  background: var(--glass-card-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--glass-card-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 18px !important;
+}
+
+.sc:hover, .pt-quick-card:hover, .ord-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--glass-shadow-hover) !important;
+}
+
+.ch {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border-bottom: 1px solid rgba(8, 145, 178, 0.12) !important;
+}
+
+th {
+  background: rgba(240, 253, 250, 0.72) !important;
+  color: #0e7490 !important;
+}
+
+.pt-hero-banner {
+  background: linear-gradient(135deg, #083344 0%, #0e7490 52%, #0d9488 100%) !important;
+  border: 1px solid rgba(125, 211, 252, 0.35) !important;
+  box-shadow: 0 20px 44px -10px rgba(8, 145, 178, 0.32) !important;
+}
+
+.modal, .auth-card {
+  background: rgba(255, 255, 255, 0.90) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 24px 56px -12px rgba(8, 145, 178, 0.28) !important;
+}
+
+@media (max-width: 760px) {
+  .lp-bento-pills { grid-template-columns: 1fr; }
+  .lp-nav { width: calc(100% - 20px); margin-top: 8px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -1258,20 +1548,51 @@ h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .l
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO (OPTION 1: AQUA GLASS & BENTO) -->
   <div class="lp-hero">
     <div class="lp-hero-left">
-      <div class="lp-hero-eyebrow"><span></span>Lab-a-Day Laundry Shop</div>
+      <div class="lp-hero-eyebrow"><span></span>📡 13.56MHz HF RFID · Lab-a-Day Smart Laundry</div>
       <h1>Fresh Laundry,<br><em>Zero Hassle.</em></h1>
-      <p>Drop off your clothes and we'll handle everything — wash, dry, fold, and have it ready for pickup. RFID-tracked orders so you always know where your laundry is.</p>
+      <p>Book online, drop off your bag at the shop for instant RFID tagging, and watch every stage update live in real time — from Received, Washing, Drying, and Folding to Ready for Pickup.</p>
       <div class="lp-hero-actions">
-        <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">Book a Service</button>
-        <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How It Works</button>
-        <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="openAuth('sign')">Track My Order</button>
+        <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">➕ Book a Service</button>
+        <button class="lp-btn lp-btn-outline lp-btn-lg" style="background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);" onclick="openAuth('sign')">📡 Track My Laundry</button>
+        <button class="lp-btn lp-btn-outline lp-btn-lg" style="background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">✨ How It Works</button>
       </div>
-      <div class="lp-hero-note">✓ Walk-in welcome &nbsp;·&nbsp; ✓ GCash & Cash accepted &nbsp;·&nbsp; ✓ RFID-tracked</div>
+      <div class="lp-bento-pills">
+        <div class="lp-bento-pill">
+          <div class="lp-bento-pill-ico">📡</div>
+          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">HF RFID Tracked</div><div style="font-size:11px;color:#475569;">ESP32 + RC522 Live</div></div>
+        </div>
+        <div class="lp-bento-pill">
+          <div class="lp-bento-pill-ico">🛡️</div>
+          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">Dup-Tag Guard</div><div style="font-size:11px;color:#475569;">100% Bag Accuracy</div></div>
+        </div>
+        <div class="lp-bento-pill">
+          <div class="lp-bento-pill-ico">⭐</div>
+          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">LabaPoints</div><div style="font-size:11px;color:#475569;">Up to 15% Loyalty Off</div></div>
+        </div>
+      </div>
     </div>
     <div class="lp-hero-right">
+      <!-- BENTO CARD 1: LIVE RFID STAGE RADAR -->
+      <div class="lp-radar-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="tb-live-dot"></span>
+            <span style="font-size:12.5px;font-weight:800;color:#0f172a;" class="mono-code">LIVE ORDER · ORD-024</span>
+          </div>
+          <span style="background:rgba(6,182,212,0.16);color:#0e7490;border:1px solid rgba(6,182,212,0.35);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;" class="mono-code">🏷️ TAG-003</span>
+        </div>
+        <div class="lp-radar-steps">
+          <div class="lp-radar-step done">✓ Recv</div>
+          <div class="lp-radar-step active">🫧 Wash</div>
+          <div class="lp-radar-step">💨 Dry</div>
+          <div class="lp-radar-step">👕 Fold</div>
+          <div class="lp-radar-step">✅ Ready</div>
+        </div>
+      </div>
+      <!-- BENTO CARD 2: FROSTED GLASS PRICING -->
       <div class="lp-hero-card">
         <img class="lp-hero-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat" onerror="this.style.display='none'">
         <div class="lp-hero-card-title">Our Pricing — Clear &amp; Simple</div>
