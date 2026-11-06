@@ -12,7 +12,7 @@ enum UserRole { admin, seller, customer }
 
 enum OrderType { clothes, bedsheet, comforter, washOnly, dryOnly }
 
-enum OrderStatus { pending, received, processing, ready, released }
+enum OrderStatus { pending, received, washing, processing, drying, folding, ready, released, cancelled }
 
 enum ColorDist { mixed, whites, colored }
 
@@ -72,24 +72,41 @@ extension OrderStatusExt on OrderStatus {
     switch (this) {
       case OrderStatus.pending:    return 'PENDING';
       case OrderStatus.received:   return 'RECEIVED';
+      case OrderStatus.washing:    return 'WASHING';
       case OrderStatus.processing: return 'PROCESSING';
+      case OrderStatus.drying:     return 'DRYING';
+      case OrderStatus.folding:    return 'FOLDING';
       case OrderStatus.ready:      return 'READY';
       case OrderStatus.released:   return 'RELEASED';
+      case OrderStatus.cancelled:  return 'CANCELLED';
     }
   }
   static OrderStatus fromString(String s) {
-    switch (s) {
+    switch (s.toUpperCase()) {
       case 'RECEIVED':   return OrderStatus.received;
+      case 'WASHING':    return OrderStatus.washing;
       case 'PROCESSING': return OrderStatus.processing;
+      case 'DRYING':     return OrderStatus.drying;
+      case 'FOLDING':    return OrderStatus.folding;
       case 'READY':      return OrderStatus.ready;
       case 'RELEASED':   return OrderStatus.released;
+      case 'CANCELLED':  return OrderStatus.cancelled;
       default:           return OrderStatus.pending;
     }
   }
   OrderStatus? get next {
-    final all = OrderStatus.values;
-    final i = all.indexOf(this);
-    return i < all.length - 1 ? all[i + 1] : null;
+    const flow = [
+      OrderStatus.pending,
+      OrderStatus.received,
+      OrderStatus.washing,
+      OrderStatus.drying,
+      OrderStatus.folding,
+      OrderStatus.ready,
+      OrderStatus.released,
+    ];
+    final normalized = this == OrderStatus.processing ? OrderStatus.washing : this;
+    final i = flow.indexOf(normalized);
+    return (i >= 0 && i < flow.length - 1) ? flow[i + 1] : null;
   }
 }
 

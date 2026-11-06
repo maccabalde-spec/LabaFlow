@@ -24,6 +24,8 @@ class DBService {
     'restockLog',
     'promoCodes',
     'reviews',
+    'rfidScanLogs',
+    'statusHistory',
   };
 
   static Future<void> init() async {

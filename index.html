@@ -740,6 +740,497 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
 .password-visibility:hover{background:#eaf3f8;color:#0369a1;}
 .password-visibility:focus-visible{outline:2px solid #0284c7;outline-offset:1px;}
 
+
+/* ══════════════════════════════════════════════════════════════════
+   FIGMA UI/UX OVERHAUL — TYPOGRAPHY, ELEVATION, ACTIONS & WORKFLOW
+══════════════════════════════════════════════════════════════════ */
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --grad-primary: linear-gradient(135deg, #078695 0%, #0284c7 55%, #0369a1 100%);
+  --grad-dark: linear-gradient(135deg, #0b253a 0%, #123943 60%, #078695 100%);
+  --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 100%);
+  --shadow-elevated: 0 12px 32px -8px rgba(15, 23, 42, 0.10), 0 4px 12px -2px rgba(7, 134, 149, 0.07);
+  --shadow-hover: 0 18px 38px -10px rgba(7, 134, 149, 0.18), 0 6px 16px -4px rgba(15, 23, 42, 0.08);
+}
+
+body, input, select, textarea, button {
+  font-family: var(--font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .lp-price-card-price, .loyalty-pts {
+  font-family: var(--font-display) !important;
+}
+
+/* ── LANDING PAGE UPGRADES ── */
+.lp-nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(7, 134, 149, 0.14) !important;
+  height: 70px !important;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
+}
+.lp-nav-logo {
+  font-size: 24px !important;
+  letter-spacing: -0.6px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.lp-nav-logo::before {
+  content: "🫧";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--grad-primary);
+  color: #fff;
+  font-size: 17px;
+  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.28);
+}
+.lp-nav-links a {
+  font-weight: 600 !important;
+  color: #334155 !important;
+  position: relative;
+  padding: 6px 2px;
+}
+.lp-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--grad-primary);
+  transition: width 0.22s ease;
+  border-radius: 2px;
+}
+.lp-nav-links a:hover::after {
+  width: 100%;
+}
+.lp-btn-solid {
+  background: var(--grad-primary) !important;
+  border: none !important;
+  box-shadow: 0 6px 18px rgba(7, 134, 149, 0.28) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+.lp-btn-solid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(7, 134, 149, 0.36) !important;
+}
+.lp-hero h1 {
+  font-size: clamp(38px, 5vw, 58px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -1.4px !important;
+}
+.lp-hero-card, .lp-step, .lp-svc, .lp-price-card, .lp-review {
+  border-radius: 18px !important;
+  box-shadow: var(--shadow-elevated) !important;
+  transition: transform 0.22s cubic-bezier(.16,1,.3,1), box-shadow 0.22s ease !important;
+}
+.lp-step:hover, .lp-svc:hover, .lp-price-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover) !important;
+}
+
+/* ── SIDEBAR & SHELL UPGRADES ── */
+.sidebar {
+  width: 248px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbfc 100%) !important;
+  border-right: 1px solid #d5e8eb !important;
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.03);
+}
+.sb-brand {
+  padding: 20px 18px 16px !important;
+}
+.sb-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  background: var(--grad-primary) !important;
+  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.28);
+}
+.sb-logo {
+  font-size: 19px !important;
+  letter-spacing: -0.4px;
+}
+.sb-user {
+  margin: 12px 12px 6px !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #f0f9fa 0%, #e4f4f6 100%) !important;
+  border: 1px solid #cde6e9 !important;
+}
+.sb-nav {
+  padding: 8px 10px !important;
+}
+.nav-item {
+  border-radius: 10px !important;
+  margin-bottom: 3px !important;
+  padding: 10px 13px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-left: none !important;
+  color: #475569 !important;
+  transition: all 0.16s ease !important;
+}
+.nav-item:hover {
+  background: rgba(7, 134, 149, 0.08) !important;
+  color: #078695 !important;
+  transform: translateX(2px);
+}
+.nav-item.active {
+  background: var(--grad-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.25) !important;
+}
+.nav-item.active .ni {
+  transform: scale(1.08);
+}
+
+/* ── TOPBAR WITH GLOBAL QUICK ACTIONS ── */
+.topbar {
+  height: 64px !important;
+  padding: 0 24px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #d5e8eb !important;
+  gap: 12px;
+}
+.tb-left-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.tb-title {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+.tb-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.tb-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+  animation: pulseDot 1.8s infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.18); }
+}
+.tb-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tb-qa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #cde4e7;
+  background: #f4fbfb;
+  color: #066c79;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+.tb-qa-btn:hover {
+  background: #e0f4f6;
+  border-color: #078695;
+  transform: translateY(-1px);
+}
+.tb-qa-btn.primary {
+  background: var(--grad-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.24);
+}
+.tb-qa-btn.primary:hover {
+  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.34);
+}
+
+/* ── STAT CARDS & CARDS ── */
+.sc {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  background: #ffffff !important;
+  border: 1px solid #d5e8eb !important;
+  box-shadow: var(--shadow-elevated) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.sc::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--grad-primary);
+}
+.sc:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover) !important;
+}
+.sc-val {
+  font-size: 29px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.8px !important;
+}
+.sc-lbl {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #64748b !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 4px !important;
+}
+.card {
+  border-radius: 16px !important;
+  border: 1px solid #d5e8eb !important;
+  box-shadow: var(--shadow-elevated) !important;
+  background: #ffffff !important;
+}
+.ch {
+  padding: 15px 20px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fcfd 100%) !important;
+  border-bottom: 1px solid #e2eff1 !important;
+}
+.ch h4 {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+}
+
+/* ── GRANULAR ORDER STATUS BADGES ── */
+.badge {
+  border-radius: 999px !important;
+  padding: 4px 11px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.s-PENDING { background: #fef3c7 !important; color: #92400e !important; border: 1px solid #fde68a !important; }
+.s-RECEIVED { background: #e0f2fe !important; color: #0369a1 !important; border: 1px solid #bae6fd !important; }
+.s-WASHING, .s-PROCESSING { background: #cffafe !important; color: #0e7490 !important; border: 1px solid #a5f3fc !important; }
+.s-DRYING { background: #ffedd5 !important; color: #c2410c !important; border: 1px solid #fed7aa !important; }
+.s-FOLDING { background: #e0e7ff !important; color: #4338ca !important; border: 1px solid #c7d2fe !important; }
+.s-READY { background: #dcfce7 !important; color: #047857 !important; border: 1px solid #86efac !important; }
+.s-RELEASED { background: #f3e8ff !important; color: #6d28d9 !important; border: 1px solid #ddd6fe !important; }
+.s-CANCELLED { background: #fee2e2 !important; color: #b91c1c !important; border: 1px solid #fecaca !important; }
+
+/* ── RFID SCANNER TERMINAL & DUPLICATE TAG ALERT ── */
+.rfid-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.rfid-terminal {
+  background: linear-gradient(145deg, #0b2236 0%, #103347 60%, #0d4456 100%);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 18px 40px -12px rgba(7, 34, 54, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.rfid-reader-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.14);
+  border: 2px solid rgba(56, 189, 248, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 12px;
+  box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.07);
+}
+.dup-alert-box {
+  background: #fef2f2;
+  border: 2px solid #ef4444;
+  color: #7f1d1d;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 14px;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
+}
+.dup-alert-title {
+  font-weight: 800;
+  font-size: 14px;
+  color: #b91c1c;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.stage-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.stage-btn {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid #cde4e7;
+  background: #f8fcfd;
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.stage-btn:hover:not(:disabled) {
+  background: #e0f4f6;
+  border-color: #078695;
+  transform: translateY(-1px);
+}
+.stage-btn.active-stage {
+  background: var(--grad-primary);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.28);
+}
+
+/* ── CUSTOMER PORTAL MODERN LAYOUT ── */
+.pt-nav {
+  height: 64px !important;
+  padding: 0 24px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #d5e8eb !important;
+}
+.pt-tabs {
+  background: #ffffff !important;
+  padding: 8px 20px !important;
+  gap: 6px;
+  border-bottom: 1px solid #d5e8eb !important;
+}
+.pt-tab {
+  padding: 9px 15px !important;
+  border-radius: 10px !important;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.16s ease !important;
+}
+.pt-tab:hover {
+  background: #f0f9fa !important;
+  color: #078695 !important;
+}
+.pt-tab.active {
+  background: var(--grad-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(7, 134, 149, 0.25);
+}
+.pt-content {
+  max-width: 1040px !important;
+  padding: 26px 24px 48px !important;
+}
+.pt-hero-banner {
+  background: var(--grad-dark);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 26px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 16px 36px -10px rgba(11, 37, 58, 0.35);
+}
+.pt-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pt-quick-card {
+  background: #ffffff;
+  border: 1px solid #d5e8eb;
+  border-radius: 15px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-elevated);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pt-quick-card:hover {
+  transform: translateY(-3px);
+  border-color: #078695;
+  box-shadow: var(--shadow-hover);
+}
+.pt-quick-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #e6f6f8;
+  color: #078695;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.mono-code {
+  font-family: var(--font-mono) !important;
+}
+@media (max-width: 900px) {
+  .rfid-grid { grid-template-columns: 1fr; }
+  .pt-quick-grid { grid-template-columns: repeat(2, 1fr); }
+  .tb-quick-actions { display: none; }
+}
+@media (max-width: 560px) {
+  .pt-quick-grid { grid-template-columns: 1fr; }
+  .stage-pill-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 </style>
 </head>
 <body>
@@ -1139,11 +1630,19 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
   </div>
   <div class="main-area">
     <div class="topbar">
-      <span class="tb-title" id="pgTitle">Dashboard</span>
+      <div class="tb-left-wrap">
+        <span class="tb-title" id="pgTitle">Dashboard</span>
+        <span class="tb-live-pill" title="Supabase Realtime Cloud Sync Active"><span class="tb-live-dot"></span>Live Sync</span>
+      </div>
+      <div class="tb-quick-actions" id="tbQuickActions">
+        <button type="button" class="tb-qa-btn primary" onclick="showPage('rfid_scanner')">📡 Scan RFID / Receive</button>
+        <button type="button" class="tb-qa-btn" onclick="openOrdModal(null)">➕ New Order</button>
+        <button type="button" class="tb-qa-btn" onclick="openPayModal()">💳 Record Payment</button>
+        <button type="button" class="tb-qa-btn" onclick="showPage('scan_logs')">🛡️ Scan Logs</button>
+      </div>
       <div class="tb-right">
         <span id="pgDate"></span>
         <span id="tbLowStockAlert" style="display:none;color:var(--warn);font-weight:600;cursor:pointer;" onclick="showPage(CU.role==='ADMIN'?'inv_admin':'inventory')">⚠ Low Stock</span>
-        
         <button class="notif-bell" id="sellerBell" onclick="toggleNotifPanel()">🔔 <span id="sellerBellCount" style="display:none;"></span></button>
       </div>
     </div>
@@ -1158,23 +1657,30 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
 <div id="portal">
 <div class="pt-wrap">
   <div class="pt-nav">
-    <div class="pt-logo">Laba<span>Flow</span></div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="pt-logo" style="cursor:pointer;" onclick="ptTab('overview')">🫧 Laba<span>Flow</span></div>
+      <span class="tb-live-pill"><span class="tb-live-dot"></span>RFID Live Portal</span>
+    </div>
     <div class="pt-user">
-      <span id="ptUserName">—</span>
+      <button class="btn btn-primary btn-sm" style="padding:6px 12px;font-size:11.5px;min-height:34px;" onclick="ptTab('book')">+ Book Laundry</button>
+      <span id="ptUserName" style="font-weight:700;color:var(--text);">—</span>
       <span class="pt-loyalty-pill" id="ptLoyaltyPill" onclick="ptTab('loyalty')">⭐ 0 pts</span>
       <button class="notif-bell" id="custBell" onclick="toggleCustNotifPanel()" style="position:relative;">🔔<span class="notif-bubble" id="custBellBubble" style="display:none;">0</span></button>
-      
-      <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="doLogout()">Sign Out</button>
+      <button class="btn btn-ghost btn-sm" style="font-size:11px;min-height:34px;" onclick="doLogout()">Sign Out</button>
     </div>
   </div>
   <div class="pt-tabs">
-    <div class="pt-tab active" id="ptt-orders" onclick="ptTab('orders')">My Orders</div>
-    <div class="pt-tab" id="ptt-book" onclick="ptTab('book')">Book Service</div>
+    <div class="pt-tab active" id="ptt-overview" onclick="ptTab('overview')">🏠 Overview</div>
+    <div class="pt-tab" id="ptt-book" onclick="ptTab('book')">➕ Book a Service</div>
+    <div class="pt-tab" id="ptt-orders" onclick="ptTab('orders')">📦 My Orders</div>
+    <div class="pt-tab" id="ptt-track" onclick="ptTab('track')">📡 Track Laundry</div>
+    <div class="pt-tab" id="ptt-payments" onclick="ptTab('payments')">💳 Payment History</div>
+    <div class="pt-tab" id="ptt-notifs" onclick="ptTab('notifs')">🔔 Notifications</div>
     <div class="pt-tab" id="ptt-messages" onclick="ptTab('messages')">
-      Messages<span class="pt-tab-badge" id="ptMsgBadge" style="display:none;">0</span>
+      💬 Messages<span class="pt-tab-badge" id="ptMsgBadge" style="display:none;">0</span>
     </div>
-    <div class="pt-tab" id="ptt-loyalty" onclick="ptTab('loyalty')">LabaPoints</div>
-    <div class="pt-tab" id="ptt-profile" onclick="ptTab('profile')">Profile</div>
+    <div class="pt-tab" id="ptt-loyalty" onclick="ptTab('loyalty')">⭐ LabaPoints</div>
+    <div class="pt-tab" id="ptt-profile" onclick="ptTab('profile')">👤 Profile</div>
   </div>
   <div class="pt-content" id="ptContent"></div>
 </div>
@@ -1439,7 +1945,7 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
 ══════════════════════════════════════ */
 const DB={
   get(k){try{let r=localStorage.getItem('lf3_'+k);if(r===null)r=sessionStorage.getItem('lf3_'+k);if(!r||r==='null')return[];const p=JSON.parse(r);return Array.isArray(p)?p:[];}catch{return[];}},
-  set(k,v,skipRemote=false){const s=JSON.stringify(v);const prev=localStorage.getItem('lf3_'+k);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}if(!window._lfSuppressRemote&&!skipRemote&&['inventory','rfidTags','orders','transactions','messages','restockLog','promoCodes','reviews'].includes(k)&&prev!==s&&window.LabaFlowSupabase?.saveCollection){window.LabaFlowSupabase.saveCollection(k,v).catch(err=>console.warn('Sync save skipped:',k,err?.message));}},
+  set(k,v,skipRemote=false){const s=JSON.stringify(v);const prev=localStorage.getItem('lf3_'+k);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}if(!window._lfSuppressRemote&&!skipRemote&&['inventory','rfidTags','orders','transactions','messages','restockLog','promoCodes','reviews','rfidScanLogs','statusHistory'].includes(k)&&prev!==s&&window.LabaFlowSupabase?.saveCollection){window.LabaFlowSupabase.saveCollection(k,v).catch(err=>console.warn('Sync save skipped:',k,err?.message));}},
   has(k){return localStorage.getItem('lf3_'+k)!==null||sessionStorage.getItem('lf3_'+k)!==null;},
   nextId(k){const a=this.get(k);return a.length?Math.max(...a.map(x=>x.id))+1:1;}
 };
@@ -1479,6 +1985,10 @@ window._lfSuppressRemote=true;(function seed(){
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
   if(!DB.has('reviews'))DB.set('reviews',[]);
+  if(!DB.has('rfidScanLogs'))DB.set('rfidScanLogs',[]);
+  if(!DB.has('statusHistory'))DB.set('statusHistory',[]);
+  if(!DB.has('rfidScanLogs'))DB.set('rfidScanLogs',[]);
+  if(!DB.has('statusHistory'))DB.set('statusHistory',[]);
   window._lfSuppressRemote=false;
   DB.set('seeded',[1]);
 })();
@@ -1593,7 +2103,65 @@ function addPoints(userId,amount){
 }
 
 const TYPE_LABEL={CLOTHES:'Clothes (Full Wash)',BEDSHEET:'Bedsheet',COMFORTER:'Comforter',WASH_ONLY:'Wash Only',DRY_ONLY:'Dry Only'};
-const STATUSES=['PENDING','RECEIVED','PROCESSING','READY','RELEASED'];
+const STATUSES=['PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'];
+const STATUS_LABEL={
+  PENDING:'Pending Booking',
+  RECEIVED:'Received at Shop',
+  WASHING:'Washing',
+  PROCESSING:'Washing',
+  DRYING:'Drying',
+  FOLDING:'Folding',
+  READY:'Ready for Pickup',
+  RELEASED:'Completed',
+  CANCELLED:'Cancelled'
+};
+const STATUS_SHORT={
+  PENDING:'Pending',
+  RECEIVED:'Received',
+  WASHING:'Washing',
+  PROCESSING:'Washing',
+  DRYING:'Drying',
+  FOLDING:'Folding',
+  READY:'Ready',
+  RELEASED:'Completed',
+  CANCELLED:'Cancelled'
+};
+function normStatus(s){
+  if(!s)return 'PENDING';
+  const u=String(s).toUpperCase();
+  return u==='PROCESSING'?'WASHING':u;
+}
+function logOrderStatus(o,status,notes){
+  if(!o)return;
+  const hist=DB.get('statusHistory');
+  hist.push({
+    id:'SH-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
+    orderId:o.id,
+    orderNum:o.num,
+    status:normStatus(status||o.status),
+    by:CU?CU.name:'System',
+    role:CU?CU.role:'SYSTEM',
+    notes:notes||'',
+    date:new Date().toISOString()
+  });
+  DB.set('statusHistory',hist);
+}
+function logRfidScan(entry){
+  const logs=DB.get('rfidScanLogs');
+  logs.push({
+    id:'SCAN-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),
+    uid:entry.uid||'—',
+    orderId:entry.orderId||null,
+    orderNum:entry.orderNum||'—',
+    staffUser:CU?CU.name:(entry.staffUser||'ESP32 Reader'),
+    staffRole:CU?CU.role:'STAFF',
+    action:entry.action||'RFID_SCAN',
+    result:entry.result||'SUCCESS',
+    details:entry.details||'',
+    date:new Date().toISOString()
+  });
+  DB.set('rfidScanLogs',logs);
+}
 
 /* ══════════════════════════════════════
    AUTH
@@ -1704,7 +2272,7 @@ function refreshActiveViews(){
   if(!CU)return;
   if(CU.role==='CUSTOMER'){
     updateLoyaltyPill();updateMsgBadge();updateNotifBadge();
-    if(!isTyping&&!modalOpen&&['orders','loyalty'].includes(curPtTab))ptTab(curPtTab);
+    if(!isTyping&&!modalOpen&&['overview','orders','track','payments','notifs','loyalty'].includes(curPtTab))ptTab(curPtTab);
   }else{
     buildSidebar();checkTopbarAlerts();updateSellerBell();
     if(!isTyping&&!modalOpen&&curPage)showPage(curPage);
@@ -1748,7 +2316,7 @@ async function launchApp(){
     updateLoyaltyPill();
     updateMsgBadge();
     updateNotifBadge();
-    ptTab('orders');
+    ptTab('overview');
   } else {
     g('app').style.display='block';
     g('sbName').textContent=CU.name;
@@ -1833,7 +2401,7 @@ function sv(id,val){g(id).value=val;}
 function peso(n){return '₱'+parseFloat(n||0).toFixed(2);}
 function fd(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});}
 function fs(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
-function sBadge(s){return`<span class="badge s-${s}">${s}</span>`;}
+function sBadge(s){const ns=normStatus(s);return`<span class="badge s-${ns}">${STATUS_SHORT[s]||s}</span>`;}
 function toast(msg){const t=g('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3800);}
 const LF_SWAL={
   customClass:{popup:'swal-lf',confirmButton:'',cancelButton:''},
@@ -2047,13 +2615,23 @@ function pgDashboard(){
 
   g('pgContent').innerHTML=`
     ${low.length?`<div class="notice n-warn">⚠ Low stock: ${low.map(i=>`<strong>${i.name}</strong> (${i.qty} ${i.unit})`).join(', ')} — <a href="#" onclick="showPage('inv_admin');return false;" style="color:var(--warn);text-decoration:underline;">View Inventory</a></div>`:''}
-    <div class="dash-actions" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;">
-      <button class="btn btn-primary" onclick="showPage('inv_admin')">Inventory monitor</button>
-      <button class="btn btn-ghost" onclick="showPage('users')">User accounts</button>
-      <button class="btn btn-ghost" onclick="showPage('analytics')">Financial analytics</button>
+    <div class="dash-actions" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;background:#fff;padding:14px 18px;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow-card);align-items:center;">
+      <span style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">⚡ Quick Actions:</span>
+      <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Open RFID Scanner & Receive</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('orders')">🧺 Manage Orders</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Logs</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('inv_admin')">🫧 Inventory Monitor</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('users')">👥 User Accounts</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('analytics')">💰 Financial Analytics</button>
     </div>
     <div class="sg sg-5">
-      ${[['PENDING','var(--text-muted)'],['RECEIVED','var(--accent2)'],['PROCESSING','var(--warn)'],['READY','var(--success)'],['RELEASED','#a78bfa']].map(([s,c])=>`<div class="sc"><div class="sc-val" style="color:${c}">${counts[s]}</div><div class="sc-lbl">${s}</div></div>`).join('')}
+      ${[
+        ['PENDING','#b45309',orders.filter(o=>normStatus(o.status)==='PENDING').length,'Pending Bookings'],
+        ['RECEIVED','#0284c7',orders.filter(o=>normStatus(o.status)==='RECEIVED').length,'Received (Tagged)'],
+        ['WASHING','#0891b2',orders.filter(o=>['WASHING','DRYING','FOLDING'].includes(normStatus(o.status))).length,'In Wash / Dry / Fold'],
+        ['READY','#059669',orders.filter(o=>normStatus(o.status)==='READY').length,'Ready for Pickup'],
+        ['RELEASED','#7c3aed',orders.filter(o=>normStatus(o.status)==='RELEASED').length,'Completed Orders']
+      ].map(([s,c,cnt,lbl])=>`<div class="sc" style="cursor:pointer;" onclick="oFilter='${s==='WASHING'?'ACTIVE':s}';showPage('orders')"><div class="sc-val" style="color:${c}">${cnt}</div><div class="sc-lbl">${lbl}</div></div>`).join('')}
     </div>
     <div class="two-col">
       <div class="card"><div class="ch"><h4>💰 Revenue</h4></div><div class="cp">
@@ -2452,19 +3030,20 @@ let oFilter='ALL',detailId=null;
 
 function pgOrders(){
   let orders=DB.get('orders');
-  if(oFilter==='ACTIVE')orders=orders.filter(o=>o.status==='RECEIVED'||o.status==='PROCESSING');
-  else if(oFilter!=='ALL')orders=orders.filter(o=>o.status===oFilter);
+  if(oFilter==='ACTIVE')orders=orders.filter(o=>['RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status));
+  else if(oFilter!=='ALL')orders=orders.filter(o=>normStatus(o.status)===oFilter);
   orders=[...orders].reverse();
   g('pgContent').innerHTML=`
     <div class="toolbar">
       <div class="search-wrap" id="oSrchWrap">
-        <input class="search-box" id="oSrch" placeholder="Search order or customer…" oninput="searchOrds()" onkeydown="handleSuggestKey(event)" autocomplete="off">
+        <input class="search-box" id="oSrch" placeholder="Search order or customer…" oninput="searchOrds()" onkeydown="handleSuggestKey(event)" autocomplete="off" style="width:220px;">
         <div class="suggest-drop" id="oSuggest"></div>
       </div>
-      ${['ALL','PENDING','ACTIVE','READY','RELEASED'].map(f=>`<span class="chip${oFilter===f?' on':''}" onclick="setOF('${f}')">${f}</span>`).join('')}
-      <div style="margin-left:auto;display:flex;gap:7px;">
-        <button class="btn btn-primary btn-sm" onclick="openOrdModal(null)">+ New Order</button>
-        <button class="btn btn-ghost btn-sm" onclick="openPayModal()">Record Payment</button>
+      ${['ALL','PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'].map(f=>`<span class="chip${oFilter===f?' on':''}" onclick="setOF('${f}')">${STATUS_SHORT[f]||f}</span>`).join('')}
+      <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 RFID Scanner & Receive</button>
+        <button class="btn btn-ghost btn-sm" onclick="openOrdModal(null)">+ Walk-in Order</button>
+        <button class="btn btn-ghost btn-sm" onclick="openPayModal()">💳 Record Payment</button>
       </div>
     </div>
     <div class="card"><div class="ch"><h4>Orders</h4><span class="text-sm text-muted">${orders.length} shown</span></div>
@@ -2492,7 +3071,7 @@ function ordRow(o){
     <td><div class="tda">
       <button class="btn btn-ghost btn-sm" onclick="openDetail(${o.id})">View</button>
       <button class="btn btn-ghost btn-sm" onclick="openOrdModal(${o.id})">Edit</button>
-      ${canAssign?`<button class="btn btn-ghost btn-sm" onclick="openAssignRfid(${o.id})">Assign RFID</button>`:''}
+      ${canAssign?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${o.id})">📡 Scan & Receive</button>`:''}
     </div></td>
   </tr>`;
 }
@@ -2639,7 +3218,7 @@ function submitOrder(){
     o.custId=custId;o.custName=cust.name;o.type=type;o.kg=kg;o.comQty=comQty;
     o.colorDist=colorDist;o.notes=notes;o.price=finalAfterPromo;o.breakdown=breakdown;o.discount=discount;o.promoCode=promoCode||'';
   } else {
-    orders.push({id,num:newOrderNum,custId,custName:cust.name,tagId:null,type,kg,comQty,colorDist,status:'PENDING',notes,price:finalAfterPromo,breakdown,discount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()});
+    const newWalkInOrd={id,num:newOrderNum,custId,custName:cust.name,tagId:null,type,kg,comQty,colorDist,serviceMode:'Walk-in Drop-off',status:'PENDING',notes,price:finalAfterPromo,breakdown,discount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};orders.push(newWalkInOrd);logOrderStatus(newWalkInOrd,'PENDING','Created by staff ('+(CU?CU.name:'Staff')+')');
     if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
     /* push notification to customer */
     pushNotif(custId,'ORDER_PLACED',`Order ${newOrderNum} placed`,`Your ${TYPE_LABEL[type]} order has been received. Drop off at the shop.`,'🧺');
@@ -2699,14 +3278,27 @@ function openAssignRfid(ordId){
   g('rfidTagSel').innerHTML=tags.length?tags.map(t=>`<option value="${t.id}">${t.uid}</option>`).join(''):'<option value="">No tags available</option>';
   openM('mRfid');
 }
+function openScannerForOrder(ordId){
+  window._scannerSelectedOrdId=ordId;
+  showPage('rfid_scanner');
+}
 function submitAssignRfid(){
   const tagId=parseInt(gv('rfidTagSel'));
   if(!tagId){swalError('No available RFID tags. Please register one first.');return;}
   const orders=DB.get('orders'),tags=DB.get('rfidTags');
   const o=orders.find(x=>x.id===assignId),tag=tags.find(t=>t.id===tagId);
+  if(!tag.available&&tag.orderId&&tag.orderId!==o.id){
+    const conflict=orders.find(x=>x.id===tag.orderId);
+    logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'DUPLICATE_BLOCKED',result:'ALREADY_ASSIGNED',details:`Blocked duplicate assignment; already linked to ${conflict?conflict.num:'Order #'+tag.orderId}`});
+    swalError(`RFID Tag ${tag.uid} is already assigned to active order ${conflict?conflict.num:'#'+tag.orderId}.`);
+    return;
+  }
   o.tagId=tagId;o.status='RECEIVED';o.dropOff=new Date().toISOString();
   tag.available=false;tag.orderId=o.id;
   DB.set('orders',orders);DB.set('rfidTags',tags);
+  logOrderStatus(o,'RECEIVED',`Assigned RFID tag ${tag.uid}`);
+  logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'TAG_ASSIGNED',result:'SUCCESS',details:`Linked to ${o.num} (${o.custName})`});
+  pushNotif(o.custId,'RECEIVED',`Order ${o.num} received`,`Your laundry was received and linked to RFID Tag ${tag.uid}.`,'📡');
   closeM('mRfid');
   swalSuccess('RFID Assigned',`Order ${o.num} received. Tag ${tag.uid} linked.`);
   pgOrders();
@@ -2716,7 +3308,7 @@ function submitAssignRfid(){
 function openDetail(id){detailId=id;renderDetail();openM('mDetail');}
 function renderDetail(){
   const o=DB.get('orders').find(x=>x.id===detailId);if(!o)return;
-  const si=STATUSES.indexOf(o.status);
+  const si=STATUSES.indexOf(normStatus(o.status));
   const tag=o.tagId?DB.get('rfidTags').find(t=>t.id===o.tagId):null;
   const isPaid=DB.get('transactions').some(t=>t.orderId===o.id&&t.status==='COMPLETED');
   const tlHTML=STATUSES.map((s,i)=>{
@@ -2756,7 +3348,7 @@ function renderDetail(){
 function advanceOrder(){
   const orders=DB.get('orders'),o=orders.find(x=>x.id===detailId);
   if(!o||o.status==='RELEASED'||!o.tagId)return;
-  const si=STATUSES.indexOf(o.status),next=STATUSES[si+1];if(!next)return;
+  const si=STATUSES.indexOf(normStatus(o.status)),next=STATUSES[si+1];if(!next)return;
 
   /* ── PAYMENT GATE: block RELEASED if not yet paid ── */
   if(next==='RELEASED'){
@@ -2777,7 +3369,7 @@ function advanceOrder(){
         if(!r.isConfirmed)return;
         closeM('mDetail');
         /* pre-select this order in the payment modal */
-        const eligible=DB.get('orders').filter(ord=>['READY','RECEIVED','PROCESSING'].includes(ord.status));
+        const eligible=DB.get('orders').filter(ord=>['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(ord.status));
         g('payOrdSel').innerHTML=eligible.map(ord=>`<option value="${ord.id}" data-p="${ord.finalPrice||ord.price}"${ord.id===o.id?' selected':''}>${ord.num} — ${ord.custName} (${peso(ord.finalPrice||ord.price)})</option>`).join('');
         g('payChan').value='CASH';
         g('gcashSection').classList.remove('show');
@@ -2796,7 +3388,7 @@ function advanceOrder(){
   }
 
   /* confirm before processing (inventory deduction) */
-  if(next==='PROCESSING'){
+  if(next==='WASHING'||next==='PROCESSING'){
     swalConfirm('Start Processing','This will deduct inventory supplies for this order. Continue?','Yes, Process').then(r=>{
       if(!r.isConfirmed)return;
       _doAdvance(o,orders,next);
@@ -2808,8 +3400,9 @@ function advanceOrder(){
 
 function _doAdvance(o,orders,next){
   o.status=next;
+  const tagObj=o.tagId?DB.get('rfidTags').find(t=>t.id===o.tagId):null;
   if(next==='RECEIVED')o.dropOff=new Date().toISOString();
-  if(next==='PROCESSING'){
+  if(next==='WASHING'||next==='PROCESSING'){
     const updatedInv=deductInventory(o.type,o.kg,o.comQty);
     checkTopbarAlerts();
     const low=updatedInv.filter(i=>i.qty<=i.thresh);
@@ -2819,30 +3412,41 @@ function _doAdvance(o,orders,next){
   if(next==='RELEASED'){
     o.pickup=new Date().toISOString();o.finalPrice=o.price;
     const tags=DB.get('rfidTags'),tag=tags.find(t=>t.id===o.tagId);
-    if(tag){tag.available=true;tag.orderId=null;}DB.set('rfidTags',tags);
+    if(tag){
+      logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'TAG_RELEASED',result:'SUCCESS',details:`Order ${o.num} completed; tag freed for reuse`});
+      tag.available=true;tag.orderId=null;
+    }
+    DB.set('rfidTags',tags);
     const pts=addPoints(o.custId,o.price);
     toast(`🌟 +${pts} LabaPoints awarded to ${o.custName}`);
+  } else if(tagObj){
+    logRfidScan({uid:tagObj.uid,orderId:o.id,orderNum:o.num,action:'STAGE_UPDATED',result:'SUCCESS',details:`Stage updated to ${STATUS_LABEL[next]||next}`});
   }
+  logOrderStatus(o,next,`Stage advanced to ${STATUS_LABEL[next]||next}`);
   DB.set('orders',orders);
   if(next==='READY'){swalSuccess('Laundry Ready! 🎉',`${o.custName}'s order (${o.num}) is ready for pickup.`);}
-  else{toast(`${o.num} → ${next}`);}
+  else{toast(`${o.num} → ${STATUS_SHORT[next]||next}`);}
   const notifMap={
     RECEIVED:{icon:'📡',title:`Order ${o.num} received`,msg:`Your ${TYPE_LABEL[o.type]||o.type} has been received and tagged with RFID.`},
+    WASHING:{icon:'🫧',title:`Order ${o.num} is washing`,msg:'Your laundry is currently in the washing cycle.'},
     PROCESSING:{icon:'🫧',title:`Order ${o.num} in progress`,msg:'Your laundry is currently being washed and dried.'},
+    DRYING:{icon:'💨',title:`Order ${o.num} is drying`,msg:'Your laundry is now in the dryer cycle.'},
+    FOLDING:{icon:'👕',title:`Order ${o.num} is being folded`,msg:'Your clean laundry is being neatly folded and packed.'},
     READY:{icon:'✅',title:`Order ${o.num} is READY!`,msg:'Your clean laundry is ready for pickup. Please proceed to the shop.'},
-    RELEASED:{icon:'🎉',title:`Order ${o.num} released`,msg:'Order complete. Thank you for choosing Lab-a-Day Laundry!'}
+    RELEASED:{icon:'🎉',title:`Order ${o.num} completed`,msg:'Order complete. Thank you for choosing Lab-a-Day Laundry!'}
   };
   if(notifMap[next])pushNotif(o.custId,next,notifMap[next].title,notifMap[next].msg,notifMap[next].icon);
   updateSellerBell();
   renderDetail();
   if(curPage==='orders')pgOrders();
+  if(curPage==='rfid_scanner')pgRfidScanner();
   if(curPage==='inventory')pgInventory();
   if(curPage==='inv_admin')pgInvAdmin();
 }
 
 /* ── Payment ── */
 function openPayModal(){
-  const eligible=DB.get('orders').filter(o=>['READY','RECEIVED','PROCESSING'].includes(o.status));
+  const eligible=DB.get('orders').filter(o=>['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status));
   g('payOrdSel').innerHTML=eligible.length?eligible.map(o=>`<option value="${o.id}" data-p="${o.finalPrice||o.price}">${o.num} — ${o.custName} (${peso(o.finalPrice||o.price)})</option>`):'<option value="">No eligible orders</option>';
   g('payChan').value='CASH';
   g('gcashSection').classList.remove('show');
@@ -2902,7 +3506,7 @@ function submitPayment(){
   if(o.status==='READY'){
     o.status='RELEASED';o.pickup=new Date().toISOString();
     const tags=DB.get('rfidTags'),tag=tags.find(t=>t.id===o.tagId);
-    if(tag){tag.available=true;tag.orderId=null;}DB.set('rfidTags',tags);
+    if(tag){logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'TAG_RELEASED',result:'SUCCESS',details:'Payment completed; tag released for reuse'});tag.available=true;tag.orderId=null;}DB.set('rfidTags',tags);logOrderStatus(o,'RELEASED','Payment recorded & laundry released');
     const pts=addPoints(o.custId,amount);
     toast(`🌟 +${pts} LabaPoints awarded to ${o.custName}`);
     pushNotif(o.custId,'RELEASED',`Order ${o.num} released`,`Your laundry is ready and paid. +${pts} LabaPoints earned!`,'✅');
@@ -3015,25 +3619,25 @@ function pgReports(){
     </div>
     <div class="two-col">
       <div class="card"><div class="ch"><h4>Today — By Channel</h4></div><div class="cp">
-        ${['CASH','GCASH'].map(c=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:#fff">${c}</span><span class="fw7" style="color:#fff">${peso(byCh(todayT,c))}</span></div>`).join('')}
-        <div style="display:flex;justify-content:space-between;padding:9px 0 0;font-size:14px;font-weight:700;color:#fff;"><span>Total</span><span>${peso(sum(todayT))}</span></div>
+        ${['CASH','GCASH'].map(c=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--text-muted);font-weight:600;">${c}</span><span class="fw7" style="color:var(--text)">${peso(byCh(todayT,c))}</span></div>`).join('')}
+        <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:14px;font-weight:800;color:var(--accent2);"><span>Total Today</span><span>${peso(sum(todayT))}</span></div>
       </div></div>
       <div class="card"><div class="ch"><h4>All-Time — By Service</h4></div><div class="cp">
-        ${Object.entries(byType).map(([t,v])=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:#fff">${TYPE_LABEL[t]||t}</span><span class="fw7" style="color:#fff">${peso(v)}</span></div>`).join('')}
-        <div style="display:flex;justify-content:space-between;padding:9px 0 0;font-size:14px;font-weight:700;color:#fff;"><span>Total</span><span>${peso(sum(txns))}</span></div>
+        ${Object.entries(byType).map(([t,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--text-muted);font-weight:600;">${TYPE_LABEL[t]||t}</span><span class="fw7" style="color:var(--text)">${peso(v)}</span></div>`).join('')}
+        <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:14px;font-weight:800;color:var(--accent2);"><span>Total Revenue</span><span>${peso(sum(txns))}</span></div>
       </div></div>
     </div>
     <div class="card"><div class="ch"><h4>Recent Transactions</h4></div>
       <table><thead><tr><th>TXN #</th><th>Order #</th><th>Type</th><th>Amount</th><th>Promo</th><th>Channel</th><th>GCash Ref</th><th>Date</th></tr></thead>
       <tbody>${txns.length?[...txns].reverse().slice(0,25).map(t=>{const o=orders.find(x=>x.num===t.orderNum);return`<tr>
-        <td class="text-sm" style="font-family:monospace;color:#fff">${t.num}</td>
-        <td class="fw7" style="color:#fff">${t.orderNum}</td>
-        <td class="text-sm" style="color:#fff">${o?TYPE_LABEL[o.type]:'—'}</td>
-        <td class="fw7" style="color:#fff">${peso(t.amount)}</td>
+        <td class="text-sm mono-code" style="color:var(--text-muted)">${t.num}</td>
+        <td class="fw7 mono-code" style="color:var(--text)">${t.orderNum}</td>
+        <td class="text-sm" style="color:var(--text)">${o?TYPE_LABEL[o.type]:'—'}</td>
+        <td class="fw7" style="color:var(--success)">${peso(t.amount)}</td>
         <td>${t.promoCode?`<span class="promo-tag">🏷 ${t.promoCode}</span>`:'—'}</td>
         <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
-        <td class="text-sm" style="font-family:monospace;color:#fff">${t.gcashRef||'—'}</td>
-        <td class="text-sm" style="color:#fff">${fd(t.date)}</td>
+        <td class="text-sm mono-code" style="color:var(--text-muted)">${t.gcashRef||'—'}</td>
+        <td class="text-sm text-muted">${fd(t.date)}</td>
       </tr>`;}).join(''):`<tr><td colspan="8"><div class="empty">No transactions yet</div></td></tr>`}
       </tbody></table>
     </div>`;
@@ -3152,30 +3756,464 @@ function openCustProfile(custId){
 }
 
 /* ══════════════════════════════════════
-   SELLER: RFID TAGS
+   SELLER & ADMIN: RFID TAGS, SCANNER & SCAN LOGS
 ══════════════════════════════════════ */
 function pgRFID(){
   const tags=DB.get('rfidTags'),orders=DB.get('orders');
+  const availCnt=tags.filter(t=>t.available).length;
   g('pgContent').innerHTML=`
-    <div class="toolbar"><button class="btn btn-primary btn-sm" onclick="openM('mRegTag')">+ Register Tag</button></div>
-    <div class="card"><div class="ch"><h4>📡 RFID Tags</h4><span class="text-sm text-muted">${tags.filter(t=>t.available).length} available / ${tags.length} total</span></div>
-      <table><thead><tr><th>Tag ID</th><th>UID</th><th>Status</th><th>Linked Order</th><th>Action</th></tr></thead>
+    <div class="sg sg-3">
+      <div class="sc"><div class="sc-val">${tags.length}</div><div class="sc-lbl">Registered HF RFID Tags (13.56 MHz)</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--success)">${availCnt}</div><div class="sc-lbl">Available for Assignment</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--accent2)">${tags.length-availCnt}</div><div class="sc-lbl">Active Linked Laundry Bags</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Open RFID Scanner & Receiving</button>
+      <button class="btn btn-ghost btn-sm" onclick="openM('mRegTag')">+ Register New RFID Tag</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Audit Logs</button>
+    </div>
+    <div class="card"><div class="ch"><h4>🏷️ Registered RFID Tags (MIFARE 13.56 MHz)</h4><span class="text-sm text-muted">${availCnt} available / ${tags.length} total</span></div>
+      <table><thead><tr><th>Tag ID</th><th>RFID UID</th><th>Status</th><th>Linked Order</th><th>Order Stage</th><th>Action</th></tr></thead>
       <tbody>${tags.map(tag=>{
         const linked=tag.orderId?orders.find(o=>o.id===tag.orderId):null;
         return`<tr>
-          <td class="fw7 text-sm" style="font-family:monospace">TAG-${String(tag.id).padStart(3,'0')}</td>
-          <td class="text-sm" style="font-family:monospace">${tag.uid}</td>
-          <td>${tag.available?'<span class="badge b-ok">Available</span>':'<span class="badge b-red">In Use</span>'}</td>
-          <td>${linked?`<span class="fw7">${linked.num}</span> — ${linked.custName}`:'—'}</td>
-          <td>${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release</button>`:'—'}</td>
+          <td class="fw7 text-sm mono-code">TAG-${String(tag.id).padStart(3,'0')}</td>
+          <td class="text-sm mono-code" style="font-weight:700;color:var(--accent2);">${tag.uid}</td>
+          <td>${tag.available?'<span class="badge b-ok">✓ Available</span>':'<span class="badge b-red">🔒 In Use</span>'}</td>
+          <td>${linked?`<span class="fw7 mono-code">${linked.num}</span> — ${linked.custName}`:'—'}</td>
+          <td>${linked?sBadge(linked.status):'—'}</td>
+          <td><div class="tda">
+            ${linked?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${linked.id})">📡 Manage Stage</button>`:''}
+            ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="window._prefillScanUid='${tag.uid}';showPage('rfid_scanner')">Assign</button>`}
+          </div></td>
         </tr>`;
       }).join('')}</tbody></table>
     </div>`;
+}
+
+/* ── Dedicated RFID Scanner & Laundry Receiving Page (PDF Sections 4, 7, 8) ── */
+window._scannerSelectedOrdId=null;
+window._prefillScanUid='';
+window._lastDuplicateAlert=null;
+
+function pgRfidScanner(){
+  const orders=DB.get('orders');
+  const tags=DB.get('rfidTags');
+  const activeOrPending=orders.filter(o=>o.status!=='RELEASED'&&o.status!=='CANCELLED');
+  if(!window._scannerSelectedOrdId&&activeOrPending.length){
+    const firstPending=activeOrPending.find(o=>o.status==='PENDING')||activeOrPending[0];
+    window._scannerSelectedOrdId=firstPending.id;
+  }
+  const selOrd=orders.find(o=>o.id===Number(window._scannerSelectedOrdId))||null;
+  const linkedTag=selOrd&&selOrd.tagId?tags.find(t=>t.id===selOrd.tagId):null;
+  const availTags=tags.filter(t=>t.available);
+  const recentLogs=[...DB.get('rfidScanLogs')].reverse().slice(0,6);
+
+  g('pgContent').innerHTML=`
+    <div class="notice n-info" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div><strong>📡 HF RFID 13.56 MHz (ESP32 + RC522) Receiving & Workflow Station:</strong> Select a customer booking, verify actual weight/load at the shop counter, and scan or assign an RFID Tag UID. Duplicate active tag assignments are automatically blocked.</div>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ Full Audit Logs (${DB.get('rfidScanLogs').length})</button>
+    </div>
+
+    <div class="rfid-grid">
+      <!-- LEFT COLUMN: STEP 1 & 2 - SELECT ORDER & VERIFY LAUNDRY DETAILS -->
+      <div class="card" style="margin-bottom:0;">
+        <div class="ch">
+          <h4>1️⃣ Select Booking & Verify Laundry Details</h4>
+          <span class="badge b-blue">${activeOrPending.length} Active / Pending</span>
+        </div>
+        <div class="cp">
+          <div class="fg">
+            <label>Select Pending or Active Order</label>
+            <select id="scnOrdSelect" onchange="onScannerOrdChange(this.value)">
+              ${activeOrPending.length?activeOrPending.map(o=>{
+                const t=o.tagId?tags.find(x=>x.id===o.tagId):null;
+                return `<option value="${o.id}" ${selOrd&&selOrd.id===o.id?'selected':''}>[${STATUS_SHORT[o.status]||o.status}] ${o.num} — ${o.custName} (${TYPE_LABEL[o.type]||o.type})${t?' · 🏷 '+t.uid:' · ⏳ No RFID'}</option>`;
+              }).join(''):'<option value="">No active or pending orders — create one first</option>'}
+            </select>
+          </div>
+
+          ${selOrd?`
+            <div style="background:#f8fcfd;border:1px solid #d5e8eb;border-radius:12px;padding:14px;margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+                <div>
+                  <div style="font-size:16px;font-weight:800;color:var(--text);" class="mono-code">${selOrd.num} <span style="font-family:var(--font-sans);font-weight:700;">— ${escapeHtml(selOrd.custName)}</span></div>
+                  <div class="text-sm text-muted">Service: <strong>${TYPE_LABEL[selOrd.type]||selOrd.type}</strong> · Mode: <strong>${selOrd.serviceMode||'Drop-off at Shop'}</strong>${selOrd.prefSchedule?' · Sched: '+escapeHtml(selOrd.prefSchedule):''}</div>
+                </div>
+                <div>${sBadge(selOrd.status)}</div>
+              </div>
+              <div class="row2">
+                <div class="fg" style="margin-bottom:8px;">
+                  <label>${selOrd.type==='COMFORTER'?'Verified Pieces (qty)':'Verified Actual Weight (kg)'}</label>
+                  <input type="number" id="scnVerifyLoad" step="${selOrd.type==='COMFORTER'?'1':'0.5'}" min="0.5" value="${selOrd.type==='COMFORTER'?(selOrd.comQty||1):(selOrd.kg||5)}">
+                </div>
+                <div class="fg" style="margin-bottom:8px;">
+                  <label>Calculated Price</label>
+                  <input type="text" id="scnVerifyPrice" value="${peso(selOrd.price)}" readonly>
+                </div>
+              </div>
+              <div class="fg" style="margin-bottom:10px;">
+                <label>Staff Receiving / Inspection Notes</label>
+                <input type="text" id="scnVerifyNotes" value="${escapeHtml(selOrd.notes||'')}" placeholder="e.g. Verified 6.5kg at counter, 1 bag, separate whites">
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+                <span class="text-sm text-muted">Current RFID Tag: <strong class="mono-code" style="color:var(--accent2);">${linkedTag?linkedTag.uid:'Not Linked Yet'}</strong></span>
+                <button class="btn btn-ghost btn-sm" onclick="saveVerifiedOrderDetails(${selOrd.id})">✓ Save Verified Load & Recalculate</button>
+              </div>
+            </div>
+
+            <!-- STEP 3: WORKFLOW STAGE PROGRESSION -->
+            <div style="border-top:1px solid var(--border);padding-top:14px;">
+              <div style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">
+                3️⃣ Laundry Stage Progression (Requires Linked RFID Tag)
+              </div>
+              <div class="stage-pill-grid">
+                ${[
+                  ['RECEIVED','📥 Received'],
+                  ['WASHING','🫧 Washing'],
+                  ['DRYING','💨 Drying'],
+                  ['FOLDING','👕 Folding'],
+                  ['READY','✅ Ready for Pickup'],
+                  ['RELEASED','🎉 Completed / Release']
+                ].map(([st,lbl])=>{
+                  const curNorm=normStatus(selOrd.status);
+                  const isCur=curNorm===st;
+                  return `<button type="button" class="stage-btn ${isCur?'active-stage':''}" ${!selOrd.tagId?'disabled title="Assign RFID Tag first"':''} onclick="scannerSetStage(${selOrd.id},'${st}')">${lbl}</button>`;
+                }).join('')}
+              </div>
+            </div>
+          `:'<div class="empty">No pending or active order selected. Click "+ New Order" in the topbar to create one.</div>'}
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: STEP 2 - ESP32 + RC522 RFID SCANNER TERMINAL & DUPLICATE PROTECTION -->
+      <div>
+        <div class="rfid-terminal">
+          <div class="rfid-reader-ring">📡</div>
+          <div style="text-align:center;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:#7dd3fc;letter-spacing:1px;text-transform:uppercase;">ESP32 + RC522 (13.56 MHz HF RFID)</div>
+            <h3 style="font-size:19px;font-weight:800;color:#ffffff;margin-top:3px;">RFID Tag Scanner & Assignment</h3>
+            <p style="font-size:12px;color:#cbd5e1;margin-top:4px;">Tap an RFID keyfob/card on the reader or select/enter a Tag UID below to link it to the selected order.</p>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);border-radius:12px;padding:14px;margin-bottom:12px;">
+            <label style="display:block;font-size:11px;font-weight:700;color:#bae6fd;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">RFID Tag UID Input (Keyboard Wedge / ESP32 / Manual)</label>
+            <div style="display:flex;gap:8px;">
+              <input id="scnUidInput" class="mono-code" value="${escapeHtml(window._prefillScanUid||(linkedTag?linkedTag.uid:(availTags[0]?availTags[0].uid:'TAG-001')))}" placeholder="e.g. TAG-001 or 04:A3:B2:C1" style="flex:1;padding:10px 12px;border-radius:9px;border:1px solid rgba(125,211,252,0.4);background:#071827;color:#38bdf8;font-size:14px;font-weight:700;outline:none;" onkeydown="if(event.key==='Enter')processRfidScanInput()">
+              <button class="btn btn-primary" onclick="processRfidScanInput()" style="background:#0284c7;border-color:#0284c7;">🔗 Scan & Link RFID</button>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+              <button type="button" class="btn btn-ghost btn-sm" style="color:#e0f2fe;border-color:rgba(255,255,255,0.22);flex:1;" onclick="simulateEsp32Scan('available')">⚡ Simulate ESP32 Scan (Available Tag)</button>
+              <button type="button" class="btn btn-ghost btn-sm" style="color:#fecdd3;border-color:rgba(251,113,133,0.4);flex:1;" onclick="simulateEsp32Scan('duplicate')">⚠️ Test Duplicate Tag Block</button>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:#cbd5e1;">
+            <span>Quick Pick Available Tag:</span>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;">
+              ${availTags.slice(0,5).map(t=>`<span onclick="sv('scnUidInput','${t.uid}')" class="mono-code" style="cursor:pointer;padding:3px 8px;border-radius:6px;background:rgba(56,189,248,0.18);color:#7dd3fc;border:1px solid rgba(56,189,248,0.35);font-weight:700;">${t.uid}</span>`).join('')}
+            </div>
+          </div>
+
+          <div id="scnDuplicateAlertArea">
+            ${window._lastDuplicateAlert?`
+              <div class="dup-alert-box">
+                <div class="dup-alert-title">⚠️ RFID Already Assigned — Assignment Blocked!</div>
+                <div style="font-size:12.5px;line-height:1.55;">
+                  Tag <strong class="mono-code">${escapeHtml(window._lastDuplicateAlert.uid)}</strong> is currently linked to active Order <strong class="mono-code">${escapeHtml(window._lastDuplicateAlert.conflictNum)}</strong>
+                  (Customer: <strong>${escapeHtml(window._lastDuplicateAlert.conflictCust)}</strong>, Stage: <strong>${escapeHtml(window._lastDuplicateAlert.conflictStatus)}</strong>).<br>
+                  <span style="font-size:11.5px;color:#991b1b;">Do not allow assignment until the existing order is completed/released or corrected.</span>
+                </div>
+                <div style="margin-top:8px;display:flex;gap:8px;">
+                  <button class="btn btn-ghost btn-sm" style="background:#fff;color:#991b1b;border-color:#fca5a5;" onclick="openScannerForOrder(${window._lastDuplicateAlert.conflictId});window._lastDuplicateAlert=null;pgRfidScanner();">View Conflicting Order (${window._lastDuplicateAlert.conflictNum})</button>
+                  <button class="btn btn-ghost btn-sm" style="background:#fff;color:#475569;" onclick="window._lastDuplicateAlert=null;pgRfidScanner();">Dismiss</button>
+                </div>
+              </div>
+            `:''}
+          </div>
+        </div>
+
+        <!-- RECENT SCAN LOGS MINI FEED -->
+        <div class="card" style="margin-top:16px;margin-bottom:0;">
+          <div class="ch">
+            <h4>🛡️ Live RFID Scan Feed</h4>
+            <a href="#" onclick="showPage('scan_logs');return false;" style="font-size:12px;font-weight:700;color:var(--accent2);">View All →</a>
+          </div>
+          <table>
+            <thead><tr><th>Time</th><th>RFID UID</th><th>Order</th><th>Action</th><th>Result</th></tr></thead>
+            <tbody>
+              ${recentLogs.length?recentLogs.map(l=>`<tr>
+                <td class="text-sm text-muted">${fs(l.date)}</td>
+                <td class="mono-code fw7" style="font-size:12px;color:var(--accent2);">${escapeHtml(l.uid)}</td>
+                <td class="mono-code text-sm fw7">${escapeHtml(l.orderNum||'—')}</td>
+                <td class="text-sm">${escapeHtml(l.action)}</td>
+                <td><span class="badge ${l.result==='SUCCESS'?'b-ok':'b-low'}">${escapeHtml(l.result)}</span></td>
+              </tr>`).join(''):'<tr><td colspan="5"><div class="empty" style="padding:18px;">No RFID scans recorded yet in this session.</div></td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  window._prefillScanUid='';
+}
+
+function onScannerOrdChange(val){
+  window._scannerSelectedOrdId=parseInt(val)||null;
+  window._lastDuplicateAlert=null;
+  pgRfidScanner();
+}
+
+function saveVerifiedOrderDetails(ordId){
+  const orders=DB.get('orders');
+  const o=orders.find(x=>x.id===ordId);
+  if(!o)return;
+  const loadVal=parseFloat(gv('scnVerifyLoad'))||0;
+  const notesVal=gv('scnVerifyNotes').trim();
+  if(o.type==='COMFORTER'){o.comQty=Math.max(1,Math.round(loadVal));}
+  else{o.kg=Math.max(0.5,loadVal);}
+  o.notes=notesVal;
+  const {price,breakdown}=calcPrice(o.type,o.kg,o.comQty);
+  const {discount,finalAfterPromo}=applyPromo(o.promoCode,price);
+  o.price=finalAfterPromo;o.breakdown=breakdown;o.discount=discount;
+  DB.set('orders',orders);
+  logOrderStatus(o,o.status,`Verified actual laundry load (${o.type==='COMFORTER'?o.comQty+' pcs':o.kg+' kg'}) — Price: ${peso(o.price)}`);
+  logRfidScan({uid:o.tagId?(DB.get('rfidTags').find(t=>t.id===o.tagId)?.uid||'—'):'COUNTER',orderId:o.id,orderNum:o.num,action:'ORDER_VERIFIED',result:'SUCCESS',details:`Verified load: ${o.type==='COMFORTER'?o.comQty+' pcs':o.kg+' kg'} (${peso(o.price)})`});
+  toast('✓ Verified laundry weight & updated order price');
+  pgRfidScanner();
+}
+
+function simulateEsp32Scan(mode){
+  const tags=DB.get('rfidTags');
+  const orders=DB.get('orders');
+  if(mode==='duplicate'){
+    let inUse=tags.find(t=>!t.available&&t.orderId);
+    if(!inUse){
+      // If none in use yet, temporarily point to first tag or inform user
+      const anyOrd=orders.find(o=>o.status!=='RELEASED');
+      if(anyOrd&&tags.length){
+        const t0=tags[0];
+        if(t0.available){
+          t0.available=false;t0.orderId=anyOrd.id;
+          anyOrd.tagId=t0.id;if(anyOrd.status==='PENDING')anyOrd.status='RECEIVED';
+          DB.set('rfidTags',tags);DB.set('orders',orders);
+          inUse=t0;
+        }
+      }
+    }
+    if(inUse){
+      sv('scnUidInput',inUse.uid);
+      // Select a DIFFERENT order if possible so duplicate protection triggers
+      const otherOrd=orders.find(o=>o.id!==inUse.orderId&&o.status!=='RELEASED');
+      if(otherOrd)window._scannerSelectedOrdId=otherOrd.id;
+      processRfidScanInput(inUse.uid);
+      return;
+    }
+  }
+  const avail=tags.find(t=>t.available);
+  if(!avail){
+    const newId=DB.nextId('rfidTags');
+    const newUid='TAG-'+String(newId).padStart(3,'0');
+    tags.push({id:newId,uid:newUid,available:true,orderId:null});
+    DB.set('rfidTags',tags);
+    sv('scnUidInput',newUid);
+  } else {
+    sv('scnUidInput',avail.uid);
+  }
+  processRfidScanInput();
+}
+
+function processRfidScanInput(forcedUid){
+  const rawUid=(forcedUid||gv('scnUidInput')||'').trim().toUpperCase();
+  if(!rawUid){swalError('Please scan or enter an RFID Tag UID.');return;}
+  const orders=DB.get('orders');
+  const tags=DB.get('rfidTags');
+  const selOrd=orders.find(o=>o.id===Number(window._scannerSelectedOrdId));
+  if(!selOrd){swalError('Please select a pending or active order first.');return;}
+
+  // Save any edited weight/notes on the form automatically
+  const loadEl=g('scnVerifyLoad');
+  if(loadEl){
+    const lv=parseFloat(loadEl.value)||0;
+    if(lv>0){
+      if(selOrd.type==='COMFORTER')selOrd.comQty=Math.max(1,Math.round(lv));
+      else selOrd.kg=Math.max(0.5,lv);
+      const {price,breakdown}=calcPrice(selOrd.type,selOrd.kg,selOrd.comQty);
+      const {discount,finalAfterPromo}=applyPromo(selOrd.promoCode,price);
+      selOrd.price=finalAfterPromo;selOrd.breakdown=breakdown;selOrd.discount=discount;
+    }
+  }
+  const notesEl=g('scnVerifyNotes');
+  if(notesEl)selOrd.notes=notesEl.value.trim();
+
+  // Find or auto-register RFID tag
+  let tag=tags.find(t=>t.uid.toUpperCase()===rawUid);
+  if(!tag){
+    const id=DB.nextId('rfidTags');
+    tag={id,uid:rawUid,available:true,orderId:null};
+    tags.push(tag);
+  }
+
+  // DUPLICATE-TAG PROTECTION (PDF Section 4, Page 4)
+  if(!tag.available && tag.orderId && tag.orderId!==selOrd.id){
+    const conflict=orders.find(o=>o.id===tag.orderId);
+    if(conflict && conflict.status!=='RELEASED' && conflict.status!=='CANCELLED'){
+      window._lastDuplicateAlert={
+        uid:tag.uid,
+        conflictId:conflict.id,
+        conflictNum:conflict.num,
+        conflictCust:conflict.custName,
+        conflictStatus:STATUS_LABEL[conflict.status]||conflict.status
+      };
+      logRfidScan({
+        uid:tag.uid,
+        orderId:selOrd.id,
+        orderNum:selOrd.num,
+        action:'DUPLICATE_BLOCKED',
+        result:'ALREADY_ASSIGNED',
+        details:`Blocked assignment to ${selOrd.num}; tag already active on ${conflict.num} (${conflict.custName})`
+      });
+      pgRfidScanner();
+      Swal.fire({
+        ...LF_SWAL,
+        icon:'error',
+        title:'⚠️ RFID Already Assigned',
+        html:`<div style="color:#e2e8f0;font-size:13.5px;line-height:1.65;">
+          RFID Tag <b class="mono-code" style="color:#fb7185;">${escapeHtml(tag.uid)}</b> is already assigned to active Order <b style="color:#fff;">${escapeHtml(conflict.num)}</b> (<span style="color:#38bdf8;">${escapeHtml(conflict.custName)}</span> — ${escapeHtml(STATUS_LABEL[conflict.status]||conflict.status)}).<br><br>
+          <span style="color:#fde68a;">Assignment is blocked until the existing order is completed/released or reassigned.</span>
+        </div>`,
+        confirmButtonText:'Understood'
+      });
+      return;
+    }
+  }
+
+  // Free old tag if selOrd was previously linked to another tag
+  if(selOrd.tagId && selOrd.tagId!==tag.id){
+    const oldTag=tags.find(t=>t.id===selOrd.tagId);
+    if(oldTag){oldTag.available=true;oldTag.orderId=null;}
+  }
+
+  window._lastDuplicateAlert=null;
+  selOrd.tagId=tag.id;
+  if(selOrd.status==='PENDING'){
+    selOrd.status='RECEIVED';
+    selOrd.dropOff=new Date().toISOString();
+  }
+  tag.available=false;
+  tag.orderId=selOrd.id;
+
+  DB.set('rfidTags',tags);
+  DB.set('orders',orders);
+
+  logOrderStatus(selOrd,selOrd.status,`RFID Tag ${tag.uid} scanned and linked at receiving station`);
+  logRfidScan({
+    uid:tag.uid,
+    orderId:selOrd.id,
+    orderNum:selOrd.num,
+    action:'TAG_ASSIGNED',
+    result:'SUCCESS',
+    details:`Linked to ${selOrd.num} (${selOrd.custName}) · Stage: ${STATUS_LABEL[selOrd.status]||selOrd.status}`
+  });
+
+  pushNotif(selOrd.custId,'RECEIVED',`Order ${selOrd.num} received & RFID tagged`,`Your laundry is now linked to RFID Tag ${tag.uid} and marked as Received.`,'📡');
+  updateSellerBell();
+  toast(`📡 Tag ${tag.uid} linked to ${selOrd.num}!`);
+  pgRfidScanner();
+}
+
+function scannerSetStage(ordId,targetStage){
+  const orders=DB.get('orders');
+  const o=orders.find(x=>x.id===ordId);
+  if(!o)return;
+  if(!o.tagId){swalError('Please scan and link an RFID tag before advancing laundry stages.');return;}
+  if(targetStage==='RELEASED'){
+    const hasPaid=DB.get('transactions').some(t=>t.orderId===o.id&&t.status==='COMPLETED');
+    if(!hasPaid){
+      detailId=o.id;
+      advanceOrder();
+      return;
+    }
+  }
+  _doAdvance(o,orders,targetStage);
+}
+
+/* ── Dedicated Admin/Staff RFID Scan Logs Page (PDF Section 6) ── */
+let scanLogFilter='ALL';
+function pgScanLogs(){
+  const logs=[...DB.get('rfidScanLogs')].reverse();
+  const hist=[...DB.get('statusHistory')].reverse();
+  const filtered=scanLogFilter==='ALL'?logs:logs.filter(l=>l.result===scanLogFilter||l.action===scanLogFilter);
+  const successCnt=logs.filter(l=>l.result==='SUCCESS').length;
+  const dupCnt=logs.filter(l=>l.result==='ALREADY_ASSIGNED').length;
+  const activeTags=DB.get('rfidTags').filter(t=>!t.available).length;
+
+  g('pgContent').innerHTML=`
+    <div class="sg sg-4">
+      <div class="sc"><div class="sc-val">${logs.length}</div><div class="sc-lbl">Total RFID Scan Events</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--success)">${successCnt}</div><div class="sc-lbl">Successful Assignments & Updates</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--danger)">${dupCnt}</div><div class="sc-lbl">Blocked Duplicate Tag Scans</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--accent2)">${activeTags}</div><div class="sc-lbl">Currently Active RFID Tags</div></div>
+    </div>
+
+    <div class="toolbar">
+      ${['ALL','SUCCESS','ALREADY_ASSIGNED','TAG_ASSIGNED','STAGE_UPDATED','TAG_RELEASED'].map(f=>`<span class="chip${scanLogFilter===f?' on':''}" onclick="scanLogFilter='${f}';pgScanLogs()">${f.replace('_',' ')}</span>`).join('')}
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Go to RFID Scanner</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <h4>🛡️ RFID Scan Audit Trail (ESP32 & Counter Scans)</h4>
+        <span class="text-sm text-muted">${filtered.length} records</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Date & Time</th><th>RFID UID</th><th>Order ID</th><th>Staff / Device</th><th>Action Performed</th><th>Scan Result</th><th>Audit Details</th></tr></thead>
+          <tbody>
+            ${filtered.length?filtered.map(l=>`<tr>
+              <td class="text-sm text-muted">${fd(l.date)}</td>
+              <td class="mono-code fw7" style="color:var(--accent2);">${escapeHtml(l.uid)}</td>
+              <td class="mono-code fw7">${escapeHtml(l.orderNum||'—')}</td>
+              <td class="text-sm">${escapeHtml(l.staffUser||'Staff')} <span class="badge b-gray" style="font-size:9.5px;">${escapeHtml(l.staffRole||'STAFF')}</span></td>
+              <td><span class="badge b-blue">${escapeHtml(l.action)}</span></td>
+              <td><span class="badge ${l.result==='SUCCESS'?'b-ok':'b-low'}">${escapeHtml(l.result)}</span></td>
+              <td class="text-sm text-muted">${escapeHtml(l.details||'—')}</td>
+            </tr>`).join(''):'<tr><td colspan="7"><div class="empty">No RFID scan logs match the selected filter.</div></td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <h4>📋 Order Stage Transition History (<span class="mono-code">order_status_history</span>)</h4>
+        <span class="text-sm text-muted">${hist.length} transitions</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Date & Time</th><th>Order #</th><th>New Stage</th><th>Updated By</th><th>Notes</th></tr></thead>
+          <tbody>
+            ${hist.length?hist.slice(0,30).map(h=>`<tr>
+              <td class="text-sm text-muted">${fd(h.date)}</td>
+              <td class="mono-code fw7">${escapeHtml(h.orderNum||'—')}</td>
+              <td>${sBadge(h.status)}</td>
+              <td class="text-sm">${escapeHtml(h.by||'Staff')}</td>
+              <td class="text-sm text-muted">${escapeHtml(h.notes||'—')}</td>
+            </tr>`).join(''):'<tr><td colspan="5"><div class="empty">No stage transitions logged yet.</div></td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
 }
 function releaseTag(id){
   swalConfirm('Release Tag','This will unlink the tag from its current order and make it available again.','Yes, Release').then(r=>{
     if(!r.isConfirmed)return;
     const tags=DB.get('rfidTags'),tag=tags.find(t=>t.id===id);
+    logRfidScan({uid:tag.uid,orderId:tag.orderId,orderNum:tag.orderId?'ORD-'+String(tag.orderId).padStart(3,'0'):'—',action:'TAG_RELEASED',result:'SUCCESS',details:'Manually released by staff'});
     tag.available=true;tag.orderId=null;DB.set('rfidTags',tags);
     swalSuccess('Tag Released',`Tag ${tag.uid} is now available.`);pgRFID();
   });
@@ -3256,44 +4294,338 @@ function saveGcashNumber(){
 /* ══════════════════════════════════════
    CUSTOMER PORTAL
 ══════════════════════════════════════ */
-let curPtTab='orders';
+let curPtTab='overview';
+let ptOrderFilter='ALL';
+let ptTrackOrderId=null;
+
 function ptTab(t){
   curPtTab=t;
   document.querySelectorAll('.pt-tab').forEach(x=>x.classList.remove('active'));
   const el=g('ptt-'+t);if(el)el.classList.add('active');
-  const R={orders:ptMyOrders,book:ptBook,messages:ptMessages,loyalty:ptLoyalty,profile:ptProfile};
+  const R={
+    overview:ptOverview,
+    orders:ptMyOrders,
+    book:ptBook,
+    track:ptTrack,
+    payments:ptPayments,
+    notifs:ptNotifs,
+    messages:ptMessages,
+    loyalty:ptLoyalty,
+    profile:ptProfile
+  };
   if(R[t])R[t]();
+}
+
+function renderOrderTimelineHTML(status){
+  const si=STATUSES.indexOf(normStatus(status));
+  return STATUSES.map((s,i)=>{
+    const cls=i<si?'tl-done':i===si?'tl-cur':'tl-fut';
+    const lnCls=i<si?'done':'';
+    return`<div class="tl-s"><div class="tl-line ${lnCls}"></div><div class="tl-dot ${cls}" style="width:24px;height:24px;font-size:10px;">${i<si?'✓':(i+1)}</div><div class="tl-lbl" style="font-weight:${i===si?'800':'600'};color:${i===si?'var(--accent2)':'var(--text-muted)'}">${STATUS_SHORT[s]||s}</div></div>`;
+  }).join('');
+}
+
+/* ─ Customer Overview Dashboard (PDF Section 3 & 5) ─ */
+function ptOverview(){
+  const myOrders=[...DB.get('orders').filter(o=>o.custId===CU.id)].reverse();
+  const activeOrders=myOrders.filter(o=>o.status!=='RELEASED'&&o.status!=='CANCELLED');
+  const readyOrders=myOrders.filter(o=>normStatus(o.status)==='READY');
+  const completedOrders=myOrders.filter(o=>normStatus(o.status)==='RELEASED');
+  const users=DB.get('users');
+  const cu=users.find(x=>x.id===CU.id)||CU;
+  const pts=cu?cu.points||0:0;
+  const tier=getTier(pts);
+  const notifs=getMyNotifs().reverse().slice(0,4);
+  const tags=DB.get('rfidTags');
+
+  g('ptContent').innerHTML=`
+    <div class="pt-hero-banner">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.18);border:1px solid rgba(56,189,248,0.35);color:#7dd3fc;padding:4px 11px;border-radius:999px;font-size:11px;font-weight:700;margin-bottom:10px;">
+          📡 Real-Time RFID Laundry Portal · ${tier.name} Tier (${pts} pts)
+        </div>
+        <h2 style="font-size:26px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">Welcome back, ${escapeHtml(CU.name)}! 👋</h2>
+        <p style="font-size:13px;color:#cbd5e1;margin-top:4px;max-width:540px;line-height:1.55;">
+          Book your laundry online, drop off your bag at the shop for HF RFID tagging, and watch every stage update live from Received to Ready for Pickup.
+        </p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary" style="background:#38bdf8;color:#082f49;border:none;font-weight:800;padding:11px 18px;" onclick="ptTab('book')">➕ Book Laundry Service</button>
+        <button class="btn btn-ghost" style="color:#ffffff;border-color:rgba(255,255,255,0.28);" onclick="ptTab('track')">📡 Track Active Order</button>
+      </div>
+    </div>
+
+    <div class="sg sg-4">
+      <div class="sc" style="cursor:pointer;" onclick="ptOrderFilter='ACTIVE';ptTab('orders')">
+        <div class="sc-val" style="color:#0284c7">${activeOrders.length}</div>
+        <div class="sc-lbl">Active Orders</div>
+      </div>
+      <div class="sc" style="cursor:pointer;" onclick="ptOrderFilter='READY';ptTab('orders')">
+        <div class="sc-val" style="color:#059669">${readyOrders.length}</div>
+        <div class="sc-lbl">Ready for Pickup</div>
+      </div>
+      <div class="sc" style="cursor:pointer;" onclick="ptOrderFilter='RELEASED';ptTab('orders')">
+        <div class="sc-val" style="color:#7c3aed">${completedOrders.length}</div>
+        <div class="sc-lbl">Completed Orders</div>
+      </div>
+      <div class="sc" style="cursor:pointer;" onclick="ptTab('loyalty')">
+        <div class="sc-val" style="color:#d97706">⭐ ${pts}</div>
+        <div class="sc-lbl">LabaPoints (${tier.name})</div>
+      </div>
+    </div>
+
+    <div class="pt-quick-grid">
+      <div class="pt-quick-card" onclick="ptTab('book')">
+        <div class="pt-quick-icon">🧺</div>
+        <div><div class="fw7" style="font-size:13.5px;">Book Laundry</div><div class="text-sm text-muted">Schedule drop-off</div></div>
+      </div>
+      <div class="pt-quick-card" onclick="ptTab('track')">
+        <div class="pt-quick-icon">📡</div>
+        <div><div class="fw7" style="font-size:13.5px;">Track Laundry</div><div class="text-sm text-muted">Live RFID stage bar</div></div>
+      </div>
+      <div class="pt-quick-card" onclick="ptTab('payments')">
+        <div class="pt-quick-icon">💳</div>
+        <div><div class="fw7" style="font-size:13.5px;">Payment History</div><div class="text-sm text-muted">Receipts & balances</div></div>
+      </div>
+      <div class="pt-quick-card" onclick="ptTab('messages')">
+        <div class="pt-quick-icon">💬</div>
+        <div><div class="fw7" style="font-size:13.5px;">Chat with Staff</div><div class="text-sm text-muted">Ask about your load</div></div>
+      </div>
+    </div>
+
+    <!-- CURRENT ACTIVE ORDER PROGRESS -->
+    <div class="card">
+      <div class="ch">
+        <h4>📡 Current Active Laundry Progress</h4>
+        <a href="#" onclick="ptTab('overview');return false;" style="font-size:12px;font-weight:700;color:var(--accent2);">View All Orders (${myOrders.length}) →</a>
+      </div>
+      <div class="cp">
+        ${activeOrders.length?activeOrders.slice(0,3).map(o=>{
+          const tag=o.tagId?tags.find(t=>t.id===o.tagId):null;
+          return `<div class="ord-card" style="margin-bottom:12px;background:#f8fcfd;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+              <div>
+                <span class="fw7 mono-code" style="font-size:15px;">${o.num}</span>
+                <span class="badge b-blue" style="margin-left:6px;">${tag?'📡 RFID: '+tag.uid:'⏳ Awaiting Shop RFID Scan'}</span>
+                <div class="text-sm text-muted" style="margin-top:3px;">${TYPE_LABEL[o.type]||o.type}${o.kg?' · '+o.kg+' kg':o.comQty?' · '+o.comQty+' pc(s)':''} · <strong style="color:var(--text);">${peso(o.price)}</strong> · ${o.serviceMode||'Drop-off'}</div>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;">
+                ${sBadge(o.status)}
+                <button class="btn btn-primary btn-sm" onclick="ptTrackOrderId=${o.id};ptTab('track')">📡 Live Tracker</button>
+                ${o.tagId?`<button class="btn btn-ghost btn-sm" onclick="showPortalQR(${o.id})">📱 QR</button>`:''}
+              </div>
+            </div>
+            <div class="tl">${renderOrderTimelineHTML(o.status)}</div>
+          </div>`;
+        }).join(''):`<div class="empty">You have no active laundry orders right now. <a href="#" onclick="ptTab('book');return false;" style="color:var(--accent2);font-weight:700;">Book a laundry service now →</a></div>`}
+      </div>
+    </div>
+
+    <!-- RECENT NOTIFICATIONS -->
+    <div class="card">
+      <div class="ch">
+        <h4>🔔 Recent Updates & Alerts</h4>
+        <a href="#" onclick="ptTab('notifs');return false;" style="font-size:12px;font-weight:700;color:var(--accent2);">All Notifications →</a>
+      </div>
+      <div class="cp">
+        ${notifs.length?notifs.map(n=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+          <span style="font-size:18px;">${n.icon||'🔔'}</span>
+          <div style="flex:1;"><div class="fw7" style="font-size:13px;">${escapeHtml(n.title)}</div><div class="text-sm text-muted">${escapeHtml(n.msg)}</div></div>
+          <span class="text-sm text-muted">${fs(n.date)}</span>
+        </div>`).join(''):'<div class="empty" style="padding:20px;">No notifications yet.</div>'}
+      </div>
+    </div>
+  `;
 }
 
 /* ─ My Orders ─ */
 function ptMyOrders(){
-  const orders=[...DB.get('orders').filter(o=>o.custId===CU.id)].reverse();
+  const allOrders=[...DB.get('orders').filter(o=>o.custId===CU.id)].reverse();
+  let orders=allOrders;
+  if(ptOrderFilter==='ACTIVE')orders=allOrders.filter(o=>o.status!=='RELEASED'&&o.status!=='CANCELLED');
+  else if(ptOrderFilter==='READY')orders=allOrders.filter(o=>normStatus(o.status)==='READY');
+  else if(ptOrderFilter==='RELEASED')orders=allOrders.filter(o=>normStatus(o.status)==='RELEASED');
+  const tags=DB.get('rfidTags');
+
   g('ptContent').innerHTML=`
-    <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;">My Orders</h3>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div>
+        <h3 style="font-size:18px;font-weight:800;">📦 My Laundry Orders</h3>
+        <p class="text-sm text-muted">View your current, ready, and completed orders with real-time RFID status.</p>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        ${[['ALL','All Orders'],['ACTIVE','Active'],['READY','Ready for Pickup'],['RELEASED','Completed']].map(([k,lbl])=>`<span class="chip${ptOrderFilter===k?' on':''}" onclick="ptOrderFilter='${k}';ptMyOrders()">${lbl}</span>`).join('')}
+        <button class="btn btn-primary btn-sm" onclick="ptTab('book')">+ Book Service</button>
+      </div>
+    </div>
     ${orders.length?orders.map(o=>{
-      const si=STATUSES.indexOf(o.status);
-      const tlHTML=STATUSES.map((s,i)=>{
-        const cls=i<si?'tl-done':i===si?'tl-cur':'tl-fut';
-        const lnCls=i<si?'done':'';
-        return`<div class="tl-s"><div class="tl-line ${lnCls}"></div><div class="tl-dot ${cls}" style="width:22px;height:22px;font-size:9px;">${i+1}</div><div class="tl-lbl">${s}</div></div>`;
-      }).join('');
+      const tag=o.tagId?tags.find(t=>t.id===o.tagId):null;
+      const isPaid=DB.get('transactions').some(t=>t.orderId===o.id&&t.status==='COMPLETED');
       return`<div class="ord-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
           <div>
-            <div class="fw7">${o.num} ${o.tagId?'<span class="badge b-blue" style="font-size:10px;">📡 RFID</span>':''}</div>
-            <div class="text-sm text-muted">${TYPE_LABEL[o.type]}${o.kg?' · '+o.kg+' kg':o.comQty?' · '+o.comQty+' pc(s)':''} · ${peso(o.price)}${o.discount?` <span style="color:var(--success);font-size:10px;">(-₱${o.discount.toFixed(2)})</span>`:''}</div>
+            <div class="fw7 mono-code" style="font-size:15px;">${o.num} ${tag?`<span class="badge b-blue" style="font-size:10px;">📡 RFID: ${tag.uid}</span>`:'<span class="badge b-gray" style="font-size:10px;">⏳ Drop off at shop for RFID tag</span>'}</div>
+            <div class="text-sm text-muted" style="margin-top:3px;">${TYPE_LABEL[o.type]}${o.kg?' · '+o.kg+' kg':o.comQty?' · '+o.comQty+' pc(s)':''} · <strong>${peso(o.price)}</strong>${o.discount?` <span style="color:var(--success);font-size:10px;">(-₱${o.discount.toFixed(2)})</span>`:''} · <span class="badge ${isPaid?'b-ok':'b-yellow'}" style="font-size:10px;">${isPaid?'✓ Paid':'Pay at Pickup'}</span></div>
           </div>
           <div style="display:flex;gap:6px;align-items:center;">
             ${sBadge(o.status)}
-            ${o.tagId?`<button class="btn btn-ghost btn-sm" style="font-size:10px;" onclick="showPortalQR(${o.id})">📱 QR</button>`:''}
+            <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="ptTrackOrderId=${o.id};ptTab('track')">📡 Track</button>
+            ${o.tagId?`<button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="showPortalQR(${o.id})">📱 QR</button>`:''}
           </div>
         </div>
-        <div class="tl">${tlHTML}</div>
+        <div class="tl">${renderOrderTimelineHTML(o.status)}</div>
         ${o.breakdown?`<div class="text-sm text-muted" style="margin-top:4px;">Pricing: ${o.breakdown}${o.promoCode?` · <span class="promo-tag">🏷 ${o.promoCode}</span>`:''}</div>`:''}
-        <div class="text-sm text-muted" style="margin-top:4px;">Booked: ${fs(o.created)}${o.ready?' · Ready: '+fs(o.ready):''}${o.pickup?' · Picked up: '+fs(o.pickup):''}</div>
-        ${o.notes?`<div class="text-sm" style="margin-top:4px;color:var(--text-muted);">Note: ${o.notes}</div>`:''}
+        <div class="text-sm text-muted" style="margin-top:4px;">Booked: ${fs(o.created)}${o.dropOff?' · Received: '+fs(o.dropOff):''}${o.ready?' · Ready: '+fs(o.ready):''}${o.pickup?' · Picked up: '+fs(o.pickup):''}</div>
+        ${o.notes?`<div class="text-sm" style="margin-top:4px;color:var(--text-muted);">Instructions: ${escapeHtml(o.notes)}</div>`:''}
       </div>`;
-    }).join(''):`<div class="ord-card" style="text-align:center;color:var(--text-muted);padding:36px;">No orders yet. <a href="#" onclick="ptTab('book');return false;" style="color:var(--accent2);">Book a service →</a></div>`}`;
+    }).join(''):`<div class="ord-card" style="text-align:center;color:var(--text-muted);padding:36px;">No orders found in this view. <a href="#" onclick="ptTab('book');return false;" style="color:var(--accent2);font-weight:700;">Book a service →</a></div>`}`;
+}
+
+/* ─ Dedicated Live Laundry Tracker Tab (PDF Section 3 & 5) ─ */
+function ptTrack(){
+  const myOrders=[...DB.get('orders').filter(o=>o.custId===CU.id)].reverse();
+  if(!ptTrackOrderId&&myOrders.length){
+    const firstAct=myOrders.find(o=>o.status!=='RELEASED')||myOrders[0];
+    ptTrackOrderId=firstAct.id;
+  }
+  const ord=myOrders.find(o=>o.id===Number(ptTrackOrderId))||myOrders[0]||null;
+  const tag=ord&&ord.tagId?DB.get('rfidTags').find(t=>t.id===ord.tagId):null;
+  const hist=ord?[...DB.get('statusHistory').filter(h=>Number(h.orderId)===ord.id||h.orderNum===ord.num)].reverse():[];
+  const scanEvents=ord?[...DB.get('rfidScanLogs').filter(l=>Number(l.orderId)===ord.id||l.orderNum===ord.num)].reverse():[];
+
+  const stageDescriptions={
+    PENDING:'Your booking has been submitted online. Bring your laundry to the shop so staff can weigh it and link an HF RFID tag.',
+    RECEIVED:'Your laundry bag has been verified at the shop counter and linked to an active 13.56 MHz RFID tag.',
+    WASHING:'Your laundry is currently in the washing machine with auto-dosed Surf Liquid Detergent, Fabric Conditioner & Zonrox Color Safe.',
+    DRYING:'Your freshly washed clothes are now in the temperature-controlled drying cycle.',
+    FOLDING:'Your clean, dry laundry is being neatly folded, sorted, and packaged by our staff.',
+    READY:'🎉 Your laundry is clean, folded, and READY FOR PICKUP! Visit the shop counter and pay via Cash or GCash.',
+    RELEASED:'Order completed and picked up. The RFID tag has been released for reuse. Thank you!'
+  };
+
+  g('ptContent').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div>
+        <h3 style="font-size:18px;font-weight:800;">📡 Real-Time RFID Laundry Tracker</h3>
+        <p class="text-sm text-muted">Customers do not need to scan RFID tags — staff scans update your progress bar automatically.</p>
+      </div>
+      ${myOrders.length?`
+        <select onchange="ptTrackOrderId=parseInt(this.value);ptTrack()" style="padding:9px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:13px;">
+          ${myOrders.map(o=>`<option value="${o.id}" ${ord&&ord.id===o.id?'selected':''}>${o.num} — ${TYPE_LABEL[o.type]||o.type} (${STATUS_SHORT[o.status]||o.status})</option>`).join('')}
+        </select>
+      `:''}
+    </div>
+
+    ${ord?`
+      <div class="card">
+        <div class="ch">
+          <div>
+            <span class="mono-code fw7" style="font-size:16px;color:var(--accent2);">${ord.num}</span>
+            <span class="text-sm text-muted" style="margin-left:8px;">${TYPE_LABEL[ord.type]||ord.type}${ord.kg?' · '+ord.kg+' kg':ord.comQty?' · '+ord.comQty+' pc(s)':''} · ${peso(ord.price)}</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            ${tag?`<span class="badge b-blue mono-code">📡 RFID UID: ${tag.uid}</span>`:'<span class="badge b-gray">⏳ Pending RFID Link</span>'}
+            ${sBadge(ord.status)}
+          </div>
+        </div>
+        <div class="cp">
+          <div class="tl" style="margin:18px 0 22px;">${renderOrderTimelineHTML(ord.status)}</div>
+          <div class="notice n-info" style="margin-bottom:0;">
+            <strong>Current Stage — ${STATUS_LABEL[ord.status]||ord.status}:</strong><br>
+            ${stageDescriptions[normStatus(ord.status)]||''}
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="ch"><h4>📋 Stage Transition History</h4></div>
+          <div class="cp">
+            ${hist.length?hist.map(h=>`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
+              <div>
+                <div>${sBadge(h.status)} <span class="text-sm text-muted" style="margin-left:6px;">by ${escapeHtml(h.by||'Staff')}</span></div>
+                ${h.notes?`<div class="text-sm text-muted" style="margin-top:3px;">${escapeHtml(h.notes)}</div>`:''}
+              </div>
+              <div class="text-sm text-muted" style="white-space:nowrap;">${fd(h.date)}</div>
+            </div>`).join(''):`<div class="text-sm text-muted" style="padding:12px 0;">Order created on ${fd(ord.created)}. Stage updates will appear here as staff processes your laundry.</div>`}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><h4>📡 Staff RFID Scan Events</h4></div>
+          <div class="cp">
+            ${scanEvents.length?scanEvents.map(s=>`<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
+              <div>
+                <div class="fw7 text-sm"><span class="mono-code" style="color:var(--accent2);">${escapeHtml(s.uid)}</span> · ${escapeHtml(s.action)}</div>
+                <div class="text-sm text-muted">${escapeHtml(s.details||'Scanned at shop station')}</div>
+              </div>
+              <div class="text-sm text-muted" style="white-space:nowrap;">${fd(s.date)}</div>
+            </div>`).join(''):'<div class="text-sm text-muted" style="padding:12px 0;">No RFID scan events recorded yet for this order.</div>'}
+          </div>
+        </div>
+      </div>
+    `:'<div class="empty">You have no orders to track yet. <a href="#" onclick="ptTab(\'book\');return false;" style="color:var(--accent2);font-weight:700;">Book your first laundry service →</a></div>'}
+  `;
+}
+
+/* ─ Dedicated Customer Payment History Tab (PDF Section 3) ─ */
+function ptPayments(){
+  const myOrders=DB.get('orders').filter(o=>o.custId===CU.id);
+  const myOrderNums=new Set(myOrders.map(o=>o.num));
+  const myTxns=[...DB.get('transactions').filter(t=>myOrderNums.has(t.orderNum)&&t.status==='COMPLETED')].reverse();
+  const paidOrderIds=new Set(myTxns.map(t=>t.orderId));
+  const unpaidActive=myOrders.filter(o=>o.status!=='RELEASED'&&o.status!=='CANCELLED'&&!paidOrderIds.has(o.id));
+  const totalPaid=myTxns.reduce((s,t)=>s+t.amount,0);
+  const unpaidBal=unpaidActive.reduce((s,o)=>s+(o.finalPrice||o.price||0),0);
+
+  g('ptContent').innerHTML=`
+    <h3 style="font-size:18px;font-weight:800;margin-bottom:4px;">💳 Payment History & Receipts</h3>
+    <p class="text-sm text-muted" style="margin-bottom:16px;">Track all your Cash and GCash payments, digital receipt numbers, and pending pickup balances.</p>
+
+    <div class="sg sg-3">
+      <div class="sc"><div class="sc-val" style="color:var(--success)">${peso(totalPaid)}</div><div class="sc-lbl">Total Amount Paid</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--warn)">${peso(unpaidBal)}</div><div class="sc-lbl">Pending Balance (${unpaidActive.length} Active Order${unpaidActive.length!==1?'s':''})</div></div>
+      <div class="sc"><div class="sc-val">${myTxns.length}</div><div class="sc-lbl">Completed Payment Receipts</div></div>
+    </div>
+
+    ${unpaidActive.length?`
+      <div class="card">
+        <div class="ch"><h4>⏳ Unpaid Active Orders (Pay at Shop Counter via Cash or GCash)</h4></div>
+        <table>
+          <thead><tr><th>Order #</th><th>Service</th><th>Stage</th><th>Amount Due</th><th>Payment Info</th></tr></thead>
+          <tbody>
+            ${unpaidActive.map(o=>`<tr>
+              <td class="mono-code fw7">${o.num}</td>
+              <td>${TYPE_LABEL[o.type]||o.type}</td>
+              <td>${sBadge(o.status)}</td>
+              <td class="fw7">${peso(o.finalPrice||o.price)}</td>
+              <td class="text-sm text-muted">Payable via Cash or GCash (${getGcashNumber()}) upon pickup</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    `:''}
+
+    <div class="card">
+      <div class="ch"><h4>🧾 Official Payment Transactions</h4><span class="text-sm text-muted">${myTxns.length} records</span></div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>TXN #</th><th>Order #</th><th>Amount</th><th>Method</th><th>GCash Ref</th><th>Receipt #</th><th>Date</th></tr></thead>
+          <tbody>
+            ${myTxns.length?myTxns.map(t=>`<tr>
+              <td class="mono-code text-sm">${t.num}</td>
+              <td class="mono-code fw7">${t.orderNum}</td>
+              <td class="fw7" style="color:var(--success)">${peso(t.amount)}</td>
+              <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
+              <td class="mono-code text-sm text-muted">${t.gcashRef||'—'}</td>
+              <td class="mono-code text-sm text-muted">${t.rcpt}</td>
+              <td class="text-sm text-muted">${fd(t.date)}</td>
+            </tr>`).join(''):'<tr><td colspan="7"><div class="empty">No payment transactions recorded yet.</div></td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
 }
 
 function showPortalQR(ordId){
@@ -3316,6 +4648,32 @@ function ptBook(){
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:18px;text-align:center;">Submit your booking and drop off at the shop.</p>
       ${tierDisc>0?`<div class="notice n-success" style="margin-bottom:14px;">🌟 <strong>${tier.name} Member:</strong> You get ${tierDisc}% loyalty discount automatically applied!</div>`:''}
       <div style="background:var(--card);border-radius:12px;padding:24px;">
+        <div class="row2" style="margin-bottom:12px;">
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Service Mode</label>
+            <select id="bkMode" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
+              <option value="Drop-off at Shop">🏪 Drop-off at Shop</option>
+              <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
+            </select>
+          </div>
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
+            <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;">
+          </div>
+        </div>
+        <div class="row2" style="margin-bottom:12px;">
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Service Mode</label>
+            <select id="bkMode" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
+              <option value="Drop-off at Shop">🏪 Drop-off at Shop</option>
+              <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
+            </select>
+          </div>
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
+            <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;">
+          </div>
+        </div>
         <div class="pt-form-group">
           <label class="pt-label" style="color:var(--accent2);">Laundry Type</label>
           <select id="bkType" onchange="bkTypeChange()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
@@ -3407,8 +4765,12 @@ function submitBooking(){
   const totalDiscount=parseFloat((promoDsc+loyaltyDisc).toFixed(2));
   const orders=DB.get('orders'),id=DB.nextId('orders');
   const newNum='ORD-'+String(id).padStart(3,'0');
-  orders.push({id,num:newNum,custId:CU.id,custName:CU.name,tagId:null,type,kg,comQty,colorDist,status:'PENDING',notes,price:grandTotal,breakdown,discount:totalDiscount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()});
+  const serviceMode=g('bkMode')?gv('bkMode'):'Drop-off at Shop';
+  const prefSchedule=g('bkSched')?gv('bkSched').trim():'';
+  const newOrdObj={id,num:newNum,custId:CU.id,custName:CU.name,tagId:null,type,kg,comQty,colorDist,serviceMode,prefSchedule,status:'PENDING',notes,price:grandTotal,breakdown,discount:totalDiscount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};
+  orders.push(newOrdObj);
   DB.set('orders',orders);
+  logOrderStatus(newOrdObj,'PENDING',`Customer booked online (${serviceMode}${prefSchedule?' · '+prefSchedule:''})`);
   if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
   /* auto-deduct inventory on booking */
   deductInventory(type,kg,comQty);
