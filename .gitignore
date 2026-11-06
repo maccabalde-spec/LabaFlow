@@ -1,5 +1,5 @@
 # Firebase client app configuration stays outside source control.
-google-services.json
+*google-services*.json
 GoogleService-Info.plist
 *service-account*.json
 serviceAccountKey.json
