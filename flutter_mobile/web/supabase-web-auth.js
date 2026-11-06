@@ -140,5 +140,80 @@
   async function notifyUser(recipientUid,type,title,body,icon='🔔') { return request('/functions/v1/send-notification',{method:'POST',body:JSON.stringify({recipientUid,type,title,body,icon})}); }
   async function listNotifications(uid) { const rows=await request(`/rest/v1/notifications?user_id=eq.${encodeURIComponent(uid)}&select=*&order=created_at.desc&limit=100`); return rows.map(n=>({id:n.id,docId:n.id,toId:0,type:n.type,title:n.title,msg:n.body,body:n.body,icon:n.icon,read:n.read,date:n.created_at,createdAt:n.created_at})); }
   async function markNotificationRead(uid,id) { return request(`/rest/v1/notifications?id=eq.${encodeURIComponent(id)}&user_id=eq.${encodeURIComponent(uid)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({read:true})}); }
-  global.LabaFlowSupabase={configured,signIn,register,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,signOut};
+  async function fetchCollections() {
+    if (!configured()) return [];
+    return request('/rest/v1/app_collections?select=key,items,updated_at', {}, Boolean(session()?.access_token));
+  }
+  async function saveCollection(colKey, items) {
+    if (!configured() || !session()?.access_token) return null;
+    return request('/rest/v1/app_collections?on_conflict=key', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ key: colKey, items: Array.isArray(items) ? items : [], updated_at: new Date().toISOString() }),
+    });
+  }
+  let _ws = null, _wsTimer = null, _hbTimer = null, _pollTimer = null;
+  function subscribeRealtime(onSync) {
+    if (!configured()) return () => {};
+    function connectWs() {
+      try {
+        if (_ws && (_ws.readyState === WebSocket.OPEN || _ws.readyState === WebSocket.CONNECTING)) return;
+        const wsUrl = base().replace(/^http/, 'ws') + `/realtime/v1/websocket?apikey=${encodeURIComponent(key())}&vsn=1.0.0`;
+        _ws = new WebSocket(wsUrl);
+        _ws.onopen = () => {
+          const token = session()?.access_token || key();
+          _ws.send(JSON.stringify({
+            topic: 'realtime:public:labaflow_sync',
+            event: 'phx_join',
+            payload: {
+              config: {
+                broadcast: { self: false },
+                presence: { key: '' },
+                postgres_changes: [
+                  { event: '*', schema: 'public', table: 'app_collections' },
+                  { event: '*', schema: 'public', table: 'notifications' },
+                  { event: '*', schema: 'public', table: 'profiles' }
+                ]
+              },
+              access_token: token
+            },
+            ref: '1'
+          }));
+          clearInterval(_hbTimer);
+          _hbTimer = setInterval(() => {
+            if (_ws && _ws.readyState === WebSocket.OPEN) {
+              _ws.send(JSON.stringify({ topic: 'phoenix', event: 'heartbeat', payload: {}, ref: String(Date.now()) }));
+            }
+          }, 25000);
+        };
+        _ws.onmessage = (evt) => {
+          try {
+            const msg = JSON.parse(evt.data);
+            if (msg.event === 'postgres_changes' && typeof onSync === 'function') {
+              onSync(msg.payload?.data || {});
+            }
+          } catch (_) {}
+        };
+        _ws.onclose = () => {
+          clearInterval(_hbTimer);
+          clearTimeout(_wsTimer);
+          _wsTimer = setTimeout(connectWs, 5000);
+        };
+      } catch (_) {}
+    }
+    connectWs();
+    clearInterval(_pollTimer);
+    _pollTimer = setInterval(() => {
+      if (document.visibilityState !== 'hidden' && typeof onSync === 'function') {
+        onSync({ table: 'poll' });
+      }
+    }, 5000);
+    return () => {
+      clearInterval(_hbTimer);
+      clearInterval(_pollTimer);
+      clearTimeout(_wsTimer);
+      if (_ws) { try { _ws.close(); } catch (_) {} _ws = null; }
+    };
+  }
+  global.LabaFlowSupabase={configured,signIn,register,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
 })(window);

@@ -16,6 +16,8 @@ import '../services/push_notification_service.dart';
 class AppProvider extends ChangeNotifier {
   StreamSubscription<List<Notif>>? _notificationSubscription;
   StreamSubscription<AuthState>? _authSubscription;
+  StreamSubscription<List<Map<String, dynamic>>>? _collectionsSubscription;
+  Timer? _syncTimer;
   // ── Current user ────────────────────────────────────────
   AppUser? currentUser;
 
@@ -67,6 +69,7 @@ class AppProvider extends ChangeNotifier {
       } catch (_) {
         currentUser = null;
       }
+      _watchCollections();
     }
     try {
       await reloadAll();
@@ -76,6 +79,39 @@ class AppProvider extends ChangeNotifier {
       if (currentUser != null) users = [currentUser!];
     }
     notifyListeners();
+  }
+
+  void _watchCollections() {
+    _collectionsSubscription?.cancel();
+    _collectionsSubscription = DBService.watchRemoteCollections().listen((
+      rows,
+    ) async {
+      final changed = await DBService.applyRemoteRows(rows);
+      if (changed) {
+        _refreshLocalLists();
+        notifyListeners();
+      }
+    }, onError: (_) {});
+
+    _syncTimer?.cancel();
+    _syncTimer = Timer.periodic(const Duration(seconds: 6), (_) async {
+      final changed = await DBService.pullRemoteCollections();
+      if (changed) {
+        _refreshLocalLists();
+        notifyListeners();
+      }
+    });
+  }
+
+  void _refreshLocalLists() {
+    inventory = DBService.getInventory();
+    rfidTags = DBService.getRfidTags();
+    orders = DBService.getOrders();
+    transactions = DBService.getTransactions();
+    messages = DBService.getMessages();
+    restockLog = DBService.getRestockLog();
+    promoCodes = DBService.getPromoCodes();
+    reviews = DBService.getReviews();
   }
 
   Future<void> _acceptOAuthUser(User user) async {
@@ -108,13 +144,20 @@ class AppProvider extends ChangeNotifier {
   void dispose() {
     _notificationSubscription?.cancel();
     _authSubscription?.cancel();
+    _collectionsSubscription?.cancel();
+    _syncTimer?.cancel();
     super.dispose();
   }
 
   Future<void> reloadAll() async {
+    await DBService.pullRemoteCollections();
     if (currentUser == null) {
       users = [];
     } else if (currentUser!.role == UserRole.customer) {
+      try {
+        final refreshed = await SupabaseAuthService.instance.restoreSession();
+        if (refreshed != null) currentUser = refreshed;
+      } catch (_) {}
       users = [currentUser!];
     } else {
       try {
@@ -123,15 +166,8 @@ class AppProvider extends ChangeNotifier {
         users = [currentUser!];
       }
     }
-    inventory = DBService.getInventory();
-    rfidTags = DBService.getRfidTags();
-    orders = DBService.getOrders();
-    transactions = DBService.getTransactions();
-    messages = DBService.getMessages();
-    restockLog = DBService.getRestockLog();
-    promoCodes = DBService.getPromoCodes();
+    _refreshLocalLists();
     if (currentUser == null) notifs = [];
-    reviews = DBService.getReviews();
   }
 
   // ── Auth ─────────────────────────────────────────────────

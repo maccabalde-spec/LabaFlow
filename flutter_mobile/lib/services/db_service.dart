@@ -1,15 +1,30 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/models.dart';
+import '../supabase_options.dart';
 import 'pricing_service.dart';
 
 // ═══════════════════════════════════════════════════════════
 //  DB SERVICE — localStorage equivalent using SharedPreferences
-//  All keys prefixed 'lf3_' to match the HTML app
+//  All keys prefixed 'lf3_' to match the HTML app, with
+//  automatic real-time synchronization via Supabase.
 // ═══════════════════════════════════════════════════════════
 
 class DBService {
   static SharedPreferences? _prefs;
+  static bool _suppressRemote = false;
+
+  static const Set<String> syncKeys = {
+    'inventory',
+    'rfidTags',
+    'orders',
+    'transactions',
+    'messages',
+    'restockLog',
+    'promoCodes',
+    'reviews',
+  };
 
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -17,8 +32,13 @@ class DBService {
     // during this upgrade; Supabase Auth is the credential store now.
     await prefs.remove('lf3_users');
     await prefs.remove('lf3_cu');
-    await _seed();
-    await _migrate();
+    _suppressRemote = true;
+    try {
+      await _seed();
+      await _migrate();
+    } finally {
+      _suppressRemote = false;
+    }
   }
 
   static SharedPreferences get prefs {
@@ -47,8 +67,88 @@ class DBService {
     return [];
   }
 
-  static Future<void> setList(String key, List<Map<String, dynamic>> value) =>
-    rawSet(key, jsonEncode(value));
+  static Future<void> setList(
+    String key,
+    List<Map<String, dynamic>> value, {
+    bool skipRemote = false,
+  }) async {
+    final encoded = jsonEncode(value);
+    final prev = rawGet(key);
+    await rawSet(key, encoded);
+    if (!_suppressRemote &&
+        !skipRemote &&
+        prev != encoded &&
+        syncKeys.contains(key) &&
+        LabaFlowSupabaseOptions.isConfigured) {
+      try {
+        final client = Supabase.instance.client;
+        if (client.auth.currentSession != null) {
+          await client.from('app_collections').upsert({
+            'key': key,
+            'items': value,
+            'updated_at': DateTime.now().toUtc().toIso8601String(),
+          }, onConflict: 'key');
+        }
+      } catch (_) {}
+    }
+  }
+
+  static Future<bool> applyRemoteRows(List<Map<String, dynamic>> rows) async {
+    var changed = false;
+    for (final row in rows) {
+      final key = row['key'] as String?;
+      final items = row['items'];
+      if (key == null || !syncKeys.contains(key) || items is! List) continue;
+      final encoded = jsonEncode(items);
+      final current = rawGet(key);
+      if (current != encoded) {
+        if (items.isEmpty && current != null && current != '[]') {
+          try {
+            final client = Supabase.instance.client;
+            if (client.auth.currentSession != null) {
+              await client.from('app_collections').upsert({
+                'key': key,
+                'items': getList(key),
+                'updated_at': DateTime.now().toUtc().toIso8601String(),
+              }, onConflict: 'key');
+            }
+          } catch (_) {}
+        } else {
+          await rawSet(key, encoded);
+          changed = true;
+        }
+      }
+    }
+    return changed;
+  }
+
+  static Future<bool> pullRemoteCollections() async {
+    if (!LabaFlowSupabaseOptions.isConfigured) return false;
+    try {
+      final rows = await Supabase.instance.client
+          .from('app_collections')
+          .select('key, items, updated_at');
+      return applyRemoteRows(
+        (rows as List).map((e) => Map<String, dynamic>.from(e as Map)).toList(),
+      );
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Stream<List<Map<String, dynamic>>> watchRemoteCollections() {
+    if (!LabaFlowSupabaseOptions.isConfigured) {
+      return const Stream.empty();
+    }
+    return Supabase.instance.client
+        .from('app_collections')
+        .stream(primaryKey: ['key'])
+        .map(
+          (rows) => rows
+              .map((e) => Map<String, dynamic>.from(e as Map))
+              .toList(),
+        );
+  }
 
   static int nextId(String key) {
     final list = getList(key);

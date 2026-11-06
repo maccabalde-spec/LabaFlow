@@ -1439,13 +1439,13 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
 ══════════════════════════════════════ */
 const DB={
   get(k){try{let r=localStorage.getItem('lf3_'+k);if(r===null)r=sessionStorage.getItem('lf3_'+k);if(!r||r==='null')return[];const p=JSON.parse(r);return Array.isArray(p)?p:[];}catch{return[];}},
-  set(k,v){const s=JSON.stringify(v);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}},
+  set(k,v,skipRemote=false){const s=JSON.stringify(v);const prev=localStorage.getItem('lf3_'+k);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}if(!window._lfSuppressRemote&&!skipRemote&&['inventory','rfidTags','orders','transactions','messages','restockLog','promoCodes','reviews'].includes(k)&&prev!==s&&window.LabaFlowSupabase?.saveCollection){window.LabaFlowSupabase.saveCollection(k,v).catch(err=>console.warn('Sync save skipped:',k,err?.message));}},
   has(k){return localStorage.getItem('lf3_'+k)!==null||sessionStorage.getItem('lf3_'+k)!==null;},
   nextId(k){const a=this.get(k);return a.length?Math.max(...a.map(x=>x.id))+1:1;}
 };
 
 /* ── SEED — safe, never overwrites any existing data ── */
-(function seed(){
+window._lfSuppressRemote=true;(function seed(){
   // User profiles and credentials now come from Supabase. Drop any old local
   // demo credentials and cached role claims on every load; preserve app data.
   localStorage.removeItem('lf3_users');
@@ -1479,6 +1479,7 @@ const DB={
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
   if(!DB.has('reviews'))DB.set('reviews',[]);
+  window._lfSuppressRemote=false;
   DB.set('seeded',[1]);
 })();
 
@@ -1509,6 +1510,7 @@ function ts(daysAgo=0){const d=new Date();d.setDate(d.getDate()+daysAgo);return 
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
   if(!DB.has('reviews'))DB.set('reviews',[]);
+  window._lfSuppressRemote=false;
 })();
 
 /* ══════════════════════════════════════
@@ -1693,7 +1695,49 @@ async function refreshRemoteNotifications(){
     updateNotifBadge();updateSellerBell();
   }catch(error){console.warn('Unable to refresh notifications:',error.message);}
 }
+let _syncingCols=false;
+function refreshActiveViews(){
+  const activeTag=document.activeElement?.tagName;
+  const isTyping=['INPUT','TEXTAREA','SELECT'].includes(activeTag);
+  const modalOpen=Boolean(document.querySelector('.ov.open'));
+  if(g('landing')&&g('landing').style.display!=='none'){renderLandingReviews();return;}
+  if(!CU)return;
+  if(CU.role==='CUSTOMER'){
+    updateLoyaltyPill();updateMsgBadge();updateNotifBadge();
+    if(!isTyping&&!modalOpen&&['orders','loyalty'].includes(curPtTab))ptTab(curPtTab);
+  }else{
+    buildSidebar();checkTopbarAlerts();updateSellerBell();
+    if(!isTyping&&!modalOpen&&curPage)showPage(curPage);
+  }
+}
+async function refreshRemoteCollections(){
+  if(_syncingCols||!window.LabaFlowSupabase?.fetchCollections)return;
+  _syncingCols=true;
+  try{
+    const rows=await LabaFlowSupabase.fetchCollections();
+    let changed=false;
+    if(Array.isArray(rows)){
+      rows.forEach(r=>{
+        if(r?.key&&Array.isArray(r.items)){
+          const next=JSON.stringify(r.items);
+          const cur=localStorage.getItem('lf3_'+r.key);
+          if(cur!==next){
+            if(r.items.length===0&&cur&&cur!=='[]'&&CU){
+              LabaFlowSupabase.saveCollection(r.key,DB.get(r.key)).catch(()=>{});
+            }else{
+              DB.set(r.key,r.items,true);
+              changed=true;
+            }
+          }
+        }
+      });
+    }
+    if(changed)refreshActiveViews();
+  }catch(e){console.warn('Unable to refresh collections:',e?.message);}
+  finally{_syncingCols=false;}
+}
 async function launchApp(){
+  await refreshRemoteCollections();
   await refreshRemoteUsers();
   await refreshRemoteNotifications();
   g('landing').style.display='none';
@@ -3761,6 +3805,15 @@ document.querySelectorAll('.lp-nav-links a[href^="#"]').forEach(a=>{
 });
 
 renderLandingReviews();
+refreshRemoteCollections();
+if(window.LabaFlowSupabase?.subscribeRealtime){
+  LabaFlowSupabase.subscribeRealtime(evt=>{
+    if(evt?.table==='notifications'){refreshRemoteNotifications();}
+    else if(evt?.table==='profiles'){refreshRemoteUsers().then(refreshActiveViews);}
+    else{refreshRemoteCollections();if(CU)refreshRemoteNotifications();}
+  });
+}
+window.addEventListener('storage',e=>{if(e.key?.startsWith('lf3_'))refreshActiveViews();});
 const lpYear=document.getElementById('lpYear');if(lpYear)lpYear.textContent=String(new Date().getFullYear());
 function addPasswordVisibility(input){
   if(input.dataset.visibilityReady)return;
