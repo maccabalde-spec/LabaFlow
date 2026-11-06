@@ -186,7 +186,7 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        _LightField(controller: _emailC, label: 'Email', hint: 'email@address.com', type: TextInputType.emailAddress),
+        _LightField(controller: _emailC, label: 'Email or Phone Number', hint: 'email@address.com or 09XXXXXXXXX', type: TextInputType.emailAddress),
         const SizedBox(height: 14),
         _LightField(controller: _passC, label: 'Password', hint: '••••••••', obscure: true),
         if (_loginErr != null) ...[
@@ -247,27 +247,14 @@ class _AuthScreenState extends State<AuthScreen> with SingleTickerProviderStateM
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFEFF6FF),
-              border: Border.all(color: const Color(0xFFBFDBFE)),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Text(
-              'Customer self-registration. Staff accounts are created by Admin.',
-              style: TextStyle(fontSize: 12, color: Color(0xFF1D4ED8)),
-            ),
-          ),
-          const SizedBox(height: 14),
           _LightField(controller: _nameC,    label: 'Full Name', hint: 'Juan dela Cruz'),
           const SizedBox(height: 14),
           _LightField(controller: _regEmailC,label: 'Email',     hint: 'juan@gmail.com', type: TextInputType.emailAddress),
           const SizedBox(height: 14),
-          _LightField(controller: _phoneC,   label: 'Phone',     hint: '09171234567', type: TextInputType.phone),
+          _LightField(controller: _phoneC,   label: 'Mobile Number', hint: '09171234567', type: TextInputType.phone),
           const SizedBox(height: 14),
           Row(children: [
-            Expanded(child: _LightField(controller: _regPassC,  label: 'Password', hint: 'Min 6 chars', obscure: true)),
+            Expanded(child: _LightField(controller: _regPassC,  label: 'Password', hint: 'Min 8 chars', obscure: true)),
             const SizedBox(width: 12),
             Expanded(child: _LightField(controller: _confPassC, label: 'Confirm',  hint: 'Repeat',      obscure: true)),
           ]),

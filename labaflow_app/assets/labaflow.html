@@ -2341,6 +2341,109 @@ tbody tr:hover td {
   .stage-pill-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+.lfg-field-err{display:none;color:#dc2626;font-size:11.5px;margin-top:5px;font-weight:600;line-height:1.35;}
+.lfg.has-err input{border-color:#ef4444!important;background:#fef2f2!important;}
+.lfg label .req{color:#ef4444;}
+.color-warn,.wash-note{font-size:12px;line-height:1.5;border-radius:10px;padding:9px 12px;margin-top:8px;}
+.color-warn{background:#fff7e0;border:1px solid #ffd978;color:#7a5200;}
+.wash-note{background:#eaf0ff;border:1px solid #c9d8ff;color:#27428f;margin-bottom:14px;}
+.lp-footer-contact{margin-top:14px;display:grid;gap:8px;font-size:13px;line-height:1.5;}
+.lp-footer-contact a{color:inherit;font-weight:700;text-decoration:none;}
+
+/* ── Password Eye Icon (Always Inside Input) & Mobile OTP Verification ── */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none !important;
+}
+.password-input-wrap {
+  position: relative !important;
+  width: 100% !important;
+  display: block !important;
+}
+.password-input-wrap > input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding-right: 44px !important;
+}
+.password-visibility {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #4579EE !important;
+  cursor: pointer !important;
+  z-index: 4 !important;
+  padding: 0 !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+.password-visibility:hover {
+  background: rgba(69, 121, 238, 0.12) !important;
+  color: #0E214E !important;
+}
+.otp-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.otp-input-row input {
+  flex: 1;
+}
+.otp-send-btn {
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1.5px solid #4579EE;
+  background: #EDF1FA;
+  color: #4579EE;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+.otp-send-btn:hover:not(:disabled) {
+  background: #4579EE;
+  color: #FFFFFF;
+}
+.otp-send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.otp-status-badge {
+  font-size: 11px;
+  font-weight: 800;
+  margin-left: 6px;
+  text-transform: none;
+}
+.sms-otp-banner {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  background: #0E214E;
+  color: #FFFFFF;
+  border: 2px solid #FFB600;
+  border-radius: 18px;
+  padding: 14px 18px;
+  box-shadow: 0 20px 50px rgba(14, 33, 78, 0.45);
+  max-width: 420px;
+  width: calc(100% - 32px);
+  display: none;
+  animation: smsSlideDown 0.28s ease-out;
+}
+@keyframes smsSlideDown {
+  from { opacity: 0; transform: translate(-50%, -18px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
 </style>
 </head>
 <body>
@@ -2353,7 +2456,8 @@ tbody tr:hover td {
   <!-- SPINZY TOP UTILITY BAR (Preserving LabaFlow Business Info) -->
   <div class="lp-topbar-spinzy">
     <div class="lp-topbar-items">
-      <div class="lp-topbar-item"><span class="lp-topbar-ico">🫧</span><span>Lab-a-Day Laundry Shop</span></div>
+      <div class="lp-topbar-item"><span class="lp-topbar-ico">🫧</span><span>Lab-a-Day Laundry Shop · B. Cosme St., Poblacion 2, Pagsanjan, Laguna</span></div>
+      <div class="lp-topbar-item"><span class="lp-topbar-ico">📞</span><span>0961 130 8218</span></div>
       <div class="lp-topbar-item"><span class="lp-topbar-ico">📡</span><span>RFID Order Tracking</span></div>
       <div class="lp-topbar-item"><span class="lp-topbar-ico">💳</span><span>Cash &amp; GCash Accepted</span></div>
     </div>
@@ -2469,7 +2573,7 @@ tbody tr:hover td {
         <div class="lp-step-num">Step 02</div>
         <img class="lp-step-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
         <h4>Washed With Detergent</h4>
-        <p>We wash and dry your clothes with Surf detergent and conditioner, using the right care for every load.</p>
+        <p>We wash and dry your clothes with Surf detergent and conditioner, using the right care for every load. Wash time is about 2–3 hours, depending on how many loads are in the queue.</p>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 03</div>
@@ -2661,6 +2765,18 @@ tbody tr:hover td {
         <div class="lp-faq-a">Yes! Register a customer account and you can view your order status in real-time, book new services online, message our staff directly, and see your full order history — all from your LabaFlow portal.</div>
       </div>
       <div class="lp-faq-item">
+        <div class="lp-faq-q" onclick="toggleFaq(this)">How long does washing take? <span class="lp-faq-icon">+</span></div>
+        <div class="lp-faq-a">Wash time is about 2–3 hours, depending on how many loads are in the queue when you drop off. You will get a "Ready" alert in your LabaFlow account as soon as your laundry is done.</div>
+      </div>
+      <div class="lp-faq-item">
+        <div class="lp-faq-q" onclick="toggleFaq(this)">Can I mix whites and colored clothes? <span class="lp-faq-icon">+</span></div>
+        <div class="lp-faq-a">When booking, you choose Whites Only, Colored Only, or Mixed. If you choose Mixed, Lab-a-Day Laundry is not liable for color bleeding or color transfer between clothes, so we recommend separating whites and colored.</div>
+      </div>
+      <div class="lp-faq-item">
+        <div class="lp-faq-q" onclick="toggleFaq(this)">Where is the shop and how do I contact you? <span class="lp-faq-icon">+</span></div>
+        <div class="lp-faq-a">Lab-a-Day Laundry is at B. Cosme Street, Poblacion 2, Pagsanjan, Laguna. Call or text us at 0961 130 8218.</div>
+      </div>
+      <div class="lp-faq-item">
         <div class="lp-faq-q" onclick="toggleFaq(this)">Do you accept special instructions? <span class="lp-faq-icon">+</span></div>
         <div class="lp-faq-a">Absolutely. When booking, there's a Special Instructions field where you can specify requests like "separate whites," "no bleach," "extra rinse," etc. Staff will see these notes when processing your order.</div>
       </div>
@@ -2680,6 +2796,11 @@ tbody tr:hover td {
       <div>
         <div class="lp-footer-logo">Laba<span>Flow</span></div>
         <div class="lp-footer-desc">Lab-a-Day Laundry Management System. RFID-tracked, real-time order status, loyalty rewards — the modern way to manage laundry.</div>
+        <div class="lp-footer-contact">
+          <div>📍 B. Cosme Street, Poblacion 2, Pagsanjan, Laguna</div>
+          <div>📞 <a href="tel:09611308218">0961 130 8218</a></div>
+          <div>⏱ Wash time: 2–3 hours, depending on number of loads</div>
+        </div>
       </div>
       <div class="lp-footer-col">
         <h5>Services</h5>
@@ -2717,19 +2838,26 @@ tbody tr:hover td {
 <!-- ══════════════════════════════════
      AUTH OVERLAY (floating modal)
 ══════════════════════════════════ -->
+<div id="smsOtpBanner" class="sms-otp-banner" role="alert"></div>
 <div id="authOverlay">
 <div class="auth-card auth-modal-wrap">
   <button class="auth-close" onclick="closeAuth()">×</button>
   <div class="auth-logo">Laba<span>Flow</span></div>
-  <div class="auth-tagline">Lab-a-Day Laundry Management System</div>
+  <div class="auth-tagline">Lab-a-Day Laundry · B. Cosme St., Poblacion 2, Pagsanjan, Laguna</div>
   <div class="auth-tabs">
     <div class="auth-tab active" id="tabSign" onclick="authTab('sign')">Sign In</div>
     <div class="auth-tab" id="tabReg" onclick="authTab('reg')">Register</div>
   </div>
   <!-- SIGN IN -->
   <div id="fSign">
-    <div class="lfg"><label>Email</label><input type="email" id="liEmail" placeholder="email@address.com"></div>
-    <div class="lfg"><label>Password</label><input type="password" id="liPass" placeholder="••••••••"></div>
+    <div class="lfg"><label>Email or Phone Number</label><input type="text" id="liEmail" placeholder="email@address.com or 09XXXXXXXXX" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+    <div class="lfg">
+      <label>Password</label>
+      <div class="password-input-wrap">
+        <input type="password" id="liPass" autocomplete="current-password" placeholder="••••••••">
+        <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
+    </div>
     <div class="lfg-err" id="liErr"></div>
     <button class="lp-btn lp-btn-solid" style="width:100%;justify-content:center;padding:11px;font-size:14px;" onclick="doLogin()">Sign In →</button>
     <div style="display:flex;align-items:center;gap:12px;margin:14px 0;color:var(--lp-muted);font-size:11px;font-weight:700;">
@@ -2739,13 +2867,38 @@ tbody tr:hover td {
   </div>
   <!-- REGISTER -->
   <div id="fReg" style="display:none">
-    <div class="lp-notice">Customer self-registration. Staff accounts are created by Admin.</div>
-    <div class="lfg"><label>Full Name</label><input id="rName" placeholder="Juan dela Cruz"></div>
-    <div class="lfg"><label>Email</label><input type="email" id="rEmail" placeholder="juan@gmail.com"></div>
-    <div class="lfg"><label>Phone</label><input id="rPhone" placeholder="09171234567"></div>
+    <div class="lfg"><label>Full Name <span class="req">*</span></label><input id="rName" placeholder="Juan dela Cruz" autocomplete="name" maxlength="60"><div class="lfg-field-err" id="rNameErr"></div></div>
+    <div class="lfg"><label>Email <span class="req">*</span></label><input type="email" id="rEmail" placeholder="juan@gmail.com" autocomplete="email" autocapitalize="none" spellcheck="false"><div class="lfg-field-err" id="rEmailErr"></div></div>
+    <div class="lfg">
+      <label>Mobile Number <span class="req">*</span></label>
+      <div class="otp-input-row">
+        <input id="rPhone" type="tel" inputmode="numeric" placeholder="09171234567" maxlength="13" autocomplete="tel">
+        <button type="button" id="btnSendOtp" class="otp-send-btn" onclick="sendRegOtp()">Send Code</button>
+      </div>
+      <div class="lfg-field-err" id="rPhoneErr"></div>
+    </div>
+    <div class="lfg" id="rOtpGroup">
+      <label>Verification Code <span class="req">*</span><span id="rOtpStatus" class="otp-status-badge"></span></label>
+      <input id="rOtp" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code sent to your mobile number" autocomplete="one-time-code" style="letter-spacing:2px;font-weight:700;">
+      <div class="lfg-field-err" id="rOtpErr"></div>
+    </div>
     <div class="lfg-row2">
-      <div class="lfg"><label>Password</label><input type="password" id="rPass" placeholder="Min 6 chars"></div>
-      <div class="lfg"><label>Confirm</label><input type="password" id="rPass2" placeholder="Repeat"></div>
+      <div class="lfg">
+        <label>Password <span class="req">*</span></label>
+        <div class="password-input-wrap">
+          <input type="password" id="rPass" placeholder="Min 8 chars" autocomplete="new-password">
+          <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="lfg-field-err" id="rPassErr"></div>
+      </div>
+      <div class="lfg">
+        <label>Confirm <span class="req">*</span></label>
+        <div class="password-input-wrap">
+          <input type="password" id="rPass2" placeholder="Repeat" autocomplete="new-password">
+          <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+        <div class="lfg-field-err" id="rPass2Err"></div>
+      </div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;margin:14px 0;color:var(--lp-muted);font-size:11px;font-weight:700;">
       <span style="height:1px;background:var(--lp-border);flex:1;"></span><span>OR</span><span style="height:1px;background:var(--lp-border);flex:1;"></span>
@@ -2831,6 +2984,7 @@ tbody tr:hover td {
 <!-- Order Modal (Seller/Admin) -->
 <div class="ov" id="mOrd"><div class="modal">
   <h3 id="mOrdTitle">New Order</h3>
+  <div id="moWashNote" class="wash-note">⏱ Estimated wash time: <b>2–3 hours</b>, depending on how many loads are in the queue.</div>
   <div class="fg"><label>Customer</label><select id="moCust"></select></div>
   <div class="fg"><label>Laundry Type</label>
     <select id="moType" onchange="onTypeChange()">
@@ -2845,10 +2999,8 @@ tbody tr:hover td {
     <div class="fg"><label>Weight (kg) — max 9 kg per set; 10+ kg = 2 sets</label><input type="number" id="moKg" min="0.5" step="0.5" placeholder="e.g. 5" oninput="calcOrdPrice()"></div>
     <div class="fg"><label>Color Distinction</label>
       <select id="moColorDist" onchange="calcOrdPrice()">
-        <option value="MIXED">Mixed / No Separation</option>
-        <option value="WHITES">Whites Only</option>
-        <option value="COLORED">Colored Only</option>
-      </select>
+        <option value="">Select clothes type…</option><option value="WHITES">Whites Only</option><option value="COLORED">Colored Only</option><option value="MIXED">Mixed (shop not liable for color bleeding)</option>
+      </select><div class="color-warn">⚠️ Choose <b>Whites Only</b>, <b>Colored Only</b> or <b>Mixed</b>. If you choose Mixed, Lab-a-Day Laundry is <b>not liable</b> for color bleeding or color transfer between clothes.</div>
     </div>
   </div>
   <div id="bedsheetFields" style="display:none">
@@ -2993,7 +3145,7 @@ tbody tr:hover td {
   <div class="fg"><label>Email</label><input type="email" id="muEmail"></div>
   <div class="fg"><label>Phone</label><input id="muPhone"></div>
   <div class="fg"><label>Role</label><select id="muRole"><option value="SELLER">Seller (Staff)</option><option value="CUSTOMER">Customer</option><option value="ADMIN">Admin</option></select></div>
-  <div class="fg"><label>Password <span class="text-muted">(blank = keep current)</span></label><input type="password" id="muPass"></div>
+  <div class="fg"><label>Password <span class="text-muted">(blank = keep current)</span></label><div class="password-input-wrap"><input type="password" id="muPass"><button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
   <div class="err-msg" id="muErr"></div>
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mUser')">Cancel</button>
@@ -3339,34 +3491,181 @@ function showAuthError(target,error){
   target.textContent=error?.message||'Supabase sign-in failed. Try again.';
   target.style.display='block';
 }
+const _pwEyeIcons={
+  show:'<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
+  hide:'<svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a15 15 0 0 1-3.1 3.9M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1 0 2-.2 2.8-.5"/></svg>'
+};
+function togglePwVis(btn){
+  const wrap=btn?.closest('.password-input-wrap');
+  const input=wrap?.querySelector('input');
+  if(!input)return;
+  const show=input.type==='password';
+  input.type=show?'text':'password';
+  const lbl=show?'Hide password':'Show password';
+  btn.setAttribute('aria-label',lbl);
+  btn.title=lbl;
+  btn.innerHTML=show?_pwEyeIcons.hide:_pwEyeIcons.show;
+  input.focus({preventScroll:true});
+}
+
 async function doLogin(){
-  const email=g('liEmail').value.trim().toLowerCase();
+  const idRaw=g('liEmail').value.trim();
   const pass=g('liPass').value;
   const err=g('liErr');
+  const isEmail=idRaw.includes('@');
+  if(!idRaw){showAuthError(err,new Error('Enter your email or mobile number.'));return;}
+  if(isEmail?!isValidEmail(idRaw):!isValidPhone(idRaw)){showAuthError(err,new Error(isEmail?'Enter a valid email address.':'Enter a valid email or mobile number (e.g. 09XXXXXXXXX).'));return;}
+  if(!pass){showAuthError(err,new Error('Enter your password.'));return;}
   showLoader('Signing in…');
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
-    const profile=await LabaFlowSupabase.signIn(email,pass);
+    const profile=await LabaFlowSupabase.signIn(isEmail?idRaw.toLowerCase():normalizePhone(idRaw),pass);
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}
 }
 
+/* ── Registration & Mobile OTP Verification helpers ── */
+let _regOtpState={phone:'',code:'',expiresAt:0,verified:false,timer:null,cooldown:0};
+function normalizePhone(v){let d=String(v||'').replace(/[\s\-().]/g,'');if(d.startsWith('+63'))d='0'+d.slice(3);else if(/^63\d{10}$/.test(d))d='0'+d.slice(2);return d;}
+function isValidPhone(v){return /^09\d{9}$/.test(normalizePhone(v));}
+function isValidEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&v.length<=254;}
+function isValidName(v){const s=String(v||'').trim();return s.length>=2&&s.length<=60&&/^\p{L}[\p{L}.'’\- ]*$/u.test(s)&&(s.match(/\p{L}/gu)||[]).length>=2;}
+function fieldErr(inputId,errId,msg){
+  const i=g(inputId),e=g(errId);if(!i||!e)return;
+  const box=i.closest('.lfg');
+  if(msg){e.textContent=msg;e.style.display='block';if(box)box.classList.add('has-err');}
+  else{e.textContent='';e.style.display='none';if(box)box.classList.remove('has-err');}
+}
+
+function updateOtpBadge(){
+  const badge=g('rOtpStatus');
+  if(!badge)return;
+  const phone=normalizePhone(g('rPhone')?.value||'');
+  const codeVal=(g('rOtp')?.value||'').trim();
+  if(_regOtpState.code && _regOtpState.phone===phone && codeVal===_regOtpState.code && Date.now()<_regOtpState.expiresAt){
+    _regOtpState.verified=true;
+    badge.innerHTML='<span style="color:#059669;">✓ Verified</span>';
+    fieldErr('rOtp','rOtpErr','');
+  }else if(_regOtpState.code && _regOtpState.phone===phone){
+    _regOtpState.verified=false;
+    badge.innerHTML='<span style="color:#4579EE;">Code sent to '+phone+'</span>';
+  }else{
+    _regOtpState.verified=false;
+    badge.innerHTML='';
+  }
+}
+
+function fillRegOtp(code){
+  const inp=g('rOtp');
+  if(inp){inp.value=code;updateOtpBadge();}
+  const b=g('smsOtpBanner');
+  if(b)b.style.display='none';
+}
+
+async function sendRegOtp(){
+  const phoneRaw=(g('rPhone')?.value||'').trim();
+  if(!phoneRaw){fieldErr('rPhone','rPhoneErr','Mobile number is required.');g('rPhone')?.focus();return false;}
+  if(!isValidPhone(phoneRaw)){fieldErr('rPhone','rPhoneErr','Enter a valid PH mobile number (09XXXXXXXXX).');g('rPhone')?.focus();return false;}
+  const phone=normalizePhone(phoneRaw);
+  const btn=g('btnSendOtp');
+  if(btn)btn.disabled=true;
+  try{
+    if(window.LabaFlowSupabase?.phoneRegistered && await LabaFlowSupabase.phoneRegistered(phone)){
+      fieldErr('rPhone','rPhoneErr','This mobile number is already registered.');
+      if(btn)btn.disabled=false;
+      g('rPhone')?.focus();
+      return false;
+    }
+  }catch(_){}
+  fieldErr('rPhone','rPhoneErr','');
+  const code=String(Math.floor(100000+Math.random()*900000));
+  _regOtpState.phone=phone;
+  _regOtpState.code=code;
+  _regOtpState.expiresAt=Date.now()+5*60*1000;
+  _regOtpState.verified=false;
+  if(g('rOtp'))g('rOtp').value='';
+  updateOtpBadge();
+  fieldErr('rOtp','rOtpErr','');
+
+  const banner=g('smsOtpBanner');
+  if(banner){
+    banner.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <div>
+          <div style="font-size:11px;font-weight:800;color:#FFB600;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">💬 SMS Verification Code Sent to ${phone}</div>
+          <div style="font-size:13.5px;line-height:1.45;">LabaFlow code: <strong style="font-size:17px;color:#FFB600;letter-spacing:2px;background:rgba(255,182,0,0.16);padding:2px 8px;border-radius:6px;">${code}</strong></div>
+          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
+            <button type="button" onclick="fillRegOtp('${code}')" style="background:#4579EE;color:#fff;border:0;border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:800;cursor:pointer;">Auto-Fill Code</button>
+            <span style="font-size:11px;color:#CBD5E1;">Valid for 5 mins</span>
+          </div>
+        </div>
+        <button type="button" onclick="document.getElementById('smsOtpBanner').style.display='none'" style="background:transparent;border:0;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">×</button>
+      </div>`;
+    banner.style.display='block';
+  }
+  g('rOtp')?.focus();
+
+  clearInterval(_regOtpState.timer);
+  _regOtpState.cooldown=60;
+  if(btn){btn.disabled=true;btn.textContent='Resend (60s)';}
+  _regOtpState.timer=setInterval(()=>{
+    _regOtpState.cooldown--;
+    if(_regOtpState.cooldown<=0){
+      clearInterval(_regOtpState.timer);
+      if(btn){btn.disabled=false;btn.textContent='Resend Code';}
+    }else if(btn){
+      btn.textContent='Resend ('+_regOtpState.cooldown+'s)';
+    }
+  },1000);
+  return true;
+}
+
 async function doRegister(){
-  const name=g('rName').value.trim(),email=g('rEmail').value.trim().toLowerCase(),
-        phone=g('rPhone').value.trim(),pass=g('rPass').value,pass2=g('rPass2').value;
-  const err=g('rErr');
-  if(!name||!email||!pass){err.textContent='Name, email and password required.';err.style.display='block';return;}
-  if(pass.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';return;}
-  if(pass!==pass2){err.textContent='Passwords do not match.';err.style.display='block';return;}
+  const name=g('rName').value.trim().replace(/\s+/g,' '),email=g('rEmail').value.trim().toLowerCase(),
+        phoneRaw=g('rPhone').value.trim(),otpVal=(g('rOtp')?.value||'').trim(),pass=g('rPass').value,pass2=g('rPass2').value;
+  const err=g('rErr');err.style.display='none';
+  let first=null;
+  const check=(id,errId,msg)=>{fieldErr(id,errId,msg);if(msg&&!first)first=id;};
+  check('rName','rNameErr',!name?'Full name is required.':!isValidName(name)?'Enter your real name (letters only, at least 2 characters).':'');
+  check('rEmail','rEmailErr',!email?'Email is required.':!isValidEmail(email)?'Enter a valid email address (e.g. juan@gmail.com).':'');
+  check('rPhone','rPhoneErr',!phoneRaw?'Mobile number is required.':!isValidPhone(phoneRaw)?'Enter a valid PH mobile number (09XXXXXXXXX).':'');
+  const phone=normalizePhone(phoneRaw);
+  let otpMsg='';
+  if(!isValidPhone(phoneRaw)){
+    otpMsg='Enter a valid mobile number first, then click Send Code.';
+  }else if(!_regOtpState.code || _regOtpState.phone!==phone){
+    otpMsg='Click "Send Code" to receive the 6-digit verification code on '+phone+'.';
+  }else if(Date.now()>_regOtpState.expiresAt){
+    otpMsg='Verification code expired. Please click "Resend Code".';
+  }else if(!otpVal){
+    otpMsg='Enter the 6-digit verification code sent to '+phone+'.';
+  }else if(otpVal!==_regOtpState.code){
+    otpMsg='Incorrect verification code. Please check the code sent to '+phone+'.';
+  }
+  check('rOtp','rOtpErr',otpMsg);
+  const pwMsg=!pass?'Password is required.':/\s/.test(pass)?'Password must not contain spaces.':pass.length<8?'Password must be at least 8 characters.':(!/[A-Za-z]/.test(pass)||!/\d/.test(pass))?'Password must include letters and numbers.':'';
+  check('rPass','rPassErr',pwMsg);
+  check('rPass2','rPass2Err',!pass2?'Please confirm your password.':pass!==pass2?'Passwords do not match.':'');
+  if(first){g(first).focus();return;}
   showLoader('Creating account…');
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
+    if(await LabaFlowSupabase.phoneRegistered(phone)){fieldErr('rPhone','rPhoneErr','This mobile number is already registered.');g('rPhone').focus();return;}
     const profile=await LabaFlowSupabase.register({name,email,phone,password:pass});
+    const b=g('smsOtpBanner');if(b)b.style.display='none';
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}
 }
+['rName','rEmail','rPhone','rOtp','rPass','rPass2'].forEach(id=>{
+  const el=g(id);if(!el)return;
+  el.addEventListener('input',()=>{
+    if(id==='rPhone'){const c=el.value.replace(/[^\d+\s-]/g,'');if(c!==el.value)el.value=c;updateOtpBadge();}
+    if(id==='rOtp'){const c=el.value.replace(/\D/g,'').slice(0,6);if(c!==el.value)el.value=c;updateOtpBadge();}
+    fieldErr(id,id+'Err','');
+  });
+});
 
 async function doGoogleSignIn(errorId='rErr'){
   const err=g(errorId);
@@ -4318,7 +4617,7 @@ function openOrdModal(id){
   g('moType').value=o?o.type:'CLOTHES';
   sv('moKg',o&&o.kg?o.kg:'');sv('moBsKg',o&&o.kg?o.kg:'');sv('moComQty',o&&o.comQty?o.comQty:'');
   sv('moWdKg',o&&o.kg?o.kg:'');
-  if(g('moColorDist'))g('moColorDist').value=o&&o.colorDist?o.colorDist:'MIXED';
+  if(g('moColorDist'))g('moColorDist').value=o&&o.colorDist?o.colorDist:'';
   sv('moNotes',o?o.notes:'');sv('moPromo',o?o.promoCode||'':'');
   sv('moPrice','');g('moPriceBreakdown').textContent='';
   onTypeChange();if(o)calcOrdPrice();openM('mOrd');
@@ -4348,6 +4647,7 @@ function submitOrder(){
   const kg=type==='BEDSHEET'?parseFloat(gv('moBsKg')):isSimple?parseFloat(gv('moWdKg')):type==='CLOTHES'?parseFloat(gv('moKg')):null;
   const comQty=type==='COMFORTER'?parseInt(gv('moComQty')):null;
   const colorDist=type==='CLOTHES'?gv('moColorDist'):'';
+  if(type==='CLOTHES'&&!colorDist){swalError('Please choose Whites Only, Colored Only or Mixed for the clothes.');return;}
   const notes=gv('moNotes');
   const promoCode=gv('moPromo').trim().toUpperCase();
   if(type!=='COMFORTER'&&!isSimple&&(!kg||kg<=0)){swalError('Please enter a valid weight in kg.');return;}
@@ -4463,7 +4763,8 @@ function renderDetail(){
   }).join('');
   const rows=[['Order #',o.num],['Customer',o.custName],['Type',TYPE_LABEL[o.type]||o.type],
     ['Details',o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?o.kg+' kg':'—')],
-    ...(o.colorDist&&o.colorDist!=='MIXED'?[['Color',o.colorDist==='WHITES'?'⬜ Whites Only':'🎨 Colored Only']]:[] ),
+    ...(o.colorDist==='MIXED'?[['Color','Mixed (shop not liable for color bleeding)']]:[]),
+...(o.colorDist&&o.colorDist!=='MIXED'?[['Color',o.colorDist==='WHITES'?'⬜ Whites Only':'🎨 Colored Only']]:[] ),
     ['Price',peso(o.price)+(o.discount?` <span style="color:var(--success);font-size:11px;">(saved ₱${o.discount.toFixed(2)})</span>`:'')],
     ['Breakdown',o.breakdown||'—'],['Promo',o.promoCode?`<span class="promo-tag">🏷 ${o.promoCode}</span>`:'—'],
     ['Payment',isPaid?`<span class="badge b-ok">✓ Paid</span>`:`<span class="badge" style="background:rgba(251,191,36,.15);color:#fbbf24;">⚠ Unpaid</span>`],
@@ -4612,7 +4913,7 @@ function onPayChanChange(){
 function getGcashNumber(){
   const s=DB.get('settings');
   const row=s.find(x=>x.key==='gcashNumber');
-  return row?row.val:'09615150075';
+  return row?row.val:'09611308218';
 }
 function setGcashNumber(num){
   const s=DB.get('settings');
@@ -5425,7 +5726,7 @@ function _renderSettingsQR(num){
 function saveGcashNumber(){
   const num=g('gcashNumInput').value.trim();
   if(!/^09\d{9}$/.test(num)){
-    swalError('Please enter a valid Philippine mobile number (e.g. 09615150075).');
+    swalError('Please enter a valid Philippine mobile number (e.g. 09611308218).');
     return;
   }
   setGcashNumber(num);
@@ -5790,7 +6091,8 @@ function ptBook(){
   g('ptContent').innerHTML=`
     <div style="max-width:520px;margin:0 auto;">
       <h3 style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;text-align:center;">Book a Laundry Service</h3>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:18px;text-align:center;">Submit your booking and drop off at the shop.</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;text-align:center;">Submit your booking and drop off at the shop.</p>
+      <div class="wash-note">⏱ Estimated wash time: <b>2–3 hours</b>, depending on how many loads are in the queue.</div>
       ${tierDisc>0?`<div class="notice n-success" style="margin-bottom:14px;">🌟 <strong>${tier.name} Member:</strong> You get ${tierDisc}% loyalty discount automatically applied!</div>`:''}
       <div style="background:var(--card);border-radius:12px;padding:24px;">
         <div class="row2" style="margin-bottom:12px;">
@@ -5820,10 +6122,8 @@ function ptBook(){
           <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label><input type="number" id="bkKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;"></div>
           <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Color Distinction</label>
             <select id="bkColorDist" onchange="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
-              <option value="MIXED">Mixed / No Separation</option>
-              <option value="WHITES">Whites Only</option>
-              <option value="COLORED">Colored Only</option>
-            </select>
+              <option value="">Select clothes type…</option><option value="WHITES">Whites Only</option><option value="COLORED">Colored Only</option><option value="MIXED">Mixed (shop not liable for color bleeding)</option>
+            </select><div class="color-warn">⚠️ Choose <b>Whites Only</b>, <b>Colored Only</b> or <b>Mixed</b>. If you choose Mixed, Lab-a-Day Laundry is <b>not liable</b> for color bleeding or color transfer between clothes.</div>
           </div>
         </div>
         <div id="bkBsF" style="display:none">
@@ -5884,6 +6184,7 @@ function submitBooking(){
   const kg=type==='BEDSHEET'?parseFloat(gv('bkBsKg')):isSimple?(g('bkWdKg')?parseFloat(gv('bkWdKg')):0):type==='CLOTHES'?parseFloat(gv('bkKg')):null;
   const comQty=type==='COMFORTER'?parseInt(gv('bkComQty')):null;
   const colorDist=type==='CLOTHES'&&g('bkColorDist')?gv('bkColorDist'):'';
+  if(type==='CLOTHES'&&g('bkColorDist')&&!colorDist){swalError('Please choose Whites Only, Colored Only or Mixed for your clothes.');return;}
   const notes=gv('bkNotes');
   const promoCode=g('bkPromo')?gv('bkPromo').trim().toUpperCase():'';
   if(type!=='COMFORTER'&&!isSimple&&(!kg||kg<=0)){swalError('Please enter an estimated weight in kg.');return;}
@@ -6020,7 +6321,7 @@ function ptProfile(){
         <div class="fg"><label>Email Address</label><input type="email" id="prEmail" value="${escapeHtml(CU.email)}"></div>
         <div class="fg"><label>Phone Number</label><input id="prPhone" value="${escapeHtml(CU.phone||'')}"></div>
         <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
-        <div class="fg"><label>New Password <span class="text-muted">(blank = keep current)</span></label><input type="password" id="prPass" placeholder="••••••••"></div>
+        <div class="fg"><label>New Password <span class="text-muted">(blank = keep current)</span></label><div class="password-input-wrap"><input type="password" id="prPass" placeholder="••••••••"><button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
         <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
       </div>
     </div>`;
@@ -6310,7 +6611,7 @@ if(window.LabaFlowSupabase?.subscribeRealtime){
 window.addEventListener('storage',e=>{if(e.key?.startsWith('lf3_'))refreshActiveViews();});
 const lpYear=document.getElementById('lpYear');if(lpYear)lpYear.textContent=String(new Date().getFullYear());
 function addPasswordVisibility(input){
-  if(input.dataset.visibilityReady)return;
+  if(input.dataset.visibilityReady||input.closest('.password-input-wrap'))return;
   input.dataset.visibilityReady='true';
   const wrapper=document.createElement('div');
   wrapper.className='password-input-wrap';

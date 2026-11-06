@@ -20,9 +20,36 @@ class SupabaseAuthService {
     return _loadProfile(user);
   }
 
-  Future<AppUser> signIn(String email, String password) async {
+  /// Returns the e-mail registered with a mobile number, or null if none.
+  /// Requires the `login_email_for_phone` function (see supabase/migrations).
+  Future<String?> emailForPhone(String phone) async {
+    final result = await _client.rpc('login_email_for_phone', params: {'p_phone': phone});
+    return result is String && result.isNotEmpty ? result : null;
+  }
+
+  Future<bool> phoneRegistered(String phone) async {
+    try {
+      return await emailForPhone(phone) != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// [identifier] is an e-mail address or a Philippine mobile number.
+  Future<AppUser> signIn(String identifier, String password) async {
+    var email = identifier.trim().toLowerCase();
+    if (!email.contains('@')) {
+      String? found;
+      try {
+        found = await emailForPhone(email);
+      } catch (_) {
+        throw StateError('Signing in with a mobile number is not available yet. Please sign in with your email.');
+      }
+      if (found == null) throw StateError('No account found with that mobile number.');
+      email = found.trim().toLowerCase();
+    }
     final response = await _client.auth.signInWithPassword(
-      email: email.trim().toLowerCase(), password: password,
+      email: email, password: password,
     );
     final user = response.user;
     if (user == null) throw StateError('Supabase did not return a user session.');

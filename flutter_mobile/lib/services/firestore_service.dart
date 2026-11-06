@@ -258,10 +258,10 @@ class FirestoreService {
     try {
       final doc = await col('settings').doc('gcashNumber').get();
       if (doc.exists) {
-        return (doc.data()?['val'] as String?) ?? '09615150075';
+        return (doc.data()?['val'] as String?) ?? '09611308218';
       }
     } catch (_) {}
-    return '09615150075';
+    return '09611308218';
   }
 
   static Future<void> setGcashNumber(String number) async {
@@ -389,7 +389,7 @@ class FirestoreService {
     ]);
 
     // GCash settings
-    await col('settings').doc('gcashNumber').set({'key':'gcashNumber','val':'09615150075'});
+    await col('settings').doc('gcashNumber').set({'key':'gcashNumber','val':'09611308218'});
 
     // Empty collections (creates the collection so Firestore rules apply)
     for (final name in ['transactions','messages','restockLog','notifs','reviews']) {

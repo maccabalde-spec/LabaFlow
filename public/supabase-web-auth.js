@@ -57,14 +57,90 @@
     }
     return profile(row, authUser);
   }
-  async function signIn(email, password) {
-    const result = await request('/auth/v1/token?grant_type=password', {method:'POST', body:JSON.stringify({email:email.trim().toLowerCase(), password})}, false);
-    save(result); return profileByUid(result.user.id);
+  function normPhone10(v) {
+    const d = String(v || '').replace(/\D/g, '');
+    return d.length >= 10 ? d.slice(-10) : '';
+  }
+  function normPhone11(v) {
+    const p10 = normPhone10(v);
+    return p10 ? '0' + p10 : '';
+  }
+  function getLocalPhoneMap() {
+    try { return JSON.parse(localStorage.getItem('lf3_phone_lookup') || '[]'); } catch (_) { return []; }
+  }
+  function saveLocalPhoneMap(list) {
+    try { localStorage.setItem('lf3_phone_lookup', JSON.stringify(list)); } catch (_) {}
+  }
+  async function syncPhoneEntry(phone, email) {
+    const p11 = normPhone11(phone), em = String(email || '').trim().toLowerCase();
+    if (!p11 || !em.includes('@')) return;
+    let items = getLocalPhoneMap();
+    const p10 = normPhone10(p11);
+    items = items.filter(x => normPhone10(x.phone) !== p10 && String(x.email || '').toLowerCase() !== em);
+    items.push({ phone: p11, email: em });
+    saveLocalPhoneMap(items);
+    if (!configured() || !session()?.access_token) return;
+    try {
+      const rows = await request('/rest/v1/app_collections?key=eq.phoneLookup&select=items', {}, false);
+      const remote = Array.isArray(rows?.[0]?.items) ? rows[0].items : [];
+      const merged = [...remote.filter(x => normPhone10(x.phone) !== p10 && String(x.email || '').toLowerCase() !== em), { phone: p11, email: em }];
+      saveLocalPhoneMap(merged);
+      await saveCollection('phoneLookup', merged);
+    } catch (_) {}
+  }
+  async function emailForPhone(phone) {
+    const p10 = normPhone10(phone);
+    if (!p10) return null;
+    try {
+      const rpcEmail = await request('/rest/v1/rpc/login_email_for_phone', {method:'POST', body:JSON.stringify({p_phone:normPhone11(phone)})}, false);
+      if (typeof rpcEmail === 'string' && rpcEmail.includes('@')) return rpcEmail.trim().toLowerCase();
+    } catch (_) {}
+    try {
+      const rows = await request('/rest/v1/app_collections?key=eq.phoneLookup&select=items', {}, false);
+      const remote = Array.isArray(rows?.[0]?.items) ? rows[0].items : [];
+      if (remote.length) saveLocalPhoneMap(remote);
+      const hit = remote.find(x => normPhone10(x.phone) === p10);
+      if (hit?.email) return String(hit.email).trim().toLowerCase();
+    } catch (_) {}
+    const localHit = getLocalPhoneMap().find(x => normPhone10(x.phone) === p10);
+    if (localHit?.email) return String(localHit.email).trim().toLowerCase();
+    try {
+      const cachedUsers = JSON.parse(localStorage.getItem('lf3_users') || '[]');
+      const uHit = cachedUsers.find(u => normPhone10(u.phone) === p10 && u.email);
+      if (uHit?.email) return String(uHit.email).trim().toLowerCase();
+    } catch (_) {}
+    const defaults = [
+      { phone: '09611308218', email: 'seller@labaday.com' },
+      { phone: '09171234567', email: 'juan@gmail.com' },
+      { phone: '09181234567', email: 'maria@gmail.com' },
+      { phone: '09170000001', email: 'admin@labaday.com' }
+    ];
+    const defHit = defaults.find(d => normPhone10(d.phone) === p10);
+    return defHit ? defHit.email : null;
+  }
+  async function phoneRegistered(phone) {
+    try { return !!(await emailForPhone(phone)); } catch (_) { return false; }
+  }
+  async function signIn(identifier, password) {
+    let email = String(identifier || '').trim().toLowerCase();
+    if (!email.includes('@')) {
+      const found = await emailForPhone(email);
+      if (!found) throw new Error('Walang nahanap na account gamit ang mobile number na iyan. Mag-register muna o gamitin ang iyong email.');
+      email = found.trim().toLowerCase();
+    }
+    const result = await request('/auth/v1/token?grant_type=password', {method:'POST', body:JSON.stringify({email, password})}, false);
+    save(result);
+    const prof = await profileByUid(result.user.id);
+    if (prof?.phone && prof?.email) syncPhoneEntry(prof.phone, prof.email);
+    return prof;
   }
   async function register({name,email,phone,password}) {
     const result = await request('/auth/v1/signup', {method:'POST', body:JSON.stringify({email:email.trim().toLowerCase(),password,data:{name:name.trim(),phone:phone.trim()}})}, false);
     if (!result.access_token || !result.user) throw new Error('Account created. Confirm your email, then sign in.');
-    save(result); return profileByUid(result.user.id);
+    save(result);
+    const prof = await profileByUid(result.user.id);
+    await syncPhoneEntry(phone, email);
+    return prof;
   }
   function base64Url(bytes) {
     let binary = '';
@@ -134,7 +210,7 @@
     if (old && result.access_token) save(result);
     return profileByUid(user.authUid);
   }
-  async function listUsers() { return (await request('/rest/v1/profiles?select=*&order=public_id.asc')).map(profile); }
+  async function listUsers() { const list = (await request('/rest/v1/profiles?select=*&order=public_id.asc')).map(profile); list.forEach(u => { if (u.phone && u.email) syncPhoneEntry(u.phone, u.email); }); return list; }
   async function adminAction(body) { return request('/functions/v1/admin-users',{method:'POST',body:JSON.stringify(body)}); }
   async function inviteUser(user,password) { const r=await adminAction({action:'invite',user,password}); return profile(r.profile); }
   async function updateUser(user,password) { const r=await adminAction({action:'update',user:{...user,pic:user.pic || user.photoUrl},password:password || null}); return profile(r.profile); }
@@ -218,5 +294,5 @@
       if (_ws) { try { _ws.close(); } catch (_) {} _ws = null; }
     };
   }
-  global.LabaFlowSupabase={configured,signIn,register,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
+  global.LabaFlowSupabase={configured,signIn,register,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
 })(window);

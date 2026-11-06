@@ -172,12 +172,38 @@ class AppProvider extends ChangeNotifier {
 
   // ── Auth ─────────────────────────────────────────────────
 
-  Future<String?> doLogin(String email, String pass) async {
+  static final RegExp _emailRe = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$');
+  static final RegExp _nameRe = RegExp(r"^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ.'’\- ]*$");
+
+  /// Normalises +63 / 63 prefixed numbers to the local 09XXXXXXXXX format.
+  static String normalizePhone(String value) {
+    var d = value.replaceAll(RegExp(r'[\s\-().]'), '');
+    if (d.startsWith('+63')) {
+      d = '0${d.substring(3)}';
+    } else if (RegExp(r'^63\d{10}$').hasMatch(d)) {
+      d = '0${d.substring(2)}';
+    }
+    return d;
+  }
+
+  static bool isValidPhone(String value) =>
+      RegExp(r'^09\d{9}$').hasMatch(normalizePhone(value));
+
+  Future<String?> doLogin(String identifier, String pass) async {
+    final id = identifier.trim();
+    if (id.isEmpty) return 'Enter your email or mobile number.';
+    if (id.contains('@') ? !_emailRe.hasMatch(id) : !isValidPhone(id)) {
+      return id.contains('@')
+          ? 'Enter a valid email address.'
+          : 'Enter a valid email or mobile number (e.g. 09XXXXXXXXX).';
+    }
+    if (pass.isEmpty) return 'Enter your password.';
     if (!LabaFlowSupabaseOptions.isConfigured) {
       return LabaFlowSupabaseOptions.setupMessage;
     }
     try {
-      currentUser = await SupabaseAuthService.instance.signIn(email, pass);
+      currentUser = await SupabaseAuthService.instance
+          .signIn(id.contains('@') ? id : normalizePhone(id), pass);
       await PushNotificationService.instance.initializeForUser(currentUser!);
       _watchNotifications();
       await reloadAll();
@@ -207,15 +233,35 @@ class AppProvider extends ChangeNotifier {
     required String pass,
     required String pass2,
   }) async {
-    if (name.isEmpty || email.isEmpty || pass.isEmpty) {
-      return 'Name, email and password required.';
+    name = name.trim().replaceAll(RegExp(r'\s+'), ' ');
+    email = email.trim().toLowerCase();
+    if (name.isEmpty) return 'Full name is required.';
+    if (name.length < 2 || name.length > 60 || !_nameRe.hasMatch(name)) {
+      return 'Enter your real name (letters only, at least 2 characters).';
     }
-    if (pass.length < 6) return 'Password must be at least 6 characters.';
+    if (email.isEmpty) return 'Email is required.';
+    if (!_emailRe.hasMatch(email)) {
+      return 'Enter a valid email address (e.g. juan@gmail.com).';
+    }
+    if (phone.trim().isEmpty) return 'Mobile number is required.';
+    if (!isValidPhone(phone)) {
+      return 'Enter a valid PH mobile number (09XXXXXXXXX).';
+    }
+    if (pass.isEmpty) return 'Password is required.';
+    if (RegExp(r'\s').hasMatch(pass)) return 'Password must not contain spaces.';
+    if (pass.length < 8) return 'Password must be at least 8 characters.';
+    if (!RegExp(r'[A-Za-z]').hasMatch(pass) || !RegExp(r'\d').hasMatch(pass)) {
+      return 'Password must include letters and numbers.';
+    }
     if (pass != pass2) return 'Passwords do not match.';
     if (!LabaFlowSupabaseOptions.isConfigured) {
       return LabaFlowSupabaseOptions.setupMessage;
     }
+    phone = normalizePhone(phone);
     try {
+      if (await SupabaseAuthService.instance.phoneRegistered(phone)) {
+        return 'This mobile number is already registered.';
+      }
       currentUser = await SupabaseAuthService.instance.register(
         name: name,
         email: email,
