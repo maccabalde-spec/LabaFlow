@@ -9,6 +9,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="supabase-config.js"></script>
 <script src="supabase-web-auth.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════
    LABAFLOW – LAUNDRY SHOP THEME
@@ -741,203 +744,1286 @@ body .content,.content{background-color:#edf7f8;background-image:radial-gradient
 .password-visibility:focus-visible{outline:2px solid #0284c7;outline-offset:1px;}
 
 
-/* ══════════════════════════════════════════════════════════════════
-   FIGMA UI/UX OVERHAUL — TYPOGRAPHY, ELEVATION, ACTIONS & WORKFLOW
-══════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SPINZY — LAUNDRY & FRESH CLOTHING DESIGN SYSTEM FOR LABAFLOW
+   Visual Reference: Spinzy Elementor Template Kit (Kitpro)
+   Preserves 100% of LabaFlow content, local images, branding & functionality
+══════════════════════════════════════════════════════════════════════════════ */
 :root {
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --grad-primary: linear-gradient(135deg, #078695 0%, #0284c7 55%, #0369a1 100%);
-  --grad-dark: linear-gradient(135deg, #0b253a 0%, #123943 60%, #078695 100%);
-  --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.90) 100%);
-  --shadow-elevated: 0 12px 32px -8px rgba(15, 23, 42, 0.10), 0 4px 12px -2px rgba(7, 134, 149, 0.07);
-  --shadow-hover: 0 18px 38px -10px rgba(7, 134, 149, 0.18), 0 6px 16px -4px rgba(15, 23, 42, 0.08);
+  /* Spinzy Global Color Palette */
+  --spinzy-sky:        #6EC1E4;
+  --spinzy-royal:      #5685F0;
+  --spinzy-blue:       #4579EE;
+  --spinzy-deep-blue:  #4065B8;
+  --spinzy-periwinkle: #739AF2;
+  --spinzy-navy:       #0E214E;
+  --spinzy-ice:        #EDF1FA;
+  --spinzy-pastel:     #D7E3FF;
+  --spinzy-canvas:     #F7F9FF;
+  --spinzy-gold:       #FFB600;
+  --spinzy-gold-hover: #FEB500;
+  --spinzy-butter:     #F8DB93;
+  --spinzy-butter-2:   #F8D682;
+  --spinzy-green:      #10B981;
+  --spinzy-muted:      #54595F;
+  --spinzy-text:       #7A7A7A;
+  --spinzy-border:     #D7E3FF;
+  --spinzy-teal-line:  rgba(116, 177, 178, 0.42);
+  --spinzy-white:      #FFFFFF;
+
+  /* Gradients from Spinzy post-3 & post-4 */
+  --spinzy-grad-blue:  linear-gradient(141deg, #4579EE 0%, #739AF2 100%);
+  --spinzy-grad-navy:  linear-gradient(135deg, #0E214E 0%, #1A3678 58%, #4579EE 100%);
+  --spinzy-grad-gold:  linear-gradient(135deg, #FFB600 0%, #FEB500 100%);
+
+  /* Map LabaFlow tokens to Spinzy tokens */
+  --lp-bg:      #F7F9FF;
+  --lp-white:   #FFFFFF;
+  --lp-text:    #0E214E;
+  --lp-muted:   #54595F;
+  --lp-subtle:  #EDF1FA;
+  --lp-border:  #D7E3FF;
+  --lp-accent:  #4579EE;
+  --lp-accent2: #4065B8;
+  --lp-navy:    #0E214E;
+
+  --bg:         #F7F9FF;
+  --sidebar:    #FFFFFF;
+  --surface:    #FFFFFF;
+  --card:       #FFFFFF;
+  --border:     #D7E3FF;
+  --accent:     #4579EE;
+  --accent2:    #4065B8;
+  --btn:        #0E214E;
+  --btn-hover:  #4579EE;
+  --text:       #0E214E;
+  --text-muted: #54595F;
+  --text-dim:   #7A7A7A;
+  --bubble-me:  #4579EE;
+
+  --font-display: 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-sans:    'Roboto', 'Figtree', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --radius-sm:   12px;
+  --radius-md:   18px;
+  --radius-card: 26px;
+  --radius-lg:   30px;
+  --radius-pill: 999px;
+  --shadow-card: 0 14px 36px -10px rgba(14, 33, 78, 0.08), 0 4px 14px -2px rgba(69, 121, 238, 0.06);
+  --shadow-hover: 0 22px 48px -12px rgba(69, 121, 238, 0.20), 0 8px 20px -4px rgba(14, 33, 78, 0.08);
 }
 
-body, input, select, textarea, button {
+body {
   font-family: var(--font-sans) !important;
+  background-color: var(--spinzy-canvas) !important;
+  color: var(--spinzy-navy) !important;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .lp-price-card-price, .loyalty-pts {
+h1, h2, h3, h4, h5, h6,
+.lp-nav-logo, .lp-section-title, .lp-price-card-name, .lp-price-card-price,
+.lp-btn, .btn, .sb-logo, .pt-logo, .tb-title, .sc-val, .loyalty-pts, .auth-logo {
   font-family: var(--font-display) !important;
 }
 
-/* ── LANDING PAGE UPGRADES ── */
-.lp-nav {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(7, 134, 149, 0.14) !important;
-  height: 70px !important;
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
+.mono-code {
+  font-family: var(--font-mono) !important;
 }
-.lp-nav-logo {
-  font-size: 24px !important;
-  letter-spacing: -0.6px !important;
+
+/* Spinzy Signature Gradient Text Span */
+.style-gradient {
+  background: linear-gradient(141deg, #4579EE 0%, #739AF2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+}
+
+/* Spinzy Section Eyebrow with Teardrop Bubble Icon */
+.lp-eyebrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  font-family: var(--font-display) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--spinzy-blue) !important;
+  background: #EDF1FA !important;
+  border: 1px solid #D7E3FF !important;
+  padding: 6px 16px 6px 10px !important;
+  border-radius: 999px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.7px !important;
+  margin-bottom: 14px !important;
+}
+.lp-eyebrow::before {
+  content: "🫧";
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--spinzy-grad-blue);
+  color: #FFFFFF;
+  font-size: 12px;
+  border-radius: 999px 999px 0px 999px;
+  flex-shrink: 0;
+}
+
+/* ── SPINZY LANDING PAGE CANVAS ── */
+#landing {
+  display: block;
+  background-color: #F7F9FF !important;
+  background-image:
+    radial-gradient(circle at 6% 12%, rgba(215, 227, 255, 0.65) 0%, transparent 28%),
+    radial-gradient(circle at 94% 22%, rgba(110, 193, 228, 0.22) 0%, transparent 26%),
+    radial-gradient(circle at 88% 72%, rgba(248, 219, 147, 0.25) 0%, transparent 25%),
+    linear-gradient(180deg, #F7F9FF 0%, #FFFFFF 45%, #F7F9FF 100%) !important;
+  background-attachment: scroll !important;
+}
+
+/* ── SPINZY TOP UTILITY BAR (post-72) ── */
+.lp-topbar-spinzy {
+  background: var(--spinzy-royal);
+  color: #FFFFFF;
+  padding: 10px 5vw;
+  font-size: 12.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.lp-topbar-items {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.lp-topbar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #F7F9FF;
+  font-weight: 500;
+}
+.lp-topbar-ico {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--spinzy-deep-blue);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.lp-topbar-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.lp-topbar-tag {
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11.5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+}
+
+/* ── SPINZY MAIN NAVBAR (post-72) ── */
+.lp-nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(247, 249, 255, 0.96) !important;
+  backdrop-filter: blur(14px) !important;
+  border: none !important;
+  border-bottom: 1px solid #D7E3FF !important;
+  padding: 0 max(5vw, calc((100vw - 1240px) / 2)) !important;
+  height: 82px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-shadow: 0 8px 28px rgba(14, 33, 78, 0.05) !important;
+}
+.lp-nav-logo {
+  font-size: 27px !important;
+  font-weight: 900 !important;
+  color: var(--spinzy-navy) !important;
+  letter-spacing: -0.7px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
 }
 .lp-nav-logo::before {
   content: "🫧";
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: var(--grad-primary);
-  color: #fff;
-  font-size: 17px;
-  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.28);
+  width: 42px;
+  height: 42px;
+  border-radius: 999px 999px 10px 999px;
+  background: var(--spinzy-grad-blue);
+  color: #FFFFFF;
+  font-size: 20px;
+  box-shadow: 0 8px 18px rgba(69, 121, 238, 0.30);
+}
+.lp-nav-logo span {
+  color: var(--spinzy-blue) !important;
+}
+.lp-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 .lp-nav-links a {
-  font-weight: 600 !important;
-  color: #334155 !important;
-  position: relative;
-  padding: 6px 2px;
+  font-family: var(--font-display) !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--spinzy-navy) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  padding: 6px 2px !important;
 }
-.lp-nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background: var(--grad-primary);
-  transition: width 0.22s ease;
-  border-radius: 2px;
-}
-.lp-nav-links a:hover::after {
-  width: 100%;
-}
-.lp-btn-solid {
-  background: var(--grad-primary) !important;
-  border: none !important;
-  box-shadow: 0 6px 18px rgba(7, 134, 149, 0.28) !important;
-  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
-}
-.lp-btn-solid:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(7, 134, 149, 0.36) !important;
-}
-.lp-hero h1 {
-  font-size: clamp(38px, 5vw, 58px) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -1.4px !important;
-}
-.lp-hero-card, .lp-step, .lp-svc, .lp-price-card, .lp-review {
-  border-radius: 18px !important;
-  box-shadow: var(--shadow-elevated) !important;
-  transition: transform 0.22s cubic-bezier(.16,1,.3,1), box-shadow 0.22s ease !important;
-}
-.lp-step:hover, .lp-svc:hover, .lp-price-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-hover) !important;
+.lp-nav-links a:hover {
+  color: var(--spinzy-blue) !important;
 }
 
-/* ── SIDEBAR & SHELL UPGRADES ── */
+/* ── SPINZY PILL BUTTONS (post-3) ── */
+.lp-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 46px !important;
+  padding: 11px 26px !important;
+  border-radius: 999px !important;
+  font-family: var(--font-display) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-decoration: none !important;
+  border: 1.5px solid transparent !important;
+}
+.lp-btn-solid {
+  background: var(--spinzy-navy) !important;
+  color: #FFFFFF !important;
+  border-color: var(--spinzy-navy) !important;
+  box-shadow: 0 10px 24px -6px rgba(14, 33, 78, 0.28) !important;
+}
+.lp-btn-solid:hover {
+  background: var(--spinzy-blue) !important;
+  border-color: var(--spinzy-blue) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 28px -6px rgba(69, 121, 238, 0.38) !important;
+}
+.lp-btn-outline {
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border: 1.5px solid #C6D7FF !important;
+  box-shadow: 0 4px 12px rgba(14, 33, 78, 0.04) !important;
+}
+.lp-btn-outline:hover {
+  background: var(--spinzy-ice) !important;
+  border-color: var(--spinzy-blue) !important;
+  color: var(--spinzy-blue) !important;
+  transform: translateY(-2px) !important;
+}
+.lp-btn-gold {
+  background: var(--spinzy-gold) !important;
+  color: var(--spinzy-navy) !important;
+  border-color: var(--spinzy-gold) !important;
+  box-shadow: 0 10px 24px -6px rgba(255, 182, 0, 0.40) !important;
+}
+.lp-btn-gold:hover {
+  background: var(--spinzy-navy) !important;
+  color: #FFFFFF !important;
+  border-color: var(--spinzy-navy) !important;
+  transform: translateY(-2px) !important;
+}
+.lp-btn-lg {
+  min-height: 54px !important;
+  padding: 14px 32px !important;
+  font-size: 15px !important;
+}
+.lp-btn-white {
+  background: var(--spinzy-navy) !important;
+  color: #FFFFFF !important;
+  border-color: var(--spinzy-navy) !important;
+}
+.lp-btn-white:hover {
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border-color: #FFFFFF !important;
+}
+
+/* ── SPINZY HERO SECTION (post-4) ── */
+.lp-hero-outer {
+  padding: 28px max(4vw, calc((100vw - 1280px) / 2)) 20px;
+}
+.lp-hero {
+  background-color: var(--spinzy-ice) !important;
+  background-image:
+    radial-gradient(circle at 88% 18%, rgba(215, 227, 255, 0.95) 0%, rgba(215, 227, 255, 0) 42%),
+    radial-gradient(circle at 12% 85%, rgba(110, 193, 228, 0.25) 0%, transparent 38%),
+    radial-gradient(circle at 75% 75%, rgba(248, 219, 147, 0.35) 0%, transparent 35%),
+    linear-gradient(135deg, #EDF1FA 0%, #E5ECFF 58%, #F2F6FF 100%) !important;
+  border-radius: 34px !important;
+  border: 1px solid #D7E3FF !important;
+  padding: 58px 52px !important;
+  max-width: 1240px !important;
+  margin: 24px auto 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 44px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 50px -18px rgba(14, 33, 78, 0.08) !important;
+}
+.lp-hero::before {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -90px;
+  top: -90px;
+  border-radius: 50%;
+  border: 36px solid rgba(69, 121, 238, 0.07);
+  pointer-events: none;
+}
+.lp-hero::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 44%;
+  bottom: -70px;
+  border-radius: 50%;
+  border: 24px solid rgba(255, 182, 0, 0.10);
+  pointer-events: none;
+  animation: none !important;
+}
+.lp-hero-left {
+  flex: 1 1 560px !important;
+  max-width: 590px !important;
+  position: relative;
+  z-index: 1;
+}
+.lp-hero-eyebrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border: 1px solid #D7E3FF !important;
+  padding: 7px 18px 7px 9px !important;
+  border-radius: 999px !important;
+  font-family: var(--font-display) !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  margin-bottom: 22px !important;
+  box-shadow: 0 6px 18px rgba(69, 121, 238, 0.10) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+.lp-hero-eyebrow span {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 999px 999px 0 999px !important;
+  background: var(--spinzy-gold) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.lp-hero-eyebrow span::after {
+  content: "★";
+  font-size: 12px;
+  color: var(--spinzy-navy);
+}
+.lp-hero h1 {
+  font-family: var(--font-display) !important;
+  font-size: clamp(40px, 4.8vw, 64px) !important;
+  font-weight: 800 !important;
+  line-height: 1.07 !important;
+  letter-spacing: -1.6px !important;
+  color: var(--spinzy-navy) !important;
+  margin-bottom: 20px !important;
+}
+.lp-hero h1 em {
+  font-style: normal !important;
+  background: var(--spinzy-grad-blue) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+.lp-hero p {
+  font-size: 16.5px !important;
+  color: var(--spinzy-muted) !important;
+  line-height: 1.68 !important;
+  margin-bottom: 30px !important;
+  max-width: 520px !important;
+}
+.lp-hero-actions {
+  display: flex !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+/* Spinzy Hero Dual Feature Cards (matching .elementor-element-71874547 & 79149e81) */
+.lp-spinzy-hero-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+.lp-spinzy-hcard-blue {
+  background: var(--spinzy-grad-blue);
+  color: #FFFFFF;
+  border-radius: 26px;
+  padding: 20px 22px;
+  box-shadow: 0 14px 30px -8px rgba(69, 121, 238, 0.35);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.lp-spinzy-hcard-blue-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--spinzy-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.lp-spinzy-hcard-white {
+  background: #FFFFFF;
+  color: var(--spinzy-navy);
+  border: 1px solid var(--spinzy-teal-line);
+  border-radius: 26px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.lp-spinzy-hcard-gold-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* Hero Right Visual Column */
+.lp-hero-right {
+  flex: 0 0 440px !important;
+  max-width: 440px !important;
+  position: relative;
+  z-index: 1;
+}
+.lp-hero-photo-wrap {
+  position: relative;
+  margin-bottom: 16px;
+}
+.lp-hero-photo {
+  display: block !important;
+  width: 100% !important;
+  height: 230px !important;
+  object-fit: cover !important;
+  border-radius: 28px !important;
+  border: 4px solid #FFFFFF !important;
+  box-shadow: 0 16px 36px -10px rgba(14, 33, 78, 0.16) !important;
+  margin-bottom: 0 !important;
+}
+.lp-hero-float-badge {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(14, 33, 78, 0.18);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lp-hero-float-rfid {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(14, 33, 78, 0.90);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 13px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lp-hero-card {
+  background: #FFFFFF !important;
+  border-radius: 30px !important;
+  padding: 26px 28px !important;
+  border: 1px solid #D7E3FF !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.lp-hero-card-title {
+  font-family: var(--font-display) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-navy) !important;
+  margin-bottom: 14px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lp-hero-card-title::after {
+  content: "₱ PHP";
+  font-size: 11px;
+  font-weight: 800;
+  background: #EDF1FA;
+  color: var(--spinzy-blue);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 14px !important;
+  margin-bottom: 8px;
+  background: #F7F9FF;
+  border: 1px solid #E2ECFF !important;
+  border-radius: 16px;
+}
+.price-row:last-of-type {
+  margin-bottom: 0;
+}
+.price-row-label {
+  font-family: var(--font-display) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: var(--spinzy-navy) !important;
+}
+.price-row-sub {
+  font-size: 11.5px !important;
+  color: var(--spinzy-muted) !important;
+}
+.price-row-val {
+  font-family: var(--font-display) !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-blue) !important;
+  background: #FFFFFF;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid #D7E3FF;
+}
+
+/* ── SPINZY BADGES RIBBON ── */
+.lp-badges {
+  max-width: 1240px;
+  margin: 22px auto 0;
+  background: var(--spinzy-grad-blue) !important;
+  border: none !important;
+  border-radius: 999px;
+  padding: 16px 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  gap: 20px !important;
+  flex-wrap: wrap !important;
+  box-shadow: 0 14px 32px -10px rgba(69, 121, 238, 0.35) !important;
+}
+.lp-badge-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: #FFFFFF !important;
+  font-family: var(--font-display) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+}
+.lp-badge-item::before {
+  content: "✓";
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.lp-badge-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px !important;
+  font-weight: 800;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 18px rgba(255, 182, 0, 0.30);
+}
+
+/* ── SECTION HEADINGS (Spinzy Style) ── */
+.lp-section {
+  padding: 84px 5vw !important;
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+}
+.lp-section-title {
+  font-family: var(--font-display) !important;
+  font-size: clamp(30px, 3.4vw, 44px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -1px !important;
+  line-height: 1.12 !important;
+  color: var(--spinzy-navy) !important;
+  margin-bottom: 14px !important;
+}
+.lp-section-sub {
+  font-size: 16px !important;
+  color: var(--spinzy-muted) !important;
+  line-height: 1.65 !important;
+  max-width: 560px !important;
+}
+
+/* ── HOW IT WORKS (Spinzy 30px Process Cards) ── */
+.lp-steps {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+  margin-top: 44px !important;
+}
+.lp-step {
+  background: #FFFFFF !important;
+  border-radius: 30px !important;
+  padding: 20px !important;
+  border: 1px solid #D7E3FF !important;
+  box-shadow: var(--shadow-card) !important;
+  position: relative !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+  display: flex;
+  flex-direction: column;
+}
+.lp-step:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--spinzy-blue) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+.lp-step-num {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: var(--spinzy-ice) !important;
+  color: var(--spinzy-navy) !important;
+  font-family: var(--font-display) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  padding: 8px 14px !important;
+  border-radius: 999px !important;
+  margin-bottom: 14px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+.lp-step-num::after {
+  content: "●";
+  color: var(--spinzy-gold);
+  font-size: 14px;
+}
+.lp-step-photo {
+  display: block !important;
+  width: 100% !important;
+  height: 195px !important;
+  min-height: 195px !important;
+  object-fit: cover !important;
+  border-radius: 22px !important;
+  margin-bottom: 18px !important;
+  background: #EDF1FA;
+}
+.lp-step h4 {
+  font-family: var(--font-display) !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-navy) !important;
+  margin-bottom: 8px !important;
+}
+.lp-step p {
+  font-size: 13.5px !important;
+  color: var(--spinzy-muted) !important;
+  line-height: 1.6 !important;
+}
+
+/* ── SERVICES SECTION (Spinzy Soft Ice Section + 30px Cards) ── */
+.lp-services-bg {
+  background: var(--spinzy-ice) !important;
+  border-radius: 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+  border: 1px solid #D7E3FF;
+}
+.lp-services-inner {
+  padding: 80px 4vw !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+.lp-services-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  margin-top: 44px !important;
+}
+.lp-svc {
+  background: #FFFFFF !important;
+  border: 1px solid #D7E3FF !important;
+  border-radius: 30px !important;
+  padding: 22px !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+  display: flex;
+  flex-direction: column;
+}
+.lp-svc:hover {
+  transform: translateY(-6px) !important;
+  border-color: var(--spinzy-blue) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+.lp-svc-photo {
+  display: block !important;
+  width: 100% !important;
+  height: 210px !important;
+  min-height: 210px !important;
+  object-fit: cover !important;
+  border-radius: 22px !important;
+  margin-bottom: 18px !important;
+  background: #EDF1FA;
+}
+.lp-svc-photo[src*="zonrox"] {
+  object-fit: contain !important;
+  padding: 14px !important;
+  background: linear-gradient(145deg, #EDF1FA 0%, #D7E3FF 100%) !important;
+}
+.lp-svc h4 {
+  font-family: var(--font-display) !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-navy) !important;
+  margin-bottom: 8px !important;
+}
+.lp-svc p {
+  font-size: 13.5px !important;
+  color: var(--spinzy-muted) !important;
+  line-height: 1.6 !important;
+  flex: 1;
+}
+.lp-svc-badge {
+  display: inline-flex !important;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  margin-top: 16px !important;
+  padding: 6px 14px !important;
+  background: var(--spinzy-ice) !important;
+  color: var(--spinzy-blue) !important;
+  border: 1px solid #C6D7FF !important;
+  border-radius: 999px !important;
+  font-family: var(--font-display) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+.lp-svc-badge::before {
+  content: "●";
+  color: var(--spinzy-gold);
+}
+
+/* ── PRICING SECTION (Spinzy Pricing Cards) ── */
+.lp-pricing-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 26px !important;
+  margin-top: 48px !important;
+  align-items: stretch;
+}
+.lp-price-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #D7E3FF !important;
+  border-radius: 30px !important;
+  padding: 36px 30px !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.lp-price-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+.lp-price-card-label {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--spinzy-ice);
+  color: var(--spinzy-blue);
+  font-family: var(--font-display);
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 14px !important;
+}
+.lp-price-card-name {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-navy) !important;
+}
+.lp-price-card-price {
+  font-size: 44px !important;
+  font-weight: 900 !important;
+  color: var(--spinzy-blue) !important;
+  letter-spacing: -1.2px !important;
+  margin: 14px 0 6px !important;
+}
+.lp-price-card-price sup {
+  font-size: 20px !important;
+}
+.lp-price-card-price span {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--spinzy-muted) !important;
+}
+.lp-price-card-desc {
+  font-size: 13.5px !important;
+  color: var(--spinzy-muted) !important;
+  margin-bottom: 22px !important;
+  line-height: 1.55 !important;
+}
+.lp-price-features {
+  list-style: none !important;
+  margin-bottom: 28px !important;
+  flex: 1;
+}
+.lp-price-features li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-size: 13.5px !important;
+  color: var(--spinzy-navy) !important;
+  padding: 9px 0 !important;
+  border-bottom: 1px solid #EDF1FA !important;
+}
+.lp-price-features li::before {
+  content: '✓' !important;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900 !important;
+  flex-shrink: 0;
+}
+.lp-price-feat-badge {
+  background: #D7E3FF !important;
+  color: var(--spinzy-navy) !important;
+  font-family: var(--font-display);
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  padding: 2px 9px !important;
+  border-radius: 999px !important;
+}
+
+/* Spinzy Featured Center Pricing Card (Royal Blue Gradient + Gold Accents) */
+.lp-price-card.featured {
+  background: var(--spinzy-grad-blue) !important;
+  border-color: transparent !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 24px 52px -12px rgba(69, 121, 238, 0.42) !important;
+  transform: translateY(-6px);
+}
+.lp-price-card.featured:hover {
+  transform: translateY(-10px) !important;
+}
+.lp-price-card.featured .lp-price-card-label {
+  background: var(--spinzy-gold) !important;
+  color: var(--spinzy-navy) !important;
+}
+.lp-price-card.featured .lp-price-card-name,
+.lp-price-card.featured .lp-price-card-price,
+.lp-price-card.featured .lp-price-features li {
+  color: #FFFFFF !important;
+}
+.lp-price-card.featured .lp-price-card-price span,
+.lp-price-card.featured .lp-price-card-desc {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+.lp-price-card.featured .lp-price-features li {
+  border-bottom-color: rgba(255, 255, 255, 0.18) !important;
+}
+.lp-price-card.featured .lp-price-feat-badge {
+  background: var(--spinzy-gold) !important;
+  color: var(--spinzy-navy) !important;
+}
+.lp-price-card.featured .lp-btn-solid {
+  background: var(--spinzy-gold) !important;
+  color: var(--spinzy-navy) !important;
+  border-color: var(--spinzy-gold) !important;
+}
+.lp-price-card.featured .lp-btn-solid:hover {
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border-color: #FFFFFF !important;
+}
+
+/* ── REVIEWS & FAQ (Spinzy Cards & Accordions) ── */
+#reviews {
+  background: var(--spinzy-ice) !important;
+  border-radius: 40px;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  border: 1px solid #D7E3FF;
+}
+.lp-review {
+  background: #FFFFFF !important;
+  border: 1px solid #D7E3FF !important;
+  border-radius: 28px !important;
+  padding: 28px 26px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.lp-review-stars, .lp-rating-stars {
+  color: var(--spinzy-gold) !important;
+}
+.lp-review-form {
+  background: #FFFFFF !important;
+  border: 1px solid #D7E3FF !important;
+  border-radius: 30px !important;
+  padding: 30px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.lp-rf-input {
+  border-radius: 16px !important;
+  border: 1.5px solid #D7E3FF !important;
+  background: #F7F9FF !important;
+  padding: 12px 16px !important;
+}
+.lp-rf-input:focus {
+  border-color: var(--spinzy-blue) !important;
+  background: #FFFFFF !important;
+}
+
+.lp-faq-list {
+  margin-top: 36px !important;
+  max-width: 860px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lp-faq-item {
+  background: #FFFFFF !important;
+  border: 1.5px solid #D7E3FF !important;
+  border-radius: 22px !important;
+  padding: 0 22px !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: all 0.2s ease;
+}
+.lp-faq-item.open {
+  border-color: var(--spinzy-blue) !important;
+  background: #F7F9FF !important;
+}
+.lp-faq-q {
+  font-family: var(--font-display) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--spinzy-navy) !important;
+  padding: 20px 4px !important;
+}
+.lp-faq-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--spinzy-ice);
+  color: var(--spinzy-blue) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+.lp-faq-item.open .lp-faq-icon {
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy) !important;
+}
+
+/* ── SPINZY CTA BANNERS & DEEP NAVY FOOTER (post-76) ── */
+#tracking .lp-cta-bg {
+  background: var(--spinzy-grad-blue) !important;
+  color: #FFFFFF !important;
+  border-radius: 32px !important;
+  padding: 56px 40px !important;
+  border: none !important;
+  box-shadow: 0 22px 48px -12px rgba(69, 121, 238, 0.38) !important;
+}
+#tracking .lp-cta-bg h2 {
+  color: #FFFFFF !important;
+}
+#tracking .lp-cta-bg p {
+  color: rgba(255, 255, 255, 0.90) !important;
+}
+#tracking .lp-cta-bg .lp-btn-white {
+  background: var(--spinzy-gold) !important;
+  color: var(--spinzy-navy) !important;
+  border-color: var(--spinzy-gold) !important;
+}
+#tracking .lp-cta-bg .lp-btn-white:hover {
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border-color: #FFFFFF !important;
+}
+
+/* Bottom Overlapping Spinzy Gold Banner (matching .elementor-76 .elementor-element-4357bb9b) */
+#landing > .lp-cta-bg {
+  max-width: 1180px;
+  margin: 20px auto -64px !important;
+  position: relative;
+  z-index: 3;
+  background: var(--spinzy-gold) !important;
+  border-radius: 32px !important;
+  padding: 52px 44px !important;
+  border: none !important;
+  box-shadow: 0 24px 50px -12px rgba(14, 33, 78, 0.25) !important;
+}
+#landing > .lp-cta-bg h2 {
+  color: var(--spinzy-navy) !important;
+}
+#landing > .lp-cta-bg p {
+  color: rgba(14, 33, 78, 0.82) !important;
+}
+
+.lp-footer {
+  background: var(--spinzy-navy) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  padding: 116px max(5vw, calc((100vw - 1200px) / 2)) 36px !important;
+  border-top: none !important;
+}
+.lp-footer-logo {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  color: #FFFFFF !important;
+}
+.lp-footer-logo span {
+  color: var(--spinzy-gold) !important;
+}
+.lp-footer-desc {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+.lp-footer-col h5 {
+  font-family: var(--font-display) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: var(--spinzy-gold) !important;
+}
+.lp-footer-col a {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+.lp-footer-col a:hover {
+  color: var(--spinzy-gold) !important;
+}
+.lp-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+.lp-footer-bottom span {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+/* ── AUTH MODAL (Spinzy Style) ── */
+.auth-card {
+  background: #FFFFFF !important;
+  border-radius: 30px !important;
+  border: 2px solid #D7E3FF !important;
+  box-shadow: 0 28px 70px rgba(14, 33, 78, 0.35) !important;
+}
+.auth-logo {
+  color: var(--spinzy-navy) !important;
+  font-size: 26px !important;
+}
+.auth-logo span {
+  color: var(--spinzy-blue) !important;
+}
+.auth-tab.active {
+  color: var(--spinzy-blue) !important;
+  border-bottom-color: var(--spinzy-blue) !important;
+}
+.lfg input, .lfg select, .lfg textarea {
+  border-radius: 14px !important;
+  border: 1.5px solid #D7E3FF !important;
+  background: #F7F9FF !important;
+}
+.lfg input:focus, .lfg select:focus {
+  border-color: var(--spinzy-blue) !important;
+  background: #FFFFFF !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SPINZY REDESIGN FOR ALL USER DASHBOARDS & BACKGROUNDS (ADMIN, SELLER, CUSTOMER)
+══════════════════════════════════════════════════════════════════════════════ */
+#app, #portal, body .content, .content, .pt-wrap {
+  background-color: #F7F9FF !important;
+  background-image:
+    radial-gradient(circle at 7% 14%, rgba(215, 227, 255, 0.78) 0%, transparent 32%),
+    radial-gradient(circle at 93% 12%, rgba(110, 193, 228, 0.28) 0%, transparent 30%),
+    radial-gradient(circle at 88% 85%, rgba(248, 219, 147, 0.32) 0%, transparent 32%),
+    radial-gradient(circle at 16% 86%, rgba(115, 154, 242, 0.18) 0%, transparent 30%),
+    linear-gradient(145deg, #F7F9FF 0%, #EDF1FA 52%, #F5F8FF 100%) !important;
+}
+
+/* Sidebar (Spinzy Clean White + Royal Blue & Navy Accents) */
 .sidebar {
-  width: 248px !important;
-  background: linear-gradient(180deg, #ffffff 0%, #f7fbfc 100%) !important;
-  border-right: 1px solid #d5e8eb !important;
-  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.03);
+  width: 252px !important;
+  background: #FFFFFF !important;
+  border-right: 1px solid #D7E3FF !important;
+  box-shadow: 6px 0 28px rgba(14, 33, 78, 0.04) !important;
 }
 .sb-brand {
   padding: 20px 18px 16px !important;
+  border-bottom: 1px solid #EDF1FA !important;
 }
 .sb-icon {
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 12px !important;
-  background: var(--grad-primary) !important;
-  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.28);
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 999px 999px 10px 999px !important;
+  background: var(--spinzy-grad-blue) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 18px rgba(69, 121, 238, 0.28) !important;
 }
 .sb-logo {
-  font-size: 19px !important;
-  letter-spacing: -0.4px;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  color: var(--spinzy-navy) !important;
+}
+.sb-logo span {
+  color: var(--spinzy-blue) !important;
 }
 .sb-user {
   margin: 12px 12px 6px !important;
-  padding: 12px !important;
-  border-radius: 12px !important;
-  background: linear-gradient(135deg, #f0f9fa 0%, #e4f4f6 100%) !important;
-  border: 1px solid #cde6e9 !important;
+  padding: 12px 14px !important;
+  border-radius: 20px !important;
+  background: #EDF1FA !important;
+  border: 1px solid #D7E3FF !important;
+}
+.sb-av {
+  border-radius: 50% !important;
+  background: var(--spinzy-grad-blue) !important;
+}
+.sb-uname {
+  color: var(--spinzy-navy) !important;
+  font-family: var(--font-display) !important;
+  font-weight: 800 !important;
 }
 .sb-nav {
-  padding: 8px 10px !important;
+  padding: 10px 12px !important;
 }
 .nav-item {
-  border-radius: 10px !important;
-  margin-bottom: 3px !important;
-  padding: 10px 13px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
+  border-radius: 999px !important;
+  margin-bottom: 4px !important;
+  padding: 11px 16px !important;
+  font-family: var(--font-display) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: var(--spinzy-muted) !important;
   border-left: none !important;
-  color: #475569 !important;
-  transition: all 0.16s ease !important;
+  transition: all 0.18s ease !important;
 }
 .nav-item:hover {
-  background: rgba(7, 134, 149, 0.08) !important;
-  color: #078695 !important;
-  transform: translateX(2px);
+  background: #EDF1FA !important;
+  color: var(--spinzy-blue) !important;
+  transform: translateX(3px);
 }
 .nav-item.active {
-  background: var(--grad-primary) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.25) !important;
-}
-.nav-item.active .ni {
-  transform: scale(1.08);
+  background: var(--spinzy-grad-blue) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 20px -4px rgba(69, 121, 238, 0.38) !important;
 }
 
-/* ── TOPBAR WITH GLOBAL QUICK ACTIONS ── */
-.topbar {
-  height: 64px !important;
+/* Topbar & Quick Actions */
+.topbar, .pt-nav {
+  height: 68px !important;
   padding: 0 24px !important;
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #d5e8eb !important;
-  gap: 12px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid #D7E3FF !important;
+  box-shadow: 0 4px 20px rgba(14, 33, 78, 0.04) !important;
 }
 .tb-left-wrap {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0;
 }
 .tb-title {
-  font-size: 18px !important;
+  font-size: 19px !important;
   font-weight: 800 !important;
-  color: #0f172a !important;
-  letter-spacing: -0.3px;
-  white-space: nowrap;
+  color: var(--spinzy-navy) !important;
 }
 .tb-live-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  color: #047857;
-  font-size: 11px;
-  font-weight: 700;
-  white-space: nowrap;
+  background: #EDF1FA;
+  border: 1px solid #C6D7FF;
+  color: var(--spinzy-blue);
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 800;
 }
 .tb-live-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
-  animation: pulseDot 1.8s infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(1.18); }
+  background: var(--spinzy-gold);
+  box-shadow: 0 0 0 3px rgba(255, 182, 0, 0.28);
 }
 .tb-quick-actions {
   display: flex;
@@ -949,42 +2035,46 @@ h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .l
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 13px;
-  border-radius: 9px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  border: 1px solid #cde4e7;
-  background: #f4fbfb;
-  color: #066c79;
-  transition: all 0.16s ease;
-  white-space: nowrap;
+  border: 1px solid #D7E3FF;
+  background: #EDF1FA;
+  color: var(--spinzy-navy);
+  transition: all 0.18s ease;
 }
 .tb-qa-btn:hover {
-  background: #e0f4f6;
-  border-color: #078695;
+  background: var(--spinzy-blue);
+  color: #FFFFFF;
+  border-color: var(--spinzy-blue);
   transform: translateY(-1px);
 }
 .tb-qa-btn.primary {
-  background: var(--grad-primary);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.24);
+  background: var(--spinzy-navy);
+  color: #FFFFFF;
+  border-color: var(--spinzy-navy);
+  box-shadow: 0 6px 16px rgba(14, 33, 78, 0.22);
 }
 .tb-qa-btn.primary:hover {
-  box-shadow: 0 6px 16px rgba(7, 134, 149, 0.34);
+  background: var(--spinzy-blue);
+  border-color: var(--spinzy-blue);
 }
 
-/* ── STAT CARDS & CARDS ── */
+/* Dashboard Cards, Stat Cards & Tables (Spinzy 24px Rounded Style) */
+.sc, .card, .ord-card, .pt-quick-card, .loyalty-card, .dash-actions {
+  background: #FFFFFF !important;
+  border: 1px solid #D7E3FF !important;
+  border-radius: 24px !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
 .sc {
   position: relative;
   overflow: hidden;
-  border-radius: 16px !important;
-  padding: 18px 20px !important;
-  background: #ffffff !important;
-  border: 1px solid #d5e8eb !important;
-  box-shadow: var(--shadow-elevated) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  padding: 20px 22px !important;
 }
 .sc::before {
   content: "";
@@ -992,109 +2082,149 @@ h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .l
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--grad-primary);
+  height: 5px;
+  background: var(--spinzy-grad-blue);
 }
-.sc:hover {
-  transform: translateY(-3px);
+.sc:hover, .pt-quick-card:hover, .ord-card:hover {
+  transform: translateY(-4px) !important;
   box-shadow: var(--shadow-hover) !important;
+  border-color: #9BB8FF !important;
 }
 .sc-val {
-  font-size: 29px !important;
-  font-weight: 800 !important;
-  color: #0f172a !important;
-  letter-spacing: -0.8px !important;
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  color: var(--spinzy-navy) !important;
 }
 .sc-lbl {
-  font-size: 11px !important;
+  font-family: var(--font-display) !important;
+  font-size: 11.5px !important;
   font-weight: 700 !important;
-  color: #64748b !important;
-  letter-spacing: 0.5px !important;
-  margin-top: 4px !important;
-}
-.card {
-  border-radius: 16px !important;
-  border: 1px solid #d5e8eb !important;
-  box-shadow: var(--shadow-elevated) !important;
-  background: #ffffff !important;
+  color: var(--spinzy-muted) !important;
 }
 .ch {
-  padding: 15px 20px !important;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fcfd 100%) !important;
-  border-bottom: 1px solid #e2eff1 !important;
+  padding: 16px 22px !important;
+  background: #EDF1FA !important;
+  border-bottom: 1px solid #D7E3FF !important;
 }
 .ch h4 {
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 800 !important;
-  color: #0f172a !important;
+  color: var(--spinzy-navy) !important;
+}
+th {
+  background: #F7F9FF !important;
+  color: var(--spinzy-navy) !important;
+  font-family: var(--font-display) !important;
+  font-weight: 800 !important;
+  border-bottom: 1px solid #D7E3FF !important;
+}
+td {
+  color: var(--spinzy-navy) !important;
+  border-bottom: 1px solid #EDF1FA !important;
+}
+tbody tr:hover td {
+  background: rgba(69, 121, 238, 0.04) !important;
 }
 
-/* ── GRANULAR ORDER STATUS BADGES ── */
+/* Dashboard Buttons & Chips */
+.btn {
+  border-radius: 999px !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  padding: 9px 18px !important;
+}
+.btn-primary {
+  background: var(--spinzy-navy) !important;
+  border-color: var(--spinzy-navy) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 16px rgba(14, 33, 78, 0.18) !important;
+}
+.btn-primary:hover {
+  background: var(--spinzy-blue) !important;
+  border-color: var(--spinzy-blue) !important;
+}
+.btn-ghost {
+  background: #FFFFFF !important;
+  color: var(--spinzy-navy) !important;
+  border: 1px solid #C6D7FF !important;
+}
+.btn-ghost:hover {
+  background: #EDF1FA !important;
+  border-color: var(--spinzy-blue) !important;
+  color: var(--spinzy-blue) !important;
+}
+.chip {
+  border-radius: 999px !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  background: #FFFFFF !important;
+  border: 1px solid #D7E3FF !important;
+  color: var(--spinzy-muted) !important;
+}
+.chip.on, .chip:hover {
+  background: var(--spinzy-blue) !important;
+  color: #FFFFFF !important;
+  border-color: var(--spinzy-blue) !important;
+}
+
+/* Status Badges */
 .badge {
   border-radius: 999px !important;
-  padding: 4px 11px !important;
+  padding: 5px 12px !important;
+  font-family: var(--font-display) !important;
   font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.2px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+  font-weight: 800 !important;
 }
-.s-PENDING { background: #fef3c7 !important; color: #92400e !important; border: 1px solid #fde68a !important; }
-.s-RECEIVED { background: #e0f2fe !important; color: #0369a1 !important; border: 1px solid #bae6fd !important; }
-.s-WASHING, .s-PROCESSING { background: #cffafe !important; color: #0e7490 !important; border: 1px solid #a5f3fc !important; }
-.s-DRYING { background: #ffedd5 !important; color: #c2410c !important; border: 1px solid #fed7aa !important; }
-.s-FOLDING { background: #e0e7ff !important; color: #4338ca !important; border: 1px solid #c7d2fe !important; }
-.s-READY { background: #dcfce7 !important; color: #047857 !important; border: 1px solid #86efac !important; }
-.s-RELEASED { background: #f3e8ff !important; color: #6d28d9 !important; border: 1px solid #ddd6fe !important; }
-.s-CANCELLED { background: #fee2e2 !important; color: #b91c1c !important; border: 1px solid #fecaca !important; }
+.s-PENDING    { background: #FEF3C7 !important; color: #92400E !important; border: 1px solid #FDE68A !important; }
+.s-RECEIVED   { background: #D7E3FF !important; color: #0E214E !important; border: 1px solid #9BB8FF !important; }
+.s-WASHING, .s-PROCESSING { background: #E0F2FE !important; color: #0369A1 !important; border: 1px solid #7DD3FC !important; }
+.s-DRYING     { background: #FFEDD5 !important; color: #C2410C !important; border: 1px solid #FED7AA !important; }
+.s-FOLDING    { background: #E0E7FF !important; color: #3730A3 !important; border: 1px solid #C7D2FE !important; }
+.s-READY      { background: #DCFCE7 !important; color: #047857 !important; border: 1px solid #86EFAC !important; }
+.s-RELEASED   { background: #F3E8FF !important; color: #6D28D9 !important; border: 1px solid #DDD6FE !important; }
 
-/* ── RFID SCANNER TERMINAL & DUPLICATE TAG ALERT ── */
+/* RFID Scanner & Duplicate Alert */
 .rfid-grid {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
-  gap: 18px;
+  gap: 20px;
   align-items: start;
 }
 .rfid-terminal {
-  background: linear-gradient(145deg, #0b2236 0%, #103347 60%, #0d4456 100%);
-  color: #ffffff;
-  border-radius: 18px;
-  padding: 22px;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 18px 40px -12px rgba(7, 34, 54, 0.35);
-  position: relative;
-  overflow: hidden;
+  background: var(--spinzy-grad-navy);
+  color: #FFFFFF;
+  border-radius: 28px;
+  padding: 26px;
+  border: 2px solid #739AF2;
+  box-shadow: 0 20px 44px -12px rgba(14, 33, 78, 0.35);
 }
 .rfid-reader-ring {
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: rgba(56, 189, 248, 0.14);
-  border: 2px solid rgba(56, 189, 248, 0.55);
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
   margin: 0 auto 12px;
-  box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.07);
+  box-shadow: 0 0 0 8px rgba(255, 182, 0, 0.22);
 }
 .dup-alert-box {
-  background: #fef2f2;
-  border: 2px solid #ef4444;
-  color: #7f1d1d;
-  border-radius: 14px;
+  background: #FEF2F2;
+  border: 2px solid #EF4444;
+  color: #7F1D1D;
+  border-radius: 20px;
   padding: 16px;
   margin-top: 14px;
-  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
 }
 .dup-alert-title {
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 14px;
-  color: #b91c1c;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #B91C1C;
   margin-bottom: 6px;
 }
 .stage-pill-grid {
@@ -1104,421 +2234,111 @@ h1, h2, h3, h4, .lp-nav-logo, .sb-logo, .pt-logo, .sc-val, .lp-section-title, .l
   margin-top: 12px;
 }
 .stage-btn {
-  padding: 10px 10px;
-  border-radius: 10px;
-  border: 1px solid #cde4e7;
-  background: #f8fcfd;
-  color: #0f172a;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid #D7E3FF;
+  background: #F7F9FF;
+  color: var(--spinzy-navy);
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   transition: all 0.15s ease;
 }
 .stage-btn:hover:not(:disabled) {
-  background: #e0f4f6;
-  border-color: #078695;
-  transform: translateY(-1px);
+  background: #EDF1FA;
+  border-color: var(--spinzy-blue);
 }
 .stage-btn.active-stage {
-  background: var(--grad-primary);
-  color: #fff;
+  background: var(--spinzy-grad-blue);
+  color: #FFFFFF;
   border-color: transparent;
-  box-shadow: 0 4px 12px rgba(7, 134, 149, 0.28);
+  box-shadow: 0 6px 14px rgba(69, 121, 238, 0.32);
 }
 
-/* ── CUSTOMER PORTAL MODERN LAYOUT ── */
-.pt-nav {
-  height: 64px !important;
-  padding: 0 24px !important;
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid #d5e8eb !important;
-}
+/* Customer Portal Tabs & Hero Banner */
 .pt-tabs {
-  background: #ffffff !important;
-  padding: 8px 20px !important;
-  gap: 6px;
-  border-bottom: 1px solid #d5e8eb !important;
+  background: #FFFFFF !important;
+  padding: 10px 20px !important;
+  gap: 8px;
+  border-bottom: 1px solid #D7E3FF !important;
 }
 .pt-tab {
-  padding: 9px 15px !important;
-  border-radius: 10px !important;
+  padding: 9px 18px !important;
+  border-radius: 999px !important;
   border-bottom: none !important;
   margin-bottom: 0 !important;
-  font-size: 12.5px !important;
+  font-family: var(--font-display) !important;
+  font-size: 13px !important;
   font-weight: 700 !important;
-  color: #475569 !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.16s ease !important;
+  color: var(--spinzy-muted) !important;
 }
 .pt-tab:hover {
-  background: #f0f9fa !important;
-  color: #078695 !important;
+  background: #EDF1FA !important;
+  color: var(--spinzy-blue) !important;
 }
 .pt-tab.active {
-  background: var(--grad-primary) !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(7, 134, 149, 0.25);
+  background: var(--spinzy-grad-blue) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 16px rgba(69, 121, 238, 0.30);
 }
 .pt-content {
-  max-width: 1040px !important;
-  padding: 26px 24px 48px !important;
+  max-width: 1080px !important;
+  padding: 28px 24px 56px !important;
 }
 .pt-hero-banner {
-  background: var(--grad-dark);
-  color: #ffffff;
-  border-radius: 20px;
-  padding: 26px 28px;
-  margin-bottom: 20px;
+  background: var(--spinzy-grad-navy) !important;
+  color: #FFFFFF;
+  border-radius: 30px !important;
+  padding: 30px 32px !important;
+  margin-bottom: 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-  box-shadow: 0 16px 36px -10px rgba(11, 37, 58, 0.35);
+  border: 1px solid #739AF2 !important;
+  box-shadow: 0 20px 44px -12px rgba(14, 33, 78, 0.32) !important;
 }
 .pt-quick-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 .pt-quick-card {
-  background: #ffffff;
-  border: 1px solid #d5e8eb;
-  border-radius: 15px;
-  padding: 16px;
+  padding: 18px;
   cursor: pointer;
-  transition: all 0.18s ease;
-  box-shadow: var(--shadow-elevated);
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-.pt-quick-card:hover {
-  transform: translateY(-3px);
-  border-color: #078695;
-  box-shadow: var(--shadow-hover);
+  gap: 14px;
 }
 .pt-quick-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: #e6f6f8;
-  color: #078695;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--spinzy-gold);
+  color: var(--spinzy-navy);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   flex-shrink: 0;
 }
-.mono-code {
-  font-family: var(--font-mono) !important;
-}
-@media (max-width: 900px) {
+
+@media (max-width: 960px) {
+  .lp-topbar-spinzy { display: none; }
+  .lp-hero { flex-direction: column; padding: 36px 24px !important; margin: 14px 16px 0 !important; }
+  .lp-hero-right { flex: 1 1 auto !important; width: 100% !important; max-width: 560px !important; }
+  .lp-spinzy-hero-cards { grid-template-columns: 1fr; }
+  .lp-badges { border-radius: 26px; margin: 16px 16px 0; padding: 18px 20px !important; }
   .rfid-grid { grid-template-columns: 1fr; }
   .pt-quick-grid { grid-template-columns: repeat(2, 1fr); }
   .tb-quick-actions { display: none; }
 }
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .pt-quick-grid { grid-template-columns: 1fr; }
   .stage-pill-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-
-/* ══════════════════════════════════════════════════════════════════════════
-   OPTION 1: AQUA GLASS & BENTO — FROSTED GLASSMORPHISM + OCEAN MESH AURORA
-══════════════════════════════════════════════════════════════════════════ */
-:root {
-  --grad-primary: linear-gradient(135deg, #06b6d4 0%, #0284c7 52%, #0d9488 100%) !important;
-  --grad-aurora-hero:
-    radial-gradient(circle at 12% 18%, rgba(6, 182, 212, 0.30) 0%, transparent 38%),
-    radial-gradient(circle at 88% 16%, rgba(16, 185, 129, 0.25) 0%, transparent 40%),
-    radial-gradient(circle at 78% 82%, rgba(56, 189, 248, 0.28) 0%, transparent 42%),
-    radial-gradient(circle at 22% 85%, rgba(14, 165, 233, 0.22) 0%, transparent 38%),
-    linear-gradient(135deg, #dcf7fb 0%, #ebfcf6 48%, #dff1ff 100%);
-  --grad-aurora-dash:
-    radial-gradient(circle at 8% 14%, rgba(6, 182, 212, 0.25) 0%, transparent 34%),
-    radial-gradient(circle at 92% 12%, rgba(16, 185, 129, 0.22) 0%, transparent 36%),
-    radial-gradient(circle at 86% 86%, rgba(56, 189, 248, 0.24) 0%, transparent 38%),
-    radial-gradient(circle at 18% 88%, rgba(20, 184, 166, 0.18) 0%, transparent 36%),
-    radial-gradient(rgba(8, 145, 178, 0.11) 1px, transparent 1px),
-    linear-gradient(145deg, #dcf5f9 0%, #eafbf5 50%, #dff0fe 100%);
-  --glass-card-bg: rgba(255, 255, 255, 0.78);
-  --glass-card-border: rgba(255, 255, 255, 0.92);
-  --glass-shadow: 0 16px 36px -8px rgba(8, 145, 178, 0.14), 0 4px 12px -2px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --glass-shadow-hover: 0 22px 44px -10px rgba(6, 182, 212, 0.24), 0 8px 20px -4px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff;
-}
-
-/* ── LANDING PAGE AQUA MESH AURORA & BENTO GLASS ── */
-#landing {
-  background: var(--grad-aurora-hero) !important;
-  background-attachment: fixed !important;
-  position: relative;
-}
-
-.lp-nav {
-  max-width: 1220px;
-  margin: 14px auto 0 !important;
-  width: calc(100% - 36px);
-  border-radius: 999px !important;
-  background: rgba(255, 255, 255, 0.78) !important;
-  backdrop-filter: blur(22px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.92) !important;
-  box-shadow: 0 12px 32px -6px rgba(8, 145, 178, 0.15), inset 0 1px 0 #ffffff !important;
-  padding: 0 26px !important;
-  top: 12px !important;
-}
-
-.lp-hero {
-  background: transparent !important;
-  padding: 56px 5vw 68px !important;
-  max-width: 1260px;
-  margin: 0 auto;
-  gap: 40px !important;
-}
-
-.lp-hero::before {
-  content: "";
-  position: absolute;
-  width: 340px;
-  height: 340px;
-  left: -80px;
-  top: 10%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.24) 0%, rgba(16, 185, 129, 0.08) 60%, transparent 75%);
-  filter: blur(18px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.lp-hero-eyebrow {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(6, 182, 212, 0.35) !important;
-  box-shadow: 0 6px 18px rgba(8, 145, 178, 0.12);
-  padding: 7px 16px !important;
-  border-radius: 999px !important;
-  color: #0e7490 !important;
-  font-weight: 800 !important;
-}
-
-.lp-hero h1 em {
-  font-style: normal !important;
-  background: linear-gradient(135deg, #0891b2 0%, #0284c7 48%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.lp-bento-pills {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 22px;
-}
-
-.lp-bento-pill {
-  background: rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.92);
-  border-radius: 14px;
-  padding: 11px 13px;
-  box-shadow: 0 8px 20px -6px rgba(8, 145, 178, 0.12);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.lp-bento-pill-ico {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(16, 185, 129, 0.18));
-  color: #0891b2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  flex-shrink: 0;
-}
-
-.lp-radar-card {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(20px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.94);
-  border-radius: 20px;
-  padding: 18px 20px;
-  margin-bottom: 14px;
-  box-shadow: var(--glass-shadow);
-}
-
-.lp-radar-steps {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.lp-radar-step {
-  text-align: center;
-  padding: 8px 4px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  background: rgba(241, 245, 249, 0.85);
-  color: #64748b;
-  border: 1px solid rgba(203, 213, 225, 0.6);
-}
-
-.lp-radar-step.done {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.28);
-}
-
-.lp-radar-step.active {
-  background: var(--grad-primary);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 6px 14px rgba(6, 182, 212, 0.35);
-  animation: pulseStage 2s infinite;
-}
-
-@keyframes pulseStage {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-}
-
-.lp-hero-card, .lp-step, .lp-svc, .lp-price-card, .lp-review, .lp-review-form, .lp-faq-item {
-  background: var(--glass-card-bg) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid var(--glass-card-border) !important;
-  box-shadow: var(--glass-shadow) !important;
-  border-radius: 20px !important;
-}
-
-.lp-price-card.featured {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(224, 247, 250, 0.88) 100%) !important;
-  border: 2px solid #06b6d4 !important;
-  box-shadow: 0 20px 44px -10px rgba(6, 182, 212, 0.25), inset 0 1px 0 #ffffff !important;
-}
-
-.lp-badges {
-  background: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.85) !important;
-}
-
-.lp-services-bg, #reviews {
-  background: rgba(255, 255, 255, 0.34) !important;
-  backdrop-filter: blur(8px);
-}
-
-.lp-cta-bg {
-  background: linear-gradient(135deg, #083344 0%, #0e7490 52%, #0d9488 100%) !important;
-  box-shadow: 0 22px 48px -12px rgba(8, 145, 178, 0.38) !important;
-}
-
-/* ── ALL USER DASHBOARDS (ADMIN, SELLER, CUSTOMER) OCEAN MESH AURORA BACKGROUND ── */
-#app, #portal, body .content, .content, .pt-wrap {
-  background: var(--grad-aurora-dash) !important;
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 24px 24px, 100% 100% !important;
-  position: relative;
-}
-
-/* Floating Ambient Glass Orbs inside Dashboards */
-.content::before, .pt-wrap::before {
-  content: "";
-  position: fixed;
-  width: 420px;
-  height: 420px;
-  right: -120px;
-  bottom: -120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.18) 0%, rgba(16, 185, 129, 0.10) 50%, transparent 72%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.content > *, .pt-content > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Frosted Glass Sidebar & Topbars */
-.sidebar {
-  background: rgba(255, 255, 255, 0.76) !important;
-  backdrop-filter: blur(22px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.90) !important;
-  box-shadow: 6px 0 30px -6px rgba(8, 145, 178, 0.12) !important;
-}
-
-.topbar, .pt-nav {
-  background: rgba(255, 255, 255, 0.76) !important;
-  backdrop-filter: blur(22px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(190%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.90) !important;
-  box-shadow: 0 8px 24px -6px rgba(8, 145, 178, 0.10) !important;
-}
-
-.pt-tabs {
-  background: rgba(255, 255, 255, 0.64) !important;
-  backdrop-filter: blur(18px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.88) !important;
-}
-
-/* Frosted Bento Cards in Admin, Seller, and Customer Dashboards */
-.sc, .card, .ord-card, .pt-quick-card, .loyalty-card, .dash-actions {
-  background: var(--glass-card-bg) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid var(--glass-card-border) !important;
-  box-shadow: var(--glass-shadow) !important;
-  border-radius: 18px !important;
-}
-
-.sc:hover, .pt-quick-card:hover, .ord-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: var(--glass-shadow-hover) !important;
-}
-
-.ch {
-  background: rgba(255, 255, 255, 0.55) !important;
-  border-bottom: 1px solid rgba(8, 145, 178, 0.12) !important;
-}
-
-th {
-  background: rgba(240, 253, 250, 0.72) !important;
-  color: #0e7490 !important;
-}
-
-.pt-hero-banner {
-  background: linear-gradient(135deg, #083344 0%, #0e7490 52%, #0d9488 100%) !important;
-  border: 1px solid rgba(125, 211, 252, 0.35) !important;
-  box-shadow: 0 20px 44px -10px rgba(8, 145, 178, 0.32) !important;
-}
-
-.modal, .auth-card {
-  background: rgba(255, 255, 255, 0.90) !important;
-  backdrop-filter: blur(24px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 24px 56px -12px rgba(8, 145, 178, 0.28) !important;
-}
-
-@media (max-width: 760px) {
-  .lp-bento-pills { grid-template-columns: 1fr; }
-  .lp-nav { width: calc(100% - 20px); margin-top: 8px !important; }
 }
 
 </style>
@@ -1529,6 +2349,18 @@ th {
      LANDING PAGE
 ══════════════════════════════════ -->
 <div id="landing">
+
+  <!-- SPINZY TOP UTILITY BAR (Preserving LabaFlow Business Info) -->
+  <div class="lp-topbar-spinzy">
+    <div class="lp-topbar-items">
+      <div class="lp-topbar-item"><span class="lp-topbar-ico">🫧</span><span>Lab-a-Day Laundry Shop</span></div>
+      <div class="lp-topbar-item"><span class="lp-topbar-ico">📡</span><span>RFID Order Tracking</span></div>
+      <div class="lp-topbar-item"><span class="lp-topbar-ico">💳</span><span>Cash &amp; GCash Accepted</span></div>
+    </div>
+    <div class="lp-topbar-right">
+      <span class="lp-topbar-tag">⭐ Earn LabaPoints Every Wash</span>
+    </div>
+  </div>
 
   <!-- NAVBAR -->
   <nav class="lp-nav">
@@ -1542,59 +2374,46 @@ th {
     </div>
     <button class="lp-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleLpMenu(this)"><span aria-hidden="true">&#9776;</span></button>
     <div class="lp-nav-cta">
-      
       <button class="lp-btn lp-btn-outline" onclick="openAuth('sign')">Sign In</button>
-      <button class="lp-btn lp-btn-solid" onclick="openAuth('reg')">Book Now</button>
+      <button class="lp-btn lp-btn-solid" onclick="openAuth('reg')">Book Now →</button>
     </div>
   </nav>
 
-  <!-- HERO (OPTION 1: AQUA GLASS & BENTO) -->
+  <!-- SPINZY HERO SECTION (100% LabaFlow Content & Local Image) -->
   <div class="lp-hero">
     <div class="lp-hero-left">
-      <div class="lp-hero-eyebrow"><span></span>📡 13.56MHz HF RFID · Lab-a-Day Smart Laundry</div>
+      <div class="lp-hero-eyebrow"><span></span>Lab-a-Day Laundry Shop</div>
       <h1>Fresh Laundry,<br><em>Zero Hassle.</em></h1>
-      <p>Book online, drop off your bag at the shop for instant RFID tagging, and watch every stage update live in real time — from Received, Washing, Drying, and Folding to Ready for Pickup.</p>
+      <p>Professional laundry service with RFID tracking, loyalty rewards, and cashless payments. Drop off and we handle the rest.</p>
       <div class="lp-hero-actions">
-        <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">➕ Book a Service</button>
-        <button class="lp-btn lp-btn-outline lp-btn-lg" style="background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);" onclick="openAuth('sign')">📡 Track My Laundry</button>
-        <button class="lp-btn lp-btn-outline lp-btn-lg" style="background:rgba(255,255,255,0.75);backdrop-filter:blur(12px);" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">✨ How It Works</button>
+        <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">Book Now →</button>
+        <button class="lp-btn lp-btn-gold lp-btn-lg" onclick="openAuth('sign')">📡 Track My Order</button>
+        <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="openAuth('sign')">Sign In</button>
       </div>
-      <div class="lp-bento-pills">
-        <div class="lp-bento-pill">
-          <div class="lp-bento-pill-ico">📡</div>
-          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">HF RFID Tracked</div><div style="font-size:11px;color:#475569;">ESP32 + RC522 Live</div></div>
+      <div class="lp-spinzy-hero-cards">
+        <div class="lp-spinzy-hcard-blue">
+          <div class="lp-spinzy-hcard-blue-ico">📡</div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:15px;font-weight:800;margin-bottom:3px;">RFID Order Tracking</div>
+            <div style="font-size:12.5px;opacity:0.92;line-height:1.45;">Each order is tagged at drop-off and updated live in your account.</div>
+          </div>
         </div>
-        <div class="lp-bento-pill">
-          <div class="lp-bento-pill-ico">🛡️</div>
-          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">Dup-Tag Guard</div><div style="font-size:11px;color:#475569;">100% Bag Accuracy</div></div>
-        </div>
-        <div class="lp-bento-pill">
-          <div class="lp-bento-pill-ico">⭐</div>
-          <div><div style="font-size:12px;font-weight:800;color:#0f172a;">LabaPoints</div><div style="font-size:11px;color:#475569;">Up to 15% Loyalty Off</div></div>
+        <div class="lp-spinzy-hcard-white">
+          <div class="lp-spinzy-hcard-gold-ico">⭐</div>
+          <div>
+            <div style="font-family:var(--font-display);font-size:15px;font-weight:800;color:var(--spinzy-navy);margin-bottom:3px;">LabaPoints &amp; GCash</div>
+            <div style="font-size:12.5px;color:var(--spinzy-muted);line-height:1.45;">Pay by Cash or GCash at pickup and earn loyalty rewards every visit.</div>
+          </div>
         </div>
       </div>
     </div>
     <div class="lp-hero-right">
-      <!-- BENTO CARD 1: LIVE RFID STAGE RADAR -->
-      <div class="lp-radar-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="tb-live-dot"></span>
-            <span style="font-size:12.5px;font-weight:800;color:#0f172a;" class="mono-code">LIVE ORDER · ORD-024</span>
-          </div>
-          <span style="background:rgba(6,182,212,0.16);color:#0e7490;border:1px solid rgba(6,182,212,0.35);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;" class="mono-code">🏷️ TAG-003</span>
-        </div>
-        <div class="lp-radar-steps">
-          <div class="lp-radar-step done">✓ Recv</div>
-          <div class="lp-radar-step active">🫧 Wash</div>
-          <div class="lp-radar-step">💨 Dry</div>
-          <div class="lp-radar-step">👕 Fold</div>
-          <div class="lp-radar-step">✅ Ready</div>
-        </div>
+      <div class="lp-hero-photo-wrap">
+        <img class="lp-hero-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}">
+        <div class="lp-hero-float-rfid">📡 RFID Order Tracking</div>
+        <div class="lp-hero-float-badge">⭐ Earn LabaPoints</div>
       </div>
-      <!-- BENTO CARD 2: FROSTED GLASS PRICING -->
       <div class="lp-hero-card">
-        <img class="lp-hero-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat" onerror="this.style.display='none'">
         <div class="lp-hero-card-title">Our Pricing — Clear &amp; Simple</div>
         <div class="price-row">
           <div><div class="price-row-label">Clothes Wash</div><div class="price-row-sub">Base 7 kg · +₱25/kg extra</div></div>
@@ -1626,7 +2445,7 @@ th {
 
   <section class="lp-section" aria-labelledby="lp-why-title">
     <div class="lp-eyebrow">Laundry Made Clear</div>
-    <h2 class="lp-section-title" id="lp-why-title">Careful service, clear updates</h2>
+    <h2 class="lp-section-title" id="lp-why-title">Careful service, <span class="style-gradient">clear updates</span></h2>
     <div class="lp-services-grid" style="margin-top:28px;">
       <article class="lp-svc"><div class="lp-badge-icon" aria-hidden="true">⌁</div><h4>RFID order tracking</h4><p>Each order is tagged at drop-off and its current stage is available in your customer account.</p></article>
       <article class="lp-svc"><div class="lp-badge-icon" aria-hidden="true">✓</div><h4>Known products per load</h4><p>Surf detergent and conditioner, with Zonrox Color Safe, are used according to the listed load amounts.</p></article>
@@ -1637,30 +2456,30 @@ th {
   <!-- HOW IT WORKS -->
   <div class="lp-section" id="how">
     <div class="lp-eyebrow">Simple Process</div>
-    <div class="lp-section-title">Ready in 4 Easy Steps</div>
+    <div class="lp-section-title">Ready in <span class="style-gradient">4 Easy Steps</span></div>
     <div class="lp-section-sub">From drop-off to pickup, our RFID system keeps your order tracked every step of the way.</div>
     <div class="lp-steps">
       <div class="lp-step">
         <div class="lp-step-num">Step 01</div>
-        <img class="lp-step-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat, ready for drop-off" loading="lazy">
+        <img class="lp-step-photo" src="images/step-drop-off.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}" alt="Laundry bag at a clean laundromat, ready for drop-off" loading="lazy">
         <h4>Drop Off Your Laundry</h4>
         <p>Bring your laundry to our shop. We weigh it, assign an RFID tag, and give you a digital receipt.</p>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 02</div>
-        <img class="lp-step-photo" src="images/step-wash-detergent.jpg" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
+        <img class="lp-step-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
         <h4>Washed With Detergent</h4>
         <p>We wash and dry your clothes with Surf detergent and conditioner, using the right care for every load.</p>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 03</div>
-        <img class="lp-step-photo" src="images/step-ready-alert.jpg" alt="Customer checking a phone while waiting at a laundromat" loading="lazy">
+        <img class="lp-step-photo" src="images/step-ready-alert.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-ready-alert.jpg';}" alt="Customer checking a phone while waiting at a laundromat" loading="lazy">
         <h4>Get a Ready Alert</h4>
         <p>We notify you when your laundry is ready, and you can track its status in the app.</p>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 04</div>
-        <img class="lp-step-photo" src="images/step-pickup-pay.jpg" alt="Customer making a contactless payment at a laundromat" loading="lazy">
+        <img class="lp-step-photo" src="images/step-pickup-pay.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-pickup-pay.jpg';}" alt="Customer making a contactless payment at a laundromat" loading="lazy">
         <h4>Pick Up &amp; Pay</h4>
         <p>Collect your clean laundry and pay by Cash or GCash. Earn LabaPoints with every visit.</p>
       </div>
@@ -1671,41 +2490,41 @@ th {
   <div class="lp-services-bg" id="services">
     <div class="lp-services-inner">
       <div class="lp-eyebrow">What We Offer</div>
-      <div class="lp-section-title">Our Services</div>
+      <div class="lp-section-title">Our <span class="style-gradient">Services</span></div>
       <div class="lp-section-sub">Every piece treated with the right product and the right process.</div>
       <div class="lp-services-grid">
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-clothes.jpg" alt="Clothes being washed with laundry detergent" loading="lazy">
+          <img class="lp-svc-photo" src="images/service-clothes.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-clothes.jpg';}" alt="Clothes being washed with laundry detergent" loading="lazy">
           <h4>Clothes Wash</h4>
           <p>Everyday clothes, casual wear, uniforms. Washed with Surf Liquid Detergent, conditioned, and folded.</p>
           <div class="lp-svc-badge">₱180 / 7kg base</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-bedsheets.jpg" alt="Fresh white and blue bed linens" loading="lazy">
+          <img class="lp-svc-photo" src="images/service-bedsheets.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-bedsheets.jpg';}" alt="Fresh white and blue bed linens" loading="lazy">
           <h4>Bedsheet Wash</h4>
           <p>Bed linens, pillowcases, and fitted sheets. Deep cleaned and returned fresh and crisp.</p>
           <div class="lp-svc-badge">₱190 / 5kg base</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-comforter.jpg" alt="Clean white comforter ready for a fresh night's rest" loading="lazy">
+          <img class="lp-svc-photo" src="images/service-comforter.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-comforter.jpg';}" alt="Clean white comforter ready for a fresh night's rest" loading="lazy">
           <h4>Comforter Wash</h4>
           <p>Heavy blankets, duvets, and comforters. Proper machine wash with extra rinse cycle.</p>
           <div class="lp-svc-badge">₱200 / piece</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" alt="Laundry detergent and fabric conditioner beside a washing machine" loading="lazy">
+          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Laundry detergent and fabric conditioner beside a washing machine" loading="lazy">
           <h4>Surf Liquid Detergent</h4>
           <p>We use Surf Liquid Detergent — tough on stains, gentle on fabrics, fresh scent every wash.</p>
           <div class="lp-svc-badge">0.1 L per load</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" alt="Fabric conditioner and laundry detergent ready for a wash" loading="lazy">
+          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Fabric conditioner and laundry detergent ready for a wash" loading="lazy">
           <h4>Surf Fabric Conditioner</h4>
           <p>Surf Fabric Conditioner on every load — softer clothes, long-lasting freshness.</p>
           <div class="lp-svc-badge">0.1 L per load</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-zonrox-colorsafe.png" alt="Zonrox ColorSafe bleach product" loading="lazy">
+          <img class="lp-svc-photo" src="images/service-zonrox-colorsafe.png" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-zonrox-colorsafe.png';}" alt="Zonrox ColorSafe bleach product" loading="lazy">
           <h4>Zonrox Color Safe</h4>
           <p>Zonrox Color Safe bleach removes bacteria and tough stains without damaging colors.</p>
           <div class="lp-svc-badge">10 ml per load</div>
@@ -1717,7 +2536,7 @@ th {
   <!-- PRICING -->
   <div class="lp-section" id="pricing">
     <div class="lp-eyebrow">Transparent Rates</div>
-    <div class="lp-section-title">Clear Pricing, No Surprises</div>
+    <div class="lp-section-title">Clear Pricing, <span class="style-gradient">No Surprises</span></div>
     <div class="lp-section-sub">All prices in Philippine Peso. No hidden fees. What you see is what you pay.</div>
     <div class="lp-pricing-grid">
       <div class="lp-price-card">
@@ -1777,7 +2596,7 @@ th {
   <div class="lp-section" id="reviews" style="background:var(--lp-subtle);max-width:100%;padding:80px 5vw;">
   <div style="max-width:1200px;margin:0 auto;">
     <div class="lp-eyebrow">Customer Reviews</div>
-    <div class="lp-section-title">What Our Customers Say</div>
+    <div class="lp-section-title">What Our <span class="style-gradient">Customers Say</span></div>
     <div class="lp-rating-row" id="lpRatingRow">
       <div class="lp-rating-big" id="lpRatingBig">—</div>
       <div>
@@ -1815,7 +2634,7 @@ th {
   <!-- FAQ -->
   <div class="lp-section" id="faq">
     <div class="lp-eyebrow">Got Questions?</div>
-    <div class="lp-section-title">Frequently Asked Questions</div>
+    <div class="lp-section-title">Frequently Asked <span class="style-gradient">Questions</span></div>
     <div class="lp-faq-list">
       <div class="lp-faq-item">
         <div class="lp-faq-q" onclick="toggleFaq(this)">How does the RFID tracking work? <span class="lp-faq-icon">+</span></div>
@@ -2677,6 +3496,9 @@ function checkTopbarAlerts(){
 ══════════════════════════════════════ */
 const NAV_ADMIN=[
   {id:'dashboard',ni:'▤',label:'Dashboard'},
+  {id:'rfid_scanner',ni:'📡',label:'RFID Scanner'},
+  {id:'orders',ni:'🧺',label:'Orders'},
+  {id:'scan_logs',ni:'🛡️',label:'RFID Scan Logs'},
   {id:'analytics',ni:'◈',label:'Financial Analytics'},
   {id:'inv_admin',ni:'▦',label:'Inventory Monitor'},
   {id:'promos',ni:'🏷',label:'Promo Codes'},
@@ -2684,10 +3506,12 @@ const NAV_ADMIN=[
 ];
 const NAV_SELLER=[
   {id:'orders',ni:'▤',label:'Orders'},
+  {id:'rfid_scanner',ni:'📡',label:'RFID Scanner & Receive'},
+  {id:'rfid',ni:'◎',label:'RFID Tags'},
+  {id:'scan_logs',ni:'🛡️',label:'RFID Scan Logs'},
   {id:'inventory',ni:'▦',label:'Inventory'},
   {id:'reports',ni:'◈',label:'Reports'},
   {id:'messages_seller',ni:'✉',label:'Messages',badge:'msgBadge'},
-  {id:'rfid',ni:'◎',label:'RFID Tags'},
   {id:'seller_settings',ni:'⚙',label:'Settings'},
 ];
 
@@ -2701,14 +3525,14 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',analytics:'Financial Analytics',inv_admin:'Inventory Monitor',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory',reports:'Reports',messages_seller:'Messages',rfid:'RFID Tags',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'RFID Scanner & Receiving',scan_logs:'RFID Scan Audit Logs',analytics:'Financial Analytics',inv_admin:'Inventory Monitor',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory',reports:'Reports',messages_seller:'Messages',rfid:'RFID Tags',seller_settings:'Settings'};
 
 function showPage(p){
   curPage=p;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const el=g('nav-'+p);if(el)el.classList.add('active');
   g('pgTitle').textContent=PG_TITLES[p]||p;
-  const R={dashboard:pgDashboard,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,seller_settings:pgSellerSettings};
+  const R={dashboard:pgDashboard,rfid_scanner:pgRfidScanner,scan_logs:pgScanLogs,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,seller_settings:pgSellerSettings};
   if(R[p])R[p]();
 }
 
@@ -4969,19 +5793,6 @@ function ptBook(){
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:18px;text-align:center;">Submit your booking and drop off at the shop.</p>
       ${tierDisc>0?`<div class="notice n-success" style="margin-bottom:14px;">🌟 <strong>${tier.name} Member:</strong> You get ${tierDisc}% loyalty discount automatically applied!</div>`:''}
       <div style="background:var(--card);border-radius:12px;padding:24px;">
-        <div class="row2" style="margin-bottom:12px;">
-          <div class="pt-form-group" style="margin-bottom:0;">
-            <label class="pt-label" style="color:var(--accent2);">Service Mode</label>
-            <select id="bkMode" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
-              <option value="Drop-off at Shop">🏪 Drop-off at Shop</option>
-              <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
-            </select>
-          </div>
-          <div class="pt-form-group" style="margin-bottom:0;">
-            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
-            <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;">
-          </div>
-        </div>
         <div class="row2" style="margin-bottom:12px;">
           <div class="pt-form-group" style="margin-bottom:0;">
             <label class="pt-label" style="color:var(--accent2);">Service Mode</label>

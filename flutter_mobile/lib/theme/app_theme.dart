@@ -31,40 +31,40 @@ class AppElevation {
 // ═══════════════════════════════════════════════════════════
 
 class AppColors {
-  // ── Landing page palette (light) ──
-  static const lpBg = Color(0xFFF3FAFB);
+  // ── Landing page palette (Spinzy Electric Blue & Fresh Clothing Theme) ──
+  static const lpBg = Color(0xFFF7F9FF);
   static const lpWhite = Color(0xFFFFFFFF);
-  static const lpText = Color(0xFF111827);
-  static const lpMuted = Color(0xFF6B7280);
-  static const lpSubtle = Color(0xFFF3F4F6);
-  static const lpBorder = Color(0xFFD8EAEC);
-  static const lpAccent = Color(0xFF078695);
-  static const lpAccent2 = Color(0xFF066C79);
-  static const lpNavy = Color(0xFF123943);
+  static const lpText = Color(0xFF0E214E);
+  static const lpMuted = Color(0xFF4B5B82);
+  static const lpSubtle = Color(0xFFEDF1FA);
+  static const lpBorder = Color(0xFFD7E3FF);
+  static const lpAccent = Color(0xFF4579EE);
+  static const lpAccent2 = Color(0xFF4065B8);
+  static const lpNavy = Color(0xFF0E214E);
 
-  // ── App/portal light palette (Option 1: Aqua Glass & Ocean Mesh Aurora) ──
-  static const lightBg = Color(0xFFE2F7FA);
-  static const lightSidebar = Color(0xF0FFFFFF);
-  static const lightSurface = Color(0xF2FFFFFF);
-  static const lightCard = Color(0xE8FFFFFF);
-  static const lightBorder = Color(0xFFC8EBF0);
-  static const lightAccent = Color(0xFF06B6D4);
-  static const lightAccent2 = Color(0xFF0284C7);
-  static const lightBtn = Color(0xFF0891B2);
-  static const lightText = Color(0xFF111827);
-  static const lightMuted = Color(0xFF4B6870);
-  static const lightDim = Color(0xFF718B91);
-  static const successLight = Color(0xFF16866E);
-  static const warnLight = Color(0xFFA96A18);
-  static const dangerLight = Color(0xFFC54D54);
-  static const infoBg = Color(0xFFE0F2FE);
+  // ── App/portal light palette (Spinzy Electric Blue & Sunny Gold) ──
+  static const lightBg = Color(0xFFF7F9FF);
+  static const lightSidebar = Color(0xF5FFFFFF);
+  static const lightSurface = Color(0xF5FFFFFF);
+  static const lightCard = Color(0xFAFFFFFF);
+  static const lightBorder = Color(0xFFD7E3FF);
+  static const lightAccent = Color(0xFF4579EE);
+  static const lightAccent2 = Color(0xFF4065B8);
+  static const lightBtn = Color(0xFF4579EE);
+  static const lightText = Color(0xFF0E214E);
+  static const lightMuted = Color(0xFF4B5B82);
+  static const lightDim = Color(0xFF7B8AB0);
+  static const successLight = Color(0xFF10B981);
+  static const warnLight = Color(0xFFD97706);
+  static const dangerLight = Color(0xFFEF4444);
+  static const infoBg = Color(0xFFEDF1FA);
   static const successBg = Color(0xFFDCFCE7);
   static const warnBg = Color(0xFFFEF3C7);
   static const dangerBg = Color(0xFFFEE2E2);
   static const success = successLight;
   static const warn = warnLight;
   static const danger = dangerLight;
-  static const bubbleMe = Color(0xFF078695);
+  static const bubbleMe = Color(0xFF4579EE);
 
   // ── Status badge colors ──
   static const statusPending = Color(0xFF1D4ED8);

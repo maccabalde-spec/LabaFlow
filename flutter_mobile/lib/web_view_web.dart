@@ -21,7 +21,7 @@ void registerLabaFlowView() {
         : '&${locationSearch.substring(1)}';
     final iframe = html.IFrameElement()
       ..src =
-          'labaflow.html?v=20261018-oceanic-bubbles1$forwardedQuery${location.hash}'
+          'labaflow.html?v=20261106-spinzy1$forwardedQuery${location.hash}'
       ..style.border = 'none'
       ..style.width = '100%'
       ..style.height = '100%'
