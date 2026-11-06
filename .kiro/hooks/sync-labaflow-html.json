@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Sync LabaFlow.html to Flutter assets",
+      "trigger": "PostFileSave",
+      "description": "Auto-copies LabaFlow.html to flutter_mobile/assets/labaflow.html on every save",
+      "matcher": "LabaFlow\\.html$",
+      "action": {
+        "type": "command",
+        "command": "python \"C:\\Users\\chrst\\OneDrive\\Desktop\\LabaFlow\\sync_desktop.py\""
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Auto-sync LabaFlow.html to Flutter assets and public",
+      "trigger": "PostFileSave",
+      "description": "When LabaFlow.html is saved, automatically copy it to flutter_mobile/assets/labaflow.html and public/index.html so both Flutter and Firebase Hosting stay in sync.",
+      "matcher": "LabaFlow\\.html$",
+      "action": {
+        "type": "command",
+        "command": "copy /Y \"LabaFlow.html\" \"flutter_mobile\\assets\\labaflow.html\" && copy /Y \"LabaFlow.html\" \"public\\index.html\""
+      }
+    }
+  ]
+}

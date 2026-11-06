@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Sync LabaFlow.html to public/index.html",
+      "trigger": "PostFileSave",
+      "matcher": "LabaFlow\\\\.html$",
+      "action": {
+        "type": "command",
+        "command": "copy /Y \"c:\\Users\\chrst\\Desktop\\LabaFlow\\LabaFlow.html\" \"c:\\Users\\chrst\\Desktop\\LabaFlow\\public\\index.html\" && copy /Y \"c:\\Users\\chrst\\Desktop\\LabaFlow\\LabaFlow.html\" \"c:\\Users\\chrst\\Desktop\\LabaFlow\\flutter_mobile\\assets\\labaflow.html\" && echo [LabaFlow] Synced to public/index.html and flutter assets"
+      }
+    }
+  ]
+}
