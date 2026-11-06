@@ -80,12 +80,15 @@
   }
   async function signInWithGoogle() {
     requireConfig();
-    const redirectTo=`${location.origin}/`;
+    let ref=location;
+    try{ if(window.top && window.top!==window && window.top.location.origin===location.origin) ref=window.top.location; }catch(e){}
+    const redirectTo=`${ref.origin}${ref.pathname.replace(/[^/]*\.html$/,'')}`;
     const {verifier,challenge}=await createPkcePair();
     localStorage.setItem(pkceVerifierKey,verifier);
     const authorize=new URL(`${base()}/auth/v1/authorize`);
     authorize.searchParams.set('provider','google');
     authorize.searchParams.set('redirect_to',redirectTo);
+    authorize.searchParams.set('prompt','select_account');
     authorize.searchParams.set('code_challenge',challenge);
     authorize.searchParams.set('code_challenge_method','s256');
     if (window.top && window.top !== window) window.top.location.assign(authorize.toString());
