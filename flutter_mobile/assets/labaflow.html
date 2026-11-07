@@ -3093,7 +3093,6 @@ input[type="password"]::-ms-clear {
 <!-- ══════════════════════════════════
      AUTH OVERLAY (floating modal)
 ══════════════════════════════════ -->
-<div id="smsOtpBanner" class="sms-otp-banner" role="alert"></div>
 <div id="authOverlay">
 <div class="auth-card auth-modal-wrap">
   <button class="auth-close" onclick="closeAuth()">×</button>
@@ -3822,12 +3821,42 @@ function updateContactOtpUI(mode){
   }
 }
 
-function fillContactOtp(mode,code){
-  const otpId=mode==='li'?'liOtp':'rOtp';
-  const inp=g(otpId);
-  if(inp){inp.value=code;updateContactOtpUI(mode);}
-  const b=g('smsOtpBanner');
-  if(b)b.style.display='none';
+async function triggerDeviceNotification(title, bodyText){
+  if(!('Notification' in window))return false;
+  try{
+    if(Notification.permission==='default'){
+      await Notification.requestPermission();
+    }
+    if(Notification.permission!=='granted')return false;
+    if(navigator.serviceWorker?.ready){
+      try{
+        const reg=await Promise.race([
+          navigator.serviceWorker.ready,
+          new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),800))
+        ]);
+        if(reg?.showNotification){
+          await reg.showNotification(title,{
+            body:bodyText,
+            icon:'images/service-zonrox-colorsafe.png',
+            badge:'images/service-zonrox-colorsafe.png',
+            tag:'labaflow-otp-'+Date.now(),
+            requireInteraction:true,
+            vibrate:[200,100,200]
+          });
+          return true;
+        }
+      }catch(_){}
+    }
+    new Notification(title,{
+      body:bodyText,
+      icon:'images/service-zonrox-colorsafe.png',
+      tag:'labaflow-otp-'+Date.now(),
+      requireInteraction:true
+    });
+    return true;
+  }catch(_){
+    return false;
+  }
 }
 
 async function sendContactOtp(mode){
@@ -3857,6 +3886,11 @@ async function sendContactOtp(mode){
     }catch(_){}
   }
   fieldErr(contactId,contactErrId,'');
+
+  if('Notification' in window && Notification.permission==='default'){
+    try{await Notification.requestPermission();}catch(_){}
+  }
+
   const code=String(Math.floor(100000+Math.random()*900000));
   const st=_otpStates[mode];
   st.target=parsed.value;
@@ -3865,32 +3899,25 @@ async function sendContactOtp(mode){
   st.expiresAt=Date.now()+5*60*1000;
   st.verified=false;
   if(g(otpId))g(otpId).value='';
-  updateContactOtpUI(mode);
   fieldErr(otpId,otpErrId,'');
 
   const isEmail=parsed.channel==='email';
-  const banner=g('smsOtpBanner');
-  if(banner){
-    banner.innerHTML=`
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
-        <div>
-          <div style="font-size:11px;font-weight:800;color:#FFB600;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">
-            ${isEmail?'📧 Email Verification Code Sent':'💬 SMS Message Verification Code Sent'}
-          </div>
-          <div style="font-size:12px;color:#E2E8F0;margin-bottom:4px;">
-            To ${isEmail?'Email':'Mobile'}: <strong style="color:#fff;">${parsed.value}</strong>
-          </div>
-          <div style="font-size:13.5px;line-height:1.45;">
-            Verification Code: <strong style="font-size:17px;color:#FFB600;letter-spacing:2px;background:rgba(255,182,0,0.16);padding:2px 8px;border-radius:6px;">${code}</strong>
-          </div>
-          <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-            <button type="button" onclick="fillContactOtp('${mode}','${code}')" style="background:#4579EE;color:#fff;border:0;border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:800;cursor:pointer;">Auto-Fill Code</button>
-            <span style="font-size:11px;color:#CBD5E1;">Valid for 5 mins</span>
-          </div>
-        </div>
-        <button type="button" onclick="document.getElementById('smsOtpBanner').style.display='none'" style="background:transparent;border:0;color:#94A3B8;font-size:18px;cursor:pointer;line-height:1;">×</button>
-      </div>`;
-    banner.style.display='block';
+  if(window.LabaFlowSupabase?.sendOtp){
+    LabaFlowSupabase.sendOtp(parsed.channel,parsed.value);
+  }
+  const notifTitle=isEmail?('📧 New Email • '+parsed.value):('💬 SMS Message • '+parsed.value);
+  const notifBody='LabaFlow Verification Code: '+code+' (Valid for 5 minutes. Do not share this code.)';
+  const shownOnDevice=await triggerDeviceNotification(notifTitle,notifBody);
+
+  updateContactOtpUI(mode);
+  const statusBadge=g(isLi?'liOtpStatus':'rOtpStatus');
+  if(statusBadge){
+    statusBadge.innerHTML='<span style="color:#4579EE;">'+(isEmail?'Sent to your Email / device':'Sent to your SMS / device')+'</span>';
+  }
+  if(!shownOnDevice && 'Notification' in window && Notification.permission==='denied'){
+    fieldErr(otpId,otpErrId,isEmail
+      ?'Verification code sent to '+parsed.value+'. Please check your email inbox or allow device notifications in browser settings.'
+      :'Please allow device notifications in your browser (click the icon beside the URL bar → Notifications → Allow) so your device receives the SMS code.');
   }
   g(otpId)?.focus();
 
@@ -3944,13 +3971,11 @@ async function doRegister(){
     otpMsg='Enter a valid email or mobile number first, then click Send Code.';
   }else if(!st.code || st.target!==parsed.value){
     await sendContactOtp('reg');
-    otpMsg='We sent a 6-digit verification code to '+parsed.value+'. Enter it above to complete registration.';
+    otpMsg='Verification code sent to your device ('+parsed.value+'). Enter the 6-digit code above.';
   }else if(Date.now()>st.expiresAt){
     otpMsg='Verification code expired. Please click "Resend Code".';
-  }else if(!otpVal){
-    otpMsg='Enter the 6-digit verification code sent to '+parsed.value+'.';
-  }else if(otpVal!==st.code){
-    otpMsg='Incorrect verification code. Please check the code sent to '+parsed.value+'.';
+  }else if(!otpVal || otpVal.length<6){
+    otpMsg='Enter the 6-digit verification code sent to your device ('+parsed.value+').';
   }
   check('rOtp','rOtpErr',otpMsg);
   const pwMsg=!pass?'Password is required.':/\s/.test(pass)?'Password must not contain spaces.':pass.length<8?'Password must be at least 8 characters.':(!/[A-Za-z]/.test(pass)||!/\d/.test(pass))?'Password must include letters and numbers.':'';
@@ -3963,8 +3988,22 @@ async function doRegister(){
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
     if(phone && await LabaFlowSupabase.phoneRegistered(phone)){fieldErr('rContact','rContactErr','This mobile number is already registered.');g('rContact').focus();return;}
-    const profile=await LabaFlowSupabase.register({name,email,phone,password:pass});
-    const b=g('smsOtpBanner');if(b)b.style.display='none';
+    let profile=null;
+    if(otpVal===st.code){
+      profile=await LabaFlowSupabase.register({name,email,phone,password:pass});
+    }else if(window.LabaFlowSupabase?.verifyOtpAndRegister){
+      try{
+        profile=await LabaFlowSupabase.verifyOtpAndRegister({name,email,phone,password:pass,token:otpVal});
+      }catch(_){
+        fieldErr('rOtp','rOtpErr','Incorrect verification code. Please check the code sent to your device.');
+        g('rOtp')?.focus();
+        return;
+      }
+    }else{
+      fieldErr('rOtp','rOtpErr','Incorrect verification code. Please check the code sent to your device.');
+      g('rOtp')?.focus();
+      return;
+    }
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}

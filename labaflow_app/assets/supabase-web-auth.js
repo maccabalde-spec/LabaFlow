@@ -144,6 +144,35 @@
     if (cleanPhone) await syncPhoneEntry(cleanPhone, cleanEmail);
     return prof;
   }
+  async function sendOtp(channel, target) {
+    if (!configured()) return false;
+    try {
+      const payload = channel === 'email'
+        ? { email: String(target || '').trim().toLowerCase(), create_user: true }
+        : { phone: '+63' + normPhone10(target), create_user: true };
+      await request('/auth/v1/otp', { method: 'POST', body: JSON.stringify(payload) }, false);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+  async function verifyOtpAndRegister({ name, email, phone, password, token }) {
+    const cleanPhone = normPhone11(phone || '');
+    const cleanEmail = String(email || '').trim().toLowerCase();
+    const verifyBody = cleanEmail
+      ? { type: 'email', email: cleanEmail, token: String(token || '').trim() }
+      : { type: 'sms', phone: '+63' + normPhone10(cleanPhone), token: String(token || '').trim() };
+    const verified = await request('/auth/v1/verify', { method: 'POST', body: JSON.stringify(verifyBody) }, false);
+    if (!verified?.access_token || !verified?.user) throw new Error('Invalid or expired verification code.');
+    save(verified);
+    await request('/auth/v1/user', {
+      method: 'PUT',
+      body: JSON.stringify({ password, data: { name: name.trim(), phone: cleanPhone } })
+    });
+    const prof = await profileByUid(verified.user.id);
+    if (cleanPhone) await syncPhoneEntry(cleanPhone, cleanEmail || (cleanPhone + '@phone.labaflow.local'));
+    return prof;
+  }
   function base64Url(bytes) {
     let binary = '';
     bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
@@ -296,5 +325,5 @@
       if (_ws) { try { _ws.close(); } catch (_) {} _ws = null; }
     };
   }
-  global.LabaFlowSupabase={configured,signIn,register,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
+  global.LabaFlowSupabase={configured,signIn,register,sendOtp,verifyOtpAndRegister,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
 })(window);
