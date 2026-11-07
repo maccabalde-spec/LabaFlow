@@ -2927,6 +2927,323 @@ input[type="password"]::-ms-clear {
   margin-bottom: 14px;
   color: #ECFDF5;
 }
+
+/* ── CENTERED MODERN USER PROFILE & GMAIL ACCOUNT IDENTITY HUB ── */
+.lf-profile-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 4px 0 36px;
+  box-sizing: border-box;
+}
+.lf-profile-hero-card {
+  background: #FFFFFF;
+  border-radius: 28px;
+  border: 1.5px solid #D7E3FF;
+  box-shadow: 0 20px 48px -14px rgba(14, 33, 78, 0.12);
+  overflow: hidden;
+  margin-bottom: 22px;
+  position: relative;
+}
+.lf-profile-cover {
+  height: 138px;
+  background:
+    radial-gradient(circle at 18% 25%, rgba(110, 193, 228, 0.35) 0 42px, transparent 44px),
+    radial-gradient(circle at 84% 20%, rgba(255, 182, 0, 0.25) 0 56px, transparent 58px),
+    radial-gradient(circle at 65% 80%, rgba(255, 255, 255, 0.14) 0 32px, transparent 34px),
+    linear-gradient(135deg, #0E214E 0%, #1E429F 52%, #0284C7 100%);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 18px 26px;
+}
+.lf-profile-cover-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+  font-family: 'Figtree', sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+.lf-profile-hero-body {
+  padding: 0 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: -54px;
+  position: relative;
+  z-index: 2;
+}
+.lf-avatar-pod {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #4285F4 0%, #34A853 35%, #FBBC05 70%, #EA4335 100%);
+  box-shadow: 0 14px 32px rgba(14, 33, 78, 0.24);
+  margin-bottom: 12px;
+}
+.lf-avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0E214E, #4579EE);
+  border: 3.5px solid #FFFFFF;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-family: 'Figtree', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+}
+.lf-avatar-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lf-avatar-g-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #D7E3FF;
+  box-shadow: 0 4px 12px rgba(14, 33, 78, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.lf-avatar-cam-btn {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0E214E;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 4px 12px rgba(14, 33, 78, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 3;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.lf-avatar-cam-btn:hover {
+  transform: scale(1.08);
+  background: #4579EE;
+}
+.lf-profile-name {
+  font-family: 'Figtree', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: #0E214E;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lf-profile-meta-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  margin-bottom: 18px;
+}
+.lf-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: #F2F6FF;
+  border: 1px solid #D7E3FF;
+  color: #0E214E;
+  font-size: 12px;
+  font-weight: 700;
+}
+.lf-meta-pill.gmail-pill {
+  background: #FFFFFF;
+  border: 1.5px solid #93C5FD;
+  box-shadow: 0 3px 10px rgba(66, 133, 244, 0.10);
+}
+.lf-profile-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid #E5EDFF;
+}
+.lf-pstat-box {
+  background: #F8FAFF;
+  border: 1px solid #E2EBFF;
+  border-radius: 16px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.lf-pstat-val {
+  font-family: 'Figtree', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: #0E214E;
+}
+.lf-pstat-lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #4B5B82;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: 2px;
+}
+.lf-profile-bento {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 20px;
+  align-items: start;
+}
+.gmail-identity-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7FAFF 100%);
+  border: 1.5px solid #C7DBFF;
+  border-radius: 22px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(66, 133, 244, 0.08);
+}
+.gmail-identity-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4285F4 0% 25%, #EA4335 25% 50%, #FBBC05 50% 75%, #34A853 75% 100%);
+}
+.gmail-id-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.gmail-id-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2.5px solid #4285F4;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #0E214E;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.22);
+}
+.gmail-id-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lf-bento-card {
+  background: #FFFFFF;
+  border: 1.5px solid #D7E3FF;
+  border-radius: 24px;
+  padding: 22px 24px;
+  box-shadow: 0 10px 28px rgba(14, 33, 78, 0.05);
+  margin-bottom: 18px;
+}
+.lf-bento-title {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: #0E214E;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EBF1FF;
+}
+.lf-modern-field {
+  margin-bottom: 14px;
+}
+.lf-modern-field label {
+  display: block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #4B5B82;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+.lf-input-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.lf-input-icon-wrap .lf-field-ico {
+  position: absolute;
+  left: 13px;
+  font-size: 15px;
+  pointer-events: none;
+  z-index: 2;
+}
+.lf-input-icon-wrap input {
+  width: 100%;
+  padding: 11px 14px 11px 38px !important;
+  border-radius: 13px !important;
+  border: 1.5px solid #D7E3FF !important;
+  background: #F8FAFF !important;
+  color: #0E214E !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  transition: all 0.16s ease !important;
+  box-sizing: border-box !important;
+}
+.lf-input-icon-wrap input:focus {
+  border-color: #4579EE !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 0 0 3px rgba(69, 121, 238, 0.15) !important;
+}
+@media (max-width: 820px) {
+  .lf-profile-bento {
+    grid-template-columns: 1fr;
+  }
+  .lf-profile-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>
 </head>
 <body>
@@ -3495,7 +3812,7 @@ input[type="password"]::-ms-clear {
         <div><div class="sb-logo">Laba<span>Flow</span></div><div class="sb-tagline">Lab-a-Day · RFID System</div></div>
       </div>
     </div>
-    <div class="sb-user"><div class="sb-av" id="sbAv">A</div><div><div class="sb-uname" id="sbName">—</div><div class="sb-urole" id="sbRole">—</div></div></div>
+    <div class="sb-user" style="cursor:pointer;transition:background .15s;" onclick="showPage('my_profile')" title="View My Gmail & Account Profile"><div class="sb-av" id="sbAv">A</div><div><div class="sb-uname" id="sbName">—</div><div class="sb-urole" id="sbRole">—</div></div></div>
     <nav class="sb-nav" id="sbNav"></nav>
     <div class="sb-foot"><button class="btn btn-ghost btn-block" style="font-size:12px;" onclick="doLogout()">↩ Sign Out</button></div>
   </div>
@@ -3549,7 +3866,10 @@ input[type="password"]::-ms-clear {
     </div>
     <div class="pt-user">
       <button class="btn btn-primary btn-sm" style="padding:6px 12px;font-size:11.5px;min-height:34px;" onclick="ptTab('book')">+ Book Laundry</button>
-      <span id="ptUserName" style="font-weight:700;color:var(--text);">—</span>
+      <div style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:4px 10px 4px 4px;border-radius:999px;background:#F2F6FF;border:1px solid #D7E3FF;" onclick="ptTab('profile')" title="View My Gmail & Account Profile">
+        <div id="ptNavAv" style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0E214E,#4579EE);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;overflow:hidden;flex-shrink:0;">U</div>
+        <span id="ptUserName" style="font-weight:800;color:var(--text);font-size:12.5px;">—</span>
+      </div>
       <span class="pt-loyalty-pill" id="ptLoyaltyPill" onclick="ptTab('loyalty')">⭐ 0 pts</span>
       <button class="notif-bell" id="custBell" onclick="toggleCustNotifPanel()" style="position:relative;">🔔<span class="notif-bubble" id="custBellBubble" style="display:none;">0</span></button>
       <button class="btn btn-ghost btn-sm" style="font-size:11px;min-height:34px;" onclick="doLogout()">Sign Out</button>
@@ -3767,8 +4087,11 @@ input[type="password"]::-ms-clear {
 </div></div>
 
 <!-- Customer Profile (Seller view) -->
-<div class="ov" id="mCustProfile"><div class="modal">
-  <h3>Customer Profile</h3>
+<div class="ov" id="mCustProfile"><div class="modal" style="max-width:640px;width:94%;margin:0 auto;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <h3 style="margin:0;">👤 Customer &amp; Gmail Profile</h3>
+    <span style="font-size:11px;font-weight:800;color:#1D4ED8;background:#EFF6FF;border:1px solid #BFDBFE;padding:3px 10px;border-radius:999px;">Google / Gmail Identity</span>
+  </div>
   <div id="custProfileBody"></div>
   <div class="mf"><button class="btn btn-ghost" onclick="closeM('mCustProfile')">Close</button></div>
 </div></div>
@@ -4461,6 +4784,7 @@ async function launchApp(){
     updateLoyaltyPill();
     updateMsgBadge();
     updateNotifBadge();
+    refreshSidebarAvatar();
     ptTab('overview');
   } else {
     g('app').style.display='block';
@@ -4508,6 +4832,7 @@ const NAV_ADMIN=[
   {id:'inv_admin',ni:'▦',label:'Inventory Monitor'},
   {id:'promos',ni:'🏷',label:'Promo Codes'},
   {id:'users',ni:'◉',label:'User Accounts'},
+  {id:'my_profile',ni:'👤',label:'My Profile (Gmail)'},
 ];
 const NAV_SELLER=[
   {id:'orders',ni:'▤',label:'Orders'},
@@ -4517,6 +4842,7 @@ const NAV_SELLER=[
   {id:'inventory',ni:'▦',label:'Inventory'},
   {id:'reports',ni:'◈',label:'Reports & Analytics'},
   {id:'messages_seller',ni:'✉',label:'Messages',badge:'msgBadge'},
+  {id:'my_profile',ni:'👤',label:'My Profile (Gmail)'},
   {id:'seller_settings',ni:'⚙',label:'Settings'},
 ];
 
@@ -4530,7 +4856,7 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
 
 function toggleExpPanel(btn){
   if(!btn)return;
@@ -4553,7 +4879,7 @@ function showPage(p){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const el=g('nav-'+p);if(el)el.classList.add('active');
   g('pgTitle').textContent=PG_TITLES[p]||p;
-  const R={dashboard:pgDashboard,rfid_scanner:pgRfidScanner,scan_logs:pgScanLogs,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,seller_settings:pgSellerSettings};
+  const R={dashboard:pgDashboard,rfid_scanner:pgRfidScanner,scan_logs:pgScanLogs,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,my_profile:pgMyProfile,seller_settings:pgSellerSettings};
   if(R[p])R[p]();
 }
 
@@ -5560,13 +5886,14 @@ function pgUsers(){
     </div>
     <div class="card"><div class="ch"><h4>👥 User Accounts (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${users.length} accounts</span></div>
       <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>LabaPoints</th><th>Tier</th><th>Actions</th></tr></thead>
-      <tbody>${filtered.length?filtered.map(u=>{const tier=getTier(u.points||0);return`<tr>
-        <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:7px;background:var(--btn);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;">${u.pic?`<img src="${u.pic}" style="width:100%;height:100%;object-fit:cover;">`:(u.name[0]||'?').toUpperCase()}</div><span class="fw7">${escapeHtml(u.name)}</span></div></td>
+      <tbody>${filtered.length?filtered.map(u=>{const tier=getTier(u.points||0);const avUrl=getUserGmailAvatar(u);const initL=escapeHtml((u.name&&u.name[0]||'?').toUpperCase());return`<tr>
+        <td><div style="display:flex;align-items:center;gap:10px;"><div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0E214E,#2563EB);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;border:2px solid #DBEAFE;box-shadow:0 2px 6px rgba(37,99,235,.15);">${avUrl?`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover;" onerror="handleGmailAvatarError(this,'${initL}')">`:`<span>${initL}</span>`}</div><div><div class="fw7" style="display:flex;align-items:center;gap:5px;">${escapeHtml(u.name)} ${u.googleConnected||/@gmail\.com$/i.test(u.email||'')?'<span title="Gmail Profile Synced" style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:#EFF6FF;border:1px solid #BFDBFE;color:#4285F4;font-size:9px;font-weight:900;">G</span>':''}</div><div class="text-sm text-muted" style="font-size:10.5px;">${u.googleConnected?'Google OAuth / Gmail':'Gmail / Standard Account'}</div></div></div></td>
         <td>${escapeHtml(u.email)}</td><td>${escapeHtml(u.phone||'—')}</td>
         <td><span class="badge ${{ADMIN:'b-admin',SELLER:'b-seller',CUSTOMER:'b-cust'}[u.role]||'b-cust'}">${u.role}</span></td>
         <td class="fw7">${u.points||0}</td>
         <td><span class="badge" style="background:rgba(251,191,36,.1);color:${tier.color}">${tier.name}</span></td>
         <td><div class="tda">
+          <button class="btn btn-ghost btn-sm" onclick="openCustProfile(${u.id})">👤 Profile</button>
           <button class="btn btn-ghost btn-sm" onclick="openUserModal(${u.id})">Edit</button>
           ${u.id!==CU.id?`<button class="btn btn-red btn-sm" onclick="delUser(${u.id})">Remove</button>`:'<span class="text-sm text-muted">(you)</span>'}
         </div></td>
@@ -5584,8 +5911,10 @@ function openUserModal(id){
   g('muRole').value=u?u.role:'SELLER';sv('muPass','');g('muErr').style.display='none';
   const ring=g('muPicRing');
   if(ring){
-    if(u&&u.pic)ring.innerHTML=`<img src="${u.pic}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-    else ring.innerHTML=`<span>${u?u.name[0].toUpperCase():'A'}</span>`;
+    const avUrl=u?getUserGmailAvatar(u):'';
+    const initL=escapeHtml(u?(u.name[0]||'A').toUpperCase():'A');
+    if(avUrl)ring.innerHTML=`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="handleGmailAvatarError(this,'${initL}')">`;
+    else ring.innerHTML=`<span>${initL}</span>`;
   }
   openM('mUser');
 }
@@ -6496,19 +6825,34 @@ function sendSellerMsg(){
 
 function openCustProfile(custId){
   const cust=DB.get('users').find(u=>u.id===custId);
+  if(!cust){swalError('User profile not found.');return;}
   const orders=DB.get('orders').filter(o=>o.custId===custId);
   const txns=DB.get('transactions').filter(t=>orders.some(o=>o.num===t.orderNum)&&t.status==='COMPLETED');
   const totalSpent=txns.reduce((s,t)=>s+t.amount,0);
   const tier=getTier(cust.points||0);
   const nextTier=getNextTier(cust.points||0);
+  const avUrl=getUserGmailAvatar(cust);
+  const initL=escapeHtml((cust.name&&cust.name[0]||'?').toUpperCase());
+  const isGmail=Boolean(cust.googleConnected||/@gmail\.com$/i.test(cust.email||''));
   g('custProfileBody').innerHTML=`
-    <div style="margin-bottom:14px;">
-      <div class="fw7" style="font-size:16px;">${cust.name}</div>
-      <div class="text-sm text-muted">${cust.email} · ${cust.phone||'—'}</div>
-      <div style="margin-top:6px;display:flex;gap:8px;align-items:center;">
-        <span class="badge" style="background:rgba(251,191,36,.1);color:${tier.color}">${tier.name}</span>
-        <span style="font-size:12px;color:var(--warn);">⭐ ${cust.points||0} LabaPoints</span>
-        ${nextTier?`<span style="font-size:11px;color:var(--text-muted);">${nextTier.minPts-(cust.points||0)} pts to ${nextTier.name}</span>`:'<span style="font-size:11px;color:#a78bfa;">Max tier reached!</span>'}
+    <div style="background:linear-gradient(135deg,#0E214E 0%,#1E429F 60%,#0284C7 100%);border-radius:16px;padding:18px 20px;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 10px 24px rgba(14,33,78,.18);">
+      <div style="position:relative;width:68px;height:68px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#4285F4 0%,#EA4335 33%,#FBBC05 66%,#34A853 100%);flex-shrink:0;">
+        <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;background:#0E214E;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;border:2px solid #fff;">
+          ${avUrl?`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover;" onerror="handleGmailAvatarError(this,'${initL}')">`:`<span>${initL}</span>`}
+        </div>
+        <span style="position:absolute;bottom:-2px;right:-2px;width:22px;height:22px;border-radius:50%;background:#fff;color:#4285F4;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25);">G</span>
+      </div>
+      <div style="flex:1;min-width:180px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:18px;font-weight:900;color:#fff;">${escapeHtml(cust.name)}</span>
+          <span class="badge" style="background:rgba(255,255,255,.16);color:#FDE68A;border:1px solid rgba(253,230,138,.4);">${tier.name} Tier</span>
+          <span class="badge" style="background:rgba(52,211,153,.2);color:#A7F3D0;border:1px solid rgba(167,243,208,.35);">${isGmail?'✓ Gmail Synced':'✓ Verified Account'}</span>
+        </div>
+        <div style="font-size:12.5px;color:#E0F2FE;margin-top:4px;font-weight:600;">✉️ ${escapeHtml(cust.googleEmail||cust.email)} · 📱 ${escapeHtml(cust.phone||'No phone linked')}</div>
+        <div style="margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#FDE68A;font-weight:800;">⭐ ${cust.points||0} LabaPoints (${tier.disc}% Loyalty Discount)</span>
+          ${nextTier?`<span style="font-size:11px;color:#BAE6FD;">${nextTier.minPts-(cust.points||0)} pts to ${nextTier.name}</span>`:'<span style="font-size:11px;color:#C4B5FD;font-weight:700;">🏆 Max Tier Reached!</span>'}
+        </div>
       </div>
     </div>
     <div class="sg sg-3" style="margin-bottom:14px;">
@@ -6516,13 +6860,15 @@ function openCustProfile(custId){
       <div class="sc"><div class="sc-val">${orders.filter(o=>o.status==='RELEASED').length}</div><div class="sc-lbl">Completed</div></div>
       <div class="sc"><div class="sc-val">${peso(totalSpent)}</div><div class="sc-lbl">Total Spent</div></div>
     </div>
-    <table><thead><tr><th>Order #</th><th>Type</th><th>Price</th><th>Status</th><th>Date</th></tr></thead>
-    <tbody>${orders.length?[...orders].reverse().map(o=>`<tr>
-      <td class="fw7">${o.num}</td><td>${TYPE_LABEL[o.type]}</td>
-      <td class="fw7">${peso(o.price)}</td><td>${sBadge(o.status)}</td>
-      <td class="text-sm text-muted">${fs(o.created)}</td>
-    </tr>`).join(''):`<tr><td colspan="5"><div class="empty">No orders</div></td></tr>`}
-    </tbody></table>`;
+    <div style="max-height:240px;overflow-y:auto;border:1px solid var(--border);border-radius:12px;">
+      <table><thead><tr><th>Order #</th><th>Type</th><th>Price</th><th>Status</th><th>Date</th></tr></thead>
+      <tbody>${orders.length?[...orders].reverse().map(o=>`<tr>
+        <td class="fw7">${o.num}</td><td>${TYPE_LABEL[o.type]||o.type}</td>
+        <td class="fw7">${peso(o.price)}</td><td>${sBadge(o.status)}</td>
+        <td class="text-sm text-muted">${fs(o.created)}</td>
+      </tr>`).join(''):`<tr><td colspan="5"><div class="empty">No orders yet</div></td></tr>`}
+      </tbody></table>
+    </div>`;
   openM('mCustProfile');
 }
 
@@ -7876,36 +8222,337 @@ function sendCustMsg(){
   DB.set('messages',msgs);input.value='';ptMessages();
 }
 
-/* ── Profile ─ */
-function ptProfile(){
-  const pic=escapeHtml(CU.pic||'');
-  g('ptContent').innerHTML=`
-    <div style="max-width:480px;">
-      <h3 style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:18px;">My Profile</h3>
-      <div style="background:var(--card);border-radius:12px;padding:22px;border:1px solid var(--border);">
-        <div class="profile-pic-wrap">
-          <div class="profile-pic-ring" id="prPicRing">
-            ${pic?`<img src="${pic}" alt="Profile">`:`<span>${escapeHtml(CU.name[0]||'?').toUpperCase()}</span>`}
+/* ── Modern Centered Profile & Gmail Account Identity ─ */
+function getUserGmailAvatar(u){
+  if(!u)return '';
+  const direct=u.pic||u.photoUrl||u.googlePhoto||u.avatar_url||'';
+  if(direct)return direct;
+  const email=String(u.googleEmail||u.email||'').trim().toLowerCase();
+  if(email&&email.includes('@')&&!email.endsWith('@phone.labaflow.local')){
+    return `https://unavatar.io/google/${encodeURIComponent(email)}`;
+  }
+  return '';
+}
+
+function handleGmailAvatarError(imgEl,initial){
+  if(!imgEl)return;
+  const parent=imgEl.parentElement;
+  const ch=initial||'?';
+  if(parent){
+    parent.innerHTML=`<span>${ch}</span>`;
+  }
+}
+
+function renderModernProfileHTML(){
+  const avUrl=getUserGmailAvatar(CU);
+  const initL=escapeHtml((CU.name&&CU.name[0]||'?').toUpperCase());
+  const rawEmail=String(CU.googleEmail||CU.email||'').trim();
+  const displayEmail=rawEmail.endsWith('@phone.labaflow.local')?'No Gmail linked yet':rawEmail;
+  const isGmail=/@gmail\.com$/i.test(rawEmail)||Boolean(CU.googleConnected);
+  const googleDisplayName=CU.googleName||CU.name||'LabaFlow User';
+  const pts=CU.points||0;
+  const tier=getTier(pts);
+  const nextTier=getNextTier(pts);
+  const progressPct=nextTier?Math.min(100,Math.round(((pts-tier.minPts)/Math.max(1,nextTier.minPts-tier.minPts))*100)):100;
+
+  /* KPI Stats calculation */
+  const isCust=CU.role==='CUSTOMER';
+  const myOrders=isCust?DB.get('orders').filter(o=>o.custId===CU.id):DB.get('orders');
+  const activeOrders=myOrders.filter(o=>!['RELEASED','CANCELLED'].includes(normStatus(o.status))).length;
+  const completedOrders=myOrders.filter(o=>normStatus(o.status)==='RELEASED').length;
+  const myTxns=DB.get('transactions').filter(t=>myOrders.some(o=>o.num===t.orderNum)&&t.status==='COMPLETED');
+  const totalSpent=myTxns.reduce((s,t)=>s+(parseFloat(t.amount)||0),0);
+
+  const googleSvg=`<svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>`;
+
+  return `
+    <div class="lf-profile-container">
+      <!-- HERO PROFILE BANNER CARD (CENTERED) -->
+      <div class="lf-profile-hero-card">
+        <div class="lf-profile-cover">
+          <div class="lf-profile-cover-badges">
+            <span class="lf-cover-pill">
+              <span style="display:inline-flex;width:16px;height:16px;background:#fff;border-radius:50%;align-items:center;justify-content:center;">${googleSvg}</span>
+              ${isGmail?'GMAIL PROFILE SYNCED':'GOOGLE / GMAIL READY'}
+            </span>
+            <span class="lf-cover-pill" style="background:rgba(251,191,36,.22);border-color:rgba(253,230,138,.45);color:#FDE68A;">
+              ${isCust?`🏆 ${tier.name} Member · ${tier.disc}% Off`:`🛡️ ${CU.role==='ADMIN'?'System Owner / Admin':'Laundry Staff / Seller'}`}
+            </span>
           </div>
-          <label class="profile-pic-label" for="prPicFile">Change Photo</label>
-          <input type="file" id="prPicFile" accept="image/*" style="display:none;" onchange="handleProfilePic(this)">
         </div>
-        ${CU.googleConnected?'<div style="display:inline-flex;align-items:center;gap:7px;background:#eff6ff;color:#1d4ed8;border-radius:20px;padding:6px 10px;margin:-4px 0 14px;font-size:11px;font-weight:700;"><span style="color:#4285f4;font-size:15px;font-weight:800;">G</span> Google account connected</div>':''}
-        <div class="fg"><label>Full Name</label><input id="prName" value="${escapeHtml(CU.name)}"></div>
-        <div class="fg"><label>Email Address</label><input type="email" id="prEmail" value="${escapeHtml(CU.email)}"></div>
-        <div class="fg"><label>Phone Number</label><input id="prPhone" value="${escapeHtml(CU.phone||'')}"></div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">
-        <div class="fg"><label>New Password <span class="text-muted">(blank = keep current)</span></label><div class="password-input-wrap"><input type="password" id="prPass" placeholder="••••••••"><button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-        <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+
+        <div class="lf-profile-hero-body">
+          <!-- OVERLAPPING GMAIL AVATAR POD -->
+          <div class="lf-avatar-pod" title="Your Google / Gmail Profile Picture">
+            <div class="lf-avatar-inner" id="prPicRing">
+              ${avUrl?`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" alt="Gmail Profile" onerror="handleGmailAvatarError(this,'${initL}')">`:`<span>${initL}</span>`}
+            </div>
+            <div class="lf-avatar-g-badge" title="Synced with Google / Gmail Account">${googleSvg}</div>
+            <label class="lf-avatar-cam-btn" for="prPicFile" title="Upload custom photo">📷</label>
+            <input type="file" id="prPicFile" accept="image/*" style="display:none;" onchange="handleProfilePic(this)">
+          </div>
+
+          <!-- USER NAME & PILLS -->
+          <div class="lf-hero-identity">
+            <div class="lf-hero-name-row">
+              <h2 class="lf-hero-name">${escapeHtml(CU.name)}</h2>
+              <span class="lf-role-chip">${CU.role}</span>
+              ${isGmail?`<span style="display:inline-flex;align-items:center;gap:5px;background:#DCFCE7;color:#15803D;border:1px solid #86EFAC;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;">✓ Gmail Connected</span>`:''}
+            </div>
+            <div class="lf-hero-sub-row">
+              <span class="lf-hero-meta-item">✉️ <strong>${escapeHtml(displayEmail)}</strong></span>
+              <span class="lf-hero-meta-item">📱 ${escapeHtml(CU.phone||'No mobile number set')}</span>
+            </div>
+          </div>
+
+          <!-- HERO QUICK ACTIONS -->
+          <div class="lf-hero-actions">
+            <button type="button" class="btn btn-sm" style="background:#EFF6FF;color:#1D4ED8;border:1.5px solid #BFDBFE;font-weight:800;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;" onclick="syncMyGmailProfile()">
+              ${googleSvg} Sync Gmail Profile
+            </button>
+            <label for="prPicFile" class="btn btn-ghost btn-sm" style="cursor:pointer;margin:0;padding:8px 13px;border-radius:10px;">
+              🖼️ Change Photo
+            </label>
+          </div>
+        </div>
+
+        <!-- 4-COLUMN KPI STATS STRIP -->
+        <div class="lf-profile-stats-strip">
+          <div class="lf-pstat">
+            <div class="lf-pstat-val">${myOrders.length}</div>
+            <div class="lf-pstat-lbl">${isCust?'My Total Bookings':'Total Shop Orders'}</div>
+          </div>
+          <div class="lf-pstat">
+            <div class="lf-pstat-val" style="color:#0284C7;">${activeOrders} / ${completedOrders}</div>
+            <div class="lf-pstat-lbl">Active / Completed</div>
+          </div>
+          <div class="lf-pstat">
+            <div class="lf-pstat-val" style="color:#059669;">${peso(totalSpent)}</div>
+            <div class="lf-pstat-lbl">${isCust?'Lifetime Spent':'Completed Revenue'}</div>
+          </div>
+          <div class="lf-pstat">
+            <div class="lf-pstat-val" style="color:#D97706;">${isCust?`⭐ ${pts}`:'✓ Active'}</div>
+            <div class="lf-pstat-lbl">${isCust?`${tier.name} Tier (${tier.disc}% Off)`:'Gmail & Cloud Sync'}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TWO-COLUMN BENTO GRID (CENTERED) -->
+      <div class="lf-profile-bento">
+        <!-- LEFT COLUMN: GMAIL IDENTITY CARD + PERSONAL DETAILS -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <!-- DEDICATED GOOGLE / GMAIL ACCOUNT PROFILE CARD -->
+          <div class="gmail-identity-card">
+            <div class="gmail-card-top">
+              <span class="gmail-card-title">${googleSvg} GOOGLE / GMAIL ACCOUNT PROFILE</span>
+              <span class="gmail-verified-pill">${isGmail?'✓ Verified Gmail':'⚡ Ready to Link'}</span>
+            </div>
+            <div class="gmail-user-row">
+              <div class="gmail-mini-av" id="gmailCardMiniAv">
+                ${avUrl?`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" alt="Gmail Avatar" onerror="handleGmailAvatarError(this,'${initL}')">`:`<span>${initL}</span>`}
+              </div>
+              <div class="gmail-user-info">
+                <div class="gmail-user-name">${escapeHtml(googleDisplayName)}</div>
+                <div class="gmail-user-email">${escapeHtml(displayEmail)}</div>
+                <div class="gmail-sync-note">
+                  <span>🟢</span>
+                  <span>Profile photo &amp; identity synced directly from your Gmail account</span>
+                </div>
+              </div>
+            </div>
+            <div class="gmail-card-actions">
+              <button type="button" class="btn btn-sm" style="background:#fff;color:#1E40AF;border:1.5px solid #93C5FD;font-weight:800;display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:7px 12px;" onclick="syncMyGmailProfile()">
+                🔄 Refresh from Gmail
+              </button>
+              <button type="button" class="btn btn-sm" style="background:#1D4ED8;color:#fff;border:none;font-weight:800;display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:7px 13px;" onclick="doGoogleSignIn()">
+                🔗 Connect / Switch Google Account
+              </button>
+            </div>
+          </div>
+
+          <!-- PERSONAL INFORMATION CARD -->
+          <div class="lf-bento-card">
+            <div class="lf-bento-head">
+              <div>
+                <div class="lf-bento-title"><span class="lf-bento-icon">👤</span> Personal &amp; Contact Information</div>
+                <div class="lf-bento-sub">Keep your name, Gmail address, and SMS number updated for booking alerts</div>
+              </div>
+            </div>
+            <div class="fg">
+              <label>Full Name</label>
+              <div class="lf-input-icon-wrap">
+                <span class="lf-inp-ico">🪪</span>
+                <input id="prName" value="${escapeHtml(CU.name)}" placeholder="Your full name">
+              </div>
+            </div>
+            <div class="fg">
+              <label>Gmail / Email Address</label>
+              <div class="lf-input-icon-wrap">
+                <span class="lf-inp-ico">✉️</span>
+                <input type="email" id="prEmail" value="${escapeHtml(rawEmail.endsWith('@phone.labaflow.local')?'':rawEmail)}" placeholder="yourname@gmail.com">
+              </div>
+            </div>
+            <div class="fg" style="margin-bottom:0;">
+              <label>Mobile Number (for SMS OTP &amp; Laundry Pickup Alerts)</label>
+              <div class="lf-input-icon-wrap">
+                <span class="lf-inp-ico">📱</span>
+                <input id="prPhone" value="${escapeHtml(CU.phone||'')}" placeholder="09XXXXXXXXX">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LOYALTY / ROLE CARD + SECURITY & SAVE -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <!-- LOYALTY TIER OR ROLE CARD -->
+          <div class="lf-bento-card" style="background:linear-gradient(145deg,#FFFFFF 0%,#F8FAFF 100%);">
+            <div class="lf-bento-head">
+              <div>
+                <div class="lf-bento-title"><span class="lf-bento-icon">${isCust?'⭐':'🛡️'}</span> ${isCust?'LabaPoints &amp; Loyalty Tier':'Account Privileges &amp; Status'}</div>
+                <div class="lf-bento-sub">${isCust?'Earn 1 LabaPoint for every ₱1 spent on completed laundry orders':'Your active workspace permissions and hardware access'}</div>
+              </div>
+              <span class="badge" style="background:rgba(37,99,235,.12);color:#1D4ED8;font-weight:900;padding:5px 12px;border-radius:999px;">${isCust?`${tier.name} Tier`:CU.role}</span>
+            </div>
+
+            ${isCust?`
+              <div style="background:linear-gradient(135deg,#0E214E,#1E40AF);border-radius:14px;padding:16px 18px;color:#fff;margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+                  <div>
+                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#93C5FD;font-weight:800;">Available Balance</div>
+                    <div style="font-size:26px;font-weight:900;color:#FDE68A;">⭐ ${pts} <span style="font-size:13px;font-weight:700;color:#E0F2FE;">LabaPoints</span></div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:12px;font-weight:800;color:#A7F3D0;">${tier.disc}% Auto-Discount</div>
+                    <div style="font-size:11px;color:#BAE6FD;">${nextTier?`${nextTier.minPts-pts} pts to ${nextTier.name}`:'Max Tier Unlocked!'}</div>
+                  </div>
+                </div>
+                <div style="height:8px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;">
+                  <div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,#FBBF24,#34D399);border-radius:999px;"></div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;">
+                ${TIERS.map(t=>`<div style="padding:8px 6px;border-radius:10px;border:1.5px solid ${t.name===tier.name?'#2563EB':'#E2E8F0'};background:${t.name===tier.name?'#EFF6FF':'#fff'};">
+                  <div style="font-size:11.5px;font-weight:900;color:#0E214E;">${t.name}</div>
+                  <div style="font-size:10px;color:#64748B;font-weight:700;">${t.minPts} pts</div>
+                  <div style="font-size:10.5px;color:#2563EB;font-weight:800;">${t.disc}% off</div>
+                </div>`).join('')}
+              </div>
+            `:`
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="padding:12px;border-radius:12px;background:#EFF6FF;border:1px solid #BFDBFE;">
+                  <div style="font-size:11px;font-weight:800;color:#1E40AF;">📡 RFID Station Access</div>
+                  <div style="font-size:13px;font-weight:900;color:#0E214E;margin-top:3px;">1-Device RC522 Enabled</div>
+                </div>
+                <div style="padding:12px;border-radius:12px;background:#ECFDF5;border:1px solid #A7F3D0;">
+                  <div style="font-size:11px;font-weight:800;color:#047857;">🔔 Background Push</div>
+                  <div style="font-size:13px;font-weight:900;color:#065F46;margin-top:3px;">Service Worker Active</div>
+                </div>
+              </div>
+            `}
+          </div>
+
+          <!-- SECURITY & SAVE CHANGES CARD -->
+          <div class="lf-bento-card">
+            <div class="lf-bento-head">
+              <div>
+                <div class="lf-bento-title"><span class="lf-bento-icon">🔒</span> Security &amp; Password</div>
+                <div class="lf-bento-sub">Leave password blank if you want to keep your current password</div>
+              </div>
+            </div>
+            <div class="fg">
+              <label>New Password <span class="text-muted">(optional — min. 12 characters)</span></label>
+              <div class="password-input-wrap">
+                <input type="password" id="prPass" placeholder="••••••••••••">
+                <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-block" style="padding:13px 18px;font-size:14px;font-weight:900;border-radius:12px;box-shadow:0 8px 20px rgba(37,99,235,.25);margin-top:8px;" onclick="saveProfile()">
+              💾 Save Profile &amp; Gmail Settings
+            </button>
+          </div>
+        </div>
       </div>
     </div>`;
 }
+
+function ptProfile(){
+  const target=g('ptContent');
+  if(target)target.innerHTML=renderModernProfileHTML();
+}
+
+function pgMyProfile(){
+  const target=g('pgContent');
+  if(target)target.innerHTML=renderModernProfileHTML();
+}
+
+async function syncMyGmailProfile(){
+  if(!CU)return;
+  const emailInput=g('prEmail')?.value?.trim().toLowerCase()||CU.email||'';
+  if(emailInput&&!emailInput.endsWith('@phone.labaflow.local')){
+    CU.email=emailInput;
+    CU.googleEmail=emailInput;
+  }
+  showLoader('Syncing Gmail profile…');
+  try{
+    let updated=null;
+    if(window.LabaFlowSupabase?.syncGoogleProfile){
+      updated=await LabaFlowSupabase.syncGoogleProfile(CU);
+    }
+    if(updated){
+      setCurrentUser(updated);
+    }else{
+      const fallbackAv=getUserGmailAvatar(CU);
+      if(fallbackAv){CU.pic=fallbackAv;CU.photoUrl=fallbackAv;CU.googlePhoto=fallbackAv;}
+      CU.googleConnected=true;
+      setCurrentUser(CU);
+    }
+    await refreshRemoteUsers();
+    refreshSidebarAvatar();
+    if(CU.role==='CUSTOMER'){
+      if(g('ptUserName'))g('ptUserName').textContent=CU.name;
+      ptProfile();
+    }else{
+      if(g('sbName'))g('sbName').textContent=CU.name;
+      pgMyProfile();
+    }
+    toast('✓ Synced with your Gmail profile!');
+  }catch(err){
+    const fallbackAv=getUserGmailAvatar(CU);
+    if(fallbackAv){
+      CU.pic=fallbackAv;CU.photoUrl=fallbackAv;CU.googlePhoto=fallbackAv;CU.googleConnected=true;
+      setCurrentUser(CU);
+      refreshSidebarAvatar();
+      if(CU.role==='CUSTOMER')ptProfile();else pgMyProfile();
+      toast('✓ Gmail avatar resolved from '+(CU.email||'account'));
+    }else{
+      swalError(err?.message||'Unable to sync Gmail profile right now.');
+    }
+  }finally{
+    hideLoader();
+  }
+}
+
 function saveProfile(){
   const name=gv('prName').trim(),email=gv('prEmail').trim().toLowerCase(),phone=gv('prPhone').trim(),pass=gv('prPass');
-  if(!name||!email){swalError('Name and email are required.');return;}
+  if(!name||!email){swalError('Name and Gmail/email address are required.');return;}
   if(pass&&pass.length<12){swalError('New password must be at least 12 characters.');return;}
-  LabaFlowSupabase.updateProfile(CU,{name,email,phone,password:pass||undefined,photoUrl:CU.pic||undefined})
-    .then(profile=>{setCurrentUser(profile);refreshRemoteUsers();g('ptUserName').textContent=CU.name;updateLoyaltyPill();refreshSidebarAvatar();swalSuccess('Profile Updated','Your Supabase account has been updated.');})
+  /* If user entered a Gmail address and has no custom photo yet, resolve Gmail avatar automatically */
+  const nextPic=(!CU.pic||CU.pic.includes('unavatar.io/google/'))
+    ?`https://unavatar.io/google/${encodeURIComponent(email)}`
+    :CU.pic;
+  LabaFlowSupabase.updateProfile(CU,{name,email,phone,password:pass||undefined,photoUrl:nextPic||undefined})
+    .then(profile=>{
+      setCurrentUser(profile);
+      refreshRemoteUsers();
+      if(g('ptUserName'))g('ptUserName').textContent=CU.name;
+      if(g('sbName'))g('sbName').textContent=CU.name;
+      updateLoyaltyPill();
+      refreshSidebarAvatar();
+      if(CU.role==='CUSTOMER')ptProfile();else if(curPage==='my_profile')pgMyProfile();
+      swalSuccess('Profile Updated','Your account & Gmail profile settings have been saved.');
+    })
     .catch(error=>swalError(error.message||'Profile update failed.'));
 }
 
@@ -7916,9 +8563,12 @@ function handleProfilePic(input){
   reader.onload=function(e){
     const dataUrl=e.target.result;
     CU.pic=dataUrl;
-    /* update preview ring */
+    CU.photoUrl=dataUrl;
+    /* update preview rings */
     const ring=g('prPicRing');
     if(ring)ring.innerHTML=`<img src="${dataUrl}" alt="Profile">`;
+    const mini=g('gmailCardMiniAv');
+    if(mini)mini.innerHTML=`<img src="${dataUrl}" alt="Gmail Avatar">`;
     /* persist immediately */
     LabaFlowSupabase.updateProfile(CU,{name:CU.name,email:CU.email,phone:CU.phone,photoUrl:dataUrl})
       .then(profile=>{setCurrentUser(profile);refreshRemoteUsers();refreshSidebarAvatar();toast('Profile photo updated');})
@@ -7928,11 +8578,20 @@ function handleProfilePic(input){
 }
 
 function refreshSidebarAvatar(){
-  /* app sidebar */
+  if(!CU)return;
+  const avUrl=getUserGmailAvatar(CU);
+  const initL=escapeHtml((CU.name&&CU.name[0]||'?').toUpperCase());
+  /* Admin/Seller sidebar avatar */
   const avEl=g('sbAv');
   if(avEl){
-    if(CU.pic)avEl.innerHTML=`<img class="sb-av-img" src="${CU.pic}" alt="">`;
-    else avEl.textContent=CU.name[0].toUpperCase();
+    if(avUrl)avEl.innerHTML=`<img class="sb-av-img" src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" alt="" onerror="handleGmailAvatarError(this,'${initL}')">`;
+    else avEl.textContent=initL;
+  }
+  /* Customer portal top navbar avatar */
+  const ptAvEl=g('ptNavAv');
+  if(ptAvEl){
+    if(avUrl)ptAvEl.innerHTML=`<img src="${escapeHtml(avUrl)}" referrerpolicy="no-referrer" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="handleGmailAvatarError(this,'${initL}')">`;
+    else ptAvEl.textContent=initL;
   }
 }
 

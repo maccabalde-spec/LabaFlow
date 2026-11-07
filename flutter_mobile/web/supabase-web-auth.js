@@ -36,26 +36,84 @@
     if (!response.ok) throw new Error(data.msg || data.message || data.error_description || data.error || data.details || `Supabase request failed (${response.status}).`);
     return data;
   }
-  function profile(row, authUser = {}) { const providers=authUser.app_metadata?.providers || []; return {id:Number(row.public_id || 0), authUid:row.id, name:row.full_name || 'Customer', email:row.email || '', phone:row.phone || '', role:String(row.role || 'CUSTOMER').toUpperCase(), points:Number(row.points || 0), pic:row.avatar_url || null, googleConnected:providers.includes('google')}; }
+  function resolveGoogleAvatar(row = {}, authUser = {}) {
+    const metadata = authUser.user_metadata || {};
+    const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
+    const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
+    const directPhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || row.avatar_url || '';
+    if (directPhoto) return directPhoto;
+    const email = String(row.email || authUser.email || metadata.email || googleIdentity.email || '').trim().toLowerCase();
+    if (email && email.includes('@') && !email.endsWith('@phone.labaflow.local')) {
+      return `https://unavatar.io/google/${encodeURIComponent(email)}`;
+    }
+    return null;
+  }
+  function profile(row, authUser = {}) {
+    const providers = authUser.app_metadata?.providers || [];
+    const metadata = authUser.user_metadata || {};
+    const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
+    const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
+    const email = String(row.email || authUser.email || metadata.email || googleIdentity.email || '').trim();
+    const isGmail = /@gmail\.com$/i.test(email) || providers.includes('google') || identities.some(i => i.provider === 'google');
+    const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || row.full_name || 'Customer';
+    const googlePhoto = resolveGoogleAvatar(row, authUser);
+    return {
+      id: Number(row.public_id || 0),
+      authUid: row.id,
+      name: row.full_name || googleName || 'Customer',
+      email,
+      phone: row.phone || metadata.phone || '',
+      role: String(row.role || 'CUSTOMER').toUpperCase(),
+      points: Number(row.points || 0),
+      pic: row.avatar_url || googlePhoto || null,
+      googlePhoto: googlePhoto || null,
+      googleName: googleName || row.full_name || '',
+      googleEmail: googleIdentity.email || metadata.email || email,
+      googleConnected: providers.includes('google') || isGmail || Boolean(metadata.avatar_url || metadata.picture || googleIdentity.picture)
+    };
+  }
   async function profileByUid(uid) {
     const [rows, authUser] = await Promise.all([
       request(`/rest/v1/profiles?id=eq.${encodeURIComponent(uid)}&select=*`),
       request('/auth/v1/user'),
     ]);
     if (!rows.length) throw new Error('Supabase profile is missing. Check the database migration.');
-    const row=rows[0], metadata=authUser.user_metadata || {};
-    const googleName=metadata.full_name || metadata.name || '';
-    const googlePhoto=metadata.avatar_url || metadata.picture || '';
-    const changes={};
-    const profileName=String(row.full_name || '');
-    const emailPrefix=String(authUser.email || '').split('@')[0];
-    if ((!profileName || profileName === 'Customer' || profileName === emailPrefix) && googleName) changes.full_name=googleName;
-    if (!row.avatar_url && googlePhoto) changes.avatar_url=googlePhoto;
+    const row = rows[0], metadata = authUser.user_metadata || {};
+    const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
+    const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
+    const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || '';
+    const googlePhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || '';
+    const changes = {};
+    const profileName = String(row.full_name || '');
+    const emailPrefix = String(authUser.email || '').split('@')[0];
+    if ((!profileName || profileName === 'Customer' || profileName === emailPrefix) && googleName) changes.full_name = googleName;
+    if (!row.avatar_url && googlePhoto) changes.avatar_url = googlePhoto;
     if (Object.keys(changes).length) {
-      await request(`/rest/v1/profiles?id=eq.${encodeURIComponent(uid)}`,{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify(changes)});
-      Object.assign(row,changes);
+      await request(`/rest/v1/profiles?id=eq.${encodeURIComponent(uid)}`, {method:'PATCH', headers:{Prefer:'return=minimal'}, body:JSON.stringify(changes)}).catch(()=>{});
+      Object.assign(row, changes);
     }
     return profile(row, authUser);
+  }
+  async function syncGoogleProfile(user) {
+    if (!user?.authUid) throw new Error('No active user session.');
+    const authUser = await request('/auth/v1/user');
+    const metadata = authUser.user_metadata || {};
+    const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
+    const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
+    const email = String(authUser.email || user.email || '').trim().toLowerCase();
+    const googlePhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || (email.includes('@') ? `https://unavatar.io/google/${encodeURIComponent(email)}` : '');
+    const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || user.name;
+    const patch = {};
+    if (googlePhoto) patch.avatar_url = googlePhoto;
+    if (googleName && (!user.name || user.name === 'Customer')) patch.full_name = googleName;
+    if (Object.keys(patch).length) {
+      await request(`/rest/v1/profiles?id=eq.${encodeURIComponent(user.authUid)}`, {
+        method: 'PATCH',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify(patch)
+      }).catch(() => {});
+    }
+    return profileByUid(user.authUid);
   }
   function normPhone10(v) {
     const d = String(v || '').replace(/\D/g, '');
@@ -325,5 +383,5 @@
       if (_ws) { try { _ws.close(); } catch (_) {} _ws = null; }
     };
   }
-  global.LabaFlowSupabase={configured,signIn,register,sendOtp,verifyOtpAndRegister,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
+  global.LabaFlowSupabase={configured,signIn,register,sendOtp,verifyOtpAndRegister,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,syncGoogleProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
 })(window);
