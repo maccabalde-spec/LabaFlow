@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -36,14 +39,16 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
 
+    private static final String LIVE_WEB_URL = "https://maccabalde-spec.github.io/LabaFlow/";
     private static final String VIRTUAL_HOST = "appassets.androidplatform.net";
-    private static final String START_URL = "https://" + VIRTUAL_HOST + "/labaflow.html";
+    private static final String FALLBACK_LOCAL_URL = "https://" + VIRTUAL_HOST + "/labaflow.html";
     private static final String CHANNEL_ID = "labaflow_push_channel";
     private static final int FILE_CHOOSER_REQ = 1001;
     private static final int NOTIF_PERM_REQ = 1002;
 
     private WebView webView;
     private ValueCallback<Uri[]> filePathCallback;
+    private boolean switchedToFallback = false;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -89,6 +94,7 @@ public class MainActivity extends Activity {
         settings.setDisplayZoomControls(false);
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        /* Always check network first so any live website changes reflect immediately in the APK */
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -130,6 +136,18 @@ public class MainActivity extends Activity {
                     }
                 }
                 return super.shouldInterceptRequest(view, request);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && request != null && request.isForMainFrame()) {
+                    if (!switchedToFallback) {
+                        switchedToFallback = true;
+                        view.loadUrl(FALLBACK_LOCAL_URL);
+                        return;
+                    }
+                }
+                super.onReceivedError(view, request, error);
             }
 
             @Override
@@ -182,7 +200,33 @@ public class MainActivity extends Activity {
             }
         });
 
-        webView.loadUrl(START_URL);
+        loadLatestWebsiteOrFallback();
+    }
+
+    private void loadLatestWebsiteOrFallback() {
+        if (isNetworkConnected()) {
+            switchedToFallback = false;
+            Map<String, String> noCacheHeaders = new HashMap<>();
+            noCacheHeaders.put("Cache-Control", "no-cache, no-store, must-revalidate");
+            noCacheHeaders.put("Pragma", "no-cache");
+            noCacheHeaders.put("Expires", "0");
+            webView.loadUrl(LIVE_WEB_URL, noCacheHeaders);
+        } else {
+            switchedToFallback = true;
+            webView.loadUrl(FALLBACK_LOCAL_URL);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean isNetworkConnected() {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm != null) {
+                NetworkInfo info = cm.getActiveNetworkInfo();
+                return info != null && info.isConnected();
+            }
+        } catch (Exception ignored) {}
+        return true;
     }
 
     private String guessMimeType(String path) {
@@ -268,6 +312,11 @@ public class MainActivity extends Activity {
         public void scheduleNotification(final String title, final String body, final int delayMs) {
             int safeDelay = Math.max(500, Math.min(delayMs, 60000));
             mainHandler.postDelayed(() -> postNativeNotification(title, body), safeDelay);
+        }
+
+        @JavascriptInterface
+        public void reloadLiveSite() {
+            mainHandler.post(() -> loadLatestWebsiteOrFallback());
         }
     }
 
