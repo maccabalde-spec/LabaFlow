@@ -36,17 +36,30 @@
     if (!response.ok) throw new Error(data.msg || data.message || data.error_description || data.error || data.details || `Supabase request failed (${response.status}).`);
     return data;
   }
+  function isFakeAvatarUrl(url) {
+    if (!url || typeof url !== 'string') return true;
+    return /unavatar\.io|gravatar\.com\/avatar\/.*d=mm/i.test(url);
+  }
+  function normalizeGooglePhotoUrl(url) {
+    if (!url || isFakeAvatarUrl(url)) return null;
+    const trimmed = String(url).trim();
+    if (!trimmed) return null;
+    if (/lh\d*\.googleusercontent\.com/i.test(trimmed)) {
+      return trimmed.replace(/=s\d+(-c)?$/, '=s256-c');
+    }
+    return trimmed;
+  }
   function resolveGoogleAvatar(row = {}, authUser = {}) {
     const metadata = authUser.user_metadata || {};
     const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
     const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
-    const directPhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || row.avatar_url || '';
-    if (directPhoto) return directPhoto;
-    const email = String(row.email || authUser.email || metadata.email || googleIdentity.email || '').trim().toLowerCase();
-    if (email && email.includes('@') && !email.endsWith('@phone.labaflow.local')) {
-      return `https://unavatar.io/google/${encodeURIComponent(email)}`;
-    }
-    return null;
+    const oauthPhoto = normalizeGooglePhotoUrl(
+      metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || ''
+    );
+    const savedPhoto = normalizeGooglePhotoUrl(row.avatar_url || '');
+    /* If user uploaded a custom data:image or has a saved photo, prefer real Google photo if savedPhoto is empty, or keep custom uploaded photo */
+    if (savedPhoto && savedPhoto.startsWith('data:image/')) return savedPhoto;
+    return oauthPhoto || savedPhoto || null;
   }
   function profile(row, authUser = {}) {
     const providers = authUser.app_metadata?.providers || [];
@@ -54,9 +67,12 @@
     const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
     const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
     const email = String(row.email || authUser.email || metadata.email || googleIdentity.email || '').trim();
-    const isGmail = /@gmail\.com$/i.test(email) || providers.includes('google') || identities.some(i => i.provider === 'google');
+    const hasGoogleIdentity = providers.includes('google') || identities.some(i => i.provider === 'google') || Boolean(metadata.avatar_url || metadata.picture || googleIdentity.picture || googleIdentity.avatar_url);
     const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || row.full_name || 'Customer';
-    const googlePhoto = resolveGoogleAvatar(row, authUser);
+    const resolvedPic = resolveGoogleAvatar(row, authUser);
+    const oauthOnlyPhoto = normalizeGooglePhotoUrl(
+      metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || ''
+    );
     return {
       id: Number(row.public_id || 0),
       authUid: row.id,
@@ -65,12 +81,24 @@
       phone: row.phone || metadata.phone || '',
       role: String(row.role || 'CUSTOMER').toUpperCase(),
       points: Number(row.points || 0),
-      pic: row.avatar_url || googlePhoto || null,
-      googlePhoto: googlePhoto || null,
+      pic: resolvedPic || null,
+      googlePhoto: oauthOnlyPhoto || resolvedPic || null,
       googleName: googleName || row.full_name || '',
       googleEmail: googleIdentity.email || metadata.email || email,
-      googleConnected: providers.includes('google') || isGmail || Boolean(metadata.avatar_url || metadata.picture || googleIdentity.picture)
+      googleConnected: hasGoogleIdentity || Boolean(oauthOnlyPhoto || (resolvedPic && /googleusercontent\.com/i.test(resolvedPic)))
     };
+  }
+  async function fetchLiveGoogleUserInfo(providerToken) {
+    if (!providerToken) return null;
+    try {
+      const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${providerToken}` }
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (_) {
+      return null;
+    }
   }
   async function profileByUid(uid) {
     const [rows, authUser] = await Promise.all([
@@ -81,13 +109,31 @@
     const row = rows[0], metadata = authUser.user_metadata || {};
     const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
     const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
-    const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || '';
-    const googlePhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || '';
+    let googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || '';
+    let googlePhoto = normalizeGooglePhotoUrl(metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || '');
+    const curSession = session();
+    if (!googlePhoto && curSession?.provider_token) {
+      const liveInfo = await fetchLiveGoogleUserInfo(curSession.provider_token);
+      if (liveInfo?.picture) googlePhoto = normalizeGooglePhotoUrl(liveInfo.picture);
+      if (!googleName && liveInfo?.name) googleName = liveInfo.name;
+    }
+    if (!googlePhoto && (!row.avatar_url || isFakeAvatarUrl(row.avatar_url))) {
+      try {
+        const rpcPic = await request('/rest/v1/rpc/sync_my_google_avatar', { method: 'POST', body: '{}' });
+        if (typeof rpcPic === 'string' && rpcPic) {
+          googlePhoto = normalizeGooglePhotoUrl(rpcPic);
+        }
+      } catch (_) {}
+    }
     const changes = {};
     const profileName = String(row.full_name || '');
     const emailPrefix = String(authUser.email || '').split('@')[0];
     if ((!profileName || profileName === 'Customer' || profileName === emailPrefix) && googleName) changes.full_name = googleName;
-    if (!row.avatar_url && googlePhoto) changes.avatar_url = googlePhoto;
+    if (isFakeAvatarUrl(row.avatar_url)) {
+      if (row.avatar_url || googlePhoto) changes.avatar_url = googlePhoto || null;
+    } else if (!row.avatar_url && googlePhoto) {
+      changes.avatar_url = googlePhoto;
+    }
     if (Object.keys(changes).length) {
       await request(`/rest/v1/profiles?id=eq.${encodeURIComponent(uid)}`, {method:'PATCH', headers:{Prefer:'return=minimal'}, body:JSON.stringify(changes)}).catch(()=>{});
       Object.assign(row, changes);
@@ -100,11 +146,28 @@
     const metadata = authUser.user_metadata || {};
     const identities = Array.isArray(authUser.identities) ? authUser.identities : [];
     const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
-    const email = String(authUser.email || user.email || '').trim().toLowerCase();
-    const googlePhoto = metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || (email.includes('@') ? `https://unavatar.io/google/${encodeURIComponent(email)}` : '');
-    const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || user.name;
+    let googlePhoto = normalizeGooglePhotoUrl(metadata.avatar_url || metadata.picture || googleIdentity.avatar_url || googleIdentity.picture || '');
+    let googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || user.name;
+    const curSession = session();
+    if (curSession?.provider_token) {
+      const liveInfo = await fetchLiveGoogleUserInfo(curSession.provider_token);
+      if (liveInfo?.picture) googlePhoto = normalizeGooglePhotoUrl(liveInfo.picture) || googlePhoto;
+      if (liveInfo?.name) googleName = liveInfo.name || googleName;
+    }
+    if (!googlePhoto) {
+      try {
+        const rpcPic = await request('/rest/v1/rpc/sync_my_google_avatar', { method: 'POST', body: '{}' });
+        if (typeof rpcPic === 'string' && rpcPic) {
+          googlePhoto = normalizeGooglePhotoUrl(rpcPic) || googlePhoto;
+        }
+      } catch (_) {}
+    }
     const patch = {};
-    if (googlePhoto) patch.avatar_url = googlePhoto;
+    if (googlePhoto) {
+      patch.avatar_url = googlePhoto;
+    } else if (isFakeAvatarUrl(user.pic)) {
+      patch.avatar_url = null;
+    }
     if (googleName && (!user.name || user.name === 'Customer')) patch.full_name = googleName;
     if (Object.keys(patch).length) {
       await request(`/rest/v1/profiles?id=eq.${encodeURIComponent(user.authUid)}`, {
@@ -243,7 +306,7 @@
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
     return {verifier, challenge:base64Url(new Uint8Array(digest))};
   }
-  async function signInWithGoogle() {
+  async function signInWithGoogle(loginHint) {
     requireConfig();
     let ref=location;
     try{ if(window.top && window.top!==window && window.top.location.origin===location.origin) ref=window.top.location; }catch(e){}
@@ -254,6 +317,9 @@
     authorize.searchParams.set('provider','google');
     authorize.searchParams.set('redirect_to',redirectTo);
     authorize.searchParams.set('prompt','select_account');
+    if (loginHint && typeof loginHint === 'string' && loginHint.includes('@') && !loginHint.endsWith('@phone.labaflow.local')) {
+      authorize.searchParams.set('login_hint', loginHint.trim());
+    }
     authorize.searchParams.set('code_challenge',challenge);
     authorize.searchParams.set('code_challenge_method','s256');
     if (window.top && window.top !== window) window.top.location.assign(authorize.toString());
@@ -283,9 +349,9 @@
     }
     if (!location.hash.includes('access_token=')) return;
     const params=new URLSearchParams(location.hash.slice(1));
-    const accessToken=params.get('access_token'), refreshToken=params.get('refresh_token');
+    const accessToken=params.get('access_token'), refreshToken=params.get('refresh_token'), providerToken=params.get('provider_token');
     if (!accessToken || !refreshToken) return;
-    save({access_token:accessToken,refresh_token:refreshToken,token_type:params.get('token_type')||'bearer',expires_in:Number(params.get('expires_in')||3600),expires_at:Math.floor(Date.now()/1000)+Number(params.get('expires_in')||3600)});
+    save({access_token:accessToken,refresh_token:refreshToken,provider_token:providerToken||undefined,token_type:params.get('token_type')||'bearer',expires_in:Number(params.get('expires_in')||3600),expires_at:Math.floor(Date.now()/1000)+Number(params.get('expires_in')||3600)});
     localStorage.removeItem(pkceVerifierKey);
     history.replaceState(null,'',location.pathname);
   }
