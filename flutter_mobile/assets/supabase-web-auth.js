@@ -116,7 +116,7 @@
       { phone: '09170000001', email: 'admin@labaday.com' }
     ];
     const defHit = defaults.find(d => normPhone10(d.phone) === p10);
-    return defHit ? defHit.email : null;
+    return defHit ? defHit.email : ('0' + p10 + '@phone.labaflow.local');
   }
   async function phoneRegistered(phone) {
     try { return !!(await emailForPhone(phone)); } catch (_) { return false; }
@@ -135,11 +135,13 @@
     return prof;
   }
   async function register({name,email,phone,password}) {
-    const result = await request('/auth/v1/signup', {method:'POST', body:JSON.stringify({email:email.trim().toLowerCase(),password,data:{name:name.trim(),phone:phone.trim()}})}, false);
+    const cleanPhone = normPhone11(phone || '');
+    const cleanEmail = String(email || '').trim().toLowerCase() || (cleanPhone ? `${cleanPhone}@phone.labaflow.local` : '');
+    const result = await request('/auth/v1/signup', {method:'POST', body:JSON.stringify({email:cleanEmail,password,data:{name:name.trim(),phone:cleanPhone}})}, false);
     if (!result.access_token || !result.user) throw new Error('Account created. Confirm your email, then sign in.');
     save(result);
     const prof = await profileByUid(result.user.id);
-    await syncPhoneEntry(phone, email);
+    if (cleanPhone) await syncPhoneEntry(cleanPhone, cleanEmail);
     return prof;
   }
   function base64Url(bytes) {

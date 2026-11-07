@@ -2444,6 +2444,261 @@ input[type="password"]::-ms-clear {
   from { opacity: 0; transform: translate(-50%, -18px); }
   to { opacity: 1; transform: translate(-50%, 0); }
 }
+
+/* ── Booking Service Choice Cards & QR Container Fitting ── */
+.bk-card-wrap {
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.bk-form-box {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(14, 33, 78, 0.06);
+}
+.svc-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+.svc-choice-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 12px 13px;
+  border-radius: 16px;
+  border: 1.5px solid #D7E3FF;
+  background: #F7F9FF;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-sizing: border-box;
+  min-width: 0;
+  text-align: left;
+  user-select: none;
+}
+.svc-choice-card:hover {
+  border-color: #739AF2;
+  background: #FFFFFF;
+  transform: translateY(-1px);
+}
+.svc-choice-card.active {
+  border-color: #4579EE;
+  background: linear-gradient(145deg, #EDF3FF 0%, #FFFFFF 100%);
+  box-shadow: 0 8px 20px rgba(69, 121, 238, 0.15);
+}
+.svc-choice-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.svc-choice-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px 999px 6px 999px;
+  background: #DCE7FF;
+  color: #4579EE;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.svc-choice-card.active .svc-choice-ico {
+  background: #4579EE;
+  color: #FFFFFF;
+}
+.svc-choice-price {
+  font-family: 'Figtree', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  color: #0E214E;
+}
+.svc-choice-card.active .svc-choice-price {
+  color: #4579EE;
+}
+.svc-choice-name {
+  font-family: 'Figtree', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0E214E;
+  line-height: 1.25;
+}
+.svc-choice-meta {
+  font-size: 11px;
+  color: #4B5B82;
+  line-height: 1.35;
+}
+.svc-choice-tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #FFB600;
+  color: #0E214E;
+  font-size: 9.5px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.color-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 6px;
+}
+.color-choice-pill {
+  padding: 10px 8px;
+  border-radius: 13px;
+  border: 1.5px solid #D7E3FF;
+  background: #F7F9FF;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s ease;
+  box-sizing: border-box;
+  min-width: 0;
+  user-select: none;
+}
+.color-choice-pill:hover {
+  border-color: #739AF2;
+  background: #FFFFFF;
+}
+.color-choice-pill.active {
+  border-color: #4579EE;
+  background: #EDF3FF;
+  box-shadow: 0 4px 12px rgba(69, 121, 238, 0.14);
+}
+.color-choice-pill .cc-title {
+  display: block;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0E214E;
+}
+.color-choice-pill .cc-sub {
+  display: block;
+  font-size: 10.5px;
+  color: #4B5B82;
+  margin-top: 2px;
+}
+.mode-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mode-choice-pill {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #D7E3FF;
+  background: #F7F9FF;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0E214E;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+.mode-choice-pill.active {
+  border-color: #4579EE;
+  background: #EDF3FF;
+  color: #4579EE;
+}
+@media (max-width: 520px) {
+  .svc-choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .color-choice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Scannable QR Code Container Fixes ── */
+#mQR .modal {
+  width: 100% !important;
+  max-width: 360px !important;
+  padding: 24px 20px !important;
+  box-sizing: border-box !important;
+}
+.qr-box {
+  background: #FFFFFF !important;
+  border-radius: 18px !important;
+  padding: 18px 16px !important;
+  text-align: center !important;
+  border: 1.5px solid #D7E3FF !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+#qrCanvasWrap {
+  background: #FFFFFF !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+}
+#qrCanvasWrap canvas,
+#qrCanvasWrap img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  margin: 0 auto !important;
+  image-rendering: pixelated;
+}
+.gcash-qr-wrap {
+  text-align: center !important;
+  padding: 16px !important;
+  background: #FFFFFF !important;
+  border-radius: 18px !important;
+  border: 1.5px solid #D7E3FF !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+.gcash-qr-pattern {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 240px !important;
+  margin: 0 auto 10px !important;
+  background: #FFFFFF !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+.gcash-qr-pattern img,
+.gcash-qr-pattern canvas {
+  width: 100% !important;
+  max-width: 240px !important;
+  height: auto !important;
+  max-height: 360px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+  border-radius: 10px !important;
+}
 </style>
 </head>
 <body>
@@ -2850,9 +3105,21 @@ input[type="password"]::-ms-clear {
   </div>
   <!-- SIGN IN -->
   <div id="fSign">
-    <div class="lfg"><label>Email or Phone Number</label><input type="text" id="liEmail" placeholder="email@address.com or 09XXXXXXXXX" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
     <div class="lfg">
-      <label>Password</label>
+      <label>Email or Phone <span class="req">*</span><span id="liDetectBadge" class="otp-status-badge"></span></label>
+      <div class="otp-input-row">
+        <input type="text" id="liEmail" placeholder="email@address.com or 09XXXXXXXXX" autocomplete="username" autocapitalize="none" spellcheck="false">
+        <button type="button" id="btnLiSendOtp" class="otp-send-btn" onclick="sendContactOtp('li')">Send Code</button>
+      </div>
+      <div class="lfg-field-err" id="liEmailErr"></div>
+    </div>
+    <div class="lfg" id="liOtpGroup">
+      <label>Verification Code <span class="req">*</span><span id="liOtpStatus" class="otp-status-badge"></span></label>
+      <input id="liOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code sent to your email or phone" autocomplete="one-time-code" style="letter-spacing:2px;font-weight:700;">
+      <div class="lfg-field-err" id="liOtpErr"></div>
+    </div>
+    <div class="lfg">
+      <label>Password <span class="req">*</span></label>
       <div class="password-input-wrap">
         <input type="password" id="liPass" autocomplete="current-password" placeholder="••••••••">
         <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
@@ -2868,18 +3135,17 @@ input[type="password"]::-ms-clear {
   <!-- REGISTER -->
   <div id="fReg" style="display:none">
     <div class="lfg"><label>Full Name <span class="req">*</span></label><input id="rName" placeholder="Juan dela Cruz" autocomplete="name" maxlength="60"><div class="lfg-field-err" id="rNameErr"></div></div>
-    <div class="lfg"><label>Email <span class="req">*</span></label><input type="email" id="rEmail" placeholder="juan@gmail.com" autocomplete="email" autocapitalize="none" spellcheck="false"><div class="lfg-field-err" id="rEmailErr"></div></div>
     <div class="lfg">
-      <label>Mobile Number <span class="req">*</span></label>
+      <label>Email or Phone <span class="req">*</span><span id="rDetectBadge" class="otp-status-badge"></span></label>
       <div class="otp-input-row">
-        <input id="rPhone" type="tel" inputmode="numeric" placeholder="09171234567" maxlength="13" autocomplete="tel">
-        <button type="button" id="btnSendOtp" class="otp-send-btn" onclick="sendRegOtp()">Send Code</button>
+        <input id="rContact" type="text" placeholder="juan@gmail.com or 09171234567" autocomplete="username" autocapitalize="none" spellcheck="false">
+        <button type="button" id="btnSendOtp" class="otp-send-btn" onclick="sendContactOtp('reg')">Send Code</button>
       </div>
-      <div class="lfg-field-err" id="rPhoneErr"></div>
+      <div class="lfg-field-err" id="rContactErr"></div>
     </div>
     <div class="lfg" id="rOtpGroup">
       <label>Verification Code <span class="req">*</span><span id="rOtpStatus" class="otp-status-badge"></span></label>
-      <input id="rOtp" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code sent to your mobile number" autocomplete="one-time-code" style="letter-spacing:2px;font-weight:700;">
+      <input id="rOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code sent to your email or phone" autocomplete="one-time-code" style="letter-spacing:2px;font-weight:700;">
       <div class="lfg-field-err" id="rOtpErr"></div>
     </div>
     <div class="lfg-row2">
@@ -3508,29 +3774,25 @@ function togglePwVis(btn){
   input.focus({preventScroll:true});
 }
 
-async function doLogin(){
-  const idRaw=g('liEmail').value.trim();
-  const pass=g('liPass').value;
-  const err=g('liErr');
-  const isEmail=idRaw.includes('@');
-  if(!idRaw){showAuthError(err,new Error('Enter your email or mobile number.'));return;}
-  if(isEmail?!isValidEmail(idRaw):!isValidPhone(idRaw)){showAuthError(err,new Error(isEmail?'Enter a valid email address.':'Enter a valid email or mobile number (e.g. 09XXXXXXXXX).'));return;}
-  if(!pass){showAuthError(err,new Error('Enter your password.'));return;}
-  showLoader('Signing in…');
-  try{
-    if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
-    const profile=await LabaFlowSupabase.signIn(isEmail?idRaw.toLowerCase():normalizePhone(idRaw),pass);
-    setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
-  }catch(error){showAuthError(err,error);}
-  finally{hideLoader();}
-}
-
-/* ── Registration & Mobile OTP Verification helpers ── */
-let _regOtpState={phone:'',code:'',expiresAt:0,verified:false,timer:null,cooldown:0};
+/* ── Unified Email or Phone OTP Verification (for both Sign In & Register) ── */
+const _otpStates={
+  li:{target:'',channel:'',code:'',expiresAt:0,verified:false,timer:null,cooldown:0},
+  reg:{target:'',channel:'',code:'',expiresAt:0,verified:false,timer:null,cooldown:0}
+};
 function normalizePhone(v){let d=String(v||'').replace(/[\s\-().]/g,'');if(d.startsWith('+63'))d='0'+d.slice(3);else if(/^63\d{10}$/.test(d))d='0'+d.slice(2);return d;}
 function isValidPhone(v){return /^09\d{9}$/.test(normalizePhone(v));}
 function isValidEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&v.length<=254;}
 function isValidName(v){const s=String(v||'').trim();return s.length>=2&&s.length<=60&&/^\p{L}[\p{L}.'’\- ]*$/u.test(s)&&(s.match(/\p{L}/gu)||[]).length>=2;}
+function parseContactInput(raw){
+  const v=String(raw||'').trim();
+  if(!v)return {valid:false,channel:'',value:'',err:'Enter your email address or mobile number.'};
+  if(v.includes('@')||/[A-Za-z]/.test(v)){
+    if(!isValidEmail(v))return {valid:false,channel:'email',value:v.toLowerCase(),err:'Enter a valid email address (e.g. juan@gmail.com).'};
+    return {valid:true,channel:'email',value:v.toLowerCase(),err:''};
+  }
+  if(!isValidPhone(v))return {valid:false,channel:'phone',value:normalizePhone(v),err:'Enter a valid PH mobile number (e.g. 09171234567).'};
+  return {valid:true,channel:'phone',value:normalizePhone(v),err:''};
+}
 function fieldErr(inputId,errId,msg){
   const i=g(inputId),e=g(errId);if(!i||!e)return;
   const box=i.closest('.lfg');
@@ -3538,65 +3800,99 @@ function fieldErr(inputId,errId,msg){
   else{e.textContent='';e.style.display='none';if(box)box.classList.remove('has-err');}
 }
 
-function updateOtpBadge(){
-  const badge=g('rOtpStatus');
-  if(!badge)return;
-  const phone=normalizePhone(g('rPhone')?.value||'');
-  const codeVal=(g('rOtp')?.value||'').trim();
-  if(_regOtpState.code && _regOtpState.phone===phone && codeVal===_regOtpState.code && Date.now()<_regOtpState.expiresAt){
-    _regOtpState.verified=true;
-    badge.innerHTML='<span style="color:#059669;">✓ Verified</span>';
-    fieldErr('rOtp','rOtpErr','');
-  }else if(_regOtpState.code && _regOtpState.phone===phone){
-    _regOtpState.verified=false;
-    badge.innerHTML='<span style="color:#4579EE;">Code sent to '+phone+'</span>';
+function updateContactOtpUI(mode){
+  const isLi=mode==='li';
+  const contactId=isLi?'liEmail':'rContact';
+  const otpId=isLi?'liOtp':'rOtp';
+  const otpErrId=isLi?'liOtpErr':'rOtpErr';
+  const detectBadge=g(isLi?'liDetectBadge':'rDetectBadge');
+  const statusBadge=g(isLi?'liOtpStatus':'rOtpStatus');
+  const raw=(g(contactId)?.value||'').trim();
+  const parsed=parseContactInput(raw);
+  if(detectBadge){
+    if(!raw)detectBadge.innerHTML='';
+    else if(parsed.channel==='email')detectBadge.innerHTML='<span style="color:#4579EE;">📧 Email</span>';
+    else if(parsed.channel==='phone')detectBadge.innerHTML='<span style="color:#4579EE;">📱 Mobile SMS</span>';
+  }
+  const st=_otpStates[mode];
+  const codeVal=(g(otpId)?.value||'').trim();
+  if(!statusBadge)return;
+  if(st.code && st.target===parsed.value && codeVal===st.code && Date.now()<st.expiresAt){
+    st.verified=true;
+    statusBadge.innerHTML='<span style="color:#059669;">✓ Verified</span>';
+    fieldErr(otpId,otpErrId,'');
+  }else if(st.code && st.target===parsed.value){
+    st.verified=false;
+    statusBadge.innerHTML='<span style="color:#4579EE;">Code sent via '+(st.channel==='email'?'Email':'SMS')+'</span>';
   }else{
-    _regOtpState.verified=false;
-    badge.innerHTML='';
+    st.verified=false;
+    statusBadge.innerHTML='';
   }
 }
 
-function fillRegOtp(code){
-  const inp=g('rOtp');
-  if(inp){inp.value=code;updateOtpBadge();}
+function fillContactOtp(mode,code){
+  const otpId=mode==='li'?'liOtp':'rOtp';
+  const inp=g(otpId);
+  if(inp){inp.value=code;updateContactOtpUI(mode);}
   const b=g('smsOtpBanner');
   if(b)b.style.display='none';
 }
 
-async function sendRegOtp(){
-  const phoneRaw=(g('rPhone')?.value||'').trim();
-  if(!phoneRaw){fieldErr('rPhone','rPhoneErr','Mobile number is required.');g('rPhone')?.focus();return false;}
-  if(!isValidPhone(phoneRaw)){fieldErr('rPhone','rPhoneErr','Enter a valid PH mobile number (09XXXXXXXXX).');g('rPhone')?.focus();return false;}
-  const phone=normalizePhone(phoneRaw);
-  const btn=g('btnSendOtp');
+async function sendContactOtp(mode){
+  const isLi=mode==='li';
+  const contactId=isLi?'liEmail':'rContact';
+  const contactErrId=isLi?'liEmailErr':'rContactErr';
+  const otpId=isLi?'liOtp':'rOtp';
+  const otpErrId=isLi?'liOtpErr':'rOtpErr';
+  const btnId=isLi?'btnLiSendOtp':'btnSendOtp';
+  const raw=(g(contactId)?.value||'').trim();
+  const parsed=parseContactInput(raw);
+  if(!parsed.valid){
+    fieldErr(contactId,contactErrId,parsed.err);
+    g(contactId)?.focus();
+    return false;
+  }
+  const btn=g(btnId);
   if(btn)btn.disabled=true;
-  try{
-    if(window.LabaFlowSupabase?.phoneRegistered && await LabaFlowSupabase.phoneRegistered(phone)){
-      fieldErr('rPhone','rPhoneErr','This mobile number is already registered.');
-      if(btn)btn.disabled=false;
-      g('rPhone')?.focus();
-      return false;
-    }
-  }catch(_){}
-  fieldErr('rPhone','rPhoneErr','');
+  if(!isLi && parsed.channel==='phone'){
+    try{
+      if(window.LabaFlowSupabase?.phoneRegistered && await LabaFlowSupabase.phoneRegistered(parsed.value)){
+        fieldErr(contactId,contactErrId,'This mobile number is already registered.');
+        if(btn)btn.disabled=false;
+        g(contactId)?.focus();
+        return false;
+      }
+    }catch(_){}
+  }
+  fieldErr(contactId,contactErrId,'');
   const code=String(Math.floor(100000+Math.random()*900000));
-  _regOtpState.phone=phone;
-  _regOtpState.code=code;
-  _regOtpState.expiresAt=Date.now()+5*60*1000;
-  _regOtpState.verified=false;
-  if(g('rOtp'))g('rOtp').value='';
-  updateOtpBadge();
-  fieldErr('rOtp','rOtpErr','');
+  const st=_otpStates[mode];
+  st.target=parsed.value;
+  st.channel=parsed.channel;
+  st.code=code;
+  st.expiresAt=Date.now()+5*60*1000;
+  st.verified=false;
+  if(g(otpId))g(otpId).value='';
+  updateContactOtpUI(mode);
+  fieldErr(otpId,otpErrId,'');
 
+  const isEmail=parsed.channel==='email';
   const banner=g('smsOtpBanner');
   if(banner){
     banner.innerHTML=`
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
         <div>
-          <div style="font-size:11px;font-weight:800;color:#FFB600;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">💬 SMS Verification Code Sent to ${phone}</div>
-          <div style="font-size:13.5px;line-height:1.45;">LabaFlow code: <strong style="font-size:17px;color:#FFB600;letter-spacing:2px;background:rgba(255,182,0,0.16);padding:2px 8px;border-radius:6px;">${code}</strong></div>
+          <div style="font-size:11px;font-weight:800;color:#FFB600;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">
+            ${isEmail?'📧 Email Verification Code Sent':'💬 SMS Message Verification Code Sent'}
+          </div>
+          <div style="font-size:12px;color:#E2E8F0;margin-bottom:4px;">
+            To ${isEmail?'Email':'Mobile'}: <strong style="color:#fff;">${parsed.value}</strong>
+          </div>
+          <div style="font-size:13.5px;line-height:1.45;">
+            Verification Code: <strong style="font-size:17px;color:#FFB600;letter-spacing:2px;background:rgba(255,182,0,0.16);padding:2px 8px;border-radius:6px;">${code}</strong>
+          </div>
           <div style="margin-top:8px;display:flex;gap:8px;align-items:center;">
-            <button type="button" onclick="fillRegOtp('${code}')" style="background:#4579EE;color:#fff;border:0;border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:800;cursor:pointer;">Auto-Fill Code</button>
+            <button type="button" onclick="fillContactOtp('${mode}','${code}')" style="background:#4579EE;color:#fff;border:0;border-radius:999px;padding:5px 12px;font-size:11.5px;font-weight:800;cursor:pointer;">Auto-Fill Code</button>
             <span style="font-size:11px;color:#CBD5E1;">Valid for 5 mins</span>
           </div>
         </div>
@@ -3604,65 +3900,109 @@ async function sendRegOtp(){
       </div>`;
     banner.style.display='block';
   }
-  g('rOtp')?.focus();
+  g(otpId)?.focus();
 
-  clearInterval(_regOtpState.timer);
-  _regOtpState.cooldown=60;
+  clearInterval(st.timer);
+  st.cooldown=60;
   if(btn){btn.disabled=true;btn.textContent='Resend (60s)';}
-  _regOtpState.timer=setInterval(()=>{
-    _regOtpState.cooldown--;
-    if(_regOtpState.cooldown<=0){
-      clearInterval(_regOtpState.timer);
+  st.timer=setInterval(()=>{
+    st.cooldown--;
+    if(st.cooldown<=0){
+      clearInterval(st.timer);
       if(btn){btn.disabled=false;btn.textContent='Resend Code';}
     }else if(btn){
-      btn.textContent='Resend ('+_regOtpState.cooldown+'s)';
+      btn.textContent='Resend ('+st.cooldown+'s)';
     }
   },1000);
   return true;
 }
 
+async function doLogin(){
+  const raw=(g('liEmail')?.value||'').trim();
+  const otpVal=(g('liOtp')?.value||'').trim();
+  const pass=g('liPass').value;
+  const err=g('liErr');err.style.display='none';
+  const parsed=parseContactInput(raw);
+  if(!parsed.valid){fieldErr('liEmail','liEmailErr',parsed.err);g('liEmail')?.focus();return;}
+  fieldErr('liEmail','liEmailErr','');
+  const st=_otpStates.li;
+  if(!st.code || st.target!==parsed.value){
+    await sendContactOtp('li');
+    fieldErr('liOtp','liOtpErr','We sent a 6-digit verification code to your '+(parsed.channel==='email'?'email':'mobile number')+'. Enter the code above to sign in.');
+    return;
+  }
+  if(Date.now()>st.expiresAt){
+    fieldErr('liOtp','liOtpErr','Verification code expired. Click "Resend Code".');
+    g('liOtp')?.focus();
+    return;
+  }
+  if(!otpVal || otpVal!==st.code){
+    fieldErr('liOtp','liOtpErr','Enter the 6-digit verification code sent to '+parsed.value+'.');
+    g('liOtp')?.focus();
+    return;
+  }
+  fieldErr('liOtp','liOtpErr','');
+  if(!pass){showAuthError(err,new Error('Enter your password.'));return;}
+  showLoader('Signing in…');
+  try{
+    if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
+    const profile=await LabaFlowSupabase.signIn(parsed.value,pass);
+    const b=g('smsOtpBanner');if(b)b.style.display='none';
+    setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
+  }catch(error){showAuthError(err,error);}
+  finally{hideLoader();}
+}
+
 async function doRegister(){
-  const name=g('rName').value.trim().replace(/\s+/g,' '),email=g('rEmail').value.trim().toLowerCase(),
-        phoneRaw=g('rPhone').value.trim(),otpVal=(g('rOtp')?.value||'').trim(),pass=g('rPass').value,pass2=g('rPass2').value;
+  const name=g('rName').value.trim().replace(/\s+/g,' '),
+        rawContact=(g('rContact')?.value||'').trim(),
+        otpVal=(g('rOtp')?.value||'').trim(),
+        pass=g('rPass').value,
+        pass2=g('rPass2').value;
   const err=g('rErr');err.style.display='none';
   let first=null;
   const check=(id,errId,msg)=>{fieldErr(id,errId,msg);if(msg&&!first)first=id;};
   check('rName','rNameErr',!name?'Full name is required.':!isValidName(name)?'Enter your real name (letters only, at least 2 characters).':'');
-  check('rEmail','rEmailErr',!email?'Email is required.':!isValidEmail(email)?'Enter a valid email address (e.g. juan@gmail.com).':'');
-  check('rPhone','rPhoneErr',!phoneRaw?'Mobile number is required.':!isValidPhone(phoneRaw)?'Enter a valid PH mobile number (09XXXXXXXXX).':'');
-  const phone=normalizePhone(phoneRaw);
+  const parsed=parseContactInput(rawContact);
+  check('rContact','rContactErr',parsed.valid?'':parsed.err);
+  const st=_otpStates.reg;
   let otpMsg='';
-  if(!isValidPhone(phoneRaw)){
-    otpMsg='Enter a valid mobile number first, then click Send Code.';
-  }else if(!_regOtpState.code || _regOtpState.phone!==phone){
-    otpMsg='Click "Send Code" to receive the 6-digit verification code on '+phone+'.';
-  }else if(Date.now()>_regOtpState.expiresAt){
+  if(!parsed.valid){
+    otpMsg='Enter a valid email or mobile number first, then click Send Code.';
+  }else if(!st.code || st.target!==parsed.value){
+    await sendContactOtp('reg');
+    otpMsg='We sent a 6-digit verification code to '+parsed.value+'. Enter it above to complete registration.';
+  }else if(Date.now()>st.expiresAt){
     otpMsg='Verification code expired. Please click "Resend Code".';
   }else if(!otpVal){
-    otpMsg='Enter the 6-digit verification code sent to '+phone+'.';
-  }else if(otpVal!==_regOtpState.code){
-    otpMsg='Incorrect verification code. Please check the code sent to '+phone+'.';
+    otpMsg='Enter the 6-digit verification code sent to '+parsed.value+'.';
+  }else if(otpVal!==st.code){
+    otpMsg='Incorrect verification code. Please check the code sent to '+parsed.value+'.';
   }
   check('rOtp','rOtpErr',otpMsg);
   const pwMsg=!pass?'Password is required.':/\s/.test(pass)?'Password must not contain spaces.':pass.length<8?'Password must be at least 8 characters.':(!/[A-Za-z]/.test(pass)||!/\d/.test(pass))?'Password must include letters and numbers.':'';
   check('rPass','rPassErr',pwMsg);
   check('rPass2','rPass2Err',!pass2?'Please confirm your password.':pass!==pass2?'Passwords do not match.':'');
   if(first){g(first).focus();return;}
+  const email=parsed.channel==='email'?parsed.value:'';
+  const phone=parsed.channel==='phone'?parsed.value:'';
   showLoader('Creating account…');
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
-    if(await LabaFlowSupabase.phoneRegistered(phone)){fieldErr('rPhone','rPhoneErr','This mobile number is already registered.');g('rPhone').focus();return;}
+    if(phone && await LabaFlowSupabase.phoneRegistered(phone)){fieldErr('rContact','rContactErr','This mobile number is already registered.');g('rContact').focus();return;}
     const profile=await LabaFlowSupabase.register({name,email,phone,password:pass});
     const b=g('smsOtpBanner');if(b)b.style.display='none';
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}
 }
-['rName','rEmail','rPhone','rOtp','rPass','rPass2'].forEach(id=>{
+
+['liEmail','liOtp','rName','rContact','rOtp','rPass','rPass2'].forEach(id=>{
   const el=g(id);if(!el)return;
   el.addEventListener('input',()=>{
-    if(id==='rPhone'){const c=el.value.replace(/[^\d+\s-]/g,'');if(c!==el.value)el.value=c;updateOtpBadge();}
-    if(id==='rOtp'){const c=el.value.replace(/\D/g,'').slice(0,6);if(c!==el.value)el.value=c;updateOtpBadge();}
+    if(id==='liOtp'||id==='rOtp'){const c=el.value.replace(/\D/g,'').slice(0,6);if(c!==el.value)el.value=c;}
+    if(id==='liEmail'||id==='liOtp')updateContactOtpUI('li');
+    if(id==='rContact'||id==='rOtp')updateContactOtpUI('reg');
     fieldErr(id,id+'Err','');
   });
 });
@@ -3867,9 +4207,7 @@ function toggleFaq(el){el.parentElement.classList.toggle('open');}
 function _renderQR(o){
   const box=g('qrBox');
   if(!box)return;
-  const isDark=false;
   const qrText=`LabaFlow|${o.num}|${o.custName}|${o.status}`;
-  /* clear old QR */
   const existing=box.querySelector('#qrCanvasWrap');
   if(existing)existing.remove();
   const wrap=document.createElement('div');
@@ -3877,8 +4215,8 @@ function _renderQR(o){
   box.insertBefore(wrap,box.firstChild);
   new QRCode(wrap,{
     text:qrText,
-    width:200,height:200,
-    colorDark:'#111827',
+    width:180,height:180,
+    colorDark:'#000000',
     colorLight:'#ffffff',
     correctLevel:QRCode.CorrectLevel.M
   });
@@ -4931,9 +5269,12 @@ function renderGcashQR(){
   el.innerHTML="";
   const img=document.createElement("img");
   img.src="gcash_qr.png";
-  img.style.cssText="width:180px;height:180px;display:block;margin:0 auto;border-radius:8px;";
+  img.style.cssText="width:100%;max-width:230px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;";
   img.alt="GCash QR Code";
-  img.onerror=function(){el.innerHTML="<div style='padding:10px;font-size:13px;color:#333;text-align:center;'>GCash: "+fmt+"</div>";};
+  img.onerror=function(){
+    if(!this.dataset.fb){this.dataset.fb="1";this.src="https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png";return;}
+    el.innerHTML="<div style='padding:10px;font-size:13px;color:#333;text-align:center;'>GCash: "+fmt+"</div>";
+  };
   el.appendChild(img);
 }
 function submitPayment(){
@@ -5713,14 +6054,8 @@ function pgSellerSettings(){
 function _renderSettingsQR(num){
   const el=g('settingsQrPreview');
   if(!el)return;
-  el.innerHTML='';
-  const wrap=document.createElement('div');
-  el.appendChild(wrap);
-  try{
-    new QRCode(wrap,{text:num,width:150,height:150,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
-  }catch(e){
-    el.innerHTML=`<div style="padding:10px;font-size:12px;color:#333;">${num}</div>`;
-  }
+  el.style.cssText='display:flex;align-items:center;justify-content:center;background:#fff;padding:12px;border-radius:14px;max-width:240px;width:100%;margin:0 auto;box-sizing:border-box;overflow:hidden;border:1.5px solid #D7E3FF;';
+  el.innerHTML='<img src="gcash_qr.png" alt="GCash QR Code" style="width:100%;max-width:210px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;">';
 }
 
 function saveGcashNumber(){
@@ -6052,6 +6387,24 @@ function ptPayments(){
       </div>
     `:''}
 
+    <div class="card" style="margin-bottom:18px;">
+      <div class="ch"><h4>📱 Scan to Pay via GCash (InstaPay QR)</h4><span class="text-sm text-muted">GCash: ${getGcashNumber()}</span></div>
+      <div class="cp" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px;padding:18px;">
+        <div class="gcash-qr-wrap" style="max-width:250px;margin:0;">
+          <div class="gcash-qr-pattern" style="margin-bottom:8px;">
+            <img src="gcash_qr.png" alt="GCash QR Code" style="width:100%;max-width:220px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;">
+          </div>
+          <div class="gcash-shop-name" style="font-weight:800;color:#0E214E;">Lab-a-Day Laundry</div>
+          <div class="gcash-num-display" style="font-family:monospace;font-weight:700;color:#4579EE;">${getGcashNumber().replace(/(\d{4})(\d{3})(\d{4})/,'$1 $2 $3')}</div>
+        </div>
+        <div style="max-width:320px;font-size:13px;color:var(--text-muted);line-height:1.6;">
+          <div style="font-weight:800;color:var(--text);font-size:15px;margin-bottom:6px;">How to Pay with GCash:</div>
+          <div>1. Open your <b>GCash App</b> and tap <b>QR</b>.</div>
+          <div>2. Scan the QR code inside the frame (or send to <b>${getGcashNumber()}</b>).</div>
+          <div>3. Present your <b>GCash Reference Number</b> at the shop counter upon pickup.</div>
+        </div>
+      </div>
+    </div>
     <div class="card">
       <div class="ch"><h4>🧾 Official Payment Transactions</h4><span class="text-sm text-muted">${myTxns.length} records</span></div>
       <div class="table-scroll">
@@ -6083,77 +6436,170 @@ function showPortalQR(ordId){
 }
 
 /* ─ Book Service ─ */
+function selectBkMode(val,el){
+  const sel=g('bkMode');
+  if(sel)sel.value=val;
+  document.querySelectorAll('#bkModeGrid .mode-choice-pill').forEach(p=>p.classList.toggle('active',p.dataset.val===val));
+}
+function selectBkService(val){
+  const sel=g('bkType');
+  if(sel)sel.value=val;
+  document.querySelectorAll('#bkSvcGrid .svc-choice-card').forEach(c=>c.classList.toggle('active',c.dataset.type===val));
+  bkTypeChange();
+}
+function selectBkColor(val){
+  const sel=g('bkColorDist');
+  if(sel)sel.value=val;
+  document.querySelectorAll('#bkColorGrid .color-choice-pill').forEach(c=>c.classList.toggle('active',c.dataset.color===val));
+  bkCalc();
+}
+
 function ptBook(){
   const users=DB.get('users');
   const cu=users.find(x=>x.id===CU.id);
   const tier=getTier(cu?cu.points||0:0);
   const tierDisc=tier.disc;
   g('ptContent').innerHTML=`
-    <div style="max-width:520px;margin:0 auto;">
-      <h3 style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;text-align:center;">Book a Laundry Service</h3>
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;text-align:center;">Submit your booking and drop off at the shop.</p>
+    <div class="bk-card-wrap">
+      <h3 style="font-size:18px;font-weight:900;color:var(--text);margin-bottom:4px;text-align:center;">Book a Laundry Service</h3>
+      <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:12px;text-align:center;">Choose your laundry service below and drop off at Lab-a-Day Laundry (B. Cosme St., Poblacion 2, Pagsanjan, Laguna).</p>
       <div class="wash-note">⏱ Estimated wash time: <b>2–3 hours</b>, depending on how many loads are in the queue.</div>
       ${tierDisc>0?`<div class="notice n-success" style="margin-bottom:14px;">🌟 <strong>${tier.name} Member:</strong> You get ${tierDisc}% loyalty discount automatically applied!</div>`:''}
-      <div style="background:var(--card);border-radius:12px;padding:24px;">
-        <div class="row2" style="margin-bottom:12px;">
+      <div class="bk-form-box">
+        <div class="row2" style="margin-bottom:14px;">
           <div class="pt-form-group" style="margin-bottom:0;">
             <label class="pt-label" style="color:var(--accent2);">Service Mode</label>
-            <select id="bkMode" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
-              <option value="Drop-off at Shop">🏪 Drop-off at Shop</option>
+            <select id="bkMode" style="display:none;">
+              <option value="Drop-off at Shop" selected>🏪 Drop-off at Shop</option>
               <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
             </select>
+            <div class="mode-choice-grid" id="bkModeGrid">
+              <div class="mode-choice-pill active" data-val="Drop-off at Shop" onclick="selectBkMode('Drop-off at Shop',this)">🏪 Drop-off at Shop</div>
+              <div class="mode-choice-pill" data-val="Pickup & Delivery" onclick="selectBkMode('Pickup & Delivery',this)">🛵 Pickup & Delivery</div>
+            </div>
           </div>
           <div class="pt-form-group" style="margin-bottom:0;">
             <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
-            <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;">
+            <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
           </div>
         </div>
+
         <div class="pt-form-group">
-          <label class="pt-label" style="color:var(--accent2);">Laundry Type</label>
-          <select id="bkType" onchange="bkTypeChange()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
-            <option value="CLOTHES">Clothes (Full Wash)</option>
+          <label class="pt-label" style="color:var(--accent2);">Select Laundry Service</label>
+          <select id="bkType" onchange="bkTypeChange()" style="display:none;">
+            <option value="CLOTHES" selected>Clothes (Full Wash)</option>
             <option value="BEDSHEET">Bedsheet</option>
             <option value="COMFORTER">Comforter</option>
             <option value="WASH_ONLY">Wash Only — ₱100 flat</option>
             <option value="DRY_ONLY">Dry Only — ₱100 flat</option>
           </select>
-        </div>
-        <div id="bkClothesF">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label><input type="number" id="bkKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;"></div>
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Color Distinction</label>
-            <select id="bkColorDist" onchange="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit;">
-              <option value="">Select clothes type…</option><option value="WHITES">Whites Only</option><option value="COLORED">Colored Only</option><option value="MIXED">Mixed (shop not liable for color bleeding)</option>
-            </select><div class="color-warn">⚠️ Choose <b>Whites Only</b>, <b>Colored Only</b> or <b>Mixed</b>. If you choose Mixed, Lab-a-Day Laundry is <b>not liable</b> for color bleeding or color transfer between clothes.</div>
+          <div class="svc-choice-grid" id="bkSvcGrid">
+            <div class="svc-choice-card active" data-type="CLOTHES" onclick="selectBkService('CLOTHES')">
+              <div class="svc-choice-top">
+                <span class="svc-choice-ico">👕</span>
+                <span class="svc-choice-price">₱180</span>
+              </div>
+              <div class="svc-choice-name">Clothes (Full Wash)</div>
+              <div class="svc-choice-meta">Up to 7 kg · +₱25/extra kg · Free detergent &amp; fabcon</div>
+            </div>
+            <div class="svc-choice-card" data-type="BEDSHEET" onclick="selectBkService('BEDSHEET')">
+              <div class="svc-choice-top">
+                <span class="svc-choice-ico">🛏️</span>
+                <span class="svc-choice-price">₱190</span>
+              </div>
+              <div class="svc-choice-name">Bedsheet Wash <span class="svc-choice-tag">Popular</span></div>
+              <div class="svc-choice-meta">Up to 5 kg · +₱38/extra kg · Deep hygienic clean</div>
+            </div>
+            <div class="svc-choice-card" data-type="COMFORTER" onclick="selectBkService('COMFORTER')">
+              <div class="svc-choice-top">
+                <span class="svc-choice-ico">🛌</span>
+                <span class="svc-choice-price">₱200</span>
+              </div>
+              <div class="svc-choice-name">Comforter Wash</div>
+              <div class="svc-choice-meta">Flat rate per piece · Heavy-duty gentle cycle</div>
+            </div>
+            <div class="svc-choice-card" data-type="WASH_ONLY" onclick="selectBkService('WASH_ONLY')">
+              <div class="svc-choice-top">
+                <span class="svc-choice-ico">🫧</span>
+                <span class="svc-choice-price">₱100</span>
+              </div>
+              <div class="svc-choice-name">Wash Only</div>
+              <div class="svc-choice-meta">Flat rate per load · Spin-washed &amp; rinsed</div>
+            </div>
+            <div class="svc-choice-card" data-type="DRY_ONLY" onclick="selectBkService('DRY_ONLY')">
+              <div class="svc-choice-top">
+                <span class="svc-choice-ico">💨</span>
+                <span class="svc-choice-price">₱100</span>
+              </div>
+              <div class="svc-choice-name">Dry Only</div>
+              <div class="svc-choice-meta">Flat rate per load · Temperature-controlled dry</div>
+            </div>
           </div>
         </div>
+
+        <div id="bkClothesF">
+          <div class="pt-form-group">
+            <label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label>
+            <input type="number" id="bkKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
+          </div>
+          <div class="pt-form-group">
+            <label class="pt-label" style="color:var(--accent2);">Clothes Type / Color Separation <span class="req">*</span></label>
+            <select id="bkColorDist" onchange="bkCalc()" style="display:none;">
+              <option value="">Select clothes type…</option>
+              <option value="WHITES">Whites Only</option>
+              <option value="COLORED">Colored Only</option>
+              <option value="MIXED">Mixed (shop not liable for color bleeding)</option>
+            </select>
+            <div class="color-choice-grid" id="bkColorGrid">
+              <div class="color-choice-pill" data-color="WHITES" onclick="selectBkColor('WHITES')">
+                <span class="cc-title">⚪ Whites Only</span>
+                <span class="cc-sub">Puti lang</span>
+              </div>
+              <div class="color-choice-pill" data-color="COLORED" onclick="selectBkColor('COLORED')">
+                <span class="cc-title">🎨 Colored Only</span>
+                <span class="cc-sub">De-kolor lang</span>
+              </div>
+              <div class="color-choice-pill" data-color="MIXED" onclick="selectBkColor('MIXED')">
+                <span class="cc-title">🧺 Mixed</span>
+                <span class="cc-sub">Magkahalo</span>
+              </div>
+            </div>
+            <div class="color-warn">⚠️ Choose <b>Whites Only</b>, <b>Colored Only</b> or <b>Mixed</b>. If you choose Mixed, Lab-a-Day Laundry is <b>not liable</b> for color bleeding or color transfer between clothes.</div>
+          </div>
+        </div>
+
         <div id="bkBsF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label><input type="number" id="bkBsKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label><input type="number" id="bkBsKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
         <div id="bkComF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Number of Comforters</label><input type="number" id="bkComQty" step="1" min="1" placeholder="1" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Number of Comforters</label><input type="number" id="bkComQty" step="1" min="1" placeholder="1" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
         <div id="bkWdF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg) — optional</label><input type="number" id="bkWdKg" step="0.5" min="0" placeholder="Optional" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg) — optional</label><input type="number" id="bkWdKg" step="0.5" min="0" placeholder="Optional" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
-        <div class="pt-form-group">
-          <label class="pt-label" style="color:var(--accent2);">Promo Code (optional)</label>
-          <input id="bkPromo" placeholder="e.g. WELCOME" oninput="bkCalc()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;text-transform:uppercase;">
+
+        <div class="row2" style="margin-bottom:12px;">
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Promo Code (optional)</label>
+            <input id="bkPromo" placeholder="e.g. WELCOME" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;text-transform:uppercase;box-sizing:border-box;">
+          </div>
+          <div class="pt-form-group" style="margin-bottom:0;">
+            <label class="pt-label" style="color:var(--accent2);">Estimated Price</label>
+            <input id="bkPrice" readonly placeholder="₱0.00" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--sidebar);color:var(--success);font-size:15px;font-weight:800;outline:none;box-sizing:border-box;">
+          </div>
         </div>
-        <div class="pt-form-group">
-          <label class="pt-label" style="color:var(--accent2);">Estimated Price</label>
-          <input id="bkPrice" readonly style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--sidebar);color:var(--success);font-size:15px;font-weight:700;outline:none;">
-        </div>
-        <div id="bkBreakdown" style="font-size:11px;color:var(--text-muted);margin-top:-10px;margin-bottom:12px;"></div>
+        <div id="bkBreakdown" style="font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:12px;"></div>
         <div class="pt-form-group">
           <label class="pt-label" style="color:var(--accent2);">Special Instructions</label>
-          <textarea id="bkNotes" rows="2" placeholder="Separate colors, no bleach..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font-size:13px;outline:none;resize:vertical;font-family:inherit;"></textarea>
+          <textarea id="bkNotes" rows="2" placeholder="Separate colors, no bleach..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box;"></textarea>
         </div>
-        <button class="btn btn-primary btn-block" style="padding:12px;font-size:14px;" onclick="submitBooking()">Submit Booking →</button>
+        <button class="btn btn-primary btn-block" style="padding:13px;font-size:14.5px;" onclick="submitBooking()">Submit Booking →</button>
       </div>
     </div>`;
 }
 function bkTypeChange(){
   const t=gv('bkType');
+  document.querySelectorAll('#bkSvcGrid .svc-choice-card').forEach(c=>c.classList.toggle('active',c.dataset.type===t));
   g('bkClothesF').style.display=t==='CLOTHES'?'':'none';
   g('bkBsF').style.display=t==='BEDSHEET'?'':'none';
   g('bkComF').style.display=t==='COMFORTER'?'':'none';
