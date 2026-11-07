@@ -3107,16 +3107,8 @@ input[type="password"]::-ms-clear {
   <div id="fSign">
     <div class="lfg">
       <label>Email or Phone <span class="req">*</span><span id="liDetectBadge" class="otp-status-badge"></span></label>
-      <div class="otp-input-row">
-        <input type="text" id="liEmail" placeholder="email@address.com or 09XXXXXXXXX" autocomplete="username" autocapitalize="none" spellcheck="false">
-        <button type="button" id="btnLiSendOtp" class="otp-send-btn" onclick="sendContactOtp('li')">Send Code</button>
-      </div>
+      <input type="text" id="liEmail" placeholder="email@address.com or 09XXXXXXXXX" autocomplete="username" autocapitalize="none" spellcheck="false">
       <div class="lfg-field-err" id="liEmailErr"></div>
-    </div>
-    <div class="lfg" id="liOtpGroup">
-      <label>Verification Code <span class="req">*</span><span id="liOtpStatus" class="otp-status-badge"></span></label>
-      <input id="liOtp" type="text" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code sent to your email or phone" autocomplete="one-time-code" style="letter-spacing:2px;font-weight:700;">
-      <div class="lfg-field-err" id="liOtpErr"></div>
     </div>
     <div class="lfg">
       <label>Password <span class="req">*</span></label>
@@ -3919,35 +3911,16 @@ async function sendContactOtp(mode){
 
 async function doLogin(){
   const raw=(g('liEmail')?.value||'').trim();
-  const otpVal=(g('liOtp')?.value||'').trim();
   const pass=g('liPass').value;
   const err=g('liErr');err.style.display='none';
   const parsed=parseContactInput(raw);
   if(!parsed.valid){fieldErr('liEmail','liEmailErr',parsed.err);g('liEmail')?.focus();return;}
   fieldErr('liEmail','liEmailErr','');
-  const st=_otpStates.li;
-  if(!st.code || st.target!==parsed.value){
-    await sendContactOtp('li');
-    fieldErr('liOtp','liOtpErr','We sent a 6-digit verification code to your '+(parsed.channel==='email'?'email':'mobile number')+'. Enter the code above to sign in.');
-    return;
-  }
-  if(Date.now()>st.expiresAt){
-    fieldErr('liOtp','liOtpErr','Verification code expired. Click "Resend Code".');
-    g('liOtp')?.focus();
-    return;
-  }
-  if(!otpVal || otpVal!==st.code){
-    fieldErr('liOtp','liOtpErr','Enter the 6-digit verification code sent to '+parsed.value+'.');
-    g('liOtp')?.focus();
-    return;
-  }
-  fieldErr('liOtp','liOtpErr','');
   if(!pass){showAuthError(err,new Error('Enter your password.'));return;}
   showLoader('Signing in…');
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
     const profile=await LabaFlowSupabase.signIn(parsed.value,pass);
-    const b=g('smsOtpBanner');if(b)b.style.display='none';
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}
