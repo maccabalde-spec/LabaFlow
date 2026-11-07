@@ -2671,17 +2671,16 @@ input[type="password"]::-ms-clear {
   background: #FFFFFF !important;
   border-radius: 18px !important;
   border: 1.5px solid #D7E3FF !important;
-  margin-bottom: 12px !important;
-  width: 100% !important;
+  margin: 0 auto 12px !important;
+  width: 276px !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
 }
 .gcash-qr-pattern {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 240px !important;
+  display: block !important;
+  width: 240px !important;
+  max-width: 100% !important;
   margin: 0 auto 10px !important;
   background: #FFFFFF !important;
   border-radius: 12px !important;
@@ -2690,14 +2689,14 @@ input[type="password"]::-ms-clear {
 }
 .gcash-qr-pattern img,
 .gcash-qr-pattern canvas {
-  width: 100% !important;
-  max-width: 240px !important;
+  width: 240px !important;
+  max-width: 100% !important;
   height: auto !important;
-  max-height: 360px !important;
+  max-height: none !important;
   object-fit: contain !important;
   display: block !important;
   margin: 0 auto !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
 }
 </style>
 </head>
@@ -5279,16 +5278,7 @@ function renderGcashQR(){
   if(dispEl)dispEl.textContent=fmt;
   const el=g("gcashQrPattern");
   if(!el)return;
-  el.innerHTML="";
-  const img=document.createElement("img");
-  img.src="gcash_qr.png";
-  img.style.cssText="width:100%;max-width:230px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;";
-  img.alt="GCash QR Code";
-  img.onerror=function(){
-    if(!this.dataset.fb){this.dataset.fb="1";this.src="https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png";return;}
-    el.innerHTML="<div style='padding:10px;font-size:13px;color:#333;text-align:center;'>GCash: "+fmt+"</div>";
-  };
-  el.appendChild(img);
+  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png\';}">';
 }
 function submitPayment(){
   const ordId=parseInt(gv('payOrdSel')),amount=parseFloat(gv('payAmt')),channel=gv('payChan');
@@ -6067,8 +6057,8 @@ function pgSellerSettings(){
 function _renderSettingsQR(num){
   const el=g('settingsQrPreview');
   if(!el)return;
-  el.style.cssText='display:flex;align-items:center;justify-content:center;background:#fff;padding:12px;border-radius:14px;max-width:240px;width:100%;margin:0 auto;box-sizing:border-box;overflow:hidden;border:1.5px solid #D7E3FF;';
-  el.innerHTML='<img src="gcash_qr.png" alt="GCash QR Code" style="width:100%;max-width:210px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;">';
+  el.style.cssText='display:block;background:#fff;padding:12px;border-radius:14px;width:264px;max-width:100%;margin:0 auto;box-sizing:border-box;overflow:hidden;border:1.5px solid #D7E3FF;';
+  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png\';}">';
 }
 
 function saveGcashNumber(){
@@ -6403,9 +6393,9 @@ function ptPayments(){
     <div class="card" style="margin-bottom:18px;">
       <div class="ch"><h4>📱 Scan to Pay via GCash (InstaPay QR)</h4><span class="text-sm text-muted">GCash: ${getGcashNumber()}</span></div>
       <div class="cp" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px;padding:18px;">
-        <div class="gcash-qr-wrap" style="max-width:250px;margin:0;">
+        <div class="gcash-qr-wrap" style="width:276px;max-width:100%;margin:0;flex:0 0 auto;">
           <div class="gcash-qr-pattern" style="margin-bottom:8px;">
-            <img src="gcash_qr.png" alt="GCash QR Code" style="width:100%;max-width:220px;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:10px;">
+            <img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png';}">
           </div>
           <div class="gcash-shop-name" style="font-weight:800;color:#0E214E;">Lab-a-Day Laundry</div>
           <div class="gcash-num-display" style="font-family:monospace;font-weight:700;color:#4579EE;">${getGcashNumber().replace(/(\d{4})(\d{3})(\d{4})/,'$1 $2 $3')}</div>
