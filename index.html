@@ -5263,7 +5263,8 @@ function onPayChanChange(){
 function getGcashNumber(){
   const s=DB.get('settings');
   const row=s.find(x=>x.key==='gcashNumber');
-  return row?row.val:'09611308218';
+  if(row&&row.val&&row.val!=='09611308218')return row.val;
+  return '09615150075';
 }
 function setGcashNumber(num){
   const s=DB.get('settings');
@@ -6073,7 +6074,7 @@ function _renderSettingsQR(num){
 function saveGcashNumber(){
   const num=g('gcashNumInput').value.trim();
   if(!/^09\d{9}$/.test(num)){
-    swalError('Please enter a valid Philippine mobile number (e.g. 09611308218).');
+    swalError('Please enter a valid Philippine mobile number (e.g. 09615150075).');
     return;
   }
   setGcashNumber(num);
