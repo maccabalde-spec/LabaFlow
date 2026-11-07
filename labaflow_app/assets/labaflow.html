@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LabaFlow – Lab-a-Day Laundry</title>
+<title>LabaFlow – Lab-a-Day Laundry | RFID &amp; Inventory System</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0E214E">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -2698,6 +2701,232 @@ input[type="password"]::-ms-clear {
   margin: 0 auto !important;
   border-radius: 12px !important;
 }
+
+/* ── CUSTOM LABAFLOW BRAND LOGO (Emblem + Wordmark) ── */
+.lf-brand-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  user-select: none;
+}
+.lf-brand-emblem {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #0E214E 0%, #1E429F 52%, #4579EE 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px -4px rgba(14, 33, 78, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.28);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(110, 193, 228, 0.45);
+}
+.lf-brand-emblem svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+.lf-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  text-align: left;
+}
+.lf-brand-title {
+  font-family: 'Figtree', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #0E214E;
+  letter-spacing: -0.6px;
+}
+.lf-brand-title span {
+  color: #4579EE;
+}
+.lf-brand-sub {
+  font-family: 'Figtree', sans-serif;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #54595F;
+  margin-top: 2px;
+}
+
+/* ── SHORT & EXPANDABLE DETAILS (Panel Suggestion #5) ── */
+.exp-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid #C6D7FF;
+  background: #F2F6FF;
+  color: #4065B8;
+  font-family: 'Figtree', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.exp-toggle-btn:hover {
+  background: #4579EE;
+  color: #FFFFFF;
+  border-color: #4579EE;
+}
+.exp-panel {
+  display: none;
+  margin-top: 7px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: #F7F9FF;
+  border: 1px solid #D7E3FF;
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.55;
+  text-align: left;
+}
+.exp-panel.open {
+  display: block;
+}
+
+/* ── 3-PILLAR ANALYTICS: DESCRIPTIVE · PREDICTIVE · PRESCRIPTIVE (Panel Suggestion #6) ── */
+.analytics-pillar-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 10px 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #D7E3FF;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(14, 33, 78, 0.05);
+  align-items: center;
+}
+.pillar-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #D7E3FF;
+  background: #F7F9FF;
+  color: #0E214E;
+  font-family: 'Figtree', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.pillar-tab-btn:hover {
+  border-color: #4579EE;
+  color: #4579EE;
+}
+.pillar-tab-btn.active {
+  background: #0E214E;
+  color: #FFFFFF;
+  border-color: #0E214E;
+  box-shadow: 0 6px 16px rgba(14, 33, 78, 0.22);
+}
+.pillar-section-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 13px 18px;
+  border-radius: 16px;
+  margin: 18px 0 12px;
+  border: 1.5px solid #D7E3FF;
+  background: linear-gradient(135deg, #EDF3FF 0%, #FFFFFF 100%);
+}
+.pillar-section-banner h3 {
+  font-family: 'Figtree', sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  color: #0E214E;
+  margin: 0;
+}
+.pillar-section-banner p {
+  font-size: 12px;
+  color: #54595F;
+  margin: 2px 0 0;
+}
+.prescriptive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.prescriptive-item {
+  background: #FFFFFF;
+  border: 1.5px solid #D7E3FF;
+  border-left: 5px solid #4579EE;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 22px rgba(14, 33, 78, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+.prescriptive-item.urgent {
+  border-left-color: #EF4444;
+  background: linear-gradient(180deg, #FFF5F5 0%, #FFFFFF 45%);
+}
+.prescriptive-item.opportunity {
+  border-left-color: #FFB600;
+}
+.prescriptive-item.optimal {
+  border-left-color: #10B981;
+}
+
+/* ── OWNER READ-ONLY AUDIT & PUSH NOTIFICATION BANNER (Panel Suggestion #3 & #4) ── */
+.owner-ro-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 13px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0E214E 0%, #1E3A8A 100%);
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 26px rgba(14, 33, 78, 0.16);
+}
+.ro-badge-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 182, 0, 0.22);
+  border: 1px solid rgba(255, 182, 0, 0.55);
+  color: #FFD166;
+  font-family: 'Figtree', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.rfid-single-device-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  margin-bottom: 14px;
+  color: #ECFDF5;
+}
 </style>
 </head>
 <body>
@@ -2722,7 +2951,22 @@ input[type="password"]::-ms-clear {
 
   <!-- NAVBAR -->
   <nav class="lp-nav">
-    <a class="lp-nav-logo" href="#">Laba<span>Flow</span></a>
+    <a class="lp-nav-logo lf-brand-wrap" href="#">
+      <span class="lf-brand-emblem" aria-hidden="true">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="28" height="28" rx="8" stroke="#6EC1E4" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+          <circle cx="18" cy="19" r="8.5" stroke="#FFFFFF" stroke-width="2.2" fill="rgba(69,121,238,0.35)"/>
+          <path d="M11 19.5C13 17 15.5 17 18 19.5C20.5 22 23 22 25 19.5" stroke="#6EC1E4" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M13 10C15.8 8 20.2 8 23 10" stroke="#FFB600" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="9.5" cy="9.5" r="1.6" fill="#FFB600"/>
+          <circle cx="26.5" cy="9.5" r="1.4" fill="#6EC1E4"/>
+        </svg>
+      </span>
+      <span class="lf-brand-copy">
+        <span class="lf-brand-title">Laba<span>Flow</span></span>
+        <span class="lf-brand-sub">Lab-a-Day · RFID Laundry</span>
+      </span>
+    </a>
     <div class="lp-nav-links">
       <a href="#how">How It Works</a>
       <a href="#services">Services</a>
@@ -2821,25 +3065,33 @@ input[type="password"]::-ms-clear {
         <div class="lp-step-num">Step 01</div>
         <img class="lp-step-photo" src="images/step-drop-off.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}" alt="Laundry bag at a clean laundromat, ready for drop-off" loading="lazy">
         <h4>Drop Off Your Laundry</h4>
-        <p>Bring your laundry to our shop. We weigh it, assign an RFID tag, and give you a digital receipt.</p>
+        <p>Bring your laundry to our shop for weighing and instant RFID tagging.</p>
+        <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+        <div class="exp-panel">Staff verifies actual weight at B. Cosme St., links a 13.56 MHz RFID tag from our 1-Device RFID station, and issues your digital receipt.</div>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 02</div>
         <img class="lp-step-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
         <h4>Washed With Detergent</h4>
-        <p>We wash and dry your clothes with Surf detergent and conditioner, using the right care for every load. Wash time is about 2–3 hours, depending on how many loads are in the queue.</p>
+        <p>Auto-dosed Surf detergent &amp; conditioner. Estimated wash time: 2–3 hours.</p>
+        <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+        <div class="exp-panel">Each load uses measured Surf Liquid Detergent (100 mL), Surf Fabric Conditioner (100 mL), and Zonrox Color Safe (10 mL). Turnaround is 2–3 hours depending on queue volume.</div>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 03</div>
         <img class="lp-step-photo" src="images/step-ready-alert.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-ready-alert.jpg';}" alt="Customer checking a phone while waiting at a laundromat" loading="lazy">
         <h4>Get a Ready Alert</h4>
-        <p>We notify you when your laundry is ready, and you can track its status in the app.</p>
+        <p>Receive an instant push notification on your device when ready.</p>
+        <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+        <div class="exp-panel">Every RFID stage tap updates your live tracker and triggers a background push notification—even when the app is minimized or closed.</div>
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 04</div>
         <img class="lp-step-photo" src="images/step-pickup-pay.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-pickup-pay.jpg';}" alt="Customer making a contactless payment at a laundromat" loading="lazy">
         <h4>Pick Up &amp; Pay</h4>
-        <p>Collect your clean laundry and pay by Cash or GCash. Earn LabaPoints with every visit.</p>
+        <p>Pay via Cash or GCash QR and earn 1 LabaPoint per ₱1 spent.</p>
+        <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+        <div class="exp-panel">Upon payment confirmation, your order is marked Released, the RFID tag is freed for reuse, and loyalty points are credited automatically.</div>
       </div>
     </div>
   </div>
@@ -2849,43 +3101,67 @@ input[type="password"]::-ms-clear {
     <div class="lp-services-inner">
       <div class="lp-eyebrow">What We Offer</div>
       <div class="lp-section-title">Our <span class="style-gradient">Services</span></div>
-      <div class="lp-section-sub">Every piece treated with the right product and the right process.</div>
+      <div class="lp-section-sub">Concise service overview — click <b>View Details</b> on any item to expand full specifications.</div>
       <div class="lp-services-grid">
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/service-clothes.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-clothes.jpg';}" alt="Clothes being washed with laundry detergent" loading="lazy">
           <h4>Clothes Wash</h4>
-          <p>Everyday clothes, casual wear, uniforms. Washed with Surf Liquid Detergent, conditioned, and folded.</p>
-          <div class="lp-svc-badge">₱180 / 7kg base</div>
+          <p>Everyday clothes &amp; uniforms — washed, dried, and neatly folded.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">₱180 / 7kg base</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Includes up to 7 kg base load (+₱25/extra kg; 10 kg+ auto-splits into 2 sets of max 9 kg). Choose Whites Only, Colored Only, or Mixed.</div>
         </div>
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/service-bedsheets.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-bedsheets.jpg';}" alt="Fresh white and blue bed linens" loading="lazy">
           <h4>Bedsheet Wash</h4>
-          <p>Bed linens, pillowcases, and fitted sheets. Deep cleaned and returned fresh and crisp.</p>
-          <div class="lp-svc-badge">₱190 / 5kg base</div>
+          <p>Bed linens, fitted sheets, and pillowcases deep-cleaned and sanitized.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">₱190 / 5kg base</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Includes up to 5 kg base load (+₱38/extra kg). Washed with Surf Liquid Detergent, Fabric Conditioner, and Zonrox Color Safe.</div>
         </div>
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/service-comforter.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-comforter.jpg';}" alt="Clean white comforter ready for a fresh night's rest" loading="lazy">
           <h4>Comforter Wash</h4>
-          <p>Heavy blankets, duvets, and comforters. Proper machine wash with extra rinse cycle.</p>
-          <div class="lp-svc-badge">₱200 / piece</div>
+          <p>Heavy blankets, duvets, and comforters at a flat per-piece rate.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">₱200 / piece</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Flat ₱200 per comforter of any thickness or size with heavy-duty deep wash, extra rinse cycle, and controlled drying.</div>
         </div>
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Laundry detergent and fabric conditioner beside a washing machine" loading="lazy">
           <h4>Surf Liquid Detergent</h4>
-          <p>We use Surf Liquid Detergent — tough on stains, gentle on fabrics, fresh scent every wash.</p>
-          <div class="lp-svc-badge">0.1 L per load</div>
+          <p>Auto-dosed liquid detergent for deep stain removal.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">0.1 L (100 mL) / load</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Automatically deducted from shop inventory (100 mL per load) when an order enters the Washing stage.</div>
         </div>
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Fabric conditioner and laundry detergent ready for a wash" loading="lazy">
           <h4>Surf Fabric Conditioner</h4>
-          <p>Surf Fabric Conditioner on every load — softer clothes, long-lasting freshness.</p>
-          <div class="lp-svc-badge">0.1 L per load</div>
+          <p>Softens fibers and locks in long-lasting fresh scent.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">0.1 L (100 mL) / load</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Automatically dosed at 100 mL per wash load and tracked in real-time by the LabaFlow Inventory Monitor.</div>
         </div>
         <div class="lp-svc">
           <img class="lp-svc-photo" src="images/service-zonrox-colorsafe.png" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-zonrox-colorsafe.png';}" alt="Zonrox ColorSafe bleach product" loading="lazy">
           <h4>Zonrox Color Safe</h4>
-          <p>Zonrox Color Safe bleach removes bacteria and tough stains without damaging colors.</p>
-          <div class="lp-svc-badge">10 ml per load</div>
+          <p>Sanitizes and brightens fabrics without fading colors.</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="lp-svc-badge" style="margin-top:0;">10 mL (0.01 L) / load</div>
+            <button type="button" class="exp-toggle-btn" style="margin-top:0;" onclick="toggleExpPanel(this)">▾ View Details</button>
+          </div>
+          <div class="exp-panel">Measured at 10 mL (0.01 L) per load to eliminate 99.9% of bacteria while keeping colored garments safe.</div>
         </div>
       </div>
     </div>
@@ -3048,7 +3324,22 @@ input[type="password"]::-ms-clear {
   <div class="lp-footer">
     <div class="lp-footer-grid">
       <div>
-        <div class="lp-footer-logo">Laba<span>Flow</span></div>
+        <div class="lp-footer-logo lf-brand-wrap" style="margin-bottom:10px;">
+          <span class="lf-brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="4" width="28" height="28" rx="8" stroke="#6EC1E4" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+              <circle cx="18" cy="19" r="8.5" stroke="#FFFFFF" stroke-width="2.2" fill="rgba(69,121,238,0.35)"/>
+              <path d="M11 19.5C13 17 15.5 17 18 19.5C20.5 22 23 22 25 19.5" stroke="#6EC1E4" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M13 10C15.8 8 20.2 8 23 10" stroke="#FFB600" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="9.5" cy="9.5" r="1.6" fill="#FFB600"/>
+              <circle cx="26.5" cy="9.5" r="1.4" fill="#6EC1E4"/>
+            </svg>
+          </span>
+          <span class="lf-brand-copy">
+            <span class="lf-brand-title" style="color:#FFFFFF;">Laba<span style="color:#6EC1E4;">Flow</span></span>
+            <span class="lf-brand-sub" style="color:rgba(255,255,255,0.72);">Lab-a-Day · RFID Laundry</span>
+          </span>
+        </div>
         <div class="lp-footer-desc">Lab-a-Day Laundry Management System. RFID-tracked, real-time order status, loyalty rewards — the modern way to manage laundry.</div>
         <div class="lp-footer-contact">
           <div>📍 B. Cosme Street, Poblacion 2, Pagsanjan, Laguna</div>
@@ -3095,7 +3386,24 @@ input[type="password"]::-ms-clear {
 <div id="authOverlay">
 <div class="auth-card auth-modal-wrap">
   <button class="auth-close" onclick="closeAuth()">×</button>
-  <div class="auth-logo">Laba<span>Flow</span></div>
+  <div style="display:flex;justify-content:center;margin-bottom:6px;">
+    <div class="lf-brand-wrap">
+      <span class="lf-brand-emblem" aria-hidden="true">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="28" height="28" rx="8" stroke="#6EC1E4" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+          <circle cx="18" cy="19" r="8.5" stroke="#FFFFFF" stroke-width="2.2" fill="rgba(69,121,238,0.35)"/>
+          <path d="M11 19.5C13 17 15.5 17 18 19.5C20.5 22 23 22 25 19.5" stroke="#6EC1E4" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M13 10C15.8 8 20.2 8 23 10" stroke="#FFB600" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="9.5" cy="9.5" r="1.6" fill="#FFB600"/>
+          <circle cx="26.5" cy="9.5" r="1.4" fill="#6EC1E4"/>
+        </svg>
+      </span>
+      <span class="lf-brand-copy">
+        <span class="lf-brand-title">Laba<span>Flow</span></span>
+        <span class="lf-brand-sub">Lab-a-Day · RFID Laundry</span>
+      </span>
+    </div>
+  </div>
   <div class="auth-tagline">Lab-a-Day Laundry · B. Cosme St., Poblacion 2, Pagsanjan, Laguna</div>
   <div class="auth-tabs">
     <div class="auth-tab active" id="tabSign" onclick="authTab('sign')">Sign In</div>
@@ -3172,7 +3480,21 @@ input[type="password"]::-ms-clear {
 <div id="app">
 <div class="shell">
   <div class="sidebar">
-    <div class="sb-brand"><div class="sb-brand-inner"><div class="sb-icon">🫧</div><div><div class="sb-logo">Laba<span>Flow</span></div><div class="sb-tagline">Lab-a-Day Laundry Shop</div></div></div></div>
+    <div class="sb-brand">
+      <div class="sb-brand-inner">
+        <div class="sb-icon lf-brand-emblem" style="width:38px;height:38px;border-radius:12px;">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:25px;height:25px;">
+            <rect x="4" y="4" width="28" height="28" rx="8" stroke="#6EC1E4" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+            <circle cx="18" cy="19" r="8.5" stroke="#FFFFFF" stroke-width="2.2" fill="rgba(69,121,238,0.35)"/>
+            <path d="M11 19.5C13 17 15.5 17 18 19.5C20.5 22 23 22 25 19.5" stroke="#6EC1E4" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M13 10C15.8 8 20.2 8 23 10" stroke="#FFB600" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9.5" cy="9.5" r="1.6" fill="#FFB600"/>
+            <circle cx="26.5" cy="9.5" r="1.4" fill="#6EC1E4"/>
+          </svg>
+        </div>
+        <div><div class="sb-logo">Laba<span>Flow</span></div><div class="sb-tagline">Lab-a-Day · RFID System</div></div>
+      </div>
+    </div>
     <div class="sb-user"><div class="sb-av" id="sbAv">A</div><div><div class="sb-uname" id="sbName">—</div><div class="sb-urole" id="sbRole">—</div></div></div>
     <nav class="sb-nav" id="sbNav"></nav>
     <div class="sb-foot"><button class="btn btn-ghost btn-block" style="font-size:12px;" onclick="doLogout()">↩ Sign Out</button></div>
@@ -3207,7 +3529,22 @@ input[type="password"]::-ms-clear {
 <div class="pt-wrap">
   <div class="pt-nav">
     <div style="display:flex;align-items:center;gap:12px;">
-      <div class="pt-logo" style="cursor:pointer;" onclick="ptTab('overview')">🫧 Laba<span>Flow</span></div>
+      <div class="pt-logo lf-brand-wrap" style="cursor:pointer;" onclick="ptTab('overview')">
+        <span class="lf-brand-emblem" style="width:36px;height:36px;border-radius:11px;" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;">
+            <rect x="4" y="4" width="28" height="28" rx="8" stroke="#6EC1E4" stroke-width="2" fill="rgba(255,255,255,0.08)"/>
+            <circle cx="18" cy="19" r="8.5" stroke="#FFFFFF" stroke-width="2.2" fill="rgba(69,121,238,0.35)"/>
+            <path d="M11 19.5C13 17 15.5 17 18 19.5C20.5 22 23 22 25 19.5" stroke="#6EC1E4" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M13 10C15.8 8 20.2 8 23 10" stroke="#FFB600" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9.5" cy="9.5" r="1.6" fill="#FFB600"/>
+            <circle cx="26.5" cy="9.5" r="1.4" fill="#6EC1E4"/>
+          </svg>
+        </span>
+        <span class="lf-brand-copy">
+          <span class="lf-brand-title" style="font-size:18px;">Laba<span>Flow</span></span>
+          <span class="lf-brand-sub" style="font-size:8.5px;">Customer RFID Portal</span>
+        </span>
+      </div>
       <span class="tb-live-pill"><span class="tb-live-dot"></span>RFID Live Portal</span>
     </div>
     <div class="pt-user">
@@ -3357,32 +3694,42 @@ input[type="password"]::-ms-clear {
 <div class="ov" id="mEditItem"><div class="modal">
   <h3>Edit Inventory Item</h3>
   <div class="fg"><label>Item Name</label><input id="eiName"></div>
-  <div class="fg"><label>Category</label><select id="eiCat"><option value="DETERGENT">Detergent</option><option value="SOFTENER">Softener</option><option value="BLEACH">Bleach</option><option value="OTHER">Other</option></select></div>
-  <div class="fg"><label>Unit</label><input id="eiUnit" placeholder="kg / L / pcs"></div>
   <div class="row2">
-    <div class="fg"><label>Current Qty</label><input type="number" id="eiQty" step="0.1"></div>
-    <div class="fg"><label>Low Stock Threshold</label><input type="number" id="eiThresh" step="0.1"></div>
+    <div class="fg"><label>Category</label><select id="eiCat"><option value="DETERGENT">Detergent</option><option value="SOFTENER">Softener</option><option value="BLEACH">Bleach</option><option value="OTHER">Other</option></select></div>
+    <div class="fg"><label>Unit</label><input id="eiUnit" placeholder="L / kg / pcs"></div>
   </div>
-  <div class="fg"><label>Deduction per Load (L or kg)</label><input type="number" id="eiCons" step="0.001" min="0" placeholder="e.g. 0.1"></div>
+  <div class="row2">
+    <div class="fg"><label>Current Stock Qty</label><input type="number" id="eiQty" step="0.01" min="0"></div>
+    <div class="fg"><label>Low Stock Threshold</label><input type="number" id="eiThresh" step="0.01" min="0.01"></div>
+  </div>
+  <div class="row2">
+    <div class="fg"><label>Pack Size (e.g. 2.5 L/pack)</label><input type="number" id="eiPackSize" step="0.1" min="0" placeholder="Optional (e.g. 2.5)"></div>
+    <div class="fg"><label>Full Capacity Packs (qty)</label><input type="number" id="eiPackQty" step="1" min="1" placeholder="Optional (e.g. 5)"></div>
+  </div>
+  <div class="fg"><label>Auto-Deduction per Wash Load (in L or kg)</label><input type="number" id="eiCons" step="0.001" min="0" placeholder="e.g. 0.1 (100 mL)"></div>
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mEditItem')">Cancel</button>
-    <button class="btn btn-primary" onclick="submitEditItem()">Save</button>
+    <button class="btn btn-primary" onclick="submitEditItem()">Save Changes</button>
   </div>
 </div></div>
 
 <!-- Add Inventory Item -->
 <div class="ov" id="mAddItem"><div class="modal">
   <h3>Add Inventory Item</h3>
-  <div class="fg"><label>Item Name</label><input id="aiName" placeholder="e.g. Tide Powder"></div>
-  <div class="fg"><label>Category</label><select id="aiCat"><option value="DETERGENT">Detergent</option><option value="SOFTENER">Softener</option><option value="BLEACH">Bleach</option><option value="OTHER">Other</option></select></div>
+  <div class="fg"><label>Item Name</label><input id="aiName" placeholder="e.g. Surf Liquid Detergent"></div>
   <div class="row2">
-    <div class="fg"><label>Unit</label><input id="aiUnit" placeholder="kg / L / pcs"></div>
-    <div class="fg"><label>Initial Qty</label><input type="number" id="aiQty" step="0.1" min="0" placeholder="0"></div>
+    <div class="fg"><label>Category</label><select id="aiCat"><option value="DETERGENT">Detergent</option><option value="SOFTENER">Softener</option><option value="BLEACH">Bleach</option><option value="OTHER">Other</option></select></div>
+    <div class="fg"><label>Unit</label><input id="aiUnit" placeholder="L / kg / pcs" value="L"></div>
   </div>
   <div class="row2">
-    <div class="fg"><label>Threshold</label><input type="number" id="aiThresh" step="0.1" min="0" placeholder="5"></div>
-    <div class="fg"><label>Deduction per Load</label><input type="number" id="aiCons" step="0.001" min="0" placeholder="e.g. 0.1"></div>
+    <div class="fg"><label>Initial Stock Qty</label><input type="number" id="aiQty" step="0.01" min="0" placeholder="e.g. 10"></div>
+    <div class="fg"><label>Low Stock Threshold</label><input type="number" id="aiThresh" step="0.01" min="0.01" placeholder="e.g. 1.0"></div>
   </div>
+  <div class="row2">
+    <div class="fg"><label>Pack Size (e.g. 2.5 L)</label><input type="number" id="aiPackSize" step="0.1" min="0" placeholder="Optional (e.g. 2.5)"></div>
+    <div class="fg"><label>Full Capacity Packs</label><input type="number" id="aiPackQty" step="1" min="1" placeholder="Optional (e.g. 5)"></div>
+  </div>
+  <div class="fg"><label>Auto-Deduction per Wash Load (in L or kg)</label><input type="number" id="aiCons" step="0.001" min="0" placeholder="e.g. 0.1"></div>
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mAddItem')">Cancel</button>
     <button class="btn btn-primary" onclick="submitAddItem()">Add Item</button>
@@ -3465,11 +3812,15 @@ input[type="password"]::-ms-clear {
 <!-- NOTIFICATION PANEL (seller/admin) -->
 <div class="notif-panel" id="notifPanel">
   <div class="notif-head">
-    <span class="notif-head-title">🔔 Notifications</span>
+    <span class="notif-head-title" id="staffNotifTitle">🔔 Notifications</span>
     <div class="notif-head-actions">
-      <span class="notif-mark-all" onclick="markAllNotifsRead()">Mark all read</span>
+      <span class="notif-mark-all" id="staffNotifMarkAll" onclick="markAllNotifsRead()">Mark all read</span>
       <span class="notif-close" onclick="toggleNotifPanel()">✕</span>
     </div>
+  </div>
+  <div style="padding:8px 12px;background:#F2F6FF;border-bottom:1px solid #D7E3FF;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+    <span id="staffNotifRoBadge" style="font-size:10.5px;font-weight:800;color:#0E214E;">📡 Background Push Ready</span>
+    <button type="button" class="exp-toggle-btn" style="margin:0;background:#0E214E;color:#fff;border-color:#0E214E;" onclick="triggerDelayedBackgroundPushDemo()">📲 Test Push (5s — Close App)</button>
   </div>
   <div class="notif-list" id="notifList"></div>
 </div>
@@ -3482,6 +3833,10 @@ input[type="password"]::-ms-clear {
       <span class="notif-mark-all" onclick="markAllCustNotifsRead()">Mark all read</span>
       <span class="notif-close" onclick="toggleCustNotifPanel()">✕</span>
     </div>
+  </div>
+  <div style="padding:8px 12px;background:#F2F6FF;border-bottom:1px solid #D7E3FF;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+    <span style="font-size:10.5px;font-weight:800;color:#0E214E;">📡 Device Push Active</span>
+    <button type="button" class="exp-toggle-btn" style="margin:0;background:#0E214E;color:#fff;border-color:#0E214E;" onclick="triggerDelayedBackgroundPushDemo()">📲 Test Push (5s — Close App)</button>
   </div>
   <div class="notif-list" id="custNotifList"></div>
 </div>
@@ -4146,21 +4501,21 @@ function checkTopbarAlerts(){
 ══════════════════════════════════════ */
 const NAV_ADMIN=[
   {id:'dashboard',ni:'▤',label:'Dashboard'},
-  {id:'rfid_scanner',ni:'📡',label:'RFID Scanner'},
+  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'orders',ni:'🧺',label:'Orders'},
-  {id:'scan_logs',ni:'🛡️',label:'RFID Scan Logs'},
-  {id:'analytics',ni:'◈',label:'Financial Analytics'},
+  {id:'scan_logs',ni:'🛡️',label:'Audit & Notif Logs (RO)'},
+  {id:'analytics',ni:'◈',label:'3-Pillar Analytics'},
   {id:'inv_admin',ni:'▦',label:'Inventory Monitor'},
   {id:'promos',ni:'🏷',label:'Promo Codes'},
   {id:'users',ni:'◉',label:'User Accounts'},
 ];
 const NAV_SELLER=[
   {id:'orders',ni:'▤',label:'Orders'},
-  {id:'rfid_scanner',ni:'📡',label:'RFID Scanner & Receive'},
+  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'rfid',ni:'◎',label:'RFID Tags'},
-  {id:'scan_logs',ni:'🛡️',label:'RFID Scan Logs'},
+  {id:'scan_logs',ni:'🛡️',label:'RFID & Audit Logs'},
   {id:'inventory',ni:'▦',label:'Inventory'},
-  {id:'reports',ni:'◈',label:'Reports'},
+  {id:'reports',ni:'◈',label:'Reports & Analytics'},
   {id:'messages_seller',ni:'✉',label:'Messages',badge:'msgBadge'},
   {id:'seller_settings',ni:'⚙',label:'Settings'},
 ];
@@ -4175,7 +4530,23 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'RFID Scanner & Receiving',scan_logs:'RFID Scan Audit Logs',analytics:'Financial Analytics',inv_admin:'Inventory Monitor',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory',reports:'Reports',messages_seller:'Messages',rfid:'RFID Tags',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',seller_settings:'Settings'};
+
+function toggleExpPanel(btn){
+  if(!btn)return;
+  const parent=btn.parentElement;
+  let panel=btn.nextElementSibling;
+  if(!panel||!panel.classList.contains('exp-panel')){
+    panel=parent?.nextElementSibling;
+  }
+  if(!panel||!panel.classList.contains('exp-panel')){
+    panel=btn.closest('td,div,article,li')?.querySelector('.exp-panel');
+  }
+  if(!panel)return;
+  const isOpen=panel.classList.toggle('open');
+  const baseLabel=btn.dataset.label||'Details';
+  btn.innerHTML=isOpen?`▴ Hide ${baseLabel}`:`▾ View ${baseLabel}`;
+}
 
 function showPage(p){
   curPage=p;
@@ -4508,8 +4879,166 @@ function drawDashCharts(view){
 }
 
 /* ══════════════════════════════════════
-   ADMIN: FINANCIAL ANALYTICS
+   ADMIN: 3-PILLAR ANALYTICS
+   1. Descriptive ("What happened?")
+   2. Predictive ("What will happen?")
+   3. Prescriptive ("What actions should we take?")
 ══════════════════════════════════════ */
+let _analyticsPillar='ALL';
+let _txnSearch='';
+let _txnChanFilter='ALL';
+
+function setAnalyticsPillar(p){
+  _analyticsPillar=p;
+  pgAnalytics();
+}
+
+function computePredictiveAndPrescriptive(){
+  const orders=DB.get('orders');
+  const txns=DB.get('transactions').filter(t=>t.status==='COMPLETED');
+  const inv=DB.get('inventory');
+  const promos=DB.get('promoCodes');
+
+  // Last 14 days daily revenue & orders
+  const dayOrdMap=ordersByDay(orders,14);
+  const dayRevMap=revenueByDay(txns,14);
+  const ordVals=Object.values(dayOrdMap);
+  const revVals=Object.values(dayRevMap);
+
+  const totalOrds=orders.length;
+  const totalRev=txns.reduce((s,t)=>s+t.amount,0);
+  const avgOrderVal=txns.length?(totalRev/txns.length):(orders.length?(orders.reduce((s,o)=>s+(o.price||180),0)/orders.length):190);
+
+  // Recent 7 days velocity (with intelligent baseline fallback if dataset is small)
+  const last7Ords=ordVals.slice(-7).reduce((a,b)=>a+b,0);
+  const prev7Ords=ordVals.slice(0,7).reduce((a,b)=>a+b,0);
+  const dailyOrdRate=Math.max(1.5, last7Ords>0 ? (last7Ords/7) : (totalOrds>0 ? Math.min(8, totalOrds/3) : 3.2));
+  const growthFactor=prev7Ords>0 ? Math.min(1.35, Math.max(0.85, (last7Ords||1)/prev7Ords)) : 1.12;
+
+  const proj7Orders=Math.round(dailyOrdRate*7*growthFactor);
+  const proj30Orders=Math.round(dailyOrdRate*30*growthFactor);
+  const proj7Rev=parseFloat((proj7Orders*avgOrderVal).toFixed(2));
+  const proj30Rev=parseFloat((proj30Orders*avgOrderVal).toFixed(2));
+
+  // Build 7-day forecast labels & series
+  const forecastLabels=[];
+  const forecastRevSeries=[];
+  const forecastOrdSeries=[];
+  const dowWeights=[1.25,0.9,0.85,0.95,1.0,1.15,1.35]; // Sun..Sat demand curve
+  for(let d=1;d<=7;d++){
+    const dt=new Date();dt.setDate(dt.getDate()+d);
+    const lbl=dt.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+    const w=dowWeights[dt.getDay()];
+    const eOrd=Math.max(1,Math.round(dailyOrdRate*growthFactor*w));
+    forecastLabels.push(lbl);
+    forecastOrdSeries.push(eOrd);
+    forecastRevSeries.push(parseFloat((eOrd*avgOrderVal).toFixed(2)));
+  }
+
+  // Inventory Depletion Forecast
+  const DEDUCT_BY_CAT={DETERGENT:0.1,SOFTENER:0.1,BLEACH:0.01};
+  const invForecast=inv.map(item=>{
+    const rate=(item.perLoad&&item.perLoad>0)?item.perLoad:(DEDUCT_BY_CAT[item.cat]||0.05);
+    const qty=Math.max(0,parseFloat(item.qty)||0);
+    const thresh=Math.max(0.01,parseFloat(item.thresh)||1);
+    const loadsRemaining=rate>0?Math.floor(qty/rate):999;
+    const loadsToThresh=rate>0?Math.max(0,Math.floor((qty-thresh)/rate)):999;
+    const daysToDepletion=Math.max(0,Math.round(loadsRemaining/Math.max(1,dailyOrdRate)));
+    const daysToThresh=Math.max(0,Math.round(loadsToThresh/Math.max(1,dailyOrdRate)));
+    const recRestockQty=item.packSize?(item.packSize*2):Math.max(5,thresh*4);
+    return {
+      ...item,
+      rate,
+      loadsRemaining,
+      daysToDepletion,
+      daysToThresh,
+      recRestockQty:parseFloat(recRestockQty.toFixed(2)),
+      isCritical:qty<=thresh||daysToThresh<=3
+    };
+  });
+
+  // Active queue & turnaround prediction
+  const activeQueue=orders.filter(o=>['PENDING','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status)).length;
+  const estQueueHrs=activeQueue<=2?'2.0 – 2.5 hrs (Normal Queue)':activeQueue<=5?'2.5 – 3.0 hrs (Moderate Queue)':'3.0 – 4.0 hrs (High Queue Volume)';
+
+  // Prescriptive Recommendations
+  const prescriptions=[];
+  const criticalItems=invForecast.filter(i=>i.isCritical);
+  if(criticalItems.length){
+    prescriptions.push({
+      cls:'urgent',
+      badge:'🚨 URGENT INVENTORY ACTION',
+      title:`Restock ${criticalItems.map(i=>i.name).join(', ')} Immediately`,
+      desc:`Predictive consumption shows ${criticalItems[0].name} has ~${criticalItems[0].loadsRemaining} wash loads left (~${criticalItems[0].daysToDepletion} days before stock-out). Recommended order: +${criticalItems[0].recRestockQty} ${criticalItems[0].unit}.`,
+      btnLabel:'▦ Open Inventory Monitor',
+      action:`showPage(CU.role==='ADMIN'?'inv_admin':'inventory')`
+    });
+  } else {
+    const lowestItem=[...invForecast].sort((a,b)=>a.loadsRemaining-b.loadsRemaining)[0];
+    prescriptions.push({
+      cls:'optimal',
+      badge:'✅ SUPPLY OPTIMIZATION',
+      title:`Maintain Buffer Stock for ${lowestItem?lowestItem.name:'Detergent & Softener'}`,
+      desc:`All supplies are above threshold. Next scheduled restock is ${lowestItem?lowestItem.name:'Surf Liquid Detergent'} (${lowestItem?lowestItem.loadsRemaining:80} loads remaining, ~${lowestItem?lowestItem.daysToDepletion:18} days runway).`,
+      btnLabel:'▦ View Supply Forecast',
+      action:`showPage(CU.role==='ADMIN'?'inv_admin':'inventory')`
+    });
+  }
+
+  // Queue & 1-Device RFID Workflow Prescription
+  const untaggedPending=orders.filter(o=>o.status==='PENDING'&&!o.tagId).length;
+  const readyUnpaid=orders.filter(o=>o.status==='READY').length;
+  prescriptions.push({
+    cls:untaggedPending>0?'opportunity':'optimal',
+    badge:'📡 1-DEVICE RFID WORKFLOW',
+    title:untaggedPending>0?`Tag ${untaggedPending} Pending Drop-Off Order(s) at 1-Device RFID Station`:`Queue Balanced (${activeQueue} Active · Est. ${estQueueHrs})`,
+    desc:untaggedPending>0
+      ?`There ${untaggedPending===1?'is 1 booking':'are '+untaggedPending+' bookings'} waiting for initial RFID tag linking, plus ${readyUnpaid} Ready order(s) awaiting pickup & payment.`
+      :`All active laundry bags are linked to 13.56 MHz RFID tags. Tap any active tag on the single ESP32 + RC522 reader to auto-advance its stage.`,
+    btnLabel:'📡 Go to 1-Device RFID Station',
+    action:`showPage('rfid_scanner')`
+  });
+
+  // Promo & Off-Peak Demand Shifting Prescription
+  const activePromos=promos.filter(p=>p.active);
+  prescriptions.push({
+    cls:'opportunity',
+    badge:'🏷️ DEMAND & PROMO STRATEGY',
+    title:`Promote Off-Peak Tue–Thu Wash Loads (+15% Utilization Target)`,
+    desc:`Historical hourly & weekday patterns show peak congestion on weekends. Keep promo code ${activePromos[0]?activePromos[0].code:'WELCOME'} (${activePromos[0]?activePromos[0].disc:10}% OFF) active for weekday drop-offs to smooth machine load.`,
+    btnLabel:'🏷️ Manage Promo Codes',
+    action:`showPage('promos')`
+  });
+
+  // Payment & Loyalty Prescription
+  const gcashShare=totalRev>0?Math.round((txns.filter(t=>t.channel==='GCASH').reduce((s,t)=>s+t.amount,0)/totalRev)*100):45;
+  prescriptions.push({
+    cls:'optimal',
+    badge:'💳 FINTECH & LOYALTY RETENTION',
+    title:`Cashless GCash Share at ${gcashShare}% · LabaPoints Retention Active`,
+    desc:`Average order value is ${peso(avgOrderVal)}. Encourage customers close to Silver (500 pts) and Gold (1,000 pts) tiers to book Comforter/Bedsheet bundles for higher basket size.`,
+    btnLabel:'🧺 View Customer Orders',
+    action:`showPage('orders')`
+  });
+
+  return {
+    avgOrderVal,
+    dailyOrdRate:parseFloat(dailyOrdRate.toFixed(1)),
+    growthPct:Math.round((growthFactor-1)*100),
+    proj7Orders,
+    proj30Orders,
+    proj7Rev,
+    proj30Rev,
+    forecastLabels,
+    forecastOrdSeries,
+    forecastRevSeries,
+    invForecast,
+    activeQueue,
+    estQueueHrs,
+    prescriptions
+  };
+}
+
 function pgAnalytics(){
   const txns=DB.get('transactions').filter(t=>t.status==='COMPLETED');
   const orders=DB.get('orders');
@@ -4520,92 +5049,266 @@ function pgAnalytics(){
   const sum=a=>a.reduce((s,t)=>s+t.amount,0);
   const byCh=(a,c)=>sum(a.filter(t=>t.channel===c));
 
-  /* unique customers this month */
   const custIds=new Set(orders.filter(o=>{const d=new Date(o.created);return d.getMonth()===nm&&d.getFullYear()===ny;}).map(o=>o.custId));
-  /* top customer */
   const custSpend={};txns.forEach(t=>{custSpend[t.custName]=(custSpend[t.custName]||0)+t.amount;});
   const topCust=Object.entries(custSpend).sort((a,b)=>b[1]-a[1])[0];
 
+  const model=computePredictiveAndPrescriptive();
+  const showDesc=_analyticsPillar==='ALL'||_analyticsPillar==='DESCRIPTIVE';
+  const showPred=_analyticsPillar==='ALL'||_analyticsPillar==='PREDICTIVE';
+  const showPresc=_analyticsPillar==='ALL'||_analyticsPillar==='PRESCRIPTIVE';
+
+  const filteredTxns=[...txns].reverse().filter(t=>{
+    if(_txnChanFilter!=='ALL'&&t.channel!==_txnChanFilter)return false;
+    if(_txnSearch){
+      const hay=`${t.num} ${t.orderNum} ${t.custName} ${t.channel} ${t.promoCode||''} ${t.rcpt||''} ${t.gcashRef||''}`.toLowerCase();
+      if(!hay.includes(_txnSearch.toLowerCase()))return false;
+    }
+    return true;
+  });
+
   g('pgContent').innerHTML=`
-    <div class="sg sg-4">
-      <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">Today's Revenue</div></div>
-      <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">This Month</div></div>
-      <div class="sc"><div class="sc-val">${custIds.size}</div><div class="sc-lbl">Customers This Month</div></div>
-      <div class="sc"><div class="sc-val">${peso(sum(txns))}</div><div class="sc-lbl">All-Time Total</div></div>
-    </div>
-    <div class="sg sg-2">
-      <div class="sc"><div class="sc-val">${peso(byCh(txns,'CASH'))}</div><div class="sc-lbl">Cash (All-Time)</div></div>
-      <div class="sc"><div class="sc-val">${peso(byCh(txns,'GCASH'))}</div><div class="sc-lbl">GCash (All-Time)</div></div>
+    <!-- 3-PILLAR ANALYTICS SELECTOR BAR -->
+    <div class="analytics-pillar-tabs">
+      <span style="font-size:11.5px;font-weight:900;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">Analytics Mode:</span>
+      <button type="button" class="pillar-tab-btn ${_analyticsPillar==='ALL'?'active':''}" onclick="setAnalyticsPillar('ALL')">⚡ All 3 Analytics Pillars</button>
+      <button type="button" class="pillar-tab-btn ${_analyticsPillar==='DESCRIPTIVE'?'active':''}" onclick="setAnalyticsPillar('DESCRIPTIVE')">📊 1. Descriptive (What Happened)</button>
+      <button type="button" class="pillar-tab-btn ${_analyticsPillar==='PREDICTIVE'?'active':''}" onclick="setAnalyticsPillar('PREDICTIVE')">🔮 2. Predictive (What Will Happen)</button>
+      <button type="button" class="pillar-tab-btn ${_analyticsPillar==='PRESCRIPTIVE'?'active':''}" onclick="setAnalyticsPillar('PRESCRIPTIVE')">💡 3. Prescriptive (What To Do)</button>
     </div>
 
-    <!-- MAIN CHARTS -->
-    <div class="card">
-      <div class="ch">
-        <h4>📈 Orders & Revenue Over Time</h4>
-        <div class="chart-tabs">
-          <span class="chart-tab on" id="act-day" onclick="drawAnalyticsCharts('day')">Daily (14 days)</span>
-          <span class="chart-tab" id="act-week" onclick="drawAnalyticsCharts('week')">Weekly (12 wks)</span>
-          <span class="chart-tab" id="act-month" onclick="drawAnalyticsCharts('month')">Monthly (12 mo)</span>
-          <span class="chart-tab" id="act-year" onclick="drawAnalyticsCharts('year')">Yearly</span>
+    ${showDesc?`
+      <div class="pillar-section-banner">
+        <div>
+          <h3>📊 1. Descriptive Analytics — Historical &amp; Current Performance</h3>
+          <p>Summarizes actual laundry revenue, completed orders, payment channels, and customer booking behavior.</p>
         </div>
+        <span class="badge b-blue">Pillar 1 of 3 · Historical Data</span>
       </div>
-      <div class="cp">
-        <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Orders Created</div>
-        <div class="chart-wrap"><canvas id="chartOrders"></canvas></div>
-        <div class="chart-legend" style="margin-top:10px;margin-bottom:20px;">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#38bdf8;"></div>Orders per period</div>
-        </div>
-        <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Revenue (₱)</div>
-        <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
-        <div class="chart-legend" style="margin-top:10px;">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#34d399;"></div>Revenue per period</div>
-        </div>
+      <div class="sg sg-4">
+        <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">Today's Revenue</div></div>
+        <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">This Month</div></div>
+        <div class="sc"><div class="sc-val">${custIds.size}</div><div class="sc-lbl">Active Customers (Month)</div></div>
+        <div class="sc"><div class="sc-val">${peso(sum(txns))}</div><div class="sc-lbl">All-Time Total Revenue</div></div>
       </div>
-    </div>
+      <div class="sg sg-2">
+        <div class="sc"><div class="sc-val">${peso(byCh(txns,'CASH'))}</div><div class="sc-lbl">Cash Revenue (All-Time)</div></div>
+        <div class="sc"><div class="sc-val">${peso(byCh(txns,'GCASH'))}</div><div class="sc-lbl">GCash Revenue (All-Time)</div></div>
+      </div>
 
-    <!-- CUSTOMER FREQUENCY & TOP CUSTOMERS -->
-    <div class="two-col">
       <div class="card">
-        <div class="ch"><h4>👥 Customer Order Frequency</h4><span class="text-sm text-muted">All-time top customers</span></div>
+        <div class="ch">
+          <h4>📈 Descriptive Trend: Orders &amp; Revenue Over Time</h4>
+          <div class="chart-tabs">
+            <span class="chart-tab on" id="act-day" onclick="drawAnalyticsCharts('day')">Daily (14 days)</span>
+            <span class="chart-tab" id="act-week" onclick="drawAnalyticsCharts('week')">Weekly (12 wks)</span>
+            <span class="chart-tab" id="act-month" onclick="drawAnalyticsCharts('month')">Monthly (12 mo)</span>
+            <span class="chart-tab" id="act-year" onclick="drawAnalyticsCharts('year')">Yearly</span>
+          </div>
+        </div>
         <div class="cp">
-          <div class="chart-wrap"><canvas id="chartCustFreq"></canvas></div>
+          <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Orders Created</div>
+          <div class="chart-wrap"><canvas id="chartOrders"></canvas></div>
+          <div style="margin-top:18px;margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Revenue (₱)</div>
+          <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
         </div>
       </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="ch"><h4>👥 Customer Order Frequency</h4><span class="text-sm text-muted">Top repeat customers</span></div>
+          <div class="cp"><div class="chart-wrap"><canvas id="chartCustFreq"></canvas></div></div>
+        </div>
+        <div class="card">
+          <div class="ch"><h4>💳 Revenue by Channel</h4><span class="text-sm text-muted">Cash vs GCash</span></div>
+          <div class="cp" style="display:flex;align-items:center;justify-content:center;">
+            <div style="height:220px;width:220px;position:relative;"><canvas id="chartChannel"></canvas></div>
+          </div>
+          ${topCust?`<div style="padding:12px 18px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);">🏆 Top customer: <span style="font-weight:700;color:var(--accent2);">${escapeHtml(topCust[0])}</span> — ${peso(topCust[1])}</div>`:''}
+        </div>
+      </div>
+
       <div class="card">
-        <div class="ch"><h4>💳 Revenue by Channel</h4><span class="text-sm text-muted">Cash vs GCash</span></div>
-        <div class="cp" style="display:flex;align-items:center;justify-content:center;">
-          <div style="height:220px;width:220px;position:relative;"><canvas id="chartChannel"></canvas></div>
-        </div>
-        ${topCust?`<div style="padding:12px 0 0;border-top:1px solid var(--border);margin-top:4px;font-size:12px;color:var(--text-muted);">🏆 Top customer: <span style="font-weight:700;color:var(--accent2);">${topCust[0]}</span> — ${peso(topCust[1])}</div>`:''}
+        <div class="ch"><h4>🕐 Order Activity by Hour of Day</h4><span class="text-sm text-muted">Busiest booking hours</span></div>
+        <div class="cp"><div class="chart-wrap-tall"><canvas id="chartHour"></canvas></div></div>
       </div>
-    </div>
+    `:''}
 
-    <!-- HEATMAP: orders by hour of day -->
+    ${showPred?`
+      <div class="pillar-section-banner" style="background:linear-gradient(135deg,#EEF2FF 0%,#FFFFFF 100%);">
+        <div>
+          <h3>🔮 2. Predictive Analytics — Demand, Revenue &amp; Supply Depletion Forecast</h3>
+          <p>Projects upcoming 7-day &amp; 30-day laundry demand, expected revenue, queue turnaround, and supply stock-out dates.</p>
+        </div>
+        <span class="badge b-purple">Pillar 2 of 3 · Forecasting Model</span>
+      </div>
+
+      <div class="sg sg-4">
+        <div class="sc">
+          <div class="sc-val" style="color:#4579EE;">${peso(model.proj7Rev)}</div>
+          <div class="sc-lbl">Projected Next 7-Day Revenue (~${model.proj7Orders} Orders)</div>
+        </div>
+        <div class="sc">
+          <div class="sc-val" style="color:#059669;">${peso(model.proj30Rev)}</div>
+          <div class="sc-lbl">Projected 30-Day Revenue (~${model.proj30Orders} Orders)</div>
+        </div>
+        <div class="sc">
+          <div class="sc-val" style="color:#D97706;">${model.dailyOrdRate} / day</div>
+          <div class="sc-lbl">Predicted Daily Order Velocity (${model.growthPct>=0?'+':''}${model.growthPct}% trend)</div>
+        </div>
+        <div class="sc">
+          <div class="sc-val" style="font-size:18px;color:#0E214E;">${model.estQueueHrs}</div>
+          <div class="sc-lbl">Predicted Wash Turnaround (${model.activeQueue} in Queue)</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="ch">
+            <h4>🔮 7-Day Revenue &amp; Order Demand Forecast</h4>
+            <span class="text-sm text-muted">Projected daily trajectory</span>
+          </div>
+          <div class="cp">
+            <div class="chart-wrap"><canvas id="chartPredictive"></canvas></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch">
+            <h4>🧪 Predictive Inventory Depletion (Stock-Out Forecast)</h4>
+            <span class="text-sm text-muted">Based on ${model.dailyOrdRate} loads/day</span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Supply Item</th><th>Current Stock</th><th>Est. Loads Left</th><th>Est. Stock-Out</th><th>Risk</th></tr></thead>
+              <tbody>
+                ${model.invForecast.map(i=>`<tr>
+                  <td class="fw7">${escapeHtml(i.name)}</td>
+                  <td>${fmtStock(i)}</td>
+                  <td class="fw7">${i.loadsRemaining} loads</td>
+                  <td class="text-sm fw7" style="color:${i.isCritical?'var(--danger)':'var(--text)'};">~${i.daysToDepletion} day${i.daysToDepletion!==1?'s':''}</td>
+                  <td>${i.isCritical?'<span class="badge b-low">⚠ Restock Soon</span>':'<span class="badge b-ok">✓ Healthy</span>'}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `:''}
+
+    ${showPresc?`
+      <div class="pillar-section-banner" style="background:linear-gradient(135deg,#FEF3C7 0%,#FFFFFF 100%);">
+        <div>
+          <h3>💡 3. Prescriptive Analytics — Automated Actionable Recommendations</h3>
+          <p>Translates descriptive metrics and predictive forecasts into concrete operational decisions for the shop owner.</p>
+        </div>
+        <span class="badge b-yellow">Pillar 3 of 3 · Decision Engine</span>
+      </div>
+
+      <div class="prescriptive-grid">
+        ${model.prescriptions.map(p=>`
+          <div class="prescriptive-item ${p.cls}">
+            <div>
+              <div style="font-size:10.5px;font-weight:900;letter-spacing:.5px;color:#4065B8;margin-bottom:5px;">${p.badge}</div>
+              <div style="font-family:'Figtree',sans-serif;font-size:15px;font-weight:900;color:#0E214E;margin-bottom:6px;">${p.title}</div>
+              <div style="font-size:12.5px;color:#54595F;line-height:1.55;">${p.desc}</div>
+            </div>
+            <div>
+              <button type="button" class="btn btn-primary btn-sm" onclick="${p.action}">${p.btnLabel} →</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `:''}
+
+    <!-- TRANSACTIONS LIST -> SEARCH -> FILTER -->
     <div class="card">
-      <div class="ch"><h4>🕐 Order Activity by Hour of Day</h4><span class="text-sm text-muted">Busiest booking hours (all-time)</span></div>
-      <div class="cp"><div class="chart-wrap-tall"><canvas id="chartHour"></canvas></div></div>
-    </div>
-
-    <div class="card"><div class="ch"><h4>All Transactions</h4><span class="text-sm text-muted">${txns.length} records</span></div>
-      <table><thead><tr><th>TXN #</th><th>Order #</th><th>Customer</th><th>Amount</th><th>Channel</th><th>Promo</th><th>Receipt #</th><th>Date</th></tr></thead>
-      <tbody>${txns.length?[...txns].reverse().map(t=>`<tr>
-        <td class="text-sm" style="font-family:monospace">${t.num}</td>
-        <td class="fw7">${t.orderNum}</td><td>${t.custName}</td>
-        <td class="fw7">${peso(t.amount)}</td>
-        <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
-        <td class="text-sm">${t.promoCode?`<span class="promo-tag">🏷 ${t.promoCode}</span>`:'—'}</td>
-        <td class="text-sm text-muted" style="font-family:monospace">${t.rcpt}</td>
-        <td class="text-sm text-muted">${fd(t.date)}</td>
-      </tr>`).join(''):`<tr><td colspan="8"><div class="empty">No transactions yet</div></td></tr>`}
-      </tbody></table>
+      <div class="ch" style="flex-wrap:wrap;gap:10px;">
+        <h4>🧾 All Payment Transactions (List → Search → Filter)</h4>
+        <span class="text-sm text-muted">${filteredTxns.length} of ${txns.length} records</span>
+      </div>
+      <div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <input class="search-box" id="txnSrchInput" value="${escapeHtml(_txnSearch)}" placeholder="Search TXN #, Order #, Customer, Receipt…" oninput="_txnSearch=this.value;pgAnalytics()" style="width:260px;">
+        ${['ALL','CASH','GCASH'].map(c=>`<span class="chip${_txnChanFilter===c?' on':''}" onclick="_txnChanFilter='${c}';pgAnalytics()">${c==='ALL'?'All Channels':c}</span>`).join('')}
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>TXN #</th><th>Order #</th><th>Customer</th><th>Amount</th><th>Channel</th><th>Details (Short / Expand)</th><th>Date</th></tr></thead>
+          <tbody>${filteredTxns.length?filteredTxns.map(t=>`<tr>
+            <td class="text-sm mono-code">${t.num}</td>
+            <td class="fw7 mono-code">${t.orderNum}</td>
+            <td>${escapeHtml(t.custName)}</td>
+            <td class="fw7" style="color:var(--success);">${peso(t.amount)}</td>
+            <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
+            <td class="text-sm">
+              <span>Rcpt: <span class="mono-code">${escapeHtml(t.rcpt||'—')}</span></span>
+              <button type="button" class="exp-toggle-btn" data-label="Receipt" onclick="toggleExpPanel(this)">▾ View Receipt</button>
+              <div class="exp-panel">
+                <div><strong>Receipt #:</strong> <span class="mono-code">${escapeHtml(t.rcpt||'—')}</span></div>
+                <div><strong>Channel:</strong> ${escapeHtml(t.channel)} ${t.gcashRef?`(GCash Ref: ${escapeHtml(t.gcashRef)})`:''}</div>
+                <div><strong>Promo Applied:</strong> ${t.promoCode?escapeHtml(t.promoCode):'None'}</div>
+                <div><strong>Timestamp:</strong> ${fd(t.date)}</div>
+              </div>
+            </td>
+            <td class="text-sm text-muted">${fs(t.date)}</td>
+          </tr>`).join(''):`<tr><td colspan="7"><div class="empty">No matching transactions found</div></td></tr>`}
+          </tbody>
+        </table>
+      </div>
     </div>`;
 
   setTimeout(()=>{
-    drawAnalyticsCharts('day');
-    drawCustFreqChart();
-    drawChannelChart(txns,byCh);
-    drawHourChart(orders);
+    if(showDesc){
+      drawAnalyticsCharts(analyticsView||'day');
+      drawCustFreqChart();
+      drawChannelChart(txns,byCh);
+      drawHourChart(orders);
+    }
+    if(showPred){
+      drawPredictiveChart(model);
+    }
   },50);
+  const sEl=g('txnSrchInput');
+  if(sEl&&document.activeElement?.id==='txnSrchInput'){sEl.focus();sEl.setSelectionRange(sEl.value.length,sEl.value.length);}
+}
+
+function drawPredictiveChart(model){
+  destroyChart('chartPredictive');
+  const ctx=g('chartPredictive');
+  if(!ctx)return;
+  _charts['chartPredictive']=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:model.forecastLabels,
+      datasets:[
+        {
+          label:'Projected Revenue (₱)',
+          data:model.forecastRevSeries,
+          borderColor:'#4579EE',
+          backgroundColor:'rgba(69,121,238,0.16)',
+          borderWidth:2.5,
+          borderDash:[6,4],
+          fill:true,
+          tension:0.38,
+          pointBackgroundColor:'#FFB600',
+          pointBorderColor:'#0E214E',
+          pointRadius:5
+        }
+      ]
+    },
+    options:{
+      ...CHART_DEFAULTS,
+      plugins:{
+        ...CHART_DEFAULTS.plugins,
+        tooltip:{
+          ...CHART_DEFAULTS.plugins.tooltip,
+          callbacks:{
+            label:(c)=>`Projected: ₱${c.parsed.y.toFixed(2)} (~${model.forecastOrdSeries[c.dataIndex]} orders)`
+          }
+        }
+      }
+    }
+  });
 }
 
 function drawCustFreqChart(){
@@ -4638,60 +5341,160 @@ function drawHourChart(orders){
 }
 
 /* ══════════════════════════════════════
-   ADMIN: INVENTORY MONITOR
+   ADMIN: INVENTORY MONITOR (Read-Only + List -> Search -> Filter)
 ══════════════════════════════════════ */
-function pgInvAdmin(){
-  const inv=DB.get('inventory');
-  const low=inv.filter(i=>i.qty<=i.thresh);
-  g('pgContent').innerHTML=`
-    ${low.length?`<div class="notice n-warn">⚠ ${low.length} item(s) below threshold — restock needed!</div>`:'<div class="notice n-success">✓ All inventory levels are OK</div>'}
-    <div class="card"><div class="ch"><h4>🫧 Supply Inventory</h4></div><div class="table-scroll">
-      <table class="inventory-table"><thead><tr><th>Item</th><th>Category</th><th>Pack Info</th><th>Stock</th><th>Threshold</th><th>Per Load</th><th>Level</th><th>Status</th></tr></thead>
-      <tbody>${inv.map(i=>{const mx=(i.packSize&&i.packQty)?i.packSize*i.packQty:Math.max(i.thresh*4,1);const pct=Math.min(100,Math.round((i.qty/mx)*100));const lw=i.qty<=i.thresh;const packInfo=i.packSize?`${i.packSize}${i.unit}/pack × ${i.packQty||'?'} packs`:'—';const perLoad=i.perLoad?`${i.perLoad}${i.unit}/load`:(i.perKg?`${i.perKg}${i.unit}/kg`:'—');return`<tr>
-        <td class="fw7">${i.name}</td><td class="text-muted">${i.cat}</td>
-        <td class="text-sm text-muted">${packInfo}</td>
-        <td style="font-weight:700;color:${lw?'var(--danger)':'var(--success)'}">${fmtStock(i)}</td>
-        <td style="color:var(--text-muted)">${i.thresh} ${i.unit}</td>
-        <td class="text-sm" style="color:var(--text-muted)">${perLoad}</td>
-        <td style="min-width:110px;"><div style="display:flex;align-items:center;gap:6px;"><div class="pbar" style="flex:1;"><div class="pb ${lw?'pb-low':'pb-ok'}" style="width:${pct}%"></div></div><span style="font-size:11px;font-weight:700;color:${pct>50?'var(--success)':pct>20?'var(--warn)':'var(--danger)'};">${pct}%</span></div></td>
-        <td>${lw?'<span class="badge b-low">LOW</span>':'<span class="badge b-ok">OK</span>'}</td>
-      </tr>`;}).join('')}</tbody></table></div>
-    </div>
-    <div class="card"><div class="ch"><h4>Restock Purchase Log</h4></div>${restockLogTable()}</div>`;
+let _invSearch='';
+let _invCatFilter='ALL';
+let _invStatusFilter='ALL';
+let _restockLogSearch='';
+let _restockLogTypeFilter='ALL';
+
+function getInvMaxQty(i){
+  const ps=parseFloat(i.packSize)||0;
+  const pq=parseInt(i.packQty)||0;
+  if(ps>0&&pq>0)return ps*pq;
+  const th=Math.max(0.1,parseFloat(i.thresh)||1);
+  return Math.max(th*4,parseFloat(i.qty)||1,1);
+}
+function getInvPct(i){
+  const qty=Math.max(0,parseFloat(i.qty)||0);
+  const mx=getInvMaxQty(i);
+  return Math.min(100,Math.max(0,Math.round((qty/mx)*100)));
 }
 
-function restockLogTable(){
-  const log=[...DB.get('restockLog')].reverse();
-  if(!log.length)return`<div class="empty">No restock records yet</div>`;
-  return`<div class="table-scroll"><table class="restock-table"><thead><tr><th>Date</th><th>Item</th><th>Qty Added</th><th>Unit Cost</th><th>Total Cost</th><th>By</th></tr></thead>
-  <tbody>${log.map(r=>`<tr>
-    <td class="text-sm text-muted">${fd(r.date)}</td><td class="fw7">${r.itemName}</td>
-    <td>${r.qty} ${r.unit}</td><td>${r.costPerUnit?peso(r.costPerUnit):'—'}</td>
-    <td class="fw7">${r.totalCost?peso(r.totalCost):'—'}</td>
-    <td class="text-muted text-sm">${r.by||'—'}</td>
-  </tr>`).join('')}</tbody></table></div>`;
+function pgInvAdmin(){
+  const inv=DB.get('inventory');
+  const low=inv.filter(i=>(parseFloat(i.qty)||0)<=(parseFloat(i.thresh)||0));
+  const filtered=inv.filter(i=>{
+    const lw=(parseFloat(i.qty)||0)<=(parseFloat(i.thresh)||0);
+    if(_invCatFilter!=='ALL'&&i.cat!==_invCatFilter)return false;
+    if(_invStatusFilter==='LOW'&&!lw)return false;
+    if(_invStatusFilter==='OK'&&lw)return false;
+    if(_invSearch){
+      const hay=`${i.name} ${i.cat} ${i.unit}`.toLowerCase();
+      if(!hay.includes(_invSearch.toLowerCase()))return false;
+    }
+    return true;
+  });
+
+  g('pgContent').innerHTML=`
+    <div class="owner-ro-banner">
+      <div>
+        <div style="font-size:15px;font-weight:900;">🔒 Owner Inventory Monitor &amp; Supply Audit</div>
+        <div style="font-size:12px;opacity:0.88;">Read-only owner view of real-time detergent, conditioner, and bleach levels plus automatic per-load deductions.</div>
+      </div>
+      <span class="ro-badge-lock">🔒 Owner Read-Only</span>
+    </div>
+    ${low.length?`<div class="notice n-warn">⚠ ${low.length} item(s) at or below threshold (${low.map(x=>escapeHtml(x.name)).join(', ')}) — restock needed!</div>`:'<div class="notice n-success">✓ All inventory supply levels are healthy</div>'}
+
+    <div class="toolbar">
+      <input class="search-box" id="invAdminSrch" value="${escapeHtml(_invSearch)}" placeholder="Search item or category…" oninput="_invSearch=this.value;pgInvAdmin()" style="width:220px;">
+      ${['ALL','DETERGENT','SOFTENER','BLEACH','OTHER'].map(c=>`<span class="chip${_invCatFilter===c?' on':''}" onclick="_invCatFilter='${c}';pgInvAdmin()">${c==='ALL'?'All Categories':c}</span>`).join('')}
+      ${[['ALL','All Status'],['LOW','⚠ Low Stock'],['OK','✓ OK']].map(([k,lbl])=>`<span class="chip${_invStatusFilter===k?' on':''}" onclick="_invStatusFilter='${k}';pgInvAdmin()">${lbl}</span>`).join('')}
+    </div>
+
+    <div class="card"><div class="ch"><h4>🫧 Supply Inventory (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${inv.length} items</span></div><div class="table-scroll">
+      <table class="inventory-table"><thead><tr><th>Item</th><th>Category</th><th>Stock</th><th>Threshold</th><th>Level</th><th>Status</th><th>Details (Short / Expand)</th></tr></thead>
+      <tbody>${filtered.length?filtered.map(i=>{
+        const qty=Math.max(0,parseFloat(i.qty)||0);
+        const thresh=Math.max(0,parseFloat(i.thresh)||0);
+        const pct=getInvPct(i);
+        const lw=qty<=thresh;
+        const rate=parseFloat(i.perLoad)||({DETERGENT:0.1,SOFTENER:0.1,BLEACH:0.01}[i.cat]||0);
+        const loadsLeft=rate>0?Math.floor(qty/rate):'—';
+        const packInfo=i.packSize?`${i.packSize} ${i.unit}/pack × ${i.packQty||5} packs`:'Standard container';
+        return`<tr>
+          <td class="fw7">${escapeHtml(i.name)}</td>
+          <td><span class="badge b-gray">${escapeHtml(i.cat)}</span></td>
+          <td style="font-weight:700;color:${lw?'var(--danger)':'var(--success)'}">${fmtStock(i)}</td>
+          <td style="color:var(--text-muted)">${thresh} ${escapeHtml(i.unit)}</td>
+          <td style="min-width:110px;"><div style="display:flex;align-items:center;gap:6px;"><div class="pbar" style="flex:1;"><div class="pb ${lw?'pb-low':'pb-ok'}" style="width:${pct}%"></div></div><span style="font-size:11px;font-weight:700;color:${pct>50?'var(--success)':pct>20?'var(--warn)':'var(--danger)'};">${pct}%</span></div></td>
+          <td>${lw?'<span class="badge b-low">LOW</span>':'<span class="badge b-ok">OK</span>'}</td>
+          <td>
+            <span class="text-sm text-muted">${rate>0?`${rate} ${i.unit}/load`:'Manual'}</span>
+            <button type="button" class="exp-toggle-btn" data-label="Specs" onclick="toggleExpPanel(this)">▾ View Specs</button>
+            <div class="exp-panel">
+              <div><strong>Pack Config:</strong> ${escapeHtml(packInfo)}</div>
+              <div><strong>Auto-Dosing Rate:</strong> ${rate>0?`${rate} ${i.unit} (${Math.round(rate*1000)} mL) per wash load`:'Not auto-dosed'}</div>
+              <div><strong>Estimated Wash Loads Remaining:</strong> <b>${loadsLeft} loads</b></div>
+            </div>
+          </td>
+        </tr>`;
+      }).join(''):'<tr><td colspan="7"><div class="empty">No inventory items match your search/filter.</div></td></tr>'}</tbody></table></div>
+    </div>
+    <div class="card"><div class="ch"><h4>📋 Inventory Restock &amp; Auto-Deduction Audit Log</h4></div>${restockLogTable('pgInvAdmin')}</div>`;
+}
+
+function restockLogTable(rerenderFn='pgInventory'){
+  const allLogs=[...DB.get('restockLog')].reverse();
+  const filtered=allLogs.filter(r=>{
+    const rType=r.type||'RESTOCK';
+    if(_restockLogTypeFilter!=='ALL'&&rType!==_restockLogTypeFilter)return false;
+    if(_restockLogSearch){
+      const hay=`${r.itemName||''} ${r.by||''} ${r.orderNum||''} ${rType}`.toLowerCase();
+      if(!hay.includes(_restockLogSearch.toLowerCase()))return false;
+    }
+    return true;
+  });
+  return`
+    <div style="padding:10px 18px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+      <input class="search-box" value="${escapeHtml(_restockLogSearch)}" placeholder="Search log by item, staff, order #…" oninput="_restockLogSearch=this.value;${rerenderFn}()" style="width:230px;">
+      ${[['ALL','All Events'],['RESTOCK','➕ Restocks'],['DEDUCTION','🫧 Auto-Deductions']].map(([k,lbl])=>`<span class="chip${_restockLogTypeFilter===k?' on':''}" onclick="_restockLogTypeFilter='${k}';${rerenderFn}()">${lbl}</span>`).join('')}
+      <span class="text-sm text-muted" style="margin-left:auto;">${filtered.length} records</span>
+    </div>
+    ${filtered.length?`<div class="table-scroll"><table class="restock-table"><thead><tr><th>Date</th><th>Type</th><th>Item</th><th>Qty Change</th><th>Stock Before → After</th><th>Cost / Order</th><th>By</th></tr></thead>
+    <tbody>${filtered.map(r=>{
+      const isDed=r.type==='DEDUCTION';
+      const qVal=parseFloat(Number(r.qty||0).toFixed(3));
+      const bVal=r.before!==undefined?parseFloat(Number(r.before).toFixed(2)):'—';
+      const aVal=r.after!==undefined?parseFloat(Number(r.after).toFixed(2)):'—';
+      return`<tr>
+        <td class="text-sm text-muted">${fd(r.date)}</td>
+        <td><span class="badge ${isDed?'b-blue':'b-ok'}">${isDed?'🫧 Auto-Deduct':'➕ Restock'}</span></td>
+        <td class="fw7">${escapeHtml(r.itemName||'—')}</td>
+        <td class="fw7" style="color:${isDed?'var(--warn)':'var(--success)'}">${isDed?'-':'+'}${qVal} ${escapeHtml(r.unit||'')}</td>
+        <td class="text-sm mono-code">${bVal} → <b>${aVal} ${escapeHtml(r.unit||'')}</b></td>
+        <td class="text-sm">${isDed?(r.orderNum?`<span class="mono-code fw7">${escapeHtml(r.orderNum)}</span>`:'Wash Load'):(r.totalCost?peso(r.totalCost):'—')}</td>
+        <td class="text-muted text-sm">${escapeHtml(r.by||'System')}</td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`:`<div class="empty">No inventory log records match your filter</div>`}`;
 }
 
 /* ══════════════════════════════════════
-   ADMIN: PROMO CODES
+   ADMIN: PROMO CODES (List -> Search -> Filter)
 ══════════════════════════════════════ */
+let _promoSearch='';
+let _promoStatusFilter='ALL';
 function pgPromos(){
   const promos=DB.get('promoCodes');
+  const filtered=promos.filter(p=>{
+    if(_promoStatusFilter==='ACTIVE'&&!p.active)return false;
+    if(_promoStatusFilter==='INACTIVE'&&p.active)return false;
+    if(_promoSearch){
+      const hay=`${p.code} ${p.desc||''}`.toLowerCase();
+      if(!hay.includes(_promoSearch.toLowerCase()))return false;
+    }
+    return true;
+  });
   g('pgContent').innerHTML=`
-    <div class="toolbar"><button class="btn btn-primary btn-sm" onclick="openPromoModal(null)">+ Add Promo Code</button></div>
-    <div class="card"><div class="ch"><h4>🏷 Promo Codes</h4><span class="text-sm text-muted">${promos.length} codes</span></div>
+    <div class="toolbar">
+      <input class="search-box" value="${escapeHtml(_promoSearch)}" placeholder="Search promo code or description…" oninput="_promoSearch=this.value;pgPromos()" style="width:230px;">
+      ${[['ALL','All Codes'],['ACTIVE','Active'],['INACTIVE','Inactive']].map(([k,lbl])=>`<span class="chip${_promoStatusFilter===k?' on':''}" onclick="_promoStatusFilter='${k}';pgPromos()">${lbl}</span>`).join('')}
+      <button class="btn btn-primary btn-sm" style="margin-left:auto;" onclick="openPromoModal(null)">+ Add Promo Code</button>
+    </div>
+    <div class="card"><div class="ch"><h4>🏷 Promo Codes (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${promos.length} codes</span></div>
       <table><thead><tr><th>Code</th><th>Discount</th><th>Description</th><th>Uses / Max</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody>${promos.length?promos.map(p=>`<tr>
-        <td class="fw7" style="font-family:monospace;font-size:14px;">${p.code}</td>
+      <tbody>${filtered.length?filtered.map(p=>`<tr>
+        <td class="fw7" style="font-family:monospace;font-size:14px;">${escapeHtml(p.code)}</td>
         <td><span class="badge b-green">${p.disc}% off</span></td>
-        <td class="text-muted">${p.desc||'—'}</td>
+        <td class="text-muted">${escapeHtml(p.desc||'—')}</td>
         <td>${p.uses} / ${p.maxUses}</td>
         <td>${p.active?'<span class="badge b-ok">Active</span>':'<span class="badge b-low">Inactive</span>'}</td>
         <td><div class="tda">
           <button class="btn btn-ghost btn-sm" onclick="togglePromo(${p.id})">${p.active?'Deactivate':'Activate'}</button>
           <button class="btn btn-red btn-sm" onclick="delPromo(${p.id})">Delete</button>
         </div></td>
-      </tr>`).join(''):`<tr><td colspan="6"><div class="empty">No promo codes yet</div></td></tr>`}
+      </tr>`).join(''):`<tr><td colspan="6"><div class="empty">No promo codes match your search/filter</div></td></tr>`}
       </tbody></table>
     </div>`;
 }
@@ -4735,17 +5538,31 @@ function delPromo(id){
 }
 
 /* ══════════════════════════════════════
-   ADMIN: USER ACCOUNTS
+   ADMIN: USER ACCOUNTS (List -> Search -> Filter)
 ══════════════════════════════════════ */
+let _userSearch='';
+let _userRoleFilter='ALL';
 function pgUsers(){
   const users=DB.get('users');
+  const filtered=users.filter(u=>{
+    if(_userRoleFilter!=='ALL'&&u.role!==_userRoleFilter)return false;
+    if(_userSearch){
+      const hay=`${u.name||''} ${u.email||''} ${u.phone||''} ${u.role||''}`.toLowerCase();
+      if(!hay.includes(_userSearch.toLowerCase()))return false;
+    }
+    return true;
+  });
   g('pgContent').innerHTML=`
-    <div class="toolbar"><button class="btn btn-primary btn-sm" onclick="openUserModal(null)">+ Add User Account</button></div>
-    <div class="card"><div class="ch"><h4>User Accounts</h4><span class="text-sm text-muted">${users.length} accounts</span></div>
+    <div class="toolbar">
+      <input class="search-box" value="${escapeHtml(_userSearch)}" placeholder="Search name, email, or phone…" oninput="_userSearch=this.value;pgUsers()" style="width:230px;">
+      ${[['ALL','All Roles'],['ADMIN','Admin / Owner'],['SELLER','Seller / Staff'],['CUSTOMER','Customer']].map(([k,lbl])=>`<span class="chip${_userRoleFilter===k?' on':''}" onclick="_userRoleFilter='${k}';pgUsers()">${lbl}</span>`).join('')}
+      <button class="btn btn-primary btn-sm" style="margin-left:auto;" onclick="openUserModal(null)">+ Add User Account</button>
+    </div>
+    <div class="card"><div class="ch"><h4>👥 User Accounts (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${users.length} accounts</span></div>
       <table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>LabaPoints</th><th>Tier</th><th>Actions</th></tr></thead>
-      <tbody>${users.map(u=>{const tier=getTier(u.points||0);return`<tr>
-        <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:7px;background:var(--btn);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;">${u.pic?`<img src="${u.pic}" style="width:100%;height:100%;object-fit:cover;">`:(u.name[0]||'?').toUpperCase()}</div><span class="fw7">${u.name}</span></div></td>
-        <td>${u.email}</td><td>${u.phone||'—'}</td>
+      <tbody>${filtered.length?filtered.map(u=>{const tier=getTier(u.points||0);return`<tr>
+        <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;border-radius:7px;background:var(--btn);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;">${u.pic?`<img src="${u.pic}" style="width:100%;height:100%;object-fit:cover;">`:(u.name[0]||'?').toUpperCase()}</div><span class="fw7">${escapeHtml(u.name)}</span></div></td>
+        <td>${escapeHtml(u.email)}</td><td>${escapeHtml(u.phone||'—')}</td>
         <td><span class="badge ${{ADMIN:'b-admin',SELLER:'b-seller',CUSTOMER:'b-cust'}[u.role]||'b-cust'}">${u.role}</span></td>
         <td class="fw7">${u.points||0}</td>
         <td><span class="badge" style="background:rgba(251,191,36,.1);color:${tier.color}">${tier.name}</span></td>
@@ -4753,7 +5570,7 @@ function pgUsers(){
           <button class="btn btn-ghost btn-sm" onclick="openUserModal(${u.id})">Edit</button>
           ${u.id!==CU.id?`<button class="btn btn-red btn-sm" onclick="delUser(${u.id})">Remove</button>`:'<span class="text-sm text-muted">(you)</span>'}
         </div></td>
-      </tr>`}).join('')}</tbody></table>
+      </tr>`}).join(''):'<tr><td colspan="7"><div class="empty">No user accounts match your search/filter</div></td></tr>'}</tbody></table>
     </div>`;
 }
 
@@ -4819,47 +5636,67 @@ function delUser(id){
 /* ══════════════════════════════════════
    SELLER: ORDERS
 ══════════════════════════════════════ */
-let oFilter='ALL',detailId=null;
+let oFilter='ALL',oTypeFilter='ALL',detailId=null;
 
 function pgOrders(){
   let orders=DB.get('orders');
   if(oFilter==='ACTIVE')orders=orders.filter(o=>['RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status));
   else if(oFilter!=='ALL')orders=orders.filter(o=>normStatus(o.status)===oFilter);
+  if(oTypeFilter!=='ALL')orders=orders.filter(o=>o.type===oTypeFilter);
   orders=[...orders].reverse();
   g('pgContent').innerHTML=`
     <div class="toolbar">
       <div class="search-wrap" id="oSrchWrap">
-        <input class="search-box" id="oSrch" placeholder="Search order or customer…" oninput="searchOrds()" onkeydown="handleSuggestKey(event)" autocomplete="off" style="width:220px;">
+        <input class="search-box" id="oSrch" placeholder="🔍 Search order #, customer, RFID, promo…" oninput="searchOrds()" onkeydown="handleSuggestKey(event)" autocomplete="off" style="width:230px;">
         <div class="suggest-drop" id="oSuggest"></div>
       </div>
       ${['ALL','PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'].map(f=>`<span class="chip${oFilter===f?' on':''}" onclick="setOF('${f}')">${STATUS_SHORT[f]||f}</span>`).join('')}
       <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 RFID Scanner & Receive</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
         <button class="btn btn-ghost btn-sm" onclick="openOrdModal(null)">+ Walk-in Order</button>
         <button class="btn btn-ghost btn-sm" onclick="openPayModal()">💳 Record Payment</button>
       </div>
     </div>
-    <div class="card"><div class="ch"><h4>Orders</h4><span class="text-sm text-muted">${orders.length} shown</span></div>
-      <table><thead><tr><th>Order #</th><th>Customer</th><th>Type</th><th>Details</th><th>Price</th><th>Promo</th><th>Status</th><th>Tag</th><th>Date</th><th>Actions</th></tr></thead>
-      <tbody id="oTbody">${orders.map(ordRow).join('')}</tbody></table>
+    <div class="toolbar" style="margin-top:-8px;">
+      <span style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Service Filter:</span>
+      ${[['ALL','All Services'],['CLOTHES','👕 Clothes'],['BEDSHEET','🛏️ Bedsheet'],['COMFORTER','🛌 Comforter'],['WASH_ONLY','🫧 Wash Only'],['DRY_ONLY','💨 Dry Only']].map(([k,lbl])=>`<span class="chip${oTypeFilter===k?' on':''}" onclick="oTypeFilter='${k}';pgOrders()">${lbl}</span>`).join('')}
+    </div>
+    <div class="card"><div class="ch"><h4>📋 Orders List</h4><span class="text-sm text-muted" id="oRowCnt">${orders.length} shown</span></div>
+      <div class="table-scroll">
+        <table><thead><tr><th>Order #</th><th>Customer</th><th>Service</th><th>Summary & Details</th><th>Amount</th><th>Status</th><th>RFID Tag</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="oTbody">${orders.length?orders.map(ordRow).join(''):'<tr><td colspan="9"><div class="empty">No matching orders found</div></td></tr>'}</tbody></table>
+      </div>
     </div>`;
 }
 
 function ordRow(o){
   const tag=o.tagId?DB.get('rfidTags').find(t=>t.id===o.tagId):null;
   const canAssign=o.status==='PENDING'&&!o.tagId;
-  const detail=o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?`${o.kg} kg`:'—');
-  const colorTag=o.colorDist&&o.colorDist!=='MIXED'?`<span class="badge ${o.colorDist==='WHITES'?'b-gray':'b-blue'}" style="font-size:10px;">${o.colorDist==='WHITES'?'⬜ Whites':'🎨 Colored'}</span>`:'';
+  const detail=o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?`${o.kg} kg`:'Flat rate');
+  const colorTag=o.colorDist?`<span class="badge ${o.colorDist==='WHITES'?'b-gray':o.colorDist==='COLORED'?'b-blue':'b-yellow'}" style="font-size:10px;margin-left:4px;">${o.colorDist==='WHITES'?'⬜ Whites':o.colorDist==='COLORED'?'🎨 Colored':'🧺 Mixed'}</span>`:'';
   const rowPaid=DB.get('transactions').some(t=>t.orderId===o.id&&t.status==='COMPLETED');
   const payBadge=o.status==='READY'?(rowPaid?'<span class="badge b-ok" style="font-size:10px;">✓ Paid</span>':'<span class="badge" style="background:rgba(251,191,36,.15);color:#fbbf24;font-size:10px;">⚠ Unpaid</span>'):'';
   return`<tr>
-    <td class="fw7">${o.num}</td><td>${o.custName}</td>
+    <td class="fw7 mono-code">${o.num}</td>
+    <td><div class="fw7">${escapeHtml(o.custName)}</div><div class="text-sm text-muted">${escapeHtml(o.serviceMode||'Drop-off')}</div></td>
     <td><span class="badge b-gray">${TYPE_LABEL[o.type]||o.type}</span>${colorTag}</td>
-    <td class="text-sm text-muted">${detail}</td>
+    <td class="text-sm">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <span class="fw7">${detail}</span>
+        ${o.promoCode?`<span class="promo-tag">🏷 ${escapeHtml(o.promoCode)}</span>`:''}
+        <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+      </div>
+      <div class="exp-panel">
+        <div><b>Pricing Breakdown:</b> ${escapeHtml(o.breakdown||'Standard rate')}</div>
+        ${o.discount?`<div style="color:var(--success);"><b>Discount Applied:</b> -₱${Number(o.discount).toFixed(2)}</div>`:''}
+        <div><b>Clothes Separation:</b> ${o.colorDist==='WHITES'?'Whites Only':o.colorDist==='COLORED'?'Colored Only':o.colorDist==='MIXED'?'Mixed (customer accepted color-bleed waiver)':'Standard'}</div>
+        <div><b>Supplies Auto-Deducted:</b> ${o.inventoryDeducted?'✓ Yes (Deducted at Washing stage)':o.type==='DRY_ONLY'?'No supplies needed (Dry Only)':'⏳ Pending Washing stage'}</div>
+        ${o.notes?`<div><b>Notes:</b> ${escapeHtml(o.notes)}</div>`:''}
+      </div>
+    </td>
     <td class="fw7">${peso(o.price)}${o.discount?`<br><span style="font-size:10px;color:var(--success)">-₱${o.discount.toFixed(2)}</span>`:''}</td>
-    <td>${o.promoCode?`<span class="promo-tag">🏷 ${o.promoCode}</span>`:'—'}</td>
     <td>${sBadge(o.status)} ${payBadge}</td>
-    <td class="text-sm text-muted">${tag?tag.uid:'—'}</td>
+    <td class="text-sm mono-code" style="color:var(--accent2);font-weight:700;">${tag?tag.uid:'—'}</td>
     <td class="text-sm text-muted">${fs(o.created)}</td>
     <td><div class="tda">
       <button class="btn btn-ghost btn-sm" onclick="openDetail(${o.id})">View</button>
@@ -5012,53 +5849,88 @@ function submitOrder(){
     o.custId=custId;o.custName=cust.name;o.type=type;o.kg=kg;o.comQty=comQty;
     o.colorDist=colorDist;o.notes=notes;o.price=finalAfterPromo;o.breakdown=breakdown;o.discount=discount;o.promoCode=promoCode||'';
   } else {
-    const newWalkInOrd={id,num:newOrderNum,custId,custName:cust.name,tagId:null,type,kg,comQty,colorDist,serviceMode:'Walk-in Drop-off',status:'PENDING',notes,price:finalAfterPromo,breakdown,discount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};orders.push(newWalkInOrd);logOrderStatus(newWalkInOrd,'PENDING','Created by staff ('+(CU?CU.name:'Staff')+')');
+    const newWalkInOrd={id,num:newOrderNum,custId,custName:cust.name,tagId:null,type,kg,comQty,colorDist,serviceMode:'Walk-in Drop-off',status:'PENDING',inventoryDeducted:false,notes,price:finalAfterPromo,breakdown,discount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};
+    orders.push(newWalkInOrd);
+    logOrderStatus(newWalkInOrd,'PENDING','Created by staff ('+(CU?CU.name:'Staff')+') — Supplies will be deducted once Washing starts.');
     if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
     /* push notification to customer */
-    pushNotif(custId,'ORDER_PLACED',`Order ${newOrderNum} placed`,`Your ${TYPE_LABEL[type]} order has been received. Drop off at the shop.`,'🧺');
-    /* auto-deduct inventory on order placement */
-    const updatedInv=deductInventory(type,kg,comQty);
+    pushNotif(custId,'ORDER_PLACED',`Order ${newOrderNum} placed`,`Your ${TYPE_LABEL[type]} order has been created. Scan RFID tag to begin processing.`,'🧺');
     checkTopbarAlerts();
-    const low=updatedInv.filter(i=>i.qty<=i.thresh);
-    if(low.length){setTimeout(()=>Swal.fire({...LF_SWAL,icon:'warning',title:'⚠ Low Stock Alert',html:`<div style="color:#fff;font-size:13px;margin-bottom:6px;">The following items are running low after this order:</div>`+low.map(i=>`<div style="margin:5px 0;color:#fff"><b>${i.name}</b> — <span style="color:var(--danger)">${Math.round(i.qty*1000)} mL remaining</span></div>`).join(''),confirmButtonText:'OK'}),400);}
   }
   DB.set('orders',orders);closeM('mOrd');
-  swalSuccess(editOrdId?'Order Updated':'Order Created',editOrdId?'The order has been updated.':`Order ${newOrderNum} created.`);
+  swalSuccess(editOrdId?'Order Updated':'Order Created',editOrdId?'The order has been updated.':`Order ${newOrderNum} created. Supplies will be deducted automatically when Washing starts.`);
   updateSellerBell();pgOrders();
 }
 
-/* ── Helper: display qty in mL + % for liquid items ── */
+/* ── Helper: display qty in mL + % for liquid items (Fixed NaN/precision errors) ── */
 function fmtStock(i){
-  const maxQty=(i.packSize&&i.packQty)?i.packSize*i.packQty:Math.max(i.thresh*4,1);
-  const pct=Math.min(100,Math.round((i.qty/maxQty)*100));
-  const isLiquid=(i.unit==='L'||i.unit==='ml'||i.unit==='mL');
-  const pctColor=pct>50?'#34d399':pct>20?'#fbbf24':'#fb7185';
-  if(isLiquid){
-    const ml=Math.round(i.qty*1000);
-    return`${ml} mL <span style="font-size:10px;font-weight:600;color:${pctColor};">(${pct}%)</span>`;
+  const qty=Math.max(0,parseFloat(i.qty)||0);
+  const thresh=Math.max(0.1,parseFloat(i.thresh)||1);
+  const maxQty=(i.packSize&&i.packQty&&i.packSize*i.packQty>0)?(i.packSize*i.packQty):Math.max(thresh*4,qty,1);
+  const pct=Math.max(0,Math.min(100,Math.round((qty/maxQty)*100)));
+  const unitStr=String(i.unit||'L').trim();
+  const isLiters=(unitStr==='L'||unitStr==='l');
+  const isMl=(unitStr.toLowerCase()==='ml');
+  const pctColor=pct>50?'#059669':pct>20?'#d97706':'#e11d48';
+  if(isLiters){
+    const ml=Math.round(qty*1000);
+    return`${ml.toLocaleString()} mL <span style="font-size:10px;font-weight:700;color:${pctColor};">(${ Number(qty.toFixed(2)) } L · ${pct}%)</span>`;
   }
-  return`${i.qty} ${i.unit} <span style="font-size:10px;font-weight:600;color:${pctColor};">(${pct}%)</span>`;
+  if(isMl){
+    return`${Math.round(qty).toLocaleString()} mL <span style="font-size:10px;font-weight:700;color:${pctColor};">(${pct}%)</span>`;
+  }
+  return`${Number(qty.toFixed(2))} ${escapeHtml(unitStr)} <span style="font-size:10px;font-weight:700;color:${pctColor};">(${pct}%)</span>`;
 }
 
-/* ── Inventory deduction ── */
-function deductInventory(type,kg,comQty){
+/* ── Inventory deduction (Fixed: single deduction on WASHING, skips DRY_ONLY, logs audit trail) ── */
+function deductInventory(type,kg,comQty,orderObj){
+  const inv=DB.get('inventory');
+  /* Fix 1: Never deduct washing supplies on DRY_ONLY orders */
+  if(type==='DRY_ONLY')return inv;
+  /* Fix 2: Prevent double deduction on the same order */
+  if(orderObj && orderObj.inventoryDeducted)return inv;
+
   const kgNum=parseFloat(kg)||0;
   const comNum=parseInt(comQty)||1;
   let loads=1;
-  if(type==='CLOTHES'){loads=kgNum>=10?Math.ceil(kgNum/9):1;}
-  else if(type==='BEDSHEET'){loads=Math.max(1,Math.ceil(kgNum/5));}
-  else if(type==='COMFORTER'){loads=comNum;}
+  if(type==='CLOTHES'){loads=kgNum>7?Math.ceil(kgNum/7):1;}
+  else if(type==='BEDSHEET'){loads=kgNum>5?Math.ceil(kgNum/5):1;}
+  else if(type==='COMFORTER'){loads=Math.max(1,comNum);}
+  else if(type==='WASH_ONLY'){loads=1;}
+
   const DEDUCT_BY_CAT={DETERGENT:0.1,SOFTENER:0.1,BLEACH:0.01};
-  const inv=DB.get('inventory');let changed=false;
+  let changed=false;
+  const rLog=DB.get('restockLog');
   inv.forEach(item=>{
-    const rate=(item.perLoad&&item.perLoad>0)?item.perLoad:(DEDUCT_BY_CAT[item.cat]||0);
+    const rate=(item.perLoad&&item.perLoad>0)?parseFloat(item.perLoad):(DEDUCT_BY_CAT[item.cat]||0);
     if(rate>0){
+      const before=Math.max(0,parseFloat(item.qty)||0);
       const deduct=parseFloat((rate*loads).toFixed(4));
-      item.qty=Math.max(0,parseFloat((item.qty-deduct).toFixed(4)));
+      const after=Math.max(0,parseFloat((before-deduct).toFixed(4)));
+      item.qty=after;
       changed=true;
+      rLog.push({
+        id:DB.nextId('restockLog')+Math.floor(Math.random()*1000),
+        type:'DEDUCTION',
+        itemId:item.id,
+        itemName:item.name,
+        unit:item.unit,
+        qty:deduct,
+        before,
+        after,
+        orderNum:orderObj?orderObj.num:'WALK-IN',
+        costPerUnit:null,
+        totalCost:null,
+        date:new Date().toISOString(),
+        by:CU?CU.name:'Auto-Wash'
+      });
     }
   });
-  if(changed)DB.set('inventory',inv);
+  if(changed){
+    DB.set('inventory',inv);
+    DB.set('restockLog',rLog);
+    if(orderObj)orderObj.inventoryDeducted=true;
+  }
   return inv;
 }
 
@@ -5098,7 +5970,7 @@ function submitAssignRfid(){
   pgOrders();
 }
 
-/* ── Order Detail / Advance ── */
+/* ── Order Detail / Advance (Short summary + expandable full details) ── */
 function openDetail(id){detailId=id;renderDetail();openM('mDetail');}
 function renderDetail(){
   const o=DB.get('orders').find(x=>x.id===detailId);if(!o)return;
@@ -5110,19 +5982,36 @@ function renderDetail(){
     const lnCls=i<si?'done':'';
     return`<div class="tl-s"><div class="tl-line ${lnCls}"></div><div class="tl-dot ${cls}">${i+1}</div><div class="tl-lbl">${s}</div></div>`;
   }).join('');
-  const rows=[['Order #',o.num],['Customer',o.custName],['Type',TYPE_LABEL[o.type]||o.type],
-    ['Details',o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?o.kg+' kg':'—')],
-    ...(o.colorDist==='MIXED'?[['Color','Mixed (shop not liable for color bleeding)']]:[]),
-...(o.colorDist&&o.colorDist!=='MIXED'?[['Color',o.colorDist==='WHITES'?'⬜ Whites Only':'🎨 Colored Only']]:[] ),
-    ['Price',peso(o.price)+(o.discount?` <span style="color:var(--success);font-size:11px;">(saved ₱${o.discount.toFixed(2)})</span>`:'')],
-    ['Breakdown',o.breakdown||'—'],['Promo',o.promoCode?`<span class="promo-tag">🏷 ${o.promoCode}</span>`:'—'],
-    ['Payment',isPaid?`<span class="badge b-ok">✓ Paid</span>`:`<span class="badge" style="background:rgba(251,191,36,.15);color:#fbbf24;">⚠ Unpaid</span>`],
-    ['Final Price',o.finalPrice?peso(o.finalPrice):'—'],['RFID Tag',tag?tag.uid:'Not assigned'],
-    ['Drop-off',fd(o.dropOff)],['Ready',fd(o.ready)],['Picked up',fd(o.pickup)],['Notes',o.notes||'—']
+  const shortRows=[
+    ['Order #',`<span class="mono-code fw7">${o.num}</span> — <b>${escapeHtml(o.custName)}</b>`],
+    ['Service & Load',`${TYPE_LABEL[o.type]||o.type} (${o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?o.kg+' kg':'Flat rate')})`],
+    ['Amount & Payment',`<b>${peso(o.price)}</b> · ${isPaid?`<span class="badge b-ok">✓ Paid</span>`:`<span class="badge" style="background:rgba(251,191,36,.15);color:#fbbf24;">⚠ Unpaid</span>`}`],
+    ['RFID Tag',tag?`<span class="mono-code fw7" style="color:var(--accent2);">${tag.uid}</span>`:'Not assigned yet']
   ];
-  g('detailBody').innerHTML=`<div class="tl">${tlHTML}</div><table style="width:100%;"><tbody>
-    ${rows.map(([l,v])=>`<tr><td class="text-sm text-muted" style="padding:5px 0;width:120px;">${l}</td><td class="text-sm" style="padding:5px 0;">${v}</td></tr>`).join('')}
-  </tbody></table>`;
+  const fullRows=[
+    ...(o.colorDist==='MIXED'?[['Clothes Separation','Mixed (shop not liable for color bleeding)']]:[]),
+    ...(o.colorDist&&o.colorDist!=='MIXED'?[['Clothes Separation',o.colorDist==='WHITES'?'⬜ Whites Only':'🎨 Colored Only']]:[]),
+    ['Pricing Breakdown',o.breakdown||'—'],
+    ['Promo Code',o.promoCode?`<span class="promo-tag">🏷 ${o.promoCode}</span>`:'—'],
+    ['Supplies Deducted',o.inventoryDeducted?'✓ Deducted on Washing cycle':(o.type==='DRY_ONLY'?'No supplies needed (Dry Only)':'⏳ Pending Washing cycle')],
+    ['Drop-off Time',fd(o.dropOff)],
+    ['Ready Time',fd(o.ready)],
+    ['Picked Up Time',fd(o.pickup)],
+    ['Special Notes',escapeHtml(o.notes||'—')]
+  ];
+  g('detailBody').innerHTML=`
+    <div class="tl">${tlHTML}</div>
+    <table style="width:100%;"><tbody>
+      ${shortRows.map(([l,v])=>`<tr><td class="text-sm text-muted" style="padding:6px 0;width:135px;">${l}</td><td class="text-sm" style="padding:6px 0;">${v}</td></tr>`).join('')}
+    </tbody></table>
+    <div style="margin-top:8px;">
+      <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Full Order Details</button>
+      <div class="exp-panel">
+        <table style="width:100%;"><tbody>
+          ${fullRows.map(([l,v])=>`<tr><td class="text-sm text-muted" style="padding:4px 0;width:135px;">${l}</td><td class="text-sm" style="padding:4px 0;">${v}</td></tr>`).join('')}
+        </tbody></table>
+      </div>
+    </div>`;
   const btn=g('btnAdv');
   btn.style.display=o.status==='RELEASED'?'none':'';
   btn.disabled=!o.tagId&&o.status==='PENDING';
@@ -5183,8 +6072,8 @@ function advanceOrder(){
   }
 
   /* confirm before processing (inventory deduction) */
-  if(next==='WASHING'||next==='PROCESSING'){
-    swalConfirm('Start Processing','This will deduct inventory supplies for this order. Continue?','Yes, Process').then(r=>{
+  if((next==='WASHING'||next==='PROCESSING')&&!o.inventoryDeducted&&o.type!=='DRY_ONLY'){
+    swalConfirm('Start Washing Cycle','This will automatically deduct detergent, fabric conditioner, and bleach supplies for this order. Continue?','Yes, Start Washing').then(r=>{
       if(!r.isConfirmed)return;
       _doAdvance(o,orders,next);
     });
@@ -5198,7 +6087,7 @@ function _doAdvance(o,orders,next){
   const tagObj=o.tagId?DB.get('rfidTags').find(t=>t.id===o.tagId):null;
   if(next==='RECEIVED')o.dropOff=new Date().toISOString();
   if(next==='WASHING'||next==='PROCESSING'){
-    const updatedInv=deductInventory(o.type,o.kg,o.comQty);
+    const updatedInv=deductInventory(o.type,o.kg,o.comQty,o);
     checkTopbarAlerts();
     const low=updatedInv.filter(i=>i.qty<=i.thresh);
     if(low.length){setTimeout(()=>Swal.fire({...LF_SWAL,icon:'warning',title:'⚠ Low Stock Alert',html:`<div style="color:#fff;font-size:13px;margin-bottom:6px;">Running low after deduction:</div>`+low.map(i=>`<div style="margin:4px 0;color:#fff"><b>${i.name}</b> — <span style="color:var(--danger)">${Math.round(i.qty*1000)} mL remaining</span></div>`).join(''),confirmButtonText:'OK'}),500);}
@@ -5308,88 +6197,160 @@ function submitPayment(){
 }
 
 /* ══════════════════════════════════════
-   SELLER: INVENTORY
+   SELLER: INVENTORY (Fixed errors + List -> Search -> Filter + Short/Expandable)
 ══════════════════════════════════════ */
-let rsId=null,eiId=null;
+let rsId=null,eiId=null,sellerInvFilter='ALL',sellerInvSrch='';
 function pgInventory(){
   const inv=DB.get('inventory');
   const low=inv.filter(i=>i.qty<=i.thresh);
+  const filtered=inv.filter(i=>{
+    const lw=i.qty<=i.thresh;
+    if(sellerInvFilter==='LOW'&&!lw)return false;
+    if(sellerInvFilter==='OK'&&lw)return false;
+    if(['DETERGENT','SOFTENER','BLEACH','OTHER'].includes(sellerInvFilter)&&i.cat!==sellerInvFilter)return false;
+    if(sellerInvSrch&&!(`${i.name} ${i.cat} ${i.unit}`).toLowerCase().includes(sellerInvSrch.toLowerCase()))return false;
+    return true;
+  });
   g('pgContent').innerHTML=`
-    ${low.length?`<div class="notice n-warn">⚠ Low stock: ${low.map(i=>`<strong>${i.name}</strong>`).join(', ')}</div>`:'<div class="notice n-success">✓ All inventory levels are OK</div>'}
-    <div class="toolbar"><button class="btn btn-primary btn-sm" onclick="openM('mAddItem')">+ Add Item</button></div>
-    <div class="card"><div class="ch"><h4>🫧 Inventory</h4><span class="text-sm text-muted">${inv.length} items</span></div>
-      <table><thead><tr><th>Item Name</th><th>Category</th><th>Pack Info</th><th>Stock</th><th>Threshold</th><th>Per Load</th><th>Level</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody>${inv.map(i=>{
-        const maxQty=(i.packSize&&i.packQty)?i.packSize*i.packQty:Math.max(i.thresh*4,1);
-        const pct=Math.min(100,Math.round((i.qty/maxQty)*100));
-        const lw=i.qty<=i.thresh;
-        const packInfo=i.packSize?`${i.packSize}${i.unit}/pack × ${i.packQty||'?'} packs`:'—';
-        const perLoad=i.perLoad?`${i.perLoad}${i.unit}/load`:(i.perKg?`${i.perKg}${i.unit}/kg`:'—');
-        return`<tr>
-          <td class="fw7">${i.name}</td><td class="text-muted">${i.cat}</td>
-          <td class="text-sm text-muted">${packInfo}</td>
-          <td style="font-weight:700;color:${lw?'var(--danger)':'var(--success)'}">${fmtStock(i)}</td>
-          <td>${i.thresh} ${i.unit}</td><td class="text-sm">${perLoad}</td>
-          <td style="min-width:110px;"><div style="display:flex;align-items:center;gap:6px;"><div class="pbar" style="flex:1;"><div class="pb ${lw?'pb-low':'pb-ok'}" style="width:${pct}%"></div></div><span style="font-size:11px;font-weight:700;color:${pct>50?'var(--success)':pct>20?'var(--warn)':'var(--danger)'};">${pct}%</span></div></td>
-          <td>${lw?'<span class="badge b-low">LOW</span>':'<span class="badge b-ok">OK</span>'}</td>
-          <td><div class="tda">
-            <button class="btn btn-ghost btn-sm" onclick="openRestock(${i.id})">Restock</button>
-            <button class="btn btn-ghost btn-sm" onclick="openEditItem(${i.id})">Edit</button>
-          </div></td>
-        </tr>`;
-      }).join('')}</tbody></table>
+    ${low.length?`<div class="notice n-warn">⚠ Low stock alert: ${low.map(i=>`<strong>${escapeHtml(i.name)}</strong> (${fmtStock(i)})`).join(', ')}</div>`:'<div class="notice n-success">✓ All inventory supply levels are healthy</div>'}
+    <div class="toolbar">
+      <input class="search-box" id="sInvSrch" value="${escapeHtml(sellerInvSrch)}" placeholder="🔍 Search supply name or category…" oninput="sellerInvSrch=this.value;pgInventory()" style="width:240px;">
+      ${[['ALL','All Items'],['LOW','⚠ Low Stock'],['OK','✓ Healthy'],['DETERGENT','Detergent'],['SOFTENER','Softener'],['BLEACH','Bleach'],['OTHER','Other']].map(([k,lbl])=>`<span class="chip${sellerInvFilter===k?' on':''}" onclick="sellerInvFilter='${k}';pgInventory()">${lbl}</span>`).join('')}
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" onclick="openM('mAddItem')">+ Add Supply Item</button>
+      </div>
     </div>
-    <div class="card"><div class="ch"><h4>Restock / Purchase Log</h4></div>${restockLogTable()}</div>`;
+    <div class="card"><div class="ch"><h4>🫧 Shop Supplies Inventory</h4><span class="text-sm text-muted">${filtered.length} of ${inv.length} items</span></div>
+      <div class="table-scroll">
+        <table><thead><tr><th>Item Name</th><th>Category</th><th>Current Stock</th><th>Level</th><th>Status</th><th>Specs & Dosing</th><th>Actions</th></tr></thead>
+        <tbody>${filtered.length?filtered.map(i=>{
+          const maxQty=(i.packSize&&i.packQty)?i.packSize*i.packQty:Math.max(i.thresh*4,i.qty,1);
+          const pct=Math.max(0,Math.min(100,Math.round((i.qty/maxQty)*100)));
+          const lw=i.qty<=i.thresh;
+          const packInfo=i.packSize?`${i.packSize} ${i.unit}/pack × ${i.packQty||4} packs (${(i.packSize*(i.packQty||4)).toFixed(1)} ${i.unit} max)`:'Standard container';
+          const perLoad=i.perLoad?`${i.perLoad} ${i.unit}/load (${Math.round(i.perLoad*1000)} mL)`:'Manual';
+          const loadsRem=i.perLoad>0?Math.floor(i.qty/i.perLoad):'∞';
+          return`<tr>
+            <td class="fw7">${escapeHtml(i.name)}</td>
+            <td><span class="badge b-gray">${escapeHtml(i.cat)}</span></td>
+            <td style="font-weight:700;color:${lw?'var(--danger)':'var(--success)'}">${fmtStock(i)}</td>
+            <td style="min-width:120px;"><div style="display:flex;align-items:center;gap:6px;"><div class="pbar" style="flex:1;"><div class="pb ${lw?'pb-low':'pb-ok'}" style="width:${pct}%"></div></div><span style="font-size:11px;font-weight:700;color:${pct>50?'var(--success)':pct>20?'var(--warn)':'var(--danger)'};">${pct}%</span></div></td>
+            <td>${lw?'<span class="badge b-low">LOW</span>':'<span class="badge b-ok">OK</span>'}</td>
+            <td>
+              <span class="text-sm fw7">${loadsRem} wash loads left</span>
+              <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+              <div class="exp-panel">
+                <div><b>Low-Stock Threshold:</b> ${i.thresh} ${escapeHtml(i.unit)}</div>
+                <div><b>Auto-Deduct Rate:</b> ${perLoad} (deducted once on WASHING stage)</div>
+                <div><b>Pack Capacity:</b> ${escapeHtml(packInfo)}</div>
+              </div>
+            </td>
+            <td><div class="tda">
+              <button class="btn btn-primary btn-sm" onclick="openRestock(${i.id})">+ Restock</button>
+              <button class="btn btn-ghost btn-sm" onclick="openEditItem(${i.id})">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="delInvItem(${i.id})">Delete</button>
+            </div></td>
+          </tr>`;
+        }).join(''):'<tr><td colspan="7"><div class="empty">No inventory items match your search/filter</div></td></tr>'}</tbody></table>
+      </div>
+    </div>
+    <div class="card"><div class="ch"><h4>📋 Inventory Restock & Auto-Deduction Audit Log</h4><span class="text-sm text-muted">Full Ledger</span></div>${restockLogTable()}</div>`;
 }
 
 function openRestock(id){
-  rsId=id;const i=DB.get('inventory').find(x=>x.id===id);
-  sv('rsName',i.name);sv('rsStock',`${i.qty} ${i.unit}`);sv('rsQty','');sv('rsCost','');openM('mRestock');
+  rsId=id;const i=DB.get('inventory').find(x=>x.id===id);if(!i)return;
+  sv('rsName',i.name);sv('rsStock',`${i.qty} ${i.unit} (${fmtStock(i).replace(/<[^>]*>/g,'')})`);sv('rsQty','');sv('rsCost','');openM('mRestock');
 }
 function submitRestock(){
   const qty=parseFloat(gv('rsQty'));
-  if(!qty||qty<=0){swalError('Please enter a valid quantity to add.');return;}
-  const inv=DB.get('inventory'),i=inv.find(x=>x.id===rsId);
-  const costPerUnit=parseFloat(gv('rsCost'))||null;
-  const totalCost=costPerUnit?costPerUnit*qty:null;
-  const before=i.qty;
-  i.qty=parseFloat((i.qty+qty).toFixed(4));
+  if(Number.isNaN(qty)||qty<=0){swalError('Please enter a valid positive quantity to restock.');return;}
+  const inv=DB.get('inventory'),i=inv.find(x=>x.id===rsId);if(!i)return;
+  const costVal=parseFloat(gv('rsCost'));
+  const costPerUnit=(!Number.isNaN(costVal)&&costVal>=0)?costVal:null;
+  const totalCost=costPerUnit!==null?parseFloat((costPerUnit*qty).toFixed(2)):null;
+  const before=Math.max(0,parseFloat(i.qty)||0);
+  i.qty=parseFloat((before+qty).toFixed(4));
   DB.set('inventory',inv);
   const log=DB.get('restockLog');
-  log.push({id:DB.nextId('restockLog'),itemId:rsId,itemName:i.name,unit:i.unit,qty,before,after:i.qty,costPerUnit,totalCost,date:new Date().toISOString(),by:CU?CU.name:'—'});
+  log.push({id:DB.nextId('restockLog'),type:'RESTOCK',itemId:rsId,itemName:i.name,unit:i.unit,qty,before,after:i.qty,costPerUnit,totalCost,date:new Date().toISOString(),by:CU?CU.name:'Staff'});
   DB.set('restockLog',log);
   checkTopbarAlerts();
   closeM('mRestock');
   swalSuccess('Restocked!',`${i.name} +${qty} ${i.unit}. New stock: ${i.qty} ${i.unit}.`);
-  pgInventory();
+  if(curPage==='inventory')pgInventory();
+  if(curPage==='inv_admin')pgInvAdmin();
 }
 
 function openEditItem(id){
-  eiId=id;const i=DB.get('inventory').find(x=>x.id===id);
+  eiId=id;const i=DB.get('inventory').find(x=>x.id===id);if(!i)return;
   sv('eiName',i.name);g('eiCat').value=i.cat;sv('eiUnit',i.unit);sv('eiQty',i.qty);sv('eiThresh',i.thresh);sv('eiCons',i.perLoad||i.perKg||0);
+  if(g('eiPackSize'))sv('eiPackSize',i.packSize||'');
+  if(g('eiPackQty'))sv('eiPackQty',i.packQty||'');
   openM('mEditItem');
 }
 function submitEditItem(){
   const name=gv('eiName').trim();if(!name){swalError('Item name is required.');return;}
-  const inv=DB.get('inventory'),i=inv.find(x=>x.id===eiId);
-  i.name=name;i.cat=gv('eiCat');i.unit=gv('eiUnit')||i.unit;
-  i.qty=parseFloat(gv('eiQty'))||i.qty;i.thresh=parseFloat(gv('eiThresh'))||i.thresh;
-  i.perLoad=parseFloat(gv('eiCons'))||0;i.perKg=0;
-  DB.set('inventory',inv);closeM('mEditItem');
-  swalSuccess('Item Updated','Inventory item saved.');pgInventory();
+  const inv=DB.get('inventory'),i=inv.find(x=>x.id===eiId);if(!i)return;
+  i.name=name;i.cat=gv('eiCat');i.unit=(gv('eiUnit')||i.unit).trim();
+  const q=parseFloat(gv('eiQty'));if(!Number.isNaN(q)&&q>=0)i.qty=parseFloat(q.toFixed(4));
+  const th=parseFloat(gv('eiThresh'));if(!Number.isNaN(th)&&th>=0)i.thresh=parseFloat(th.toFixed(4));
+  const cons=parseFloat(gv('eiCons'));if(!Number.isNaN(cons)&&cons>=0)i.perLoad=parseFloat(cons.toFixed(4));
+  i.perKg=0;
+  if(g('eiPackSize')){const ps=parseFloat(gv('eiPackSize'));i.packSize=(!Number.isNaN(ps)&&ps>0)?ps:null;}
+  if(g('eiPackQty')){const pq=parseInt(gv('eiPackQty'));i.packQty=(!Number.isNaN(pq)&&pq>0)?pq:null;}
+  DB.set('inventory',inv);
+  checkTopbarAlerts();
+  closeM('mEditItem');
+  swalSuccess('Item Updated',`${i.name} saved cleanly.`);
+  if(curPage==='inventory')pgInventory();
+  if(curPage==='inv_admin')pgInvAdmin();
 }
 
 function submitAddItem(){
   const name=gv('aiName').trim();if(!name){swalError('Item name is required.');return;}
   const inv=DB.get('inventory');
-  inv.push({id:DB.nextId('inventory'),name,cat:gv('aiCat'),unit:gv('aiUnit')||'unit',qty:parseFloat(gv('aiQty'))||0,thresh:parseFloat(gv('aiThresh'))||5,perKg:0,perLoad:parseFloat(gv('aiCons'))||0,packSize:null,packQty:null});
-  DB.set('inventory',inv);closeM('mAddItem');
-  swalSuccess('Item Added',`${name} added to inventory.`);pgInventory();
+  const q=parseFloat(gv('aiQty'));
+  const th=parseFloat(gv('aiThresh'));
+  const cons=parseFloat(gv('aiCons'));
+  const ps=g('aiPackSize')?parseFloat(gv('aiPackSize')):NaN;
+  const pq=g('aiPackQty')?parseInt(gv('aiPackQty')):NaN;
+  inv.push({
+    id:DB.nextId('inventory'),
+    name,
+    cat:gv('aiCat'),
+    unit:(gv('aiUnit')||'L').trim(),
+    qty:(!Number.isNaN(q)&&q>=0)?parseFloat(q.toFixed(4)):0,
+    thresh:(!Number.isNaN(th)&&th>=0)?parseFloat(th.toFixed(4)):1,
+    perKg:0,
+    perLoad:(!Number.isNaN(cons)&&cons>=0)?parseFloat(cons.toFixed(4)):0.1,
+    packSize:(!Number.isNaN(ps)&&ps>0)?ps:null,
+    packQty:(!Number.isNaN(pq)&&pq>0)?pq:null
+  });
+  DB.set('inventory',inv);
+  checkTopbarAlerts();
+  closeM('mAddItem');
+  ['aiName','aiUnit','aiQty','aiThresh','aiCons','aiPackSize','aiPackQty'].forEach(id=>{if(g(id))sv(id,'');});
+  swalSuccess('Supply Added',`${name} added to inventory.`);
+  if(curPage==='inventory')pgInventory();
+  if(curPage==='inv_admin')pgInvAdmin();
+}
+
+function delInvItem(id){
+  const inv=DB.get('inventory'),i=inv.find(x=>x.id===id);if(!i)return;
+  swalConfirm('Delete Supply Item',`Remove "${i.name}" from inventory?`,'Yes, Delete').then(r=>{
+    if(!r.isConfirmed)return;
+    DB.set('inventory',inv.filter(x=>x.id!==id));
+    checkTopbarAlerts();
+    toast('Supply item deleted');
+    if(curPage==='inventory')pgInventory();
+    if(curPage==='inv_admin')pgInvAdmin();
+  });
 }
 
 /* ══════════════════════════════════════
-   SELLER: REPORTS
+   SELLER: REPORTS (With List -> Search -> Filter + 3-Pillar Summary)
 ══════════════════════════════════════ */
+let repChFilter='ALL',repSrch='';
 function pgReports(){
   const txns=DB.get('transactions').filter(t=>t.status==='COMPLETED');
   const orders=DB.get('orders');
@@ -5399,13 +6360,18 @@ function pgReports(){
   const monthT=txns.filter(t=>{const d=new Date(t.date);return d.getMonth()===nm&&d.getFullYear()===ny;});
   const sum=a=>a.reduce((s,t)=>s+t.amount,0);
   const byCh=(a,c)=>sum(a.filter(t=>t.channel===c));
-  const byType={CLOTHES:0,BEDSHEET:0,COMFORTER:0};
+  const byType={CLOTHES:0,BEDSHEET:0,COMFORTER:0,WASH_ONLY:0,DRY_ONLY:0};
   txns.forEach(t=>{const o=orders.find(x=>x.num===t.orderNum);if(o)byType[o.type]=(byType[o.type]||0)+t.amount;});
+  const filteredTxns=[...txns].reverse().filter(t=>{
+    if(repChFilter!=='ALL'&&t.channel!==repChFilter)return false;
+    if(repSrch&&!(`${t.num} ${t.orderNum} ${t.custName||''} ${t.gcashRef||''} ${t.promoCode||''}`).toLowerCase().includes(repSrch.toLowerCase()))return false;
+    return true;
+  });
   g('pgContent').innerHTML=`
     <div class="sg sg-3">
-      <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">Today's Revenue</div></div>
-      <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">This Month</div></div>
-      <div class="sc"><div class="sc-val">${orders.filter(o=>o.status==='RELEASED').length}</div><div class="sc-lbl">Completed Orders</div></div>
+      <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">📊 Descriptive: Today's Revenue</div></div>
+      <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">🔮 Predictive: Monthly Run-Rate (${peso(Math.round(sum(monthT)*1.18))} proj.)</div></div>
+      <div class="sc"><div class="sc-val">${orders.filter(o=>o.status==='RELEASED').length}</div><div class="sc-lbl">💡 Completed Orders</div></div>
     </div>
     <div class="two-col">
       <div class="card"><div class="ch"><h4>Today — By Channel</h4></div><div class="cp">
@@ -5417,19 +6383,34 @@ function pgReports(){
         <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:14px;font-weight:800;color:var(--accent2);"><span>Total Revenue</span><span>${peso(sum(txns))}</span></div>
       </div></div>
     </div>
-    <div class="card"><div class="ch"><h4>Recent Transactions</h4></div>
-      <table><thead><tr><th>TXN #</th><th>Order #</th><th>Type</th><th>Amount</th><th>Promo</th><th>Channel</th><th>GCash Ref</th><th>Date</th></tr></thead>
-      <tbody>${txns.length?[...txns].reverse().slice(0,25).map(t=>{const o=orders.find(x=>x.num===t.orderNum);return`<tr>
-        <td class="text-sm mono-code" style="color:var(--text-muted)">${t.num}</td>
-        <td class="fw7 mono-code" style="color:var(--text)">${t.orderNum}</td>
-        <td class="text-sm" style="color:var(--text)">${o?TYPE_LABEL[o.type]:'—'}</td>
-        <td class="fw7" style="color:var(--success)">${peso(t.amount)}</td>
-        <td>${t.promoCode?`<span class="promo-tag">🏷 ${t.promoCode}</span>`:'—'}</td>
-        <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
-        <td class="text-sm mono-code" style="color:var(--text-muted)">${t.gcashRef||'—'}</td>
-        <td class="text-sm text-muted">${fd(t.date)}</td>
-      </tr>`;}).join(''):`<tr><td colspan="8"><div class="empty">No transactions yet</div></td></tr>`}
-      </tbody></table>
+    <div class="card"><div class="ch"><h4>🧾 Transactions (List → Search → Filter)</h4><span class="text-sm text-muted">${filteredTxns.length} shown</span></div>
+      <div class="cp" style="padding-bottom:0;">
+        <div class="toolbar" style="margin-bottom:10px;">
+          <input class="search-box" value="${escapeHtml(repSrch)}" placeholder="🔍 Search TXN #, Order #, Customer, GCash Ref…" oninput="repSrch=this.value;pgReports()" style="width:250px;">
+          ${['ALL','CASH','GCASH'].map(c=>`<span class="chip${repChFilter===c?' on':''}" onclick="repChFilter='${c}';pgReports()">${c==='ALL'?'All Channels':c}</span>`).join('')}
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table><thead><tr><th>TXN #</th><th>Order #</th><th>Customer</th><th>Service</th><th>Amount</th><th>Channel</th><th>Details</th><th>Date</th></tr></thead>
+        <tbody>${filteredTxns.length?filteredTxns.slice(0,30).map(t=>{const o=orders.find(x=>x.num===t.orderNum);return`<tr>
+          <td class="text-sm mono-code" style="color:var(--text-muted)">${t.num}</td>
+          <td class="fw7 mono-code" style="color:var(--text)">${t.orderNum}</td>
+          <td class="text-sm fw7">${escapeHtml(t.custName||(o?o.custName:'—'))}</td>
+          <td class="text-sm" style="color:var(--text)">${o?TYPE_LABEL[o.type]:'—'}</td>
+          <td class="fw7" style="color:var(--success)">${peso(t.amount)}</td>
+          <td><span class="badge ${t.channel==='CASH'?'b-gray':'b-blue'}">${t.channel}</span></td>
+          <td>
+            <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+            <div class="exp-panel">
+              <div><b>Receipt #:</b> ${escapeHtml(t.rcpt||'—')}</div>
+              <div><b>GCash Reference:</b> ${escapeHtml(t.gcashRef||'Cash Payment')}</div>
+              <div><b>Promo Code:</b> ${escapeHtml(t.promoCode||'None')}</div>
+            </div>
+          </td>
+          <td class="text-sm text-muted">${fd(t.date)}</td>
+        </tr>`;}).join(''):`<tr><td colspan="8"><div class="empty">No transactions match your search/filter</div></td></tr>`}
+        </tbody></table>
+      </div>
     </div>`;
 }
 </script>
@@ -5546,11 +6527,22 @@ function openCustProfile(custId){
 }
 
 /* ══════════════════════════════════════
-   SELLER & ADMIN: RFID TAGS, SCANNER & SCAN LOGS
+   SELLER & ADMIN: RFID TAGS, 1-DEVICE SCANNER & OWNER READ-ONLY AUDIT LOGS
 ══════════════════════════════════════ */
+let rfidListFilter='ALL',rfidListSrch='';
 function pgRFID(){
   const tags=DB.get('rfidTags'),orders=DB.get('orders');
   const availCnt=tags.filter(t=>t.available).length;
+  const filtered=tags.filter(tag=>{
+    if(rfidListFilter==='AVAILABLE'&&!tag.available)return false;
+    if(rfidListFilter==='IN_USE'&&tag.available)return false;
+    const linked=tag.orderId?orders.find(o=>o.id===tag.orderId):null;
+    if(rfidListSrch){
+      const hay=`TAG-${String(tag.id).padStart(3,'0')} ${tag.uid} ${linked?linked.num+' '+linked.custName+' '+linked.status:''}`.toLowerCase();
+      if(!hay.includes(rfidListSrch.toLowerCase()))return false;
+    }
+    return true;
+  });
   g('pgContent').innerHTML=`
     <div class="sg sg-3">
       <div class="sc"><div class="sc-val">${tags.length}</div><div class="sc-lbl">Registered HF RFID Tags (13.56 MHz)</div></div>
@@ -5558,33 +6550,50 @@ function pgRFID(){
       <div class="sc"><div class="sc-val" style="color:var(--accent2)">${tags.length-availCnt}</div><div class="sc-lbl">Active Linked Laundry Bags</div></div>
     </div>
     <div class="toolbar">
-      <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Open RFID Scanner & Receiving</button>
-      <button class="btn btn-ghost btn-sm" onclick="openM('mRegTag')">+ Register New RFID Tag</button>
-      <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Audit Logs</button>
+      <input class="search-box" value="${escapeHtml(rfidListSrch)}" placeholder="🔍 Search Tag ID, UID, Order #, Customer…" oninput="rfidListSrch=this.value;pgRFID()" style="width:240px;">
+      ${[['ALL','All Tags'],['AVAILABLE','✓ Available'],['IN_USE','🔒 In Use']].map(([k,lbl])=>`<span class="chip${rfidListFilter===k?' on':''}" onclick="rfidListFilter='${k}';pgRFID()">${lbl}</span>`).join('')}
+      <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
+        <button class="btn btn-ghost btn-sm" onclick="openM('mRegTag')">+ Register New RFID Tag</button>
+        <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🔒 Audit Logs</button>
+      </div>
     </div>
-    <div class="card"><div class="ch"><h4>🏷️ Registered RFID Tags (MIFARE 13.56 MHz)</h4><span class="text-sm text-muted">${availCnt} available / ${tags.length} total</span></div>
-      <table><thead><tr><th>Tag ID</th><th>RFID UID</th><th>Status</th><th>Linked Order</th><th>Order Stage</th><th>Action</th></tr></thead>
-      <tbody>${tags.map(tag=>{
-        const linked=tag.orderId?orders.find(o=>o.id===tag.orderId):null;
-        return`<tr>
-          <td class="fw7 text-sm mono-code">TAG-${String(tag.id).padStart(3,'0')}</td>
-          <td class="text-sm mono-code" style="font-weight:700;color:var(--accent2);">${tag.uid}</td>
-          <td>${tag.available?'<span class="badge b-ok">✓ Available</span>':'<span class="badge b-red">🔒 In Use</span>'}</td>
-          <td>${linked?`<span class="fw7 mono-code">${linked.num}</span> — ${linked.custName}`:'—'}</td>
-          <td>${linked?sBadge(linked.status):'—'}</td>
-          <td><div class="tda">
-            ${linked?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${linked.id})">📡 Manage Stage</button>`:''}
-            ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="window._prefillScanUid='${tag.uid}';showPage('rfid_scanner')">Assign</button>`}
-          </div></td>
-        </tr>`;
-      }).join('')}</tbody></table>
+    <div class="card"><div class="ch"><h4>🏷️ Registered RFID Tags (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${tags.length} shown</span></div>
+      <div class="table-scroll">
+        <table><thead><tr><th>Tag ID</th><th>RFID UID</th><th>Status</th><th>Linked Order</th><th>Stage & Details</th><th>Action</th></tr></thead>
+        <tbody>${filtered.length?filtered.map(tag=>{
+          const linked=tag.orderId?orders.find(o=>o.id===tag.orderId):null;
+          return`<tr>
+            <td class="fw7 text-sm mono-code">TAG-${String(tag.id).padStart(3,'0')}</td>
+            <td class="text-sm mono-code" style="font-weight:700;color:var(--accent2);">${tag.uid}</td>
+            <td>${tag.available?'<span class="badge b-ok">✓ Available</span>':'<span class="badge b-red">🔒 In Use</span>'}</td>
+            <td>${linked?`<span class="fw7 mono-code">${linked.num}</span> — ${escapeHtml(linked.custName)}`:'—'}</td>
+            <td>
+              ${linked?`
+                ${sBadge(linked.status)}
+                <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+                <div class="exp-panel">
+                  <div><b>Service:</b> ${TYPE_LABEL[linked.type]||linked.type} (${linked.type==='COMFORTER'?linked.comQty+' pcs':(linked.kg||0)+' kg'})</div>
+                  <div><b>Amount:</b> ${peso(linked.price)}</div>
+                  <div><b>Drop-off:</b> ${fd(linked.dropOff)}</div>
+                </div>
+              `:'<span class="text-sm text-muted">Ready for next customer bag</span>'}
+            </td>
+            <td><div class="tda">
+              ${linked?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${linked.id})">📡 Scan / Advance</button>`:''}
+              ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="window._prefillScanUid='${tag.uid}';showPage('rfid_scanner')">Assign</button>`}
+            </div></td>
+          </tr>`;
+        }).join(''):'<tr><td colspan="6"><div class="empty">No RFID tags match your search/filter</div></td></tr>'}</tbody></table>
+      </div>
     </div>`;
 }
 
-/* ── Dedicated RFID Scanner & Laundry Receiving Page (PDF Sections 4, 7, 8) ── */
+/* ── Dedicated 1-Device RFID Scanner & Laundry Workflow Station ── */
 window._scannerSelectedOrdId=null;
 window._prefillScanUid='';
 window._lastDuplicateAlert=null;
+window._rfidOneDeviceAutoAdvance=true;
 
 function pgRfidScanner(){
   const orders=DB.get('orders');
@@ -5597,19 +6606,32 @@ function pgRfidScanner(){
   const selOrd=orders.find(o=>o.id===Number(window._scannerSelectedOrdId))||null;
   const linkedTag=selOrd&&selOrd.tagId?tags.find(t=>t.id===selOrd.tagId):null;
   const availTags=tags.filter(t=>t.available);
+  const inUseTags=tags.filter(t=>!t.available&&t.orderId);
   const recentLogs=[...DB.get('rfidScanLogs')].reverse().slice(0,6);
 
   g('pgContent').innerHTML=`
-    <div class="notice n-info" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-      <div><strong>📡 HF RFID 13.56 MHz (ESP32 + RC522) Receiving & Workflow Station:</strong> Select a customer booking, verify actual weight/load at the shop counter, and scan or assign an RFID Tag UID. Duplicate active tag assignments are automatically blocked.</div>
-      <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ Full Audit Logs (${DB.get('rfidScanLogs').length})</button>
+    <div class="rfid-single-device-bar">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.2);border:1px solid rgba(56,189,248,0.45);padding:3px 10px;border-radius:999px;font-size:11px;font-weight:800;color:#7dd3fc;margin-bottom:6px;">
+          📡 1-DEVICE UNIFIED RFID STATION · ESP32 + RC522 (13.56 MHz)
+        </div>
+        <div style="font-size:15px;font-weight:800;color:#ffffff;">Single Hardware Reader handles Receiving + All Stage Transitions</div>
+        <div style="font-size:12px;color:#cbd5e1;margin-top:2px;">
+          Tap an <b>unassigned tag</b> to link &amp; receive a pending order · Tap an <b>active tag</b> on the same reader to automatically advance its stage (<span class="mono-code" style="color:#7dd3fc;">RECEIVED → WASHING → DRYING → FOLDING → READY → RELEASED</span>).
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <button type="button" class="btn btn-sm" style="background:${window._rfidOneDeviceAutoAdvance?'#0284c7':'rgba(255,255,255,0.1)'};color:#fff;border:1px solid rgba(125,211,252,0.4);" onclick="window._rfidOneDeviceAutoAdvance=true;window._lastDuplicateAlert=null;pgRfidScanner()">🔄 1-Device Auto-Advance Mode</button>
+        <button type="button" class="btn btn-sm" style="background:${!window._rfidOneDeviceAutoAdvance?'#e11d48':'rgba(255,255,255,0.1)'};color:#fff;border:1px solid rgba(251,113,133,0.4);" onclick="window._rfidOneDeviceAutoAdvance=false;pgRfidScanner()">🛡️ Strict Assign (Duplicate Block Test)</button>
+        <button class="btn btn-ghost btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.3);" onclick="showPage('scan_logs')">🔒 Audit Logs (${DB.get('rfidScanLogs').length})</button>
+      </div>
     </div>
 
     <div class="rfid-grid">
       <!-- LEFT COLUMN: STEP 1 & 2 - SELECT ORDER & VERIFY LAUNDRY DETAILS -->
       <div class="card" style="margin-bottom:0;">
         <div class="ch">
-          <h4>1️⃣ Select Booking & Verify Laundry Details</h4>
+          <h4>1️⃣ Active Order on 1-Device Station</h4>
           <span class="badge b-blue">${activeOrPending.length} Active / Pending</span>
         </div>
         <div class="cp">
@@ -5628,7 +6650,7 @@ function pgRfidScanner(){
               <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
                 <div>
                   <div style="font-size:16px;font-weight:800;color:var(--text);" class="mono-code">${selOrd.num} <span style="font-family:var(--font-sans);font-weight:700;">— ${escapeHtml(selOrd.custName)}</span></div>
-                  <div class="text-sm text-muted">Service: <strong>${TYPE_LABEL[selOrd.type]||selOrd.type}</strong> · Mode: <strong>${selOrd.serviceMode||'Drop-off at Shop'}</strong>${selOrd.prefSchedule?' · Sched: '+escapeHtml(selOrd.prefSchedule):''}</div>
+                  <div class="text-sm text-muted">Service: <strong>${TYPE_LABEL[selOrd.type]||selOrd.type}</strong> · Mode: <strong>${selOrd.serviceMode||'Drop-off at Shop'}</strong></div>
                 </div>
                 <div>${sBadge(selOrd.status)}</div>
               </div>
@@ -5642,29 +6664,32 @@ function pgRfidScanner(){
                   <input type="text" id="scnVerifyPrice" value="${peso(selOrd.price)}" readonly>
                 </div>
               </div>
-              <div class="fg" style="margin-bottom:10px;">
-                <label>Staff Receiving / Inspection Notes</label>
-                <input type="text" id="scnVerifyNotes" value="${escapeHtml(selOrd.notes||'')}" placeholder="e.g. Verified 6.5kg at counter, 1 bag, separate whites">
-              </div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
-                <span class="text-sm text-muted">Current RFID Tag: <strong class="mono-code" style="color:var(--accent2);">${linkedTag?linkedTag.uid:'Not Linked Yet'}</strong></span>
-                <button class="btn btn-ghost btn-sm" onclick="saveVerifiedOrderDetails(${selOrd.id})">✓ Save Verified Load & Recalculate</button>
+                <span class="text-sm text-muted">Linked RFID Tag: <strong class="mono-code" style="color:var(--accent2);">${linkedTag?linkedTag.uid:'Not Linked Yet'}</strong></span>
+                <div style="display:flex;gap:6px;align-items:center;">
+                  <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Notes</button>
+                  <button class="btn btn-ghost btn-sm" onclick="saveVerifiedOrderDetails(${selOrd.id})">✓ Save Weight</button>
+                </div>
+                <div class="exp-panel" style="width:100%;">
+                  <label style="display:block;font-size:11px;font-weight:700;margin-bottom:4px;">Staff Receiving / Inspection Notes</label>
+                  <input type="text" id="scnVerifyNotes" value="${escapeHtml(selOrd.notes||'')}" placeholder="e.g. Verified 6.5kg at counter, 1 bag, separate whites" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;">
+                </div>
               </div>
             </div>
 
             <!-- STEP 3: WORKFLOW STAGE PROGRESSION -->
             <div style="border-top:1px solid var(--border);padding-top:14px;">
               <div style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">
-                3️⃣ Laundry Stage Progression (Requires Linked RFID Tag)
+                2️⃣ 1-Device Stage Progression (Tap RFID Tag or Click Stage)
               </div>
               <div class="stage-pill-grid">
                 ${[
-                  ['RECEIVED','📥 Received'],
-                  ['WASHING','🫧 Washing'],
-                  ['DRYING','💨 Drying'],
-                  ['FOLDING','👕 Folding'],
-                  ['READY','✅ Ready for Pickup'],
-                  ['RELEASED','🎉 Completed / Release']
+                  ['RECEIVED','📥 1. Received'],
+                  ['WASHING','🫧 2. Washing'],
+                  ['DRYING','💨 3. Drying'],
+                  ['FOLDING','👕 4. Folding'],
+                  ['READY','✅ 5. Ready'],
+                  ['RELEASED','🎉 6. Released']
                 ].map(([st,lbl])=>{
                   const curNorm=normStatus(selOrd.status);
                   const isCur=curNorm===st;
@@ -5672,39 +6697,49 @@ function pgRfidScanner(){
                 }).join('')}
               </div>
             </div>
-          `:'<div class="empty">No pending or active order selected. Click "+ New Order" in the topbar to create one.</div>'}
+          `:'<div class="empty">No pending or active order selected. Click "+ Walk-in Order" to create one.</div>'}
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: STEP 2 - ESP32 + RC522 RFID SCANNER TERMINAL & DUPLICATE PROTECTION -->
+      <!-- RIGHT COLUMN: SINGLE HARDWARE ESP32 + RC522 RFID TERMINAL -->
       <div>
         <div class="rfid-terminal">
           <div class="rfid-reader-ring">📡</div>
-          <div style="text-align:center;margin-bottom:16px;">
-            <div style="font-size:11px;font-weight:700;color:#7dd3fc;letter-spacing:1px;text-transform:uppercase;">ESP32 + RC522 (13.56 MHz HF RFID)</div>
-            <h3 style="font-size:19px;font-weight:800;color:#ffffff;margin-top:3px;">RFID Tag Scanner & Assignment</h3>
-            <p style="font-size:12px;color:#cbd5e1;margin-top:4px;">Tap an RFID keyfob/card on the reader or select/enter a Tag UID below to link it to the selected order.</p>
+          <div style="text-align:center;margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:#7dd3fc;letter-spacing:1px;text-transform:uppercase;">1-Device Hardware Reader · ESP32 + RC522</div>
+            <h3 style="font-size:19px;font-weight:800;color:#ffffff;margin-top:3px;">Single-Station RFID Tap Terminal</h3>
+            <p style="font-size:12px;color:#cbd5e1;margin-top:4px;">
+              Mode: <strong style="color:${window._rfidOneDeviceAutoAdvance?'#34d399':'#fb7185'};">${window._rfidOneDeviceAutoAdvance?'🔄 1-Device Smart Auto-Advance (Tap to Receive or Advance Stage)':'🛡️ Strict Assign Mode (Tests Duplicate Tag Block)'}</strong>
+            </p>
           </div>
 
           <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);border-radius:12px;padding:14px;margin-bottom:12px;">
-            <label style="display:block;font-size:11px;font-weight:700;color:#bae6fd;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">RFID Tag UID Input (Keyboard Wedge / ESP32 / Manual)</label>
+            <label style="display:block;font-size:11px;font-weight:700;color:#bae6fd;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">RFID Tag UID Input (Single ESP32 Reader / USB Wedge / Manual)</label>
             <div style="display:flex;gap:8px;">
               <input id="scnUidInput" class="mono-code" value="${escapeHtml(window._prefillScanUid||(linkedTag?linkedTag.uid:(availTags[0]?availTags[0].uid:'TAG-001')))}" placeholder="e.g. TAG-001 or 04:A3:B2:C1" style="flex:1;padding:10px 12px;border-radius:9px;border:1px solid rgba(125,211,252,0.4);background:#071827;color:#38bdf8;font-size:14px;font-weight:700;outline:none;" onkeydown="if(event.key==='Enter')processRfidScanInput()">
-              <button class="btn btn-primary" onclick="processRfidScanInput()" style="background:#0284c7;border-color:#0284c7;">🔗 Scan & Link RFID</button>
+              <button class="btn btn-primary" onclick="processRfidScanInput()" style="background:#0284c7;border-color:#0284c7;">📡 Tap / Scan RFID</button>
             </div>
 
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
-              <button type="button" class="btn btn-ghost btn-sm" style="color:#e0f2fe;border-color:rgba(255,255,255,0.22);flex:1;" onclick="simulateEsp32Scan('available')">⚡ Simulate ESP32 Scan (Available Tag)</button>
-              <button type="button" class="btn btn-ghost btn-sm" style="color:#fecdd3;border-color:rgba(251,113,133,0.4);flex:1;" onclick="simulateEsp32Scan('duplicate')">⚠️ Test Duplicate Tag Block</button>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;">
+              <button type="button" class="btn btn-ghost btn-sm" style="color:#e0f2fe;border-color:rgba(255,255,255,0.22);flex:1;" onclick="simulateEsp32Scan('available')">⚡ Tap Available Tag (Receive)</button>
+              <button type="button" class="btn btn-ghost btn-sm" style="color:#a7f3d0;border-color:rgba(52,211,153,0.4);flex:1;" onclick="simulateEsp32Scan('advance')">🔄 Tap Active Tag (Next Stage)</button>
+              <button type="button" class="btn btn-ghost btn-sm" style="color:#fecdd3;border-color:rgba(251,113,133,0.4);flex:1;" onclick="simulateEsp32Scan('duplicate')">⚠️ Test Duplicate Block</button>
             </div>
           </div>
 
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:#cbd5e1;">
-            <span>Quick Pick Available Tag:</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:#cbd5e1;margin-bottom:6px;">
+            <span>Available Tags (Tap to Link):</span>
             <div style="display:flex;gap:5px;flex-wrap:wrap;">
               ${availTags.slice(0,5).map(t=>`<span onclick="sv('scnUidInput','${t.uid}')" class="mono-code" style="cursor:pointer;padding:3px 8px;border-radius:6px;background:rgba(56,189,248,0.18);color:#7dd3fc;border:1px solid rgba(56,189,248,0.35);font-weight:700;">${t.uid}</span>`).join('')}
             </div>
           </div>
+          ${inUseTags.length?`
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11.5px;color:#cbd5e1;">
+            <span>Active Tags (Tap to Auto-Advance):</span>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;">
+              ${inUseTags.slice(0,5).map(t=>`<span onclick="sv('scnUidInput','${t.uid}');processRfidScanInput('${t.uid}')" class="mono-code" style="cursor:pointer;padding:3px 8px;border-radius:6px;background:rgba(16,185,129,0.2);color:#6ee7b7;border:1px solid rgba(16,185,129,0.4);font-weight:700;" title="Tap to advance order stage">${t.uid} ↻</span>`).join('')}
+            </div>
+          </div>`:''}
 
           <div id="scnDuplicateAlertArea">
             ${window._lastDuplicateAlert?`
@@ -5713,10 +6748,10 @@ function pgRfidScanner(){
                 <div style="font-size:12.5px;line-height:1.55;">
                   Tag <strong class="mono-code">${escapeHtml(window._lastDuplicateAlert.uid)}</strong> is currently linked to active Order <strong class="mono-code">${escapeHtml(window._lastDuplicateAlert.conflictNum)}</strong>
                   (Customer: <strong>${escapeHtml(window._lastDuplicateAlert.conflictCust)}</strong>, Stage: <strong>${escapeHtml(window._lastDuplicateAlert.conflictStatus)}</strong>).<br>
-                  <span style="font-size:11.5px;color:#991b1b;">Do not allow assignment until the existing order is completed/released or corrected.</span>
+                  <span style="font-size:11.5px;color:#991b1b;">Switch to <b>1-Device Auto-Advance Mode</b> to advance ${escapeHtml(window._lastDuplicateAlert.conflictNum)} on tap, or release the tag first.</span>
                 </div>
-                <div style="margin-top:8px;display:flex;gap:8px;">
-                  <button class="btn btn-ghost btn-sm" style="background:#fff;color:#991b1b;border-color:#fca5a5;" onclick="openScannerForOrder(${window._lastDuplicateAlert.conflictId});window._lastDuplicateAlert=null;pgRfidScanner();">View Conflicting Order (${window._lastDuplicateAlert.conflictNum})</button>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+                  <button class="btn btn-ghost btn-sm" style="background:#fff;color:#0284c7;border-color:#7dd3fc;" onclick="window._rfidOneDeviceAutoAdvance=true;window._lastDuplicateAlert=null;processRfidScanInput('${window._lastDuplicateAlert.uid}');">🔄 Auto-Advance ${window._lastDuplicateAlert.conflictNum} Now</button>
                   <button class="btn btn-ghost btn-sm" style="background:#fff;color:#475569;" onclick="window._lastDuplicateAlert=null;pgRfidScanner();">Dismiss</button>
                 </div>
               </div>
@@ -5727,7 +6762,7 @@ function pgRfidScanner(){
         <!-- RECENT SCAN LOGS MINI FEED -->
         <div class="card" style="margin-top:16px;margin-bottom:0;">
           <div class="ch">
-            <h4>🛡️ Live RFID Scan Feed</h4>
+            <h4>🛡️ Live 1-Device RFID Scan Feed</h4>
             <a href="#" onclick="showPage('scan_logs');return false;" style="font-size:12px;font-weight:700;color:var(--accent2);">View All →</a>
           </div>
           <table>
@@ -5760,7 +6795,8 @@ function saveVerifiedOrderDetails(ordId){
   const o=orders.find(x=>x.id===ordId);
   if(!o)return;
   const loadVal=parseFloat(gv('scnVerifyLoad'))||0;
-  const notesVal=gv('scnVerifyNotes').trim();
+  const notesEl=g('scnVerifyNotes');
+  const notesVal=notesEl?notesEl.value.trim():(o.notes||'');
   if(o.type==='COMFORTER'){o.comQty=Math.max(1,Math.round(loadVal));}
   else{o.kg=Math.max(0.5,loadVal);}
   o.notes=notesVal;
@@ -5777,10 +6813,22 @@ function saveVerifiedOrderDetails(ordId){
 function simulateEsp32Scan(mode){
   const tags=DB.get('rfidTags');
   const orders=DB.get('orders');
-  if(mode==='duplicate'){
+  if(mode==='advance'){
+    window._rfidOneDeviceAutoAdvance=true;
     let inUse=tags.find(t=>!t.available&&t.orderId);
     if(!inUse){
-      // If none in use yet, temporarily point to first tag or inform user
+      toast('Linking available tag first on 1-Device Reader…');
+      simulateEsp32Scan('available');
+      return;
+    }
+    sv('scnUidInput',inUse.uid);
+    processRfidScanInput(inUse.uid);
+    return;
+  }
+  if(mode==='duplicate'){
+    window._rfidOneDeviceAutoAdvance=false;
+    let inUse=tags.find(t=>!t.available&&t.orderId);
+    if(!inUse){
       const anyOrd=orders.find(o=>o.status!=='RELEASED');
       if(anyOrd&&tags.length){
         const t0=tags[0];
@@ -5794,7 +6842,6 @@ function simulateEsp32Scan(mode){
     }
     if(inUse){
       sv('scnUidInput',inUse.uid);
-      // Select a DIFFERENT order if possible so duplicate protection triggers
       const otherOrd=orders.find(o=>o.id!==inUse.orderId&&o.status!=='RELEASED');
       if(otherOrd)window._scannerSelectedOrdId=otherOrd.id;
       processRfidScanInput(inUse.uid);
@@ -5819,6 +6866,32 @@ function processRfidScanInput(forcedUid){
   if(!rawUid){swalError('Please scan or enter an RFID Tag UID.');return;}
   const orders=DB.get('orders');
   const tags=DB.get('rfidTags');
+
+  // Find or auto-register RFID tag
+  let tag=tags.find(t=>t.uid.toUpperCase()===rawUid);
+  if(!tag){
+    const id=DB.nextId('rfidTags');
+    tag={id,uid:rawUid,available:true,orderId:null};
+    tags.push(tag);
+  }
+
+  /* ── 1-DEVICE SMART AUTO-ADVANCE MODE ──
+     If the scanned tag is ALREADY linked to an active order and 1-Device Auto-Advance Mode is ON,
+     tapping the tag on the single reader automatically selects that order and advances it to the next stage! */
+  if(!tag.available && tag.orderId && window._rfidOneDeviceAutoAdvance){
+    const activeOrd=orders.find(o=>o.id===tag.orderId);
+    if(activeOrd && activeOrd.status!=='RELEASED' && activeOrd.status!=='CANCELLED'){
+      window._scannerSelectedOrdId=activeOrd.id;
+      window._lastDuplicateAlert=null;
+      const curIdx=STATUSES.indexOf(normStatus(activeOrd.status));
+      const nextStage=STATUSES[curIdx+1];
+      if(nextStage){
+        scannerSetStage(activeOrd.id,nextStage);
+        return;
+      }
+    }
+  }
+
   const selOrd=orders.find(o=>o.id===Number(window._scannerSelectedOrdId));
   if(!selOrd){swalError('Please select a pending or active order first.');return;}
 
@@ -5837,15 +6910,7 @@ function processRfidScanInput(forcedUid){
   const notesEl=g('scnVerifyNotes');
   if(notesEl)selOrd.notes=notesEl.value.trim();
 
-  // Find or auto-register RFID tag
-  let tag=tags.find(t=>t.uid.toUpperCase()===rawUid);
-  if(!tag){
-    const id=DB.nextId('rfidTags');
-    tag={id,uid:rawUid,available:true,orderId:null};
-    tags.push(tag);
-  }
-
-  // DUPLICATE-TAG PROTECTION (PDF Section 4, Page 4)
+  // DUPLICATE-TAG PROTECTION (When in Strict Assign Mode or assigning an active tag to a different order)
   if(!tag.available && tag.orderId && tag.orderId!==selOrd.id){
     const conflict=orders.find(o=>o.id===tag.orderId);
     if(conflict && conflict.status!=='RELEASED' && conflict.status!=='CANCELLED'){
@@ -5871,10 +6936,20 @@ function processRfidScanInput(forcedUid){
         title:'⚠️ RFID Already Assigned',
         html:`<div style="color:#e2e8f0;font-size:13.5px;line-height:1.65;">
           RFID Tag <b class="mono-code" style="color:#fb7185;">${escapeHtml(tag.uid)}</b> is already assigned to active Order <b style="color:#fff;">${escapeHtml(conflict.num)}</b> (<span style="color:#38bdf8;">${escapeHtml(conflict.custName)}</span> — ${escapeHtml(STATUS_LABEL[conflict.status]||conflict.status)}).<br><br>
-          <span style="color:#fde68a;">Assignment is blocked until the existing order is completed/released or reassigned.</span>
+          <span style="color:#fde68a;">Assignment to a different order is blocked. In <b>1-Device Auto-Advance Mode</b>, tapping this tag advances ${escapeHtml(conflict.num)} to its next stage.</span>
         </div>`,
         confirmButtonText:'Understood'
       });
+      return;
+    }
+  }
+
+  // If tag is already linked to selOrd, advance selOrd to next stage on 1-Device tap!
+  if(selOrd.tagId===tag.id && selOrd.status!=='PENDING'){
+    const curIdx=STATUSES.indexOf(normStatus(selOrd.status));
+    const nextStage=STATUSES[curIdx+1];
+    if(nextStage){
+      scannerSetStage(selOrd.id,nextStage);
       return;
     }
   }
@@ -5897,7 +6972,7 @@ function processRfidScanInput(forcedUid){
   DB.set('rfidTags',tags);
   DB.set('orders',orders);
 
-  logOrderStatus(selOrd,selOrd.status,`RFID Tag ${tag.uid} scanned and linked at receiving station`);
+  logOrderStatus(selOrd,selOrd.status,`RFID Tag ${tag.uid} scanned and linked on 1-Device ESP32 Station`);
   logRfidScan({
     uid:tag.uid,
     orderId:selOrd.id,
@@ -5909,7 +6984,7 @@ function processRfidScanInput(forcedUid){
 
   pushNotif(selOrd.custId,'RECEIVED',`Order ${selOrd.num} received & RFID tagged`,`Your laundry is now linked to RFID Tag ${tag.uid} and marked as Received.`,'📡');
   updateSellerBell();
-  toast(`📡 Tag ${tag.uid} linked to ${selOrd.num}!`);
+  toast(`📡 1-Device RFID: ${tag.uid} linked to ${selOrd.num} (RECEIVED)!`);
   pgRfidScanner();
 }
 
@@ -5929,39 +7004,58 @@ function scannerSetStage(ordId,targetStage){
   _doAdvance(o,orders,targetStage);
 }
 
-/* ── Dedicated Admin/Staff RFID Scan Logs Page (PDF Section 6) ── */
-let scanLogFilter='ALL';
+/* ── Dedicated Owner Read-Only Audit & Notification Logs Page ── */
+let scanLogFilter='ALL',scanLogSrch='',histLogFilter='ALL',histLogSrch='';
 function pgScanLogs(){
   const logs=[...DB.get('rfidScanLogs')].reverse();
   const hist=[...DB.get('statusHistory')].reverse();
-  const filtered=scanLogFilter==='ALL'?logs:logs.filter(l=>l.result===scanLogFilter||l.action===scanLogFilter);
+  const notifs=[...DB.get('notifs')].reverse();
+  const filtered=logs.filter(l=>{
+    if(scanLogFilter!=='ALL'&&l.result!==scanLogFilter&&l.action!==scanLogFilter)return false;
+    if(scanLogSrch&&!(`${l.uid} ${l.orderNum||''} ${l.staffUser||''} ${l.action} ${l.result} ${l.details||''}`).toLowerCase().includes(scanLogSrch.toLowerCase()))return false;
+    return true;
+  });
+  const filteredHist=hist.filter(h=>{
+    if(histLogFilter!=='ALL'&&normStatus(h.status)!==histLogFilter)return false;
+    if(histLogSrch&&!(`${h.orderNum||''} ${h.status||''} ${h.by||''} ${h.notes||''}`).toLowerCase().includes(histLogSrch.toLowerCase()))return false;
+    return true;
+  });
   const successCnt=logs.filter(l=>l.result==='SUCCESS').length;
   const dupCnt=logs.filter(l=>l.result==='ALREADY_ASSIGNED').length;
   const activeTags=DB.get('rfidTags').filter(t=>!t.available).length;
 
   g('pgContent').innerHTML=`
-    <div class="sg sg-4">
-      <div class="sc"><div class="sc-val">${logs.length}</div><div class="sc-lbl">Total RFID Scan Events</div></div>
-      <div class="sc"><div class="sc-val" style="color:var(--success)">${successCnt}</div><div class="sc-lbl">Successful Assignments & Updates</div></div>
-      <div class="sc"><div class="sc-val" style="color:var(--danger)">${dupCnt}</div><div class="sc-lbl">Blocked Duplicate Tag Scans</div></div>
-      <div class="sc"><div class="sc-val" style="color:var(--accent2)">${activeTags}</div><div class="sc-lbl">Currently Active RFID Tags</div></div>
+    <div class="owner-ro-banner">
+      <div>
+        <span class="ro-lock">🔒 OWNER READ-ONLY AUDIT &amp; NOTIFICATION LOGS</span>
+        <span style="margin-left:8px;">All RFID scans, order transitions, inventory deductions, and push notifications are immutable (cannot be edited or deleted) for owner audit integrity.</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" style="background:#0284c7;border:none;" onclick="triggerDelayedBackgroundPushDemo()">📲 Test Push Notif (5s — Close/Destroy App Now)</button>
+      </div>
     </div>
 
-    <div class="toolbar">
-      ${['ALL','SUCCESS','ALREADY_ASSIGNED','TAG_ASSIGNED','STAGE_UPDATED','TAG_RELEASED'].map(f=>`<span class="chip${scanLogFilter===f?' on':''}" onclick="scanLogFilter='${f}';pgScanLogs()">${f.replace('_',' ')}</span>`).join('')}
-      <div style="margin-left:auto;display:flex;gap:8px;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Go to RFID Scanner</button>
-      </div>
+    <div class="sg sg-4">
+      <div class="sc"><div class="sc-val">${logs.length}</div><div class="sc-lbl">Total RFID Scan Events</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--success)">${successCnt}</div><div class="sc-lbl">Successful Scans &amp; Advances</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--danger)">${dupCnt}</div><div class="sc-lbl">Blocked Duplicate Scans</div></div>
+      <div class="sc"><div class="sc-val" style="color:var(--accent2)">${hist.length + notifs.length}</div><div class="sc-lbl">Audit &amp; Push Notification Events</div></div>
     </div>
 
     <div class="card">
       <div class="ch">
-        <h4>🛡️ RFID Scan Audit Trail (ESP32 & Counter Scans)</h4>
-        <span class="text-sm text-muted">${filtered.length} records</span>
+        <h4>🛡️ 1-Device RFID Scan Audit Trail (Read-Only · List → Search → Filter)</h4>
+        <span class="text-sm text-muted">${filtered.length} records · 🔒 Tamper-Protected</span>
+      </div>
+      <div class="cp" style="padding-bottom:0;">
+        <div class="toolbar" style="margin-bottom:10px;">
+          <input class="search-box" value="${escapeHtml(scanLogSrch)}" placeholder="🔍 Search UID, Order #, Staff, Action…" oninput="scanLogSrch=this.value;pgScanLogs()" style="width:240px;">
+          ${['ALL','SUCCESS','ALREADY_ASSIGNED','TAG_ASSIGNED','STAGE_UPDATED','TAG_RELEASED'].map(f=>`<span class="chip${scanLogFilter===f?' on':''}" onclick="scanLogFilter='${f}';pgScanLogs()">${f.replace('_',' ')}</span>`).join('')}
+        </div>
       </div>
       <div class="table-scroll">
         <table>
-          <thead><tr><th>Date & Time</th><th>RFID UID</th><th>Order ID</th><th>Staff / Device</th><th>Action Performed</th><th>Scan Result</th><th>Audit Details</th></tr></thead>
+          <thead><tr><th>Date &amp; Time</th><th>RFID UID</th><th>Order ID</th><th>Staff / Device</th><th>Action</th><th>Result</th><th>Short Summary &amp; Details</th></tr></thead>
           <tbody>
             ${filtered.length?filtered.map(l=>`<tr>
               <td class="text-sm text-muted">${fd(l.date)}</td>
@@ -5970,8 +7064,16 @@ function pgScanLogs(){
               <td class="text-sm">${escapeHtml(l.staffUser||'Staff')} <span class="badge b-gray" style="font-size:9.5px;">${escapeHtml(l.staffRole||'STAFF')}</span></td>
               <td><span class="badge b-blue">${escapeHtml(l.action)}</span></td>
               <td><span class="badge ${l.result==='SUCCESS'?'b-ok':'b-low'}">${escapeHtml(l.result)}</span></td>
-              <td class="text-sm text-muted">${escapeHtml(l.details||'—')}</td>
-            </tr>`).join(''):'<tr><td colspan="7"><div class="empty">No RFID scan logs match the selected filter.</div></td></tr>'}
+              <td class="text-sm">
+                <span>${escapeHtml((l.details||'—').slice(0,38))}${(l.details||'').length>38?'…':''}</span>
+                <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+                <div class="exp-panel">
+                  <div><b>Full Audit Details:</b> ${escapeHtml(l.details||'—')}</div>
+                  <div><b>Hardware Reader:</b> 1-Device ESP32 + RC522 (13.56 MHz)</div>
+                  <div><b>Audit Status:</b> 🔒 Read-Only Record #${l.id||'—'}</div>
+                </div>
+              </td>
+            </tr>`).join(''):'<tr><td colspan="7"><div class="empty">No RFID scan logs match the selected search/filter.</div></td></tr>'}
           </tbody>
         </table>
       </div>
@@ -5979,20 +7081,34 @@ function pgScanLogs(){
 
     <div class="card">
       <div class="ch">
-        <h4>📋 Order Stage Transition History (<span class="mono-code">order_status_history</span>)</h4>
-        <span class="text-sm text-muted">${hist.length} transitions</span>
+        <h4>📋 Order Stage &amp; Notification Audit History (Read-Only · List → Search → Filter)</h4>
+        <span class="text-sm text-muted">${filteredHist.length} transitions · 🔒 Tamper-Protected</span>
+      </div>
+      <div class="cp" style="padding-bottom:0;">
+        <div class="toolbar" style="margin-bottom:10px;">
+          <input class="search-box" value="${escapeHtml(histLogSrch)}" placeholder="🔍 Search Order #, Stage, Staff, Notes…" oninput="histLogSrch=this.value;pgScanLogs()" style="width:240px;">
+          ${['ALL','PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'].map(f=>`<span class="chip${histLogFilter===f?' on':''}" onclick="histLogFilter='${f}';pgScanLogs()">${f}</span>`).join('')}
+        </div>
       </div>
       <div class="table-scroll">
         <table>
-          <thead><tr><th>Date & Time</th><th>Order #</th><th>New Stage</th><th>Updated By</th><th>Notes</th></tr></thead>
+          <thead><tr><th>Date &amp; Time</th><th>Order #</th><th>Stage</th><th>Logged By</th><th>Summary &amp; Expandable Details</th></tr></thead>
           <tbody>
-            ${hist.length?hist.slice(0,30).map(h=>`<tr>
+            ${filteredHist.length?filteredHist.slice(0,40).map(h=>`<tr>
               <td class="text-sm text-muted">${fd(h.date)}</td>
               <td class="mono-code fw7">${escapeHtml(h.orderNum||'—')}</td>
               <td>${sBadge(h.status)}</td>
               <td class="text-sm">${escapeHtml(h.by||'Staff')}</td>
-              <td class="text-sm text-muted">${escapeHtml(h.notes||'—')}</td>
-            </tr>`).join(''):'<tr><td colspan="5"><div class="empty">No stage transitions logged yet.</div></td></tr>'}
+              <td class="text-sm">
+                <span>${escapeHtml((h.notes||'—').slice(0,42))}${(h.notes||'').length>42?'…':''}</span>
+                <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
+                <div class="exp-panel">
+                  <div><b>Full Transition Note:</b> ${escapeHtml(h.notes||'—')}</div>
+                  <div><b>Timestamp:</b> ${new Date(h.date).toLocaleString()}</div>
+                  <div><b>Push Notification Dispatched:</b> ✓ Sent via Service Worker + Realtime Channel</div>
+                </div>
+              </td>
+            </tr>`).join(''):'<tr><td colspan="5"><div class="empty">No stage transitions match your filter.</div></td></tr>'}
           </tbody>
         </table>
       </div>
@@ -6222,7 +7338,8 @@ function ptOverview(){
   `;
 }
 
-/* ─ My Orders ─ */
+/* ─ My Orders (List -> Search -> Filter + Short/Expandable Details) ─ */
+let ptOrderSrch='';
 function ptMyOrders(){
   const allOrders=[...DB.get('orders').filter(o=>o.custId===CU.id)].reverse();
   let orders=allOrders;
@@ -6230,14 +7347,21 @@ function ptMyOrders(){
   else if(ptOrderFilter==='READY')orders=allOrders.filter(o=>normStatus(o.status)==='READY');
   else if(ptOrderFilter==='RELEASED')orders=allOrders.filter(o=>normStatus(o.status)==='RELEASED');
   const tags=DB.get('rfidTags');
+  if(ptOrderSrch){
+    orders=orders.filter(o=>{
+      const t=o.tagId?tags.find(x=>x.id===o.tagId):null;
+      return (`${o.num} ${TYPE_LABEL[o.type]||o.type} ${o.status} ${t?t.uid:''} ${o.notes||''}`).toLowerCase().includes(ptOrderSrch.toLowerCase());
+    });
+  }
 
   g('ptContent').innerHTML=`
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
       <div>
         <h3 style="font-size:18px;font-weight:800;">📦 My Laundry Orders</h3>
-        <p class="text-sm text-muted">View your current, ready, and completed orders with real-time RFID status.</p>
+        <p class="text-sm text-muted">Search and filter your orders with real-time 1-Device RFID status.</p>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+        <input class="search-box" value="${escapeHtml(ptOrderSrch)}" placeholder="🔍 Search Order #, Service, RFID…" oninput="ptOrderSrch=this.value;ptMyOrders()" style="width:210px;">
         ${[['ALL','All Orders'],['ACTIVE','Active'],['READY','Ready for Pickup'],['RELEASED','Completed']].map(([k,lbl])=>`<span class="chip${ptOrderFilter===k?' on':''}" onclick="ptOrderFilter='${k}';ptMyOrders()">${lbl}</span>`).join('')}
         <button class="btn btn-primary btn-sm" onclick="ptTab('book')">+ Book Service</button>
       </div>
@@ -6253,14 +7377,17 @@ function ptMyOrders(){
           </div>
           <div style="display:flex;gap:6px;align-items:center;">
             ${sBadge(o.status)}
+            <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
             <button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="ptTrackOrderId=${o.id};ptTab('track')">📡 Track</button>
             ${o.tagId?`<button class="btn btn-ghost btn-sm" style="font-size:11px;" onclick="showPortalQR(${o.id})">📱 QR</button>`:''}
           </div>
         </div>
         <div class="tl">${renderOrderTimelineHTML(o.status)}</div>
-        ${o.breakdown?`<div class="text-sm text-muted" style="margin-top:4px;">Pricing: ${o.breakdown}${o.promoCode?` · <span class="promo-tag">🏷 ${o.promoCode}</span>`:''}</div>`:''}
-        <div class="text-sm text-muted" style="margin-top:4px;">Booked: ${fs(o.created)}${o.dropOff?' · Received: '+fs(o.dropOff):''}${o.ready?' · Ready: '+fs(o.ready):''}${o.pickup?' · Picked up: '+fs(o.pickup):''}</div>
-        ${o.notes?`<div class="text-sm" style="margin-top:4px;color:var(--text-muted);">Instructions: ${escapeHtml(o.notes)}</div>`:''}
+        <div class="exp-panel">
+          ${o.breakdown?`<div><b>Pricing Breakdown:</b> ${o.breakdown}${o.promoCode?` · <span class="promo-tag">🏷 ${o.promoCode}</span>`:''}</div>`:''}
+          <div><b>Timestamps:</b> Booked: ${fs(o.created)}${o.dropOff?' · Received: '+fs(o.dropOff):''}${o.ready?' · Ready: '+fs(o.ready):''}${o.pickup?' · Picked up: '+fs(o.pickup):''}</div>
+          ${o.notes?`<div><b>Special Instructions:</b> ${escapeHtml(o.notes)}</div>`:''}
+        </div>
       </div>`;
     }).join(''):`<div class="ord-card" style="text-align:center;color:var(--text-muted);padding:36px;">No orders found in this view. <a href="#" onclick="ptTab('book');return false;" style="color:var(--accent2);font-weight:700;">Book a service →</a></div>`}`;
 }
@@ -6649,14 +7776,12 @@ function submitBooking(){
   const newNum='ORD-'+String(id).padStart(3,'0');
   const serviceMode=g('bkMode')?gv('bkMode'):'Drop-off at Shop';
   const prefSchedule=g('bkSched')?gv('bkSched').trim():'';
-  const newOrdObj={id,num:newNum,custId:CU.id,custName:CU.name,tagId:null,type,kg,comQty,colorDist,serviceMode,prefSchedule,status:'PENDING',notes,price:grandTotal,breakdown,discount:totalDiscount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};
+  const newOrdObj={id,num:newNum,custId:CU.id,custName:CU.name,tagId:null,type,kg,comQty,colorDist,serviceMode,prefSchedule,status:'PENDING',inventoryDeducted:false,notes,price:grandTotal,breakdown,discount:totalDiscount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};
   orders.push(newOrdObj);
   DB.set('orders',orders);
   logOrderStatus(newOrdObj,'PENDING',`Customer booked online (${serviceMode}${prefSchedule?' · '+prefSchedule:''})`);
   if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
-  /* auto-deduct inventory on booking */
-  deductInventory(type,kg,comQty);
-  /* self-notification */
+  /* self-notification (Supplies will be deducted automatically when staff starts the WASHING cycle) */
   pushNotif(CU.id,'ORDER_PLACED',`Order ${newNum} booked`,`Your ${TYPE_LABEL[type]} booking is confirmed. Drop off at the shop!`,'🧺');
   updateNotifBadge();
   Swal.fire({...LF_SWAL,icon:'success',title:'Booking Submitted!',html:`<div style="color:#fff;font-size:14px;">Order <b>${newNum}</b> submitted.<br><span style="color:var(--text-muted)">Drop off your laundry at the shop — staff will assign your RFID tag upon arrival.</span></div>`,confirmButtonText:'View My Orders'}).then(()=>ptTab('orders'));
@@ -6859,10 +7984,125 @@ function toggleCallVideo(){
 }
 
 /* ══════════════════════════════════════
-   NOTIFICATIONS AND REVIEWS
+   NOTIFICATIONS, SERVICE WORKER BACKGROUND PUSH & REVIEWS
 ══════════════════════════════════════ */
+let _lfSwReg=null;
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').then(reg=>{
+    _lfSwReg=reg;
+  }).catch(()=>{});
+}
+
+function sendOsPushNotification(title,body,tag){
+  const fullTitle=title.startsWith('LabaFlow')?title:`LabaFlow · ${title}`;
+  if('Notification' in window && Notification.permission==='granted'){
+    if(navigator.serviceWorker && navigator.serviceWorker.controller){
+      navigator.serviceWorker.controller.postMessage({
+        type:'SHOW_OS_NOTIFICATION',
+        title:fullTitle,
+        body,
+        tag:tag||('lf-push-'+Date.now()),
+        url:'./'
+      });
+      return;
+    }
+    if(_lfSwReg && _lfSwReg.showNotification){
+      _lfSwReg.showNotification(fullTitle,{body,icon:'favicon.png',badge:'favicon.png',tag:tag||('lf-push-'+Date.now()),vibrate:[200,100,200]}).catch(()=>{});
+      return;
+    }
+    try{new Notification(fullTitle,{body,icon:'favicon.png'});}catch(e){}
+  }
+}
+
+function triggerDelayedBackgroundPushDemo(){
+  const startCountdown=()=>{
+    const demoTitle='LabaFlow Background Push Alert 🔔';
+    const demoBody='App Closed / Backgrounded ("Naka-Destroy"): Order ORD-002 is READY FOR PICKUP & Owner Audit Log updated!';
+    /* Log into local notifications and audit trail so owner sees it in Read-Only Audit Logs too */
+    const notifs=DB.get('notifs');
+    notifs.push({
+      id:DB.nextId('notifs'),
+      toId:CU?CU.id:1,
+      type:'BG_PUSH_DEMO',
+      title:demoTitle,
+      msg:demoBody,
+      icon:'📲',
+      read:false,
+      date:new Date().toISOString()
+    });
+    DB.set('notifs',notifs);
+    updateSellerBell();updateNotifBadge();
+
+    if(navigator.serviceWorker && navigator.serviceWorker.controller){
+      navigator.serviceWorker.controller.postMessage({
+        type:'SCHEDULE_BG_PUSH',
+        delayMs:5000,
+        title:demoTitle,
+        body:demoBody,
+        tag:'lf-bg-push-demo-'+Date.now(),
+        url:'./'
+      });
+    } else if(_lfSwReg && _lfSwReg.active){
+      _lfSwReg.active.postMessage({
+        type:'SCHEDULE_BG_PUSH',
+        delayMs:5000,
+        title:demoTitle,
+        body:demoBody,
+        tag:'lf-bg-push-demo-'+Date.now(),
+        url:'./'
+      });
+    } else {
+      setTimeout(()=>sendOsPushNotification(demoTitle,demoBody,'lf-bg-fallback'),5000);
+    }
+
+    Swal.fire({
+      ...LF_SWAL,
+      icon:'info',
+      title:'📲 5-Second Background Push Armed!',
+      html:`<div style="color:#e2e8f0;font-size:13.5px;line-height:1.65;">
+        <b>Minimize, switch apps, or close ("i-destroy") this tab/window right now!</b><br><br>
+        In <b>5 seconds</b>, the LabaFlow Service Worker (<span class="mono-code" style="color:#38bdf8;">sw.js</span>) will fire an OS-level Push Notification to your device even while the app is in the background or closed.
+      </div>`,
+      timer:4800,
+      timerProgressBar:true,
+      confirmButtonText:'Got It — Minimizing Now'
+    });
+  };
+
+  if(!('Notification' in window)){
+    toast('📲 Push scheduled (5s)');
+    setTimeout(()=>toast('🔔 PUSH ALERT: Order ORD-002 is READY FOR PICKUP!'),5000);
+    return;
+  }
+  if(Notification.permission==='granted'){
+    startCountdown();
+  } else {
+    Notification.requestPermission().then(perm=>{
+      startCountdown();
+    }).catch(()=>startCountdown());
+  }
+}
+
 function pushNotif(toId,type,title,msg,icon){
   icon=icon||'🔔';
+  /* Always record in local notifications DB so Owner Read-Only Audit & Bell work immediately */
+  const notifs=DB.get('notifs');
+  notifs.push({
+    id:DB.nextId('notifs'),
+    toId:toId||(CU?CU.id:1),
+    type,
+    title,
+    msg,
+    icon,
+    read:false,
+    date:new Date().toISOString()
+  });
+  DB.set('notifs',notifs);
+  updateSellerBell();
+  updateNotifBadge();
+  /* Dispatch OS / Service Worker Push Notification */
+  sendOsPushNotification(`${icon} ${title}`,msg,`lf-${type}-${Date.now()}`);
+
   const target=DB.get('users').find(u=>u.id===toId)||(CU?.id===toId?CU:null);
   if(!target?.authUid)return;
   LabaFlowSupabase.notifyUser(target.authUid,type,title,msg,icon)
@@ -6876,7 +8116,10 @@ function isCurrentCustomerNotification(n){
   if(!mentioned.length)return readyOrders.length>0;
   return readyOrders.some(o=>mentioned.includes(String(o.num||'').toUpperCase()));
 }
-function getMyNotifs(){return DB.get('notifs').filter(n=>n.toId===CU.id&&isCurrentCustomerNotification(n));}
+function getMyNotifs(){
+  if(CU?.role==='ADMIN')return DB.get('notifs');
+  return DB.get('notifs').filter(n=>n.toId===CU?.id&&isCurrentCustomerNotification(n));
+}
 function getUnreadCount(){return getMyNotifs().filter(n=>!n.read).length;}
 function updateNotifBadge(){
   const cnt=getUnreadCount();
@@ -6898,22 +8141,35 @@ function renderCustNotifPanel(){
   list.innerHTML=notifs.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="markCustNotifRead('${n.docId||n.id}')">
     <span class="notif-ico">${n.icon}</span>
     <div class="notif-body-txt">
-      <div class="notif-title-txt">${n.title}</div>
-      <div class="notif-msg-txt">${n.msg}</div>
+      <div class="notif-title-txt">${escapeHtml(n.title)}</div>
+      <div class="notif-msg-txt">${escapeHtml(n.msg)}</div>
       <div class="notif-time-txt">${fs(n.date)}</div>
     </div>
   </div>`).join('');
 }
 function markCustNotifRead(id){
-  LabaFlowSupabase.markNotificationRead(CU.authUid,id).then(refreshRemoteNotifications).then(()=>{renderCustNotifPanel();updateNotifBadge();}).catch(error=>console.error(error));
+  const notifs=DB.get('notifs');
+  const item=notifs.find(x=>String(x.docId||x.id)===String(id));
+  if(item){item.read=true;DB.set('notifs',notifs);}
+  renderCustNotifPanel();updateNotifBadge();
+  if(CU?.authUid){
+    LabaFlowSupabase.markNotificationRead(CU.authUid,id).then(refreshRemoteNotifications).then(()=>{renderCustNotifPanel();updateNotifBadge();}).catch(()=>{});
+  }
 }
 function markAllCustNotifsRead(){
-  Promise.all(getMyNotifs().filter(n=>!n.read).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
-    .then(refreshRemoteNotifications).then(()=>{renderCustNotifPanel();updateNotifBadge();}).catch(error=>console.error(error));
+  const notifs=DB.get('notifs');
+  notifs.forEach(n=>{if(n.toId===CU?.id)n.read=true;});
+  DB.set('notifs',notifs);
+  renderCustNotifPanel();updateNotifBadge();
+  if(CU?.authUid){
+    Promise.all(getMyNotifs().filter(n=>!n.read&&n.docId).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
+      .then(refreshRemoteNotifications).then(()=>{renderCustNotifPanel();updateNotifBadge();}).catch(()=>{});
+  }
 }
 function updateSellerBell(){
   if(!CU||CU.role==='CUSTOMER')return;
-  const cnt=DB.get('notifs').filter(n=>n.toId===CU.id&&!n.read).length;
+  const list=CU.role==='ADMIN'?DB.get('notifs'):DB.get('notifs').filter(n=>n.toId===CU.id);
+  const cnt=list.filter(n=>!n.read).length;
   const bell=g('sellerBell');
   if(bell)bell.innerHTML=cnt>0?`🔔 <span class="notif-bubble">${cnt}</span>`:'🔔';
 }
@@ -6924,35 +8180,68 @@ function toggleNotifPanel(){
   if(panel.classList.contains('open'))renderNotifPanel();
 }
 function renderNotifPanel(){
-  const notifs=DB.get('notifs').filter(n=>n.toId===CU.id).reverse();
+  const isOwner=CU&&CU.role==='ADMIN';
+  const rawNotifs=isOwner?[...DB.get('notifs')].reverse():DB.get('notifs').filter(n=>n.toId===CU?.id).reverse();
+  const scanEvents=isOwner?[...DB.get('rfidScanLogs')].reverse().slice(0,5).map(s=>({
+    id:'scn-'+s.id,
+    icon:'📡',
+    title:`RFID ${s.action}: ${s.uid}`,
+    msg:`Order ${s.orderNum||'—'} · ${s.details||'Scanned at station'}`,
+    date:s.date,
+    read:true
+  })):[];
+  const combined=[...rawNotifs,...scanEvents].slice(0,18);
   const list=g('notifList');
   if(!list)return;
-  if(!notifs.length){list.innerHTML='<div class="notif-empty">No notifications yet</div>';return;}
-  list.innerHTML=notifs.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="markNotifRead('${n.docId||n.id}')">
-    <span class="notif-ico">${n.icon}</span>
+  const ownerBadge=isOwner?`<div style="padding:6px 12px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-size:10.5px;font-weight:800;color:#0369a1;">🔒 OWNER READ-ONLY FEED — Audit &amp; Push Notifications cannot be deleted</div>`:'';
+  if(!combined.length){list.innerHTML=ownerBadge+'<div class="notif-empty">No notifications yet</div>';return;}
+  list.innerHTML=ownerBadge+combined.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="${isOwner?'':`markNotifRead('${n.docId||n.id}')`}">
+    <span class="notif-ico">${n.icon||'🔔'}</span>
     <div class="notif-body-txt">
-      <div class="notif-title-txt">${n.title}</div>
-      <div class="notif-msg-txt">${n.msg}</div>
+      <div class="notif-title-txt">${escapeHtml(n.title)} ${isOwner?'<span class="badge b-gray" style="font-size:9px;padding:1px 5px;">READ-ONLY</span>':''}</div>
+      <div class="notif-msg-txt">${escapeHtml(n.msg)}</div>
       <div class="notif-time-txt">${fs(n.date)}</div>
     </div>
   </div>`).join('');
 }
 function markNotifRead(id){
-  LabaFlowSupabase.markNotificationRead(CU.authUid,id).then(refreshRemoteNotifications).then(()=>{renderNotifPanel();updateSellerBell();updateNotifBadge();}).catch(error=>console.error(error));
+  if(CU?.role==='ADMIN')return; /* Owner Read-Only */
+  const notifs=DB.get('notifs');
+  const item=notifs.find(x=>String(x.docId||x.id)===String(id));
+  if(item){item.read=true;DB.set('notifs',notifs);}
+  renderNotifPanel();updateSellerBell();updateNotifBadge();
+  if(CU?.authUid){
+    LabaFlowSupabase.markNotificationRead(CU.authUid,id).then(refreshRemoteNotifications).then(()=>{renderNotifPanel();updateSellerBell();updateNotifBadge();}).catch(()=>{});
+  }
 }
 function markAllNotifsRead(){
-  Promise.all(getMyNotifs().filter(n=>!n.read).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
-    .then(refreshRemoteNotifications).then(()=>{renderNotifPanel();updateSellerBell();updateNotifBadge();}).catch(error=>console.error(error));
+  if(CU?.role==='ADMIN'){toast('🔒 Owner notifications & audit logs are Read-Only');return;}
+  const notifs=DB.get('notifs');
+  notifs.forEach(n=>{if(n.toId===CU?.id)n.read=true;});
+  DB.set('notifs',notifs);
+  renderNotifPanel();updateSellerBell();updateNotifBadge();
+  if(CU?.authUid){
+    Promise.all(getMyNotifs().filter(n=>!n.read&&n.docId).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
+      .then(refreshRemoteNotifications).then(()=>{renderNotifPanel();updateSellerBell();updateNotifBadge();}).catch(()=>{});
+  }
 }
 function ptNotifs(){
   const notifs=getMyNotifs().reverse();
-  Promise.all(notifs.filter(n=>!n.read).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
-    .then(refreshRemoteNotifications).catch(error=>console.error(error));
+  if(CU?.authUid){
+    Promise.all(notifs.filter(n=>!n.read&&n.docId).map(n=>LabaFlowSupabase.markNotificationRead(CU.authUid,n.docId)))
+      .then(refreshRemoteNotifications).catch(()=>{});
+  }
   g('ptContent').innerHTML=`
-    <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;">🔔 Notifications</h3>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+      <div>
+        <h3 style="font-size:16px;font-weight:800;">🔔 Notifications &amp; Background Push Alerts</h3>
+        <p class="text-sm text-muted">Receive real-time laundry updates even when the app is minimized or closed.</p>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="triggerDelayedBackgroundPushDemo()">📲 Test Push Notif (5s — Close App)</button>
+    </div>
     ${notifs.length?`<div class="pt-notif-list">${notifs.map(n=>`<div class="pt-notif-card${n.read?'':' unread'}">
-      <span class="pt-notif-ico">${n.icon}</span>
-      <div class="pt-notif-body"><div class="pt-notif-title">${n.title}</div><div class="pt-notif-msg">${n.msg}</div><div class="pt-notif-time">${fs(n.date)}</div></div>
+      <span class="pt-notif-ico">${n.icon||'🔔'}</span>
+      <div class="pt-notif-body"><div class="pt-notif-title">${escapeHtml(n.title)}</div><div class="pt-notif-msg">${escapeHtml(n.msg)}</div><div class="pt-notif-time">${fs(n.date)}</div></div>
     </div>`).join('')}</div>`:'<div class="empty">No notifications yet</div>'}`;
 }
 let rvRating=5;

@@ -1,28 +1,21 @@
 {
-  "name": "LabaFlow",
+  "name": "LabaFlow — Lab-a-Day Laundry RFID & Inventory System",
   "short_name": "LabaFlow",
-  "description": "Lab-a-Day Laundry Management System",
-  "start_url": "/",
+  "description": "An Integrated Mobile-Based Laundry Operations and Inventory Management System with 1-Device HF RFID Tracking",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0a1628",
-  "theme_color": "#0284c7",
+  "background_color": "#F7F9FF",
+  "theme_color": "#0E214E",
   "icons": [
     {
-      "src": "favicon-32.png",
-      "sizes": "32x32",
+      "src": "favicon.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
+      "src": "favicon.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
