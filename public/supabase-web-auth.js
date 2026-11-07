@@ -303,15 +303,21 @@
     const bytes = new Uint8Array(64);
     crypto.getRandomValues(bytes);
     const verifier = base64Url(bytes);
-    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
-    return {verifier, challenge:base64Url(new Uint8Array(digest))};
+    if (crypto && crypto.subtle && typeof crypto.subtle.digest === 'function') {
+      const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
+      return {verifier, challenge:base64Url(new Uint8Array(digest)), method:'s256'};
+    }
+    return {verifier, challenge:verifier, method:'plain'};
   }
   async function signInWithGoogle(loginHint) {
     requireConfig();
     let ref=location;
     try{ if(window.top && window.top!==window && window.top.location.origin===location.origin) ref=window.top.location; }catch(e){}
-    const redirectTo=`${ref.origin}${ref.pathname.replace(/[^/]*\.html$/,'')}`;
-    const {verifier,challenge}=await createPkcePair();
+    const hasHttpOrigin = /^https?:\/\//i.test(String(ref.origin || ''));
+    const redirectTo = hasHttpOrigin
+      ? `${ref.origin}${ref.pathname.replace(/[^/]*\.html$/,'')}`
+      : 'https://appassets.androidplatform.net/labaflow.html';
+    const {verifier,challenge,method}=await createPkcePair();
     localStorage.setItem(pkceVerifierKey,verifier);
     const authorize=new URL(`${base()}/auth/v1/authorize`);
     authorize.searchParams.set('provider','google');
@@ -321,7 +327,7 @@
       authorize.searchParams.set('login_hint', loginHint.trim());
     }
     authorize.searchParams.set('code_challenge',challenge);
-    authorize.searchParams.set('code_challenge_method','s256');
+    authorize.searchParams.set('code_challenge_method',method||'s256');
     if (window.top && window.top !== window) window.top.location.assign(authorize.toString());
     else location.assign(authorize.toString());
   }

@@ -30,4 +30,7 @@ flutter:
     - assets/labaflow.html
     - assets/supabase-config.js
     - assets/supabase-web-auth.js
+    - assets/gcash_qr.png
+    - assets/manifest.json
+    - assets/sw.js
     - assets/images/

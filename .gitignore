@@ -32,6 +32,9 @@ LabaFlow_backup.html
 hs_err_pid*.log
 replay_pid*.log
 .idea/
+*.idsig
+android/debug.keystore
+android/local.properties
 '
 10}
 DB.get('users')
