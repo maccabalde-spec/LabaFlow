@@ -6,10 +6,98 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>LabaFlow – Lab-a-Day Laundry | RFID &amp; Inventory System</title>
+<title>LabaFlow – Smart RFID Laundry Tracking &amp; Management System</title>
+<meta name="google-site-verification" content="TsqcwWStSILiv2QwqZOSJ3JBpvrh-7-VLyA5pMIj7f8" />
+<!-- Search Engine Optimization (SEO) Meta Tags -->
+<meta name="title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta name="description" content="LabaFlow is an automated RFID laundry tracking and inventory management system for Lab-a-Day Laundry Shop in Pagsanjan, Laguna. Track orders in real-time, view wash stages, and manage laundry seamlessly.">
+<meta name="keywords" content="LabaFlow, labaflow, Lab-a-Day Laundry, RFID laundry, laundry tracking system, laundry management Pagsanjan, IoT laundry tracking, RFID tag laundry Laguna, smart laundry tracker">
+<meta name="author" content="LabaFlow Team">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://labaflow.netlify.app/">
+
+<!-- Open Graph / Facebook / Messenger / Viber -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://labaflow.netlify.app/">
+<meta property="og:title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta property="og:description" content="Track your laundry in real-time with LabaFlow RFID technology. Automated wash stages, instant updates, and cashless payments.">
+<meta property="og:image" content="https://labaflow.netlify.app/images/service-clothes.jpg">
+<meta property="og:site_name" content="LabaFlow">
+<meta property="og:locale" content="en_PH">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://labaflow.netlify.app/">
+<meta name="twitter:title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta name="twitter:description" content="Real-time RFID laundry tracking & inventory management for Lab-a-Day Laundry Shop.">
+<meta name="twitter:image" content="https://labaflow.netlify.app/images/service-clothes.jpg">
+
+<!-- Google Rich Snippets / Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://labaflow.netlify.app/#website",
+      "url": "https://labaflow.netlify.app/",
+      "name": "LabaFlow",
+      "alternateName": ["Laba Flow", "LabaFlow System", "Lab-a-Day Laundry"],
+      "description": "Smart RFID Laundry Tracking & Inventory Management System for Lab-a-Day Laundry Shop",
+      "inLanguage": "en-PH"
+    },
+    {
+      "@type": "DryCleaningOrLaundry",
+      "@id": "https://labaflow.netlify.app/#business",
+      "name": "Lab-a-Day Laundry (Powered by LabaFlow)",
+      "url": "https://labaflow.netlify.app/",
+      "image": "https://labaflow.netlify.app/images/service-clothes.jpg",
+      "telephone": "+639123456789",
+      "priceRange": "₱₱",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "B. Cosme St., Poblacion 2",
+        "addressLocality": "Pagsanjan",
+        "addressRegion": "Laguna",
+        "postalCode": "4008",
+        "addressCountry": "PH"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 14.2755,
+        "longitude": 121.4554
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "07:00",
+          "closes": "19:00"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "LabaFlow",
+      "operatingSystem": "Web, Android",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "PHP"
+      }
+    }
+  ]
+}
+</script>
+
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0E214E">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -3748,6 +3836,7 @@ img, svg, canvas, video {
     </div>
     <button class="lp-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleLpMenu(this)"><span aria-hidden="true">&#9776;</span></button>
     <div class="lp-nav-cta">
+      <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline" style="text-decoration:none;font-size:12.5px;padding:7px 12px;gap:6px;" title="Download Android Mobile App">📲 App (APK)</a>
       <button class="lp-btn lp-btn-outline" onclick="openAuth('sign')">Sign In</button>
       <button class="lp-btn lp-btn-solid" onclick="openAuth('reg')">Book Now →</button>
     </div>
@@ -3763,6 +3852,7 @@ img, svg, canvas, video {
         <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">Book Now →</button>
         <button class="lp-btn lp-btn-gold lp-btn-lg" onclick="openAuth('sign')">📡 Track My Order</button>
         <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="openAuth('sign')">Sign In</button>
+        <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline lp-btn-lg" style="text-decoration:none;gap:6px;" title="Download Android Mobile App">📲 Download APK</a>
       </div>
       <div class="lp-spinzy-hero-cards">
         <div class="lp-spinzy-hcard-blue">
@@ -4278,7 +4368,7 @@ img, svg, canvas, video {
         <span class="tb-live-pill" title="Supabase Realtime Cloud Sync Active"><span class="tb-live-dot"></span>Live Sync</span>
       </div>
       <div class="tb-quick-actions" id="tbQuickActions">
-        <button type="button" class="tb-qa-btn primary" onclick="showPage('rfid_scanner')">📡 Scan RFID / Receive</button>
+        <button type="button" class="tb-qa-btn primary" onclick="showPage('orders')">🧺 Orders</button>
         <button type="button" class="tb-qa-btn" onclick="openOrdModal(null)">➕ New Order</button>
         <button type="button" class="tb-qa-btn" onclick="openPayModal()">💳 Record Payment</button>
         <button type="button" class="tb-qa-btn" onclick="showPage('scan_logs')">🛡️ Scan Logs</button>
@@ -4564,6 +4654,17 @@ img, svg, canvas, video {
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mPromo')">Cancel</button>
     <button class="btn btn-primary" onclick="submitPromo()">Save Code</button>
+  </div>
+</div></div>
+
+<!-- Logout Confirmation Modal (HTML Fallback) -->
+<div class="ov" id="mLogoutConfirm"><div class="modal" style="width:360px;text-align:center;padding:24px 20px;">
+  <div style="width:52px;height:52px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;">🚪</div>
+  <h3 style="margin-bottom:8px;font-size:18px;">Sign Out</h3>
+  <p class="text-sm text-muted" style="margin-bottom:20px;line-height:1.5;">Are you sure you want to sign out of LabaFlow? All session data and password fields will be securely cleared.</p>
+  <div class="mf" style="justify-content:center;gap:10px;">
+    <button type="button" class="btn btn-ghost" onclick="closeM('mLogoutConfirm')">Cancel</button>
+    <button type="button" class="btn btn-danger" style="background:#DC2626;color:#fff;" onclick="closeM('mLogoutConfirm');executeSecureLogout()">Yes, Sign Out</button>
   </div>
 </div></div>
 
@@ -4854,7 +4955,12 @@ function openAuth(tab){
   document.getElementById('authOverlay').classList.add('open');
   authTab(tab||'sign');
 }
-function closeAuth(){document.getElementById('authOverlay').classList.remove('open');}
+function closeAuth(){
+  document.getElementById('authOverlay').classList.remove('open');
+  const liPass=g('liPass');if(liPass){liPass.value='';liPass.blur();}
+  const rPass=g('rPass');if(rPass)rPass.value='';
+  const rPass2=g('rPass2');if(rPass2)rPass2.value='';
+}
 
 function authTab(t){
   document.getElementById('fSign').style.display=t==='sign'?'':'none';
@@ -5089,7 +5195,11 @@ async function doLogin(){
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
     const profile=await LabaFlowSupabase.signIn(parsed.value,pass);
-    setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
+    setCurrentUser(profile);
+    err.style.display='none';
+    const liP=g('liPass');if(liP){liP.value='';liP.blur();}
+    closeAuth();
+    await launchApp();
   }catch(error){showAuthError(err,error);}
   finally{hideLoader();}
 }
@@ -5167,16 +5277,79 @@ async function doGoogleSignIn(errorId='rErr'){
   catch(error){showAuthError(err,error);}
 }
 
-async function doLogout(){
-  showLoader('Signing out…');
-  try{LabaFlowSupabase.signOut();}finally{
-    sessionStorage.removeItem('lf3_cu');CU=null;
-    g('app').style.display='none';
-    g('portal').style.display='none';
-    hideLoader();
-    g('landing').style.display='block';
+async function doLogout(force=false){
+  if(!force){
+    if(typeof Swal!=='undefined'&&typeof LF_SWAL!=='undefined'){
+      const res=await Swal.fire({
+        ...LF_SWAL,
+        icon:'question',
+        title:'<span style="color:#fff;">Sign Out?</span>',
+        html:'<div style="color:#e2e8f0;font-size:14px;line-height:1.6;">Sigurado ka bang nais mong mag-sign out sa LabaFlow?<br><span style="color:#94a3b8;font-size:12px;">All session data, cookies, and password fields will be securely cleared.</span></div>',
+        showCancelButton:true,
+        confirmButtonText:'Yes, Sign Out',
+        cancelButtonText:'Cancel',
+        confirmButtonColor:'#ef4444',
+        cancelButtonColor:'#334155',
+        reverseButtons:true
+      });
+      if(res&&res.isConfirmed){
+        return executeSecureLogout();
+      }
+      return;
+    }else if(g('mLogoutConfirm')){
+      openM('mLogoutConfirm');
+      return;
+    }else if(confirm('Are you sure you want to sign out of LabaFlow?')){
+      return executeSecureLogout();
+    }
+    return;
+  }
+  executeSecureLogout();
+}
+
+async function executeSecureLogout(){
+  showLoader('Signing out securely…');
+  try{
+    if(window.LabaFlowSupabase&&typeof LabaFlowSupabase.signOut==='function'){
+      try{LabaFlowSupabase.signOut();}catch(_){}
+    }
+    sessionStorage.clear();
+    localStorage.removeItem('lf3_cu');
+    localStorage.removeItem('lf3_sb_session');
+    localStorage.removeItem('labaflow.supabase.session.v1');
+    localStorage.removeItem('labaflow.supabase.pkce.verifier.v1');
+    CU=null;window.CU=null;
+
+    document.querySelectorAll('input[type="password"]').forEach(i=>{i.value='';i.defaultValue='';i.setAttribute('value','');});
+    ['liEmail','liPass','rPass','rPass2','rContact','rOtp','setPass'].forEach(id=>{
+      const el=g(id);if(el){el.value='';el.defaultValue='';el.setAttribute('value','');}
+    });
+
+    document.querySelectorAll('form').forEach(f=>{try{f.reset();}catch(_){}});
+    if(document.activeElement&&typeof document.activeElement.blur==='function')document.activeElement.blur();
+
+    try{
+      document.cookie.split(';').forEach(c=>{
+        document.cookie=c.trim().split('=')[0]+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
+      });
+    }catch(_){}
+
+    if(navigator.serviceWorker&&navigator.serviceWorker.controller){
+      navigator.serviceWorker.controller.postMessage({type:'CLEAR_AUTH'});
+    }
+
+    const appEl=g('app');if(appEl)appEl.style.display='none';
+    const pgContent=g('pgContent');if(pgContent)pgContent.innerHTML='';
+    const portalEl=g('portal');if(portalEl)portalEl.style.display='none';
+    const landingEl=g('landing');if(landingEl)landingEl.style.display='block';
     document.body.style.background='';
-    
+
+    try{
+      window.history.replaceState(null,document.title,window.location.pathname);
+    }catch(_){}
+  }finally{
+    hideLoader();
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 }
 
@@ -5294,7 +5467,6 @@ function checkTopbarAlerts(){
 ══════════════════════════════════════ */
 const NAV_ADMIN=[
   {id:'dashboard',ni:'▤',label:'Dashboard'},
-  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'orders',ni:'🧺',label:'Orders'},
   {id:'scan_logs',ni:'🛡️',label:'Audit & Notif Logs (RO)'},
   {id:'analytics',ni:'◈',label:'3-Pillar Analytics'},
@@ -5305,7 +5477,6 @@ const NAV_ADMIN=[
 ];
 const NAV_SELLER=[
   {id:'orders',ni:'▤',label:'Orders'},
-  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'rfid',ni:'◎',label:'RFID Tags'},
   {id:'scan_logs',ni:'🛡️',label:'RFID & Audit Logs'},
   {id:'inventory',ni:'▦',label:'Inventory'},
@@ -5325,7 +5496,7 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',scan_logs:'Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics',inv_admin:'Inventory Monitor',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
 
 function toggleExpPanel(btn){
   if(!btn)return;
@@ -5576,7 +5747,6 @@ function pgDashboard(){
     ${low.length?`<div class="notice n-warn">⚠ Low stock: ${low.map(i=>`<strong>${i.name}</strong> (${i.qty} ${i.unit})`).join(', ')} — <a href="#" onclick="showPage('inv_admin');return false;" style="color:var(--warn);text-decoration:underline;">View Inventory</a></div>`:''}
     <div class="dash-actions" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;background:#fff;padding:14px 18px;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow-card);align-items:center;">
       <span style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">⚡ Quick Actions:</span>
-      <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Open RFID Scanner & Receive</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('orders')">🧺 Manage Orders</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Logs</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('inv_admin')">🫧 Inventory Monitor</button>
@@ -5790,8 +5960,8 @@ function computePredictiveAndPrescriptive(){
     desc:untaggedPending>0
       ?`There ${untaggedPending===1?'is 1 booking':'are '+untaggedPending+' bookings'} waiting for initial RFID tag linking, plus ${readyUnpaid} Ready order(s) awaiting pickup & payment.`
       :`All active laundry bags are linked to 13.56 MHz RFID tags. Tap any active tag on the single ESP32 + RC522 reader to auto-advance its stage.`,
-    btnLabel:'📡 Go to 1-Device RFID Station',
-    action:`showPage('rfid_scanner')`
+    btnLabel:'🧺 View Orders',
+    action:`showPage('orders')`
   });
 
   // Promo & Off-Peak Demand Shifting Prescription
@@ -6450,7 +6620,7 @@ function pgOrders(){
       </div>
       ${['ALL','PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'].map(f=>`<span class="chip${oFilter===f?' on':''}" onclick="setOF('${f}')">${STATUS_SHORT[f]||f}</span>`).join('')}
       <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('orders')">🧺 Orders</button>
         <button class="btn btn-ghost btn-sm" onclick="openOrdModal(null)">+ Walk-in Order</button>
         <button class="btn btn-ghost btn-sm" onclick="openPayModal()">💳 Record Payment</button>
       </div>
@@ -6743,8 +6913,7 @@ function openAssignRfid(ordId){
   openM('mRfid');
 }
 function openScannerForOrder(ordId){
-  window._scannerSelectedOrdId=ordId;
-  showPage('rfid_scanner');
+  showPage('orders');
 }
 function submitAssignRfid(){
   const tagId=parseInt(gv('rfidTagSel'));
@@ -6921,7 +7090,6 @@ function _doAdvance(o,orders,next){
   updateSellerBell();
   renderDetail();
   if(curPage==='orders')pgOrders();
-  if(curPage==='rfid_scanner')pgRfidScanner();
   if(curPage==='inventory')pgInventory();
   if(curPage==='inv_admin')pgInvAdmin();
 }
@@ -7369,7 +7537,7 @@ function pgRFID(){
       <input class="search-box" value="${escapeHtml(rfidListSrch)}" placeholder="🔍 Search Tag ID, UID, Order #, Customer…" oninput="rfidListSrch=this.value;pgRFID()" style="width:240px;">
       ${[['ALL','All Tags'],['AVAILABLE','✓ Available'],['IN_USE','🔒 In Use']].map(([k,lbl])=>`<span class="chip${rfidListFilter===k?' on':''}" onclick="rfidListFilter='${k}';pgRFID()">${lbl}</span>`).join('')}
       <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('orders')">🧺 Orders</button>
         <button class="btn btn-ghost btn-sm" onclick="openM('mRegTag')">+ Register New RFID Tag</button>
         <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🔒 Audit Logs</button>
       </div>
@@ -7397,7 +7565,7 @@ function pgRFID(){
             </td>
             <td><div class="tda">
               ${linked?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${linked.id})">📡 Scan / Advance</button>`:''}
-              ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="window._prefillScanUid='${tag.uid}';showPage('rfid_scanner')">Assign</button>`}
+              ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="showPage('orders')">View Orders</button>`}
             </div></td>
           </tr>`;
         }).join(''):'<tr><td colspan="6"><div class="empty">No RFID tags match your search/filter</div></td></tr>'}</tbody></table>
@@ -8256,11 +8424,25 @@ function ptTrack(){
           </div>
         </div>
         <div class="cp">
+          ${!tag?`
+            <div style="text-align:center;padding:28px 16px;">
+              <div style="font-size:48px;margin-bottom:12px;">⏳</div>
+              <div style="font-weight:800;font-size:16px;color:var(--text);margin-bottom:8px;">Waiting for Seller to Scan Your RFID</div>
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.7;max-width:380px;margin:0 auto;">
+                Your booking has been received! Please <b>drop off your laundry at the shop</b>.<br>
+                Our staff will scan an RFID tag to confirm your order and begin real-time tracking.
+              </div>
+              <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700;color:#7dd3fc;">
+                📡 RFID scan required to start tracking
+              </div>
+            </div>
+          `:`
           <div class="tl" style="margin:18px 0 22px;">${renderOrderTimelineHTML(ord.status)}</div>
           <div class="notice n-info" style="margin-bottom:0;">
             <strong>Current Stage — ${STATUS_LABEL[ord.status]||ord.status}:</strong><br>
             ${stageDescriptions[normStatus(ord.status)]||''}
           </div>
+          `}
         </div>
       </div>
 
@@ -8420,12 +8602,11 @@ function ptBook(){
               <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
             </select>
             <div class="mode-choice-grid" id="bkModeGrid">
-              <div class="mode-choice-pill active" data-val="Drop-off at Shop" onclick="selectBkMode('Drop-off at Shop',this)">🏪 Drop-off at Shop</div>
-              <div class="mode-choice-pill" data-val="Pickup & Delivery" onclick="selectBkMode('Pickup & Delivery',this)">🛵 Pickup & Delivery</div>
+              <div class="mode-choice-pill active" data-val="Drop-off at Shop" onclick="selectBkMode('Drop-off at Shop',this)">🏪 Drop-off at Shop (Walk-in Only)</div>
             </div>
           </div>
           <div class="pt-form-group" style="margin-bottom:0;">
-            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
+            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off Schedule</label>
             <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
           </div>
         </div>
@@ -9443,6 +9624,46 @@ enhancePasswordVisibility();
 new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{
   if(node.nodeType===Node.ELEMENT_NODE)enhancePasswordVisibility(node);
 }))).observe(document.body,{childList:true,subtree:true});
+
+/* 🔒 Secure Navigation, Back-Button & bfcache Cache Wipe */
+window.addEventListener('pageshow', function(event) {
+  const hasSession = localStorage.getItem('labaflow.supabase.session.v1') || localStorage.getItem('lf3_sb_session') || sessionStorage.getItem('lf3_cu');
+  if (!hasSession) {
+    CU = null;
+    window.CU = null;
+    if (window.g) {
+      const app = g('app');
+      const portal = g('portal');
+      const landing = g('landing');
+      if (app) app.style.display = 'none';
+      if (portal) portal.style.display = 'none';
+      if (landing) landing.style.display = 'block';
+    }
+    document.querySelectorAll('input[type="password"]').forEach(el => { el.value = ''; el.defaultValue = ''; });
+    const liP = document.getElementById('liPass');
+    if (liP) { liP.value = ''; liP.blur(); }
+    if (event.persisted) {
+      window.location.replace(window.location.pathname);
+    }
+  }
+});
+
+window.addEventListener('popstate', function() {
+  const hasSession = localStorage.getItem('labaflow.supabase.session.v1') || localStorage.getItem('lf3_sb_session') || sessionStorage.getItem('lf3_cu');
+  if (!hasSession && CU === null) {
+    if (window.g) {
+      const app = g('app');
+      const portal = g('portal');
+      const landing = g('landing');
+      if (app) app.style.display = 'none';
+      if (portal) portal.style.display = 'none';
+      if (landing) landing.style.display = 'block';
+    }
+    document.querySelectorAll('input[type="password"]').forEach(el => { el.value = ''; });
+    const liP = document.getElementById('liPass');
+    if (liP) { liP.value = ''; liP.blur(); }
+  }
+});
 
 </script>
 </body>
