@@ -6608,10 +6608,19 @@ let oFilter='ALL',oTypeFilter='ALL',detailId=null;
 
 function pgOrders(){
   let orders=DB.get('orders');
+  const pendingNoTag=DB.get('orders').filter(o=>o.status==='PENDING'&&!o.tagId).length;
   if(oFilter==='ACTIVE')orders=orders.filter(o=>['RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status));
   else if(oFilter!=='ALL')orders=orders.filter(o=>normStatus(o.status)===oFilter);
   if(oTypeFilter!=='ALL')orders=orders.filter(o=>o.type===oTypeFilter);
-  orders=[...orders].reverse();
+  // Sort: PENDING orders (no tag) first by created date, then rest
+  orders=[...orders].sort((a,b)=>{
+    const aPending=a.status==='PENDING'&&!a.tagId;
+    const bPending=b.status==='PENDING'&&!b.tagId;
+    if(aPending&&!bPending) return -1;
+    if(!aPending&&bPending) return 1;
+    if(aPending&&bPending) return new Date(a.created)-new Date(b.created); // oldest first
+    return new Date(b.created)-new Date(a.created); // newest first for others
+  });
   g('pgContent').innerHTML=`
     <div class="toolbar">
       <div class="search-wrap" id="oSrchWrap">
@@ -6629,23 +6638,40 @@ function pgOrders(){
       <span style="font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Service Filter:</span>
       ${[['ALL','All Services'],['CLOTHES','👕 Clothes'],['BEDSHEET','🛏️ Bedsheet'],['COMFORTER','🛌 Comforter'],['WASH_ONLY','🫧 Wash Only'],['DRY_ONLY','💨 Dry Only']].map(([k,lbl])=>`<span class="chip${oTypeFilter===k?' on':''}" onclick="oTypeFilter='${k}';pgOrders()">${lbl}</span>`).join('')}
     </div>
-    <div class="card"><div class="ch"><h4>📋 Orders List</h4><span class="text-sm text-muted" id="oRowCnt">${orders.length} shown</span></div>
+    <div class="card"><div class="ch">
+        <h4>📋 Orders List</h4>
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${pendingNoTag>0?`<span style="background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.4);color:#38bdf8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;">📡 ${pendingNoTag} pending RFID scan — scan ESP32 in order</span>`:''}
+          <span class="text-sm text-muted" id="oRowCnt">${orders.length} shown</span>
+        </div>
+      </div>
       <div class="table-scroll">
         <table><thead><tr><th>Order #</th><th>Customer</th><th>Service</th><th>Summary & Details</th><th>Amount</th><th>Status</th><th>RFID Tag</th><th>Date</th><th>Actions</th></tr></thead>
-        <tbody id="oTbody">${orders.length?orders.map(ordRow).join(''):'<tr><td colspan="9"><div class="empty">No matching orders found</div></td></tr>'}</tbody></table>
+        <tbody id="oTbody">${orders.length?(()=>{
+          let qPos=0;
+          return orders.map(o=>{
+            if(o.status==='PENDING'&&!o.tagId) qPos++;
+            return ordRow(o, o.status==='PENDING'&&!o.tagId?qPos:0);
+          }).join('');
+        })():'<tr><td colspan="9"><div class="empty">No matching orders found</div></td></tr>'}</tbody></table>
       </div>
     </div>`;
 }
 
-function ordRow(o){
+function ordRow(o, queuePos){
   const tag=o.tagId?DB.get('rfidTags').find(t=>t.id===o.tagId):null;
   const canAssign=o.status==='PENDING'&&!o.tagId;
+  const isNextInQueue=canAssign&&queuePos===1; // Only oldest pending gets "NEXT" badge
   const detail=o.type==='COMFORTER'?`${o.comQty} pc(s)`:(o.kg?`${o.kg} kg`:'Flat rate');
   const colorTag=o.colorDist?`<span class="badge ${o.colorDist==='WHITES'?'b-gray':o.colorDist==='COLORED'?'b-blue':'b-yellow'}" style="font-size:10px;margin-left:4px;">${o.colorDist==='WHITES'?'⬜ Whites':o.colorDist==='COLORED'?'🎨 Colored':'🧺 Mixed'}</span>`:'';
   const rowPaid=DB.get('transactions').some(t=>t.orderId===o.id&&t.status==='COMPLETED');
   const payBadge=o.status==='READY'?(rowPaid?'<span class="badge b-ok" style="font-size:10px;">✓ Paid</span>':'<span class="badge" style="background:rgba(251,191,36,.15);color:#fbbf24;font-size:10px;">⚠ Unpaid</span>'):'';
-  return`<tr>
-    <td class="fw7 mono-code">${o.num}</td>
+  return`<tr style="${isNextInQueue?'background:rgba(56,189,248,.06);border-left:3px solid #38bdf8;':''}">
+    <td class="fw7 mono-code">
+      ${o.num}
+      ${isNextInQueue?`<div style="font-size:10px;font-weight:800;color:#38bdf8;margin-top:2px;">📡 NEXT RFID SCAN</div>`:''}
+      ${canAssign&&!isNextInQueue?`<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Queue #${queuePos}</div>`:''}
+    </td>
     <td><div class="fw7">${escapeHtml(o.custName)}</div><div class="text-sm text-muted">${escapeHtml(o.serviceMode||'Drop-off')}</div></td>
     <td><span class="badge b-gray">${TYPE_LABEL[o.type]||o.type}</span>${colorTag}</td>
     <td class="text-sm">
@@ -6669,7 +6695,6 @@ function ordRow(o){
     <td><div class="tda">
       <button class="btn btn-ghost btn-sm" onclick="openDetail(${o.id})">View</button>
       <button class="btn btn-ghost btn-sm" onclick="openOrdModal(${o.id})">Edit</button>
-      ${canAssign?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${o.id})">📡 Scan & Receive</button>`:''}
     </div></td>
   </tr>`;
 }
