@@ -2773,17 +2773,46 @@ input[type="password"]::-ms-clear {
   color: #FFFFFF;
   border-color: #4579EE;
 }
+.exp-toggle-btn {
+  transition: all 0.15s ease, transform 0.12s ease;
+}
+.exp-toggle-btn[aria-expanded="true"] {
+  background: #4579EE;
+  color: #FFFFFF;
+  border-color: #4579EE;
+}
 .exp-panel {
-  display: none;
-  margin-top: 7px;
-  padding: 9px 11px;
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  padding: 0 11px;
   border-radius: 10px;
   background: #F7F9FF;
-  border: 1px solid #D7E3FF;
+  border: 1px solid transparent;
   font-size: 12px;
   color: #334155;
+  overflow: hidden;
+  transition: grid-template-rows 0.32s cubic-bezier(0.4,0,0.2,1),
+              padding 0.32s ease,
+              border-color 0.25s ease,
+              opacity 0.28s ease;
+  opacity: 0;
+}
+.exp-panel > .exp-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.exp-panel.open {
+  grid-template-rows: 1fr;
+  padding: 9px 11px;
+  border-color: #D7E3FF;
+  opacity: 1;
+  margin-top: 7px;
+}
+.exp-panel {
   line-height: 1.55;
   text-align: left;
+}
 }
 .exp-panel.open {
   display: block;
@@ -5401,9 +5430,43 @@ function toggleExpPanel(btn){
     panel=btn.closest('td,div,article,li')?.querySelector('.exp-panel');
   }
   if(!panel)return;
+
+  // ── Accordion: close all siblings in the same section ──
+  const section=btn.closest('.lp-services-grid,.lp-steps-grid,.exp-section,section,table,tbody,.card,.cp');
+  if(section){
+    section.querySelectorAll('.exp-panel.open').forEach(p=>{
+      if(p!==panel){
+        p.classList.remove('open');
+        const sibBtn=p.previousElementSibling?.matches?.('.exp-toggle-btn')
+          ? p.previousElementSibling
+          : section.querySelector(`.exp-toggle-btn[data-panel-id="${p.id}"]`);
+        if(sibBtn){
+          const lbl=sibBtn.dataset.label||'Details';
+          sibBtn.innerHTML=`▾ View ${lbl}`;
+          sibBtn.setAttribute('aria-expanded','false');
+        }
+      }
+    });
+  }
+
+  // ── Wrap panel content in .exp-panel-inner if not already ──
+  if(!panel.querySelector('.exp-panel-inner')){
+    const inner=document.createElement('div');
+    inner.className='exp-panel-inner';
+    while(panel.firstChild) inner.appendChild(panel.firstChild);
+    panel.appendChild(inner);
+  }
+
   const isOpen=panel.classList.toggle('open');
   const baseLabel=btn.dataset.label||'Details';
-  btn.innerHTML=isOpen?`▴ Hide ${baseLabel}`:`▾ View ${baseLabel}`;
+
+  // ── Button: flip chevron + text with a smooth swap ──
+  btn.style.transform='scale(0.93)';
+  setTimeout(()=>{ btn.style.transform=''; },150);
+  btn.innerHTML=isOpen
+    ? `▴ Hide ${baseLabel}`
+    : `▾ View ${baseLabel}`;
+  btn.setAttribute('aria-expanded', String(isOpen));
 }
 
 function showPage(p){
