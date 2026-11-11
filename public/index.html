@@ -4368,7 +4368,7 @@ img, svg, canvas, video {
         <span class="tb-live-pill" title="Supabase Realtime Cloud Sync Active"><span class="tb-live-dot"></span>Live Sync</span>
       </div>
       <div class="tb-quick-actions" id="tbQuickActions">
-        <button type="button" class="tb-qa-btn primary" onclick="showPage('orders')">🧺 Orders</button>
+        <button type="button" class="tb-qa-btn primary" onclick="showPage('rfid_scanner')">📡 Scan RFID / Receive</button>
         <button type="button" class="tb-qa-btn" onclick="openOrdModal(null)">➕ New Order</button>
         <button type="button" class="tb-qa-btn" onclick="openPayModal()">💳 Record Payment</button>
         <button type="button" class="tb-qa-btn" onclick="showPage('scan_logs')">🛡️ Scan Logs</button>
@@ -4665,6 +4665,29 @@ img, svg, canvas, video {
   <div class="mf" style="justify-content:center;gap:10px;">
     <button type="button" class="btn btn-ghost" onclick="closeM('mLogoutConfirm')">Cancel</button>
     <button type="button" class="btn btn-danger" style="background:#DC2626;color:#fff;" onclick="closeM('mLogoutConfirm');executeSecureLogout()">Yes, Sign Out</button>
+  </div>
+</div></div>
+
+<!-- Set Password (for Google-only users) -->
+<div class="ov" id="mSetPw"><div class="modal" style="max-width:400px;">
+  <h3>🔑 Set a Password</h3>
+  <p class="text-sm text-muted" style="margin-bottom:14px;">You signed in with Google. Set a password so you can also sign in with your email and password next time — no Google needed.</p>
+  <div class="fg"><label>New Password</label>
+    <div class="password-input-wrap">
+      <input type="password" id="spPass" placeholder="Min 8 chars, letters + numbers" autocomplete="new-password">
+      <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </div>
+  <div class="fg"><label>Confirm Password</label>
+    <div class="password-input-wrap">
+      <input type="password" id="spPass2" placeholder="Repeat password" autocomplete="new-password">
+      <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </div>
+  <div class="lfg-err" id="spErr"></div>
+  <div class="mf">
+    <button class="btn btn-ghost" onclick="closeM('mSetPw')">Skip for now</button>
+    <button class="btn btn-primary" onclick="submitSetPassword()">Set Password</button>
   </div>
 </div></div>
 
@@ -5200,7 +5223,17 @@ async function doLogin(){
     const liP=g('liPass');if(liP){liP.value='';liP.blur();}
     closeAuth();
     await launchApp();
-  }catch(error){showAuthError(err,error);}
+  }catch(error){
+    const em=String(error?.message||'');
+    if(em.toLowerCase().includes('google')||em.includes('"Continue with Google"')){
+      err.innerHTML=em+' <button type="button" onclick="doGoogleSignIn(\'liErr\')" style="display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #d1d5db;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px;vertical-align:middle;">'+
+        '<svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>'+
+        'Sign in with Google</button>';
+      err.style.display='block';
+    }else{
+      showAuthError(err,error);
+    }
+  }
   finally{hideLoader();}
 }
 
@@ -5256,7 +5289,15 @@ async function doRegister(){
       return;
     }
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
-  }catch(error){showAuthError(err,error);}
+  }catch(error){
+    const em=String(error?.message||'');
+    if(em.toLowerCase().includes('already')&&(em.toLowerCase().includes('account')||em.toLowerCase().includes('registered'))){
+      err.innerHTML=em+' <a href="#" onclick="authTab(\'sign\');return false;" style="color:var(--accent2);font-weight:700;text-decoration:underline;">Sign in →</a>';
+      err.style.display='block';
+    }else{
+      showAuthError(err,error);
+    }
+  }
   finally{hideLoader();}
 }
 
@@ -5275,6 +5316,22 @@ async function doGoogleSignIn(errorId='rErr'){
   if(!LabaFlowSupabase.configured()){showAuthError(err,new Error('Supabase is not configured. Add your project values in supabase-config.js.'));return;}
   try{await LabaFlowSupabase.signInWithGoogle();}
   catch(error){showAuthError(err,error);}
+}
+
+function submitSetPassword(){
+  const pass=g('spPass').value,pass2=g('spPass2').value;
+  const err=g('spErr');err.style.display='none';
+  if(!pass){showAuthError(err,new Error('Enter a password.'));return;}
+  if(/\s/.test(pass)){showAuthError(err,new Error('Password must not contain spaces.'));return;}
+  if(pass.length<8){showAuthError(err,new Error('Password must be at least 8 characters.'));return;}
+  if(!/[A-Za-z]/.test(pass)||!/\d/.test(pass)){showAuthError(err,new Error('Password must include letters and numbers.'));return;}
+  if(pass!==pass2){showAuthError(err,new Error('Passwords do not match.'));return;}
+  showLoader('Setting password…');
+  LabaFlowSupabase.setPassword(pass).then(()=>{
+    if(CU){CU.hasPassword=true;sessionStorage.setItem('lf3_cu',JSON.stringify(CU));}
+    closeM('mSetPw');
+    toast('✓ Password set! You can now sign in with your email and password too.');
+  }).catch(e=>{showAuthError(err,e);}).finally(hideLoader);
 }
 
 async function doLogout(force=false){
@@ -5440,6 +5497,12 @@ async function launchApp(){
     showPage(returnTab==='profile'?'my_profile':(CU.role==='ADMIN'?'dashboard':'orders'));
     if(returnTab==='profile')toast('✓ Gmail profile picture synced!');
   }
+
+  /* Google-only users: prompt to set a password so email+password sign-in also works */
+  if(CU?.googleConnected && !CU?.hasPassword && !sessionStorage.getItem('lf3_pw_prompted')){
+    sessionStorage.setItem('lf3_pw_prompted','1');
+    setTimeout(()=>{ if(g('mSetPw')) openM('mSetPw'); },1500);
+  }
 }
 
 function updateLoyaltyPill(){
@@ -5467,6 +5530,7 @@ function checkTopbarAlerts(){
 ══════════════════════════════════════ */
 const NAV_ADMIN=[
   {id:'dashboard',ni:'▤',label:'Dashboard'},
+  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'orders',ni:'🧺',label:'Orders'},
   {id:'scan_logs',ni:'🛡️',label:'Audit & Notif Logs (RO)'},
   {id:'analytics',ni:'◈',label:'3-Pillar Analytics'},
@@ -5477,6 +5541,7 @@ const NAV_ADMIN=[
 ];
 const NAV_SELLER=[
   {id:'orders',ni:'▤',label:'Orders'},
+  {id:'rfid_scanner',ni:'📡',label:'1-Device RFID Station'},
   {id:'rfid',ni:'◎',label:'RFID Tags'},
   {id:'scan_logs',ni:'🛡️',label:'RFID & Audit Logs'},
   {id:'inventory',ni:'▦',label:'Inventory'},
@@ -5496,7 +5561,7 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',scan_logs:'Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics',inv_admin:'Inventory Monitor',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
 
 function toggleExpPanel(btn){
   if(!btn)return;
@@ -5747,6 +5812,7 @@ function pgDashboard(){
     ${low.length?`<div class="notice n-warn">⚠ Low stock: ${low.map(i=>`<strong>${i.name}</strong> (${i.qty} ${i.unit})`).join(', ')} — <a href="#" onclick="showPage('inv_admin');return false;" style="color:var(--warn);text-decoration:underline;">View Inventory</a></div>`:''}
     <div class="dash-actions" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;background:#fff;padding:14px 18px;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow-card);align-items:center;">
       <span style="font-size:12px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">⚡ Quick Actions:</span>
+      <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 Open RFID Scanner & Receive</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('orders')">🧺 Manage Orders</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Logs</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('inv_admin')">🫧 Inventory Monitor</button>
@@ -5960,8 +6026,8 @@ function computePredictiveAndPrescriptive(){
     desc:untaggedPending>0
       ?`There ${untaggedPending===1?'is 1 booking':'are '+untaggedPending+' bookings'} waiting for initial RFID tag linking, plus ${readyUnpaid} Ready order(s) awaiting pickup & payment.`
       :`All active laundry bags are linked to 13.56 MHz RFID tags. Tap any active tag on the single ESP32 + RC522 reader to auto-advance its stage.`,
-    btnLabel:'🧺 View Orders',
-    action:`showPage('orders')`
+    btnLabel:'📡 Go to 1-Device RFID Station',
+    action:`showPage('rfid_scanner')`
   });
 
   // Promo & Off-Peak Demand Shifting Prescription
@@ -6620,7 +6686,7 @@ function pgOrders(){
       </div>
       ${['ALL','PENDING','RECEIVED','WASHING','DRYING','FOLDING','READY','RELEASED'].map(f=>`<span class="chip${oFilter===f?' on':''}" onclick="setOF('${f}')">${STATUS_SHORT[f]||f}</span>`).join('')}
       <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('orders')">🧺 Orders</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
         <button class="btn btn-ghost btn-sm" onclick="openOrdModal(null)">+ Walk-in Order</button>
         <button class="btn btn-ghost btn-sm" onclick="openPayModal()">💳 Record Payment</button>
       </div>
@@ -6913,7 +6979,8 @@ function openAssignRfid(ordId){
   openM('mRfid');
 }
 function openScannerForOrder(ordId){
-  showPage('orders');
+  window._scannerSelectedOrdId=ordId;
+  showPage('rfid_scanner');
 }
 function submitAssignRfid(){
   const tagId=parseInt(gv('rfidTagSel'));
@@ -7090,6 +7157,7 @@ function _doAdvance(o,orders,next){
   updateSellerBell();
   renderDetail();
   if(curPage==='orders')pgOrders();
+  if(curPage==='rfid_scanner')pgRfidScanner();
   if(curPage==='inventory')pgInventory();
   if(curPage==='inv_admin')pgInvAdmin();
 }
@@ -7537,7 +7605,7 @@ function pgRFID(){
       <input class="search-box" value="${escapeHtml(rfidListSrch)}" placeholder="🔍 Search Tag ID, UID, Order #, Customer…" oninput="rfidListSrch=this.value;pgRFID()" style="width:240px;">
       ${[['ALL','All Tags'],['AVAILABLE','✓ Available'],['IN_USE','🔒 In Use']].map(([k,lbl])=>`<span class="chip${rfidListFilter===k?' on':''}" onclick="rfidListFilter='${k}';pgRFID()">${lbl}</span>`).join('')}
       <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="showPage('orders')">🧺 Orders</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('rfid_scanner')">📡 1-Device RFID Station</button>
         <button class="btn btn-ghost btn-sm" onclick="openM('mRegTag')">+ Register New RFID Tag</button>
         <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🔒 Audit Logs</button>
       </div>
@@ -7565,7 +7633,7 @@ function pgRFID(){
             </td>
             <td><div class="tda">
               ${linked?`<button class="btn btn-primary btn-sm" onclick="openScannerForOrder(${linked.id})">📡 Scan / Advance</button>`:''}
-              ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="showPage('orders')">View Orders</button>`}
+              ${!tag.available?`<button class="btn btn-ghost btn-sm" onclick="releaseTag(${tag.id})">Release Tag</button>`:`<button class="btn btn-ghost btn-sm" onclick="window._prefillScanUid='${tag.uid}';showPage('rfid_scanner')">Assign</button>`}
             </div></td>
           </tr>`;
         }).join(''):'<tr><td colspan="6"><div class="empty">No RFID tags match your search/filter</div></td></tr>'}</tbody></table>
@@ -8424,25 +8492,11 @@ function ptTrack(){
           </div>
         </div>
         <div class="cp">
-          ${!tag?`
-            <div style="text-align:center;padding:28px 16px;">
-              <div style="font-size:48px;margin-bottom:12px;">⏳</div>
-              <div style="font-weight:800;font-size:16px;color:var(--text);margin-bottom:8px;">Waiting for Seller to Scan Your RFID</div>
-              <div style="font-size:13px;color:var(--text-muted);line-height:1.7;max-width:380px;margin:0 auto;">
-                Your booking has been received! Please <b>drop off your laundry at the shop</b>.<br>
-                Our staff will scan an RFID tag to confirm your order and begin real-time tracking.
-              </div>
-              <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700;color:#7dd3fc;">
-                📡 RFID scan required to start tracking
-              </div>
-            </div>
-          `:`
           <div class="tl" style="margin:18px 0 22px;">${renderOrderTimelineHTML(ord.status)}</div>
           <div class="notice n-info" style="margin-bottom:0;">
             <strong>Current Stage — ${STATUS_LABEL[ord.status]||ord.status}:</strong><br>
             ${stageDescriptions[normStatus(ord.status)]||''}
           </div>
-          `}
         </div>
       </div>
 
@@ -8602,11 +8656,12 @@ function ptBook(){
               <option value="Pickup & Delivery">🛵 Pickup & Delivery</option>
             </select>
             <div class="mode-choice-grid" id="bkModeGrid">
-              <div class="mode-choice-pill active" data-val="Drop-off at Shop" onclick="selectBkMode('Drop-off at Shop',this)">🏪 Drop-off at Shop (Walk-in Only)</div>
+              <div class="mode-choice-pill active" data-val="Drop-off at Shop" onclick="selectBkMode('Drop-off at Shop',this)">🏪 Drop-off at Shop</div>
+              <div class="mode-choice-pill" data-val="Pickup & Delivery" onclick="selectBkMode('Pickup & Delivery',this)">🛵 Pickup & Delivery</div>
             </div>
           </div>
           <div class="pt-form-group" style="margin-bottom:0;">
-            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off Schedule</label>
+            <label class="pt-label" style="color:var(--accent2);">Preferred Drop-off / Pickup Schedule</label>
             <input type="text" id="bkSched" placeholder="e.g. Today 2:00 PM" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
           </div>
         </div>
@@ -9534,11 +9589,21 @@ if(LabaFlowSupabase.configured()){
     if(profile){setCurrentUser(profile);return launchApp();}
   }).catch(error=>{
     console.info('Supabase session restore unavailable:',error.message);
-    const callbackFailed=error.message.includes('Google sign-in');
+    const em=String(error?.message||'');
+    const callbackFailed=em.includes('Google sign-in');
     const callbackSession=Boolean(localStorage.getItem('labaflow.supabase.session.v1'));
     if(callbackFailed||callbackSession){
       openAuth('sign');
-      showAuthError(g('liErr'),error);
+      const liErr=g('liErr');
+      if(em.toLowerCase().includes('already')||em.toLowerCase().includes('identity')){
+        liErr.innerHTML='This account already exists. <a href="#" onclick="authTab(\'sign\');return false;" style="color:var(--accent2);font-weight:700;text-decoration:underline;">Sign in with your password →</a>'+
+          ' or <button type="button" onclick="doGoogleSignIn(\'liErr\')" style="display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #d1d5db;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;margin-left:2px;vertical-align:middle;">'+
+          '<svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>'+
+          'Try Google again</button>';
+        liErr.style.display='block';
+      }else{
+        showAuthError(liErr,error);
+      }
     }
   });
 }

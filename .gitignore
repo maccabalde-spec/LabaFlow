@@ -42,3 +42,6 @@ I'
 IIBBBBB'
 {dst_size}
 {src_size}
+
+# Local Netlify folder
+.netlify

@@ -15,11 +15,15 @@ const char* API_KEY   = "YOUR_IOT_DEVICE_API_KEY";
 const char* DEVICE_ID = "ESP32-LF-001";
 
 // --- Pin Definitions ---
-#define RST_PIN         22
-#define SS_PIN          21
+// RFID MFRC522 (SPI)
+#define RST_PIN          4   // RFID RST -> GPIO 4
+#define SS_PIN           5   // RFID SS  -> GPIO 5
+// ESP32 default SPI: SCK=18, MOSI=23, MISO=19 (hardware default, no need to define)
+// LEDs & Buzzer
 #define LED_GREEN       25
 #define LED_RED         26
 #define BUZZER_PIN      27
+// OLED SSD1306 (I2C) - Using default ESP32 I2C: SDA=21, SCL=22
 #define SCREEN_WIDTH    128
 #define SCREEN_HEIGHT   64
 
@@ -28,6 +32,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 void setupDisplay() {
+    Wire.begin(21, 22); // SDA=D21, SCL=D22 — explicit para sigurado
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
         Serial.println(F("SSD1306 allocation failed"));
         for(;;);
@@ -68,7 +73,7 @@ void triggerFeedback(bool success) {
 
 void setup() {
     Serial.begin(115200);
-    SPI.begin();
+    SPI.begin(18, 19, 23, SS_PIN); // SCK=D18, MISO=D19, MOSI=D23, SS=D5
     mfrc522.PCD_Init();
 
     pinMode(LED_GREEN, OUTPUT);
@@ -76,6 +81,23 @@ void setup() {
     pinMode(BUZZER_PIN, OUTPUT);
 
     setupDisplay();
+
+    // --- RFID Self-Check ---
+    byte rfidVersion = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
+    Serial.print("MFRC522 Version: 0x");
+    Serial.println(rfidVersion, HEX);
+    if (rfidVersion == 0x00 || rfidVersion == 0xFF) {
+        Serial.println("ERROR: RFID not detected! Check wiring on GPIO 5 (SS) and GPIO 17 (RST).");
+        updateDisplay("RFID ERROR", "Check Wiring", "SS=5 RST=17");
+        // Blink red LED indefinitely to signal error
+        while (true) {
+            digitalWrite(LED_RED, HIGH); delay(300);
+            digitalWrite(LED_RED, LOW);  delay(300);
+        }
+    } else {
+        Serial.println("RFID OK!");
+        updateDisplay("RFID OK", "v" + String(rfidVersion, HEX), "Connecting WiFi");
+    }
 
     WiFi.begin(WIFI_SSID, WIFI_PASS);
     updateDisplay("Connecting Wi-Fi...", WIFI_SSID);
