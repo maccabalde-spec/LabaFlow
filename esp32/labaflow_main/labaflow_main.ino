@@ -1,18 +1,19 @@
 /**
- * LabaFlow ESP32 Firmware v4.0
+ * LabaFlow ESP32 Firmware v7.0
+ *
+ * Simple and reliable — ESP32 sends UID to edge function.
+ * Edge function handles ALL logic (find order, assign, advance status).
+ * ESP32 just reacts to the response with LED + buzzer.
  *
  * LED SEQUENCE:
- *   1. Card detected   → Yellow ON (processing...)
- *   2. Sending to API  → Yellow blink
- *   3. SUCCESS         → Yellow OFF → Green flash + beep
- *   4. ERROR/DUPLICATE → Yellow OFF → Red flash + long beep
+ *   Yellow ON    → card detected
+ *   Yellow blink → sending to server
+ *   Green flash  → SUCCESS
+ *   Red flash    → ERROR
  *
  * WIRING:
- *   RFID SDA  → D5    RFID SCK   → D18
- *   RFID MOSI → D23   RFID MISO  → D19
- *   RFID RST  → D4    RFID 3.3V  → 3V3 rail
- *   Green LED → D32   Yellow LED → D33
- *   Red LED   → D25   Buzzer     → D12
+ *   RFID SDA → D5   SCK → D18   MOSI → D23   MISO → D19   RST → D4
+ *   Green LED → D32   Yellow LED → D33   Red LED → D25   Buzzer → D12
  */
 
 #include <WiFi.h>
@@ -24,14 +25,13 @@
 // =============================================
 // CONFIGURATION
 // =============================================
-const char* WIFI_SSID    = "Macoyshit";
-const char* WIFI_PASS    = "tintinganda";
-const char* SUPABASE_URL = "https://sesiygonrbthnwjlpggf.supabase.co";
-const char* API_KEY      = "labaflow-iot-esp32-key-001";
-const char* DEVICE_ID    = "ESP32-LF-001";
+const char* WIFI_SSID   = "Macoyshit";
+const char* WIFI_PASS   = "tintinganda";
+const char* FUNCTION_URL = "https://sesiygonrbthnwjlpggf.supabase.co/functions/v1/rfid-scan";
+const char* ANON_KEY    = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlc2l5Z29ucmJ0aG53amxwZ2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTI0NDQsImV4cCI6MjEwOTUyODQ0NH0.YjpCWOqMbp9lZISkx0gZnF-TFF7rHAnnEFSN_JJJkWA";
 
 // =============================================
-// PIN DEFINITIONS
+// PINS
 // =============================================
 #define RST_PIN     4
 #define SS_PIN      5
@@ -43,86 +43,45 @@ const char* DEVICE_ID    = "ESP32-LF-001";
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 // =============================================
-// LED HELPERS
+// LED + BUZZER
 // =============================================
-void allLedsOff() {
-  digitalWrite(LED_GREEN,  LOW);
+void allOff() {
+  digitalWrite(LED_GREEN, LOW);
   digitalWrite(LED_YELLOW, LOW);
-  digitalWrite(LED_RED,    LOW);
+  digitalWrite(LED_RED, LOW);
+  noTone(BUZZER_PIN);
 }
 
-// Step 1: Yellow ON → card detected, processing
-void ledProcessing() {
-  allLedsOff();
-  digitalWrite(LED_YELLOW, HIGH);
-}
+void ledYellow() { allOff(); digitalWrite(LED_YELLOW, HIGH); }
 
-// Step 2: Yellow blink → waiting for API response
-void ledWaiting() {
+void ledYellowBlink() {
   for (int i = 0; i < 3; i++) {
     digitalWrite(LED_YELLOW, HIGH); delay(150);
     digitalWrite(LED_YELLOW, LOW);  delay(150);
   }
 }
 
-// Step 3a: Green flash + beep → SUCCESS
-void ledSuccess(String status) {
-  allLedsOff();
-  if (status == "Ready for Pick-up") {
-    // Triple green flash for READY — most important event
-    for (int i = 0; i < 3; i++) {
-      digitalWrite(LED_GREEN, HIGH);
-      tone(BUZZER_PIN, 1500, 200);
-      delay(300);
-      digitalWrite(LED_GREEN, LOW);
-      delay(100);
-    }
-  } else if (status == "ASSIGNED") {
-    // 1 long green + 1 short yellow = new assignment confirmed
+void ledGreen(bool isReady) {
+  allOff();
+  int times = isReady ? 3 : 2;
+  int freq  = isReady ? 1500 : 1200;
+  for (int i = 0; i < times; i++) {
     digitalWrite(LED_GREEN, HIGH);
-    tone(BUZZER_PIN, 1000, 400);
-    delay(500);
+    tone(BUZZER_PIN, freq, 150);
+    delay(250);
     digitalWrite(LED_GREEN, LOW);
     delay(100);
-    digitalWrite(LED_YELLOW, HIGH);
-    tone(BUZZER_PIN, 1400, 150);
-    delay(200);
-    digitalWrite(LED_YELLOW, LOW);
-  } else {
-    // Double green flash = stage advanced
-    for (int i = 0; i < 2; i++) {
-      digitalWrite(LED_GREEN, HIGH);
-      tone(BUZZER_PIN, 1200, 150);
-      delay(200);
-      digitalWrite(LED_GREEN, LOW);
-      delay(100);
-    }
   }
 }
 
-// Step 3b: Red flash + long beep → ERROR or DUPLICATE
-void ledError(bool isDuplicate) {
-  allLedsOff();
-  if (isDuplicate) {
-    // Fast triple red blink = DUPLICATE tag warning
-    for (int i = 0; i < 3; i++) {
-      digitalWrite(LED_RED, HIGH); delay(150);
-      digitalWrite(LED_RED, LOW);  delay(150);
-    }
-    tone(BUZZER_PIN, 400, 300);
-    delay(400);
-  } else {
-    // Single long red = general error
-    digitalWrite(LED_RED, HIGH);
-    tone(BUZZER_PIN, 300, 600);
-    delay(700);
-    digitalWrite(LED_RED, LOW);
+void ledRed() {
+  allOff();
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(LED_RED, HIGH); delay(200);
+    digitalWrite(LED_RED, LOW);  delay(150);
   }
-}
-
-void ledWifiConnecting() {
-  digitalWrite(LED_YELLOW, HIGH); delay(100);
-  digitalWrite(LED_YELLOW, LOW);  delay(100);
+  tone(BUZZER_PIN, 300, 400);
+  delay(500);
 }
 
 // =============================================
@@ -139,21 +98,96 @@ String uidToString(byte *buf, byte size) {
 }
 
 // =============================================
+// PROCESS SCAN — send to edge function
+// =============================================
+void processScan(String tagUID) {
+  // Build simple JSON body
+  String body = "{\"tag_uid\":\"" + tagUID + "\"}";
+
+  Serial.println("Sending to function...");
+  HTTPClient http;
+  http.begin(FUNCTION_URL);
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", "Bearer " + String(ANON_KEY));
+  http.addHeader("apikey", ANON_KEY);
+  http.setTimeout(15000);
+
+  int code = http.POST(body);
+  String response = http.getString();
+  http.end();
+
+  Serial.println("HTTP: " + String(code));
+  Serial.println("Response: " + response);
+
+  if (code == 200) {
+    // Parse response
+    StaticJsonDocument<512> doc;
+    DeserializationError err = deserializeJson(doc, response);
+
+    if (err) {
+      Serial.println("JSON parse error");
+      ledRed();
+      return;
+    }
+
+    bool success = doc["success"] | false;
+
+    if (success) {
+      String action  = doc["action"] | "UNKNOWN";
+      String orderNum = doc["order_num"] | "";
+      String customer = doc["customer"] | "";
+      String status   = doc["status"] | "";
+
+      Serial.println("SUCCESS! " + action + ": " + orderNum + " → " + status + " (" + customer + ")");
+      ledGreen(status == "READY");
+
+    } else {
+      String code2  = doc["code"] | "";
+      String msg    = doc["message"] | "Unknown error";
+      Serial.println("FAILED: " + code2 + " — " + msg);
+      ledRed();
+    }
+
+  } else if (code == 404) {
+    Serial.println("No pending orders to assign!");
+    ledRed();
+  } else if (code == 402) {
+    Serial.println("Order not paid yet — collect payment first!");
+    // Special pattern for unpaid: slow red blink
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LED_RED, HIGH); delay(400);
+      digitalWrite(LED_RED, LOW);  delay(300);
+    }
+  } else if (code == 429) {
+    Serial.println("Rate limited — scan too fast, please wait.");
+    // Short yellow blink — not an error, just slow down
+    for (int i = 0; i < 3; i++) {
+      digitalWrite(LED_YELLOW, HIGH); delay(300);
+      digitalWrite(LED_YELLOW, LOW);  delay(200);
+    }
+  } else {
+    Serial.println("HTTP Error: " + String(code));
+    Serial.println(response);
+    ledRed();
+  }
+}
+
+// =============================================
 // SETUP
 // =============================================
 void setup() {
   Serial.begin(115200);
   delay(1000);
 
-  Serial.println("\n=============================");
-  Serial.println("  LabaFlow ESP32 v4.0");
-  Serial.println("=============================");
+  Serial.println("============================");
+  Serial.println("  LabaFlow ESP32 v7.0");
+  Serial.println("============================");
 
   pinMode(LED_GREEN,  OUTPUT);
   pinMode(LED_YELLOW, OUTPUT);
   pinMode(LED_RED,    OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
-  allLedsOff();
+  allOff();
 
   // Init RFID
   SPI.begin(18, 19, 23, SS_PIN);
@@ -161,15 +195,11 @@ void setup() {
   delay(100);
 
   byte ver = rfid.PCD_ReadRegister(rfid.VersionReg);
-  Serial.print("RFID Version: 0x");
-  Serial.println(ver, HEX);
-
   if (ver == 0x91 || ver == 0x92) {
     rfid.PCD_SetAntennaGain(rfid.RxGain_max);
     Serial.println("RFID: OK");
   } else {
     Serial.println("RFID: ERROR — check wiring!");
-    // Fast red blink forever
     while (true) {
       digitalWrite(LED_RED, HIGH); delay(300);
       digitalWrite(LED_RED, LOW);  delay(300);
@@ -177,147 +207,103 @@ void setup() {
   }
 
   // Connect WiFi
-  Serial.print("Connecting to WiFi: ");
-  Serial.println(WIFI_SSID);
+  WiFi.setAutoReconnect(true);    // auto-reconnect on drop
+  WiFi.persistent(true);          // persist credentials across reboots
+  Serial.print("WiFi: connecting");
   WiFi.begin(WIFI_SSID, WIFI_PASS);
-
   int attempts = 0;
   while (WiFi.status() != WL_CONNECTED && attempts < 30) {
-    ledWifiConnecting();
+    digitalWrite(LED_YELLOW, HIGH); delay(200);
+    digitalWrite(LED_YELLOW, LOW);  delay(200);
     Serial.print(".");
     attempts++;
   }
 
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("\nWiFi: OK — IP: " + WiFi.localIP().toString());
-    // Double green blink = ready
+    Serial.println(" OK! " + WiFi.localIP().toString());
     for (int i = 0; i < 2; i++) {
       digitalWrite(LED_GREEN, HIGH); delay(150);
       digitalWrite(LED_GREEN, LOW);  delay(150);
     }
   } else {
-    Serial.println("\nWiFi: FAILED");
-    ledError(false);
+    Serial.println(" FAILED!");
+    ledRed();
   }
 
-  Serial.println("-----------------------------");
   Serial.println("Ready. Tap RFID card.");
-  Serial.println("=============================");
+  Serial.println("============================");
 }
 
 // =============================================
 // LOOP
 // =============================================
+String lastUID = "";
+unsigned long lastScanMs = 0;
+unsigned long lastReconnectMs = 0;
+
 void loop() {
+  // ── Auto-reconnect WiFi if dropped ──────────
+  if (WiFi.status() != WL_CONNECTED) {
+    unsigned long now = millis();
+    if (now - lastReconnectMs > 10000) {   // try every 10 seconds
+      lastReconnectMs = now;
+      Serial.println("[WiFi] Lost connection — reconnecting...");
+      WiFi.disconnect();
+      WiFi.begin(WIFI_SSID, WIFI_PASS);
+      // Brief yellow blink to signal reconnect attempt
+      for (int i = 0; i < 2; i++) {
+        digitalWrite(LED_YELLOW, HIGH); delay(200);
+        digitalWrite(LED_YELLOW, LOW);  delay(200);
+      }
+    }
+    delay(50);
+    return;
+  }
   if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
     delay(50);
     return;
   }
 
-  // Card detected
   String tagUID = uidToString(rfid.uid.uidByte, rfid.uid.size);
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
 
-  Serial.println("\n--- Card Detected ---");
-  Serial.println("UID: " + tagUID);
-
-  // ── STEP 1: Yellow ON immediately (card detected)
-  ledProcessing();
-
-  // Check WiFi
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("ERROR: No WiFi");
-    ledError(false);
-    delay(2000);
-    allLedsOff();
+  // Ignore incomplete UIDs
+  if (rfid.uid.size < 4 || tagUID.length() < 8) {
+    Serial.println("Incomplete UID: " + tagUID + " — hold card closer!");
+    ledRed();
+    delay(500);
+    allOff();
     return;
   }
 
-  // ── STEP 2: Yellow blink while sending to API
-  ledWaiting();
-
-  // Build request
-  String eventId = String(millis()) + "-" + tagUID;
-  StaticJsonDocument<256> reqDoc;
-  reqDoc["device_id"] = DEVICE_ID;
-  reqDoc["tag_uid"]   = tagUID;
-  reqDoc["event_id"]  = eventId;
-  String reqBody;
-  serializeJson(reqDoc, reqBody);
-
-  Serial.println("Sending to Supabase...");
-
-  HTTPClient http;
-  http.begin(String(SUPABASE_URL) + "/functions/v1/rfid-scan");
-  http.addHeader("Content-Type", "application/json");
-  http.addHeader("x-device-key", API_KEY);
-  http.setTimeout(10000);
-
-  int httpCode = http.POST(reqBody);
-  String responseStr = http.getString();
-  http.end();
-
-  Serial.print("HTTP: "); Serial.println(httpCode);
-  Serial.println("Response: " + responseStr);
-
-  // ── STEP 3: React to response
-  if (httpCode == 200) {
-    StaticJsonDocument<512> resDoc;
-    DeserializationError err = deserializeJson(resDoc, responseStr);
-
-    if (err) {
-      Serial.println("ERROR: JSON parse failed");
-      ledError(false);
-    } else {
-      bool success = resDoc["success"].as<bool>();
-
-      if (success) {
-        String action   = resDoc["action"].as<String>();
-        String status   = resDoc["status"].as<String>();
-        String orderRef = resDoc["order_reference"].as<String>();
-        String message  = resDoc["message"].as<String>();
-
-        Serial.println("SUCCESS! Action: " + action);
-        Serial.println("Order: " + orderRef + " → " + status);
-
-        if (action == "ASSIGNED") {
-          String customer = resDoc["customer_name"].as<String>();
-          Serial.println("Assigned to: " + customer);
-          ledSuccess("ASSIGNED");
-        } else {
-          Serial.println("Advanced to: " + status);
-          ledSuccess(status);
-        }
-
-      } else {
-        // API returned error
-        String code = resDoc["code"].as<String>();
-        String msg  = resDoc["message"].as<String>();
-        Serial.println("FAILED: " + code + " — " + msg);
-
-        bool isDuplicate = (code == "DUPLICATE_TAG");
-        ledError(isDuplicate);
-
-        if (isDuplicate) {
-          Serial.println(">>> DUPLICATE: Use a different tag for this customer!");
-        } else if (code == "NO_PENDING_ORDER") {
-          Serial.println(">>> No pending orders. Customer must book first.");
-        } else if (code == "INVALID_STATE") {
-          Serial.println(">>> Order already in final state: " + msg);
-        }
-      }
-    }
-
-  } else if (httpCode == 401) {
-    Serial.println("ERROR 401: Check API_KEY in Supabase secrets");
-    ledError(false);
-  } else {
-    Serial.println("ERROR: HTTP " + String(httpCode));
-    ledError(false);
+  // Prevent double scan of same card within 2 seconds
+  if (tagUID == lastUID && millis() - lastScanMs < 2000) {
+    delay(50);
+    return;
   }
 
-  allLedsOff();
-  delay(2000); // Cooldown before next scan
-  Serial.println("Ready. Tap RFID card.");
+  lastUID    = tagUID;
+  lastScanMs = millis();
+
+  Serial.println("\n--- Card: " + tagUID + " ---");
+
+  // Step 1: Yellow ON
+  ledYellow();
+
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("No WiFi!");
+    ledRed();
+    allOff();
+    return;
+  }
+
+  // Step 2: Yellow blink (sending)
+  ledYellowBlink();
+
+  // Step 3: Process and react
+  processScan(tagUID);
+
+  allOff();
+  Serial.println("Ready. Tap next card.");
 }

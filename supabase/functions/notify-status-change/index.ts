@@ -1,71 +1,102 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
-import { initializeApp, cert } from 'npm:firebase-admin/app';
-import { getMessaging } from 'npm:firebase-admin/messaging';
 
-// Initialize Firebase Admin with Service Account (stored in Supabase Secrets)
-const serviceAccount = JSON.parse(Deno.env.get('FIREBASE_SERVICE_ACCOUNT') || '{}');
-if (Object.keys(serviceAccount).length > 0) {
-  initializeApp({ credential: cert(serviceAccount) });
-}
+/**
+ * notify-status-change
+ *
+ * Called manually or via a webhook when an order status changes.
+ * Uses the same notifications table as rfid-scan for consistency.
+ *
+ * NOTE: The app's primary notification path is rfid-scan → notifyCustomer().
+ * This function is a secondary path for manual staff status advances.
+ *
+ * Expected body:
+ * {
+ *   order_id: number,       // numeric order id from app_collections orders
+ *   customer_id: number,    // numeric custId (profiles.public_id)
+ *   order_num: string,      // e.g. "ORD-001"
+ *   status: string,         // new status e.g. "READY", "WASHING"
+ *   prev_status: string     // previous status
+ * }
+ */
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
 
+const notifMap: Record<string, { title: string; body: string; icon: string }> = {
+  'RECEIVED': { title: 'Order received!',         body: 'Your laundry has been received. Track your progress now!',  icon: '📡' },
+  'WASHING':  { title: 'Washing in progress! 🫧', body: 'Your laundry is now in the washing cycle.',                 icon: '🫧' },
+  'DRYING':   { title: 'Drying in progress! 💨',  body: 'Your laundry is now in the dryer.',                         icon: '💨' },
+  'FOLDING':  { title: 'Being folded! 👕',         body: 'Your laundry is being neatly folded and packed.',           icon: '👕' },
+  'READY':    { title: 'Ready for pickup! ✅',      body: 'Your clean laundry is ready. Visit the shop to pick it up!',icon: '✅' },
+  'RELEASED': { title: 'Order completed! 🎉',      body: 'Thank you for choosing Lab-a-Day Laundry!',                 icon: '🎉' },
+};
+
 serve(async (req) => {
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'POST required' }), { status: 405 });
+  }
+
   try {
-    // Webhook payload from Supabase
-    const payload = await req.json();
-    const { record, old_record } = payload;
+    const { order_id, customer_id, order_num, status, prev_status } = await req.json();
 
-    // Only proceed if the status actually changed
-    if (record.status === old_record.status) {
-      return new Response('Status unchanged', { status: 200 });
+    if (!order_id || !customer_id || !status) {
+      return new Response(
+        JSON.stringify({ error: 'order_id, customer_id, and status are required' }),
+        { status: 400 }
+      );
     }
 
-    // Determine notification content based on the new status
-    let title = '';
-    let body = '';
+    const newStatus = String(status).toUpperCase();
+    const notif = notifMap[newStatus];
 
-    if (record.status === 'Ready for Pick-up') {
-      title = 'Laundry Ready! 🎉';
-      body = `Your order (${record.order_reference}) is clean, folded, and ready for pickup.`;
-    } else if (record.status === 'In Progress') {
-      title = 'Washing Started 🫧';
-      body = `We've started processing your order (${record.order_reference}).`;
-    } else {
-      // Do not send notifications for other intermediate statuses to avoid spam
-      return new Response('No notification required for this status', { status: 200 });
+    if (!notif) {
+      return new Response(
+        JSON.stringify({ skipped: true, reason: `No notification defined for status: ${newStatus}` }),
+        { status: 200 }
+      );
     }
 
-    // Fetch the customer's FCM tokens
-    const { data: tokens, error } = await supabase
-      .from('notification_tokens')
-      .select('fcm_token')
-      .eq('user_id', record.customer_id);
+    // Resolve numeric customer id → auth UUID via profiles.public_id
+    const { data: profileRow, error: profileErr } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('public_id', Number(customer_id))
+      .maybeSingle();
 
-    if (error || !tokens || tokens.length === 0) {
-      return new Response('No registered devices for this user', { status: 200 });
+    if (profileErr || !profileRow) {
+      console.error('notify-status-change: could not resolve customer_id', customer_id, profileErr?.message);
+      return new Response(
+        JSON.stringify({ error: 'Customer profile not found' }),
+        { status: 404 }
+      );
     }
 
-    // Send push notification via Firebase Admin
-    const fcmTokens = tokens.map(t => t.fcm_token);
-    const message = {
-      notification: { title, body },
-      data: { orderId: record.id, status: record.status },
-      tokens: fcmTokens,
-    };
+    const authUid = profileRow.id as string;
+    const title = order_num ? `Order ${order_num}: ${notif.title}` : notif.title;
 
-    const response = await getMessaging().sendEachForMulticast(message);
-
-    return new Response(JSON.stringify({ success: true, firebaseResponse: response }), {
-      headers: { 'Content-Type': 'application/json' }
+    const { error: insertErr } = await supabase.from('notifications').insert({
+      user_id: authUid,
+      type: newStatus,
+      title,
+      body: notif.body,
+      icon: notif.icon,
     });
 
-  } catch (error: any) {
-    console.error('Notification Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    if (insertErr) {
+      console.error('notify-status-change: insert failed', insertErr.message);
+      return new Response(JSON.stringify({ error: insertErr.message }), { status: 500 });
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, notified: authUid, status: newStatus }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+
+  } catch (err: any) {
+    console.error('notify-status-change error:', err);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 });

@@ -6,10 +6,98 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>LabaFlow – Lab-a-Day Laundry | RFID &amp; Inventory System</title>
+<title>LabaFlow – Smart RFID Laundry Tracking &amp; Management System</title>
+<meta name="google-site-verification" content="TsqcwWStSILiv2QwqZOSJ3JBpvrh-7-VLyA5pMIj7f8" />
+<!-- Search Engine Optimization (SEO) Meta Tags -->
+<meta name="title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta name="description" content="LabaFlow is an automated RFID laundry tracking and inventory management system for Lab-a-Day Laundry Shop in Pagsanjan, Laguna. Track orders in real-time, view wash stages, and manage laundry seamlessly.">
+<meta name="keywords" content="LabaFlow, labaflow, Lab-a-Day Laundry, RFID laundry, laundry tracking system, laundry management Pagsanjan, IoT laundry tracking, RFID tag laundry Laguna, smart laundry tracker">
+<meta name="author" content="LabaFlow Team">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="https://labaflow.netlify.app/">
+
+<!-- Open Graph / Facebook / Messenger / Viber -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://labaflow.netlify.app/">
+<meta property="og:title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta property="og:description" content="Track your laundry in real-time with LabaFlow RFID technology. Automated wash stages, instant updates, and cashless payments.">
+<meta property="og:image" content="https://labaflow.netlify.app/images/service-clothes.jpg">
+<meta property="og:site_name" content="LabaFlow">
+<meta property="og:locale" content="en_PH">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://labaflow.netlify.app/">
+<meta name="twitter:title" content="LabaFlow – Smart RFID Laundry Tracking &amp; Management System">
+<meta name="twitter:description" content="Real-time RFID laundry tracking & inventory management for Lab-a-Day Laundry Shop.">
+<meta name="twitter:image" content="https://labaflow.netlify.app/images/service-clothes.jpg">
+
+<!-- Google Rich Snippets / Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://labaflow.netlify.app/#website",
+      "url": "https://labaflow.netlify.app/",
+      "name": "LabaFlow",
+      "alternateName": ["Laba Flow", "LabaFlow System", "Lab-a-Day Laundry"],
+      "description": "Smart RFID Laundry Tracking & Inventory Management System for Lab-a-Day Laundry Shop",
+      "inLanguage": "en-PH"
+    },
+    {
+      "@type": "DryCleaningOrLaundry",
+      "@id": "https://labaflow.netlify.app/#business",
+      "name": "Lab-a-Day Laundry (Powered by LabaFlow)",
+      "url": "https://labaflow.netlify.app/",
+      "image": "https://labaflow.netlify.app/images/service-clothes.jpg",
+      "telephone": "+639123456789",
+      "priceRange": "₱₱",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "B. Cosme St., Poblacion 2",
+        "addressLocality": "Pagsanjan",
+        "addressRegion": "Laguna",
+        "postalCode": "4008",
+        "addressCountry": "PH"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 14.2755,
+        "longitude": 121.4554
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "07:00",
+          "closes": "19:00"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "LabaFlow",
+      "operatingSystem": "Web, Android",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "PHP"
+      }
+    }
+  ]
+}
+</script>
+
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0E214E">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -3748,6 +3836,7 @@ img, svg, canvas, video {
     </div>
     <button class="lp-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleLpMenu(this)"><span aria-hidden="true">&#9776;</span></button>
     <div class="lp-nav-cta">
+      <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline" style="text-decoration:none;font-size:12.5px;padding:7px 12px;gap:6px;" title="Download Android Mobile App">📲 App (APK)</a>
       <button class="lp-btn lp-btn-outline" onclick="openAuth('sign')">Sign In</button>
       <button class="lp-btn lp-btn-solid" onclick="openAuth('reg')">Book Now →</button>
     </div>
@@ -3763,6 +3852,7 @@ img, svg, canvas, video {
         <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">Book Now →</button>
         <button class="lp-btn lp-btn-gold lp-btn-lg" onclick="openAuth('sign')">📡 Track My Order</button>
         <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="openAuth('sign')">Sign In</button>
+        <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline lp-btn-lg" style="text-decoration:none;gap:6px;" title="Download Android Mobile App">📲 Download APK</a>
       </div>
       <div class="lp-spinzy-hero-cards">
         <div class="lp-spinzy-hcard-blue">
@@ -4567,6 +4657,40 @@ img, svg, canvas, video {
   </div>
 </div></div>
 
+<!-- Logout Confirmation Modal (HTML Fallback) -->
+<div class="ov" id="mLogoutConfirm"><div class="modal" style="width:360px;text-align:center;padding:24px 20px;">
+  <div style="width:52px;height:52px;border-radius:50%;background:#FEE2E2;color:#DC2626;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px;">🚪</div>
+  <h3 style="margin-bottom:8px;font-size:18px;">Sign Out</h3>
+  <p class="text-sm text-muted" style="margin-bottom:20px;line-height:1.5;">Are you sure you want to sign out of LabaFlow? All session data and password fields will be securely cleared.</p>
+  <div class="mf" style="justify-content:center;gap:10px;">
+    <button type="button" class="btn btn-ghost" onclick="closeM('mLogoutConfirm')">Cancel</button>
+    <button type="button" class="btn btn-danger" style="background:#DC2626;color:#fff;" onclick="closeM('mLogoutConfirm');executeSecureLogout()">Yes, Sign Out</button>
+  </div>
+</div></div>
+
+<!-- Set Password (for Google-only users) -->
+<div class="ov" id="mSetPw"><div class="modal" style="max-width:400px;">
+  <h3>🔑 Set a Password</h3>
+  <p class="text-sm text-muted" style="margin-bottom:14px;">You signed in with Google. Set a password so you can also sign in with your email and password next time — no Google needed.</p>
+  <div class="fg"><label>New Password</label>
+    <div class="password-input-wrap">
+      <input type="password" id="spPass" placeholder="Min 8 chars, letters + numbers" autocomplete="new-password">
+      <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </div>
+  <div class="fg"><label>Confirm Password</label>
+    <div class="password-input-wrap">
+      <input type="password" id="spPass2" placeholder="Repeat password" autocomplete="new-password">
+      <button type="button" class="password-visibility" onclick="togglePwVis(this)" aria-label="Show password" title="Show password"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </div>
+  <div class="lfg-err" id="spErr"></div>
+  <div class="mf">
+    <button class="btn btn-ghost" onclick="closeM('mSetPw')">Skip for now</button>
+    <button class="btn btn-primary" onclick="submitSetPassword()">Set Password</button>
+  </div>
+</div></div>
+
 <!-- AUTH LOADING OVERLAY -->
 <div class="auth-loader" id="authLoader">
   <div class="auth-spin"></div>
@@ -4854,7 +4978,12 @@ function openAuth(tab){
   document.getElementById('authOverlay').classList.add('open');
   authTab(tab||'sign');
 }
-function closeAuth(){document.getElementById('authOverlay').classList.remove('open');}
+function closeAuth(){
+  document.getElementById('authOverlay').classList.remove('open');
+  const liPass=g('liPass');if(liPass){liPass.value='';liPass.blur();}
+  const rPass=g('rPass');if(rPass)rPass.value='';
+  const rPass2=g('rPass2');if(rPass2)rPass2.value='';
+}
 
 function authTab(t){
   document.getElementById('fSign').style.display=t==='sign'?'':'none';
@@ -5089,8 +5218,22 @@ async function doLogin(){
   try{
     if(!LabaFlowSupabase.configured())throw new Error('Supabase is not configured. Add your project values in supabase-config.js.');
     const profile=await LabaFlowSupabase.signIn(parsed.value,pass);
-    setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
-  }catch(error){showAuthError(err,error);}
+    setCurrentUser(profile);
+    err.style.display='none';
+    const liP=g('liPass');if(liP){liP.value='';liP.blur();}
+    closeAuth();
+    await launchApp();
+  }catch(error){
+    const em=String(error?.message||'');
+    if(em.toLowerCase().includes('google')||em.includes('"Continue with Google"')){
+      err.innerHTML=em+' <button type="button" onclick="doGoogleSignIn(\'liErr\')" style="display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #d1d5db;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px;vertical-align:middle;">'+
+        '<svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>'+
+        'Sign in with Google</button>';
+      err.style.display='block';
+    }else{
+      showAuthError(err,error);
+    }
+  }
   finally{hideLoader();}
 }
 
@@ -5146,7 +5289,15 @@ async function doRegister(){
       return;
     }
     setCurrentUser(profile);err.style.display='none';closeAuth();await launchApp();
-  }catch(error){showAuthError(err,error);}
+  }catch(error){
+    const em=String(error?.message||'');
+    if(em.toLowerCase().includes('already')&&(em.toLowerCase().includes('account')||em.toLowerCase().includes('registered'))){
+      err.innerHTML=em+' <a href="#" onclick="authTab(\'sign\');return false;" style="color:var(--accent2);font-weight:700;text-decoration:underline;">Sign in →</a>';
+      err.style.display='block';
+    }else{
+      showAuthError(err,error);
+    }
+  }
   finally{hideLoader();}
 }
 
@@ -5167,16 +5318,95 @@ async function doGoogleSignIn(errorId='rErr'){
   catch(error){showAuthError(err,error);}
 }
 
-async function doLogout(){
-  showLoader('Signing out…');
-  try{LabaFlowSupabase.signOut();}finally{
-    sessionStorage.removeItem('lf3_cu');CU=null;
-    g('app').style.display='none';
-    g('portal').style.display='none';
-    hideLoader();
-    g('landing').style.display='block';
+function submitSetPassword(){
+  const pass=g('spPass').value,pass2=g('spPass2').value;
+  const err=g('spErr');err.style.display='none';
+  if(!pass){showAuthError(err,new Error('Enter a password.'));return;}
+  if(/\s/.test(pass)){showAuthError(err,new Error('Password must not contain spaces.'));return;}
+  if(pass.length<8){showAuthError(err,new Error('Password must be at least 8 characters.'));return;}
+  if(!/[A-Za-z]/.test(pass)||!/\d/.test(pass)){showAuthError(err,new Error('Password must include letters and numbers.'));return;}
+  if(pass!==pass2){showAuthError(err,new Error('Passwords do not match.'));return;}
+  showLoader('Setting password…');
+  LabaFlowSupabase.setPassword(pass).then(()=>{
+    if(CU){CU.hasPassword=true;sessionStorage.setItem('lf3_cu',JSON.stringify(CU));}
+    closeM('mSetPw');
+    toast('✓ Password set! You can now sign in with your email and password too.');
+  }).catch(e=>{showAuthError(err,e);}).finally(hideLoader);
+}
+
+async function doLogout(force=false){
+  if(!force){
+    if(typeof Swal!=='undefined'&&typeof LF_SWAL!=='undefined'){
+      const res=await Swal.fire({
+        ...LF_SWAL,
+        icon:'question',
+        title:'<span style="color:#fff;">Sign Out?</span>',
+        html:'<div style="color:#e2e8f0;font-size:14px;line-height:1.6;">Sigurado ka bang nais mong mag-sign out sa LabaFlow?<br><span style="color:#94a3b8;font-size:12px;">All session data, cookies, and password fields will be securely cleared.</span></div>',
+        showCancelButton:true,
+        confirmButtonText:'Yes, Sign Out',
+        cancelButtonText:'Cancel',
+        confirmButtonColor:'#ef4444',
+        cancelButtonColor:'#334155',
+        reverseButtons:true
+      });
+      if(res&&res.isConfirmed){
+        return executeSecureLogout();
+      }
+      return;
+    }else if(g('mLogoutConfirm')){
+      openM('mLogoutConfirm');
+      return;
+    }else if(confirm('Are you sure you want to sign out of LabaFlow?')){
+      return executeSecureLogout();
+    }
+    return;
+  }
+  executeSecureLogout();
+}
+
+async function executeSecureLogout(){
+  showLoader('Signing out securely…');
+  try{
+    if(window.LabaFlowSupabase&&typeof LabaFlowSupabase.signOut==='function'){
+      try{LabaFlowSupabase.signOut();}catch(_){}
+    }
+    sessionStorage.clear();
+    localStorage.removeItem('lf3_cu');
+    localStorage.removeItem('lf3_sb_session');
+    localStorage.removeItem('labaflow.supabase.session.v1');
+    localStorage.removeItem('labaflow.supabase.pkce.verifier.v1');
+    CU=null;window.CU=null;
+
+    document.querySelectorAll('input[type="password"]').forEach(i=>{i.value='';i.defaultValue='';i.setAttribute('value','');});
+    ['liEmail','liPass','rPass','rPass2','rContact','rOtp','setPass'].forEach(id=>{
+      const el=g(id);if(el){el.value='';el.defaultValue='';el.setAttribute('value','');}
+    });
+
+    document.querySelectorAll('form').forEach(f=>{try{f.reset();}catch(_){}});
+    if(document.activeElement&&typeof document.activeElement.blur==='function')document.activeElement.blur();
+
+    try{
+      document.cookie.split(';').forEach(c=>{
+        document.cookie=c.trim().split('=')[0]+'=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
+      });
+    }catch(_){}
+
+    if(navigator.serviceWorker&&navigator.serviceWorker.controller){
+      navigator.serviceWorker.controller.postMessage({type:'CLEAR_AUTH'});
+    }
+
+    const appEl=g('app');if(appEl)appEl.style.display='none';
+    const pgContent=g('pgContent');if(pgContent)pgContent.innerHTML='';
+    const portalEl=g('portal');if(portalEl)portalEl.style.display='none';
+    const landingEl=g('landing');if(landingEl)landingEl.style.display='block';
     document.body.style.background='';
-    
+
+    try{
+      window.history.replaceState(null,document.title,window.location.pathname);
+    }catch(_){}
+  }finally{
+    hideLoader();
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 }
 
@@ -5266,6 +5496,12 @@ async function launchApp(){
     refreshSidebarAvatar();
     showPage(returnTab==='profile'?'my_profile':(CU.role==='ADMIN'?'dashboard':'orders'));
     if(returnTab==='profile')toast('✓ Gmail profile picture synced!');
+  }
+
+  /* Google-only users: prompt to set a password so email+password sign-in also works */
+  if(CU?.googleConnected && !CU?.hasPassword && !sessionStorage.getItem('lf3_pw_prompted')){
+    sessionStorage.setItem('lf3_pw_prompted','1');
+    setTimeout(()=>{ if(g('mSetPw')) openM('mSetPw'); },1500);
   }
 }
 
@@ -9353,11 +9589,21 @@ if(LabaFlowSupabase.configured()){
     if(profile){setCurrentUser(profile);return launchApp();}
   }).catch(error=>{
     console.info('Supabase session restore unavailable:',error.message);
-    const callbackFailed=error.message.includes('Google sign-in');
+    const em=String(error?.message||'');
+    const callbackFailed=em.includes('Google sign-in');
     const callbackSession=Boolean(localStorage.getItem('labaflow.supabase.session.v1'));
     if(callbackFailed||callbackSession){
       openAuth('sign');
-      showAuthError(g('liErr'),error);
+      const liErr=g('liErr');
+      if(em.toLowerCase().includes('already')||em.toLowerCase().includes('identity')){
+        liErr.innerHTML='This account already exists. <a href="#" onclick="authTab(\'sign\');return false;" style="color:var(--accent2);font-weight:700;text-decoration:underline;">Sign in with your password →</a>'+
+          ' or <button type="button" onclick="doGoogleSignIn(\'liErr\')" style="display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid #d1d5db;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;margin-left:2px;vertical-align:middle;">'+
+          '<svg width="14" height="14" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>'+
+          'Try Google again</button>';
+        liErr.style.display='block';
+      }else{
+        showAuthError(liErr,error);
+      }
     }
   });
 }
@@ -9443,6 +9689,46 @@ enhancePasswordVisibility();
 new MutationObserver(records=>records.forEach(record=>record.addedNodes.forEach(node=>{
   if(node.nodeType===Node.ELEMENT_NODE)enhancePasswordVisibility(node);
 }))).observe(document.body,{childList:true,subtree:true});
+
+/* 🔒 Secure Navigation, Back-Button & bfcache Cache Wipe */
+window.addEventListener('pageshow', function(event) {
+  const hasSession = localStorage.getItem('labaflow.supabase.session.v1') || localStorage.getItem('lf3_sb_session') || sessionStorage.getItem('lf3_cu');
+  if (!hasSession) {
+    CU = null;
+    window.CU = null;
+    if (window.g) {
+      const app = g('app');
+      const portal = g('portal');
+      const landing = g('landing');
+      if (app) app.style.display = 'none';
+      if (portal) portal.style.display = 'none';
+      if (landing) landing.style.display = 'block';
+    }
+    document.querySelectorAll('input[type="password"]').forEach(el => { el.value = ''; el.defaultValue = ''; });
+    const liP = document.getElementById('liPass');
+    if (liP) { liP.value = ''; liP.blur(); }
+    if (event.persisted) {
+      window.location.replace(window.location.pathname);
+    }
+  }
+});
+
+window.addEventListener('popstate', function() {
+  const hasSession = localStorage.getItem('labaflow.supabase.session.v1') || localStorage.getItem('lf3_sb_session') || sessionStorage.getItem('lf3_cu');
+  if (!hasSession && CU === null) {
+    if (window.g) {
+      const app = g('app');
+      const portal = g('portal');
+      const landing = g('landing');
+      if (app) app.style.display = 'none';
+      if (portal) portal.style.display = 'none';
+      if (landing) landing.style.display = 'block';
+    }
+    document.querySelectorAll('input[type="password"]').forEach(el => { el.value = ''; });
+    const liP = document.getElementById('liPass');
+    if (liP) { liP.value = ''; liP.blur(); }
+  }
+});
 
 </script>
 </body>

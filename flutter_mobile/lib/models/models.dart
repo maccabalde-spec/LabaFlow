@@ -165,6 +165,7 @@ class AppUser {
   int points;
   String? pic; // base64 dataURL
   bool googleConnected;
+  bool hasPassword;
 
   AppUser({
     required this.id,
@@ -176,6 +177,7 @@ class AppUser {
     this.points = 0,
     this.pic,
     this.googleConnected = false,
+    this.hasPassword = true,
   });
 
   factory AppUser.fromJson(Map<String, dynamic> j) => AppUser(
@@ -188,6 +190,7 @@ class AppUser {
     points: (j['points'] ?? 0) as int,
     pic:    j['pic']    as String?,
     googleConnected: j['googleConnected'] as bool? ?? false,
+    hasPassword: j['hasPassword'] as bool? ?? true,
   );
 
   Map<String, dynamic> toJson() => {
@@ -196,13 +199,15 @@ class AppUser {
     if (authUid.isNotEmpty) 'authUid': authUid,
     if (pic != null) 'pic': pic,
     'googleConnected': googleConnected,
+    'hasPassword': hasPassword,
   };
 
-  AppUser copyWith({String? name, String? email, String? phone, int? points, String? pic, bool? googleConnected}) => AppUser(
+  AppUser copyWith({String? name, String? email, String? phone, int? points, String? pic, bool? googleConnected, bool? hasPassword}) => AppUser(
     id: id, authUid: authUid, name: name ?? this.name, email: email ?? this.email,
     phone: phone ?? this.phone, role: role,
     points: points ?? this.points, pic: pic ?? this.pic,
     googleConnected: googleConnected ?? this.googleConnected,
+    hasPassword: hasPassword ?? this.hasPassword,
   );
 }
 

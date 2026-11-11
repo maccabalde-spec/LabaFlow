@@ -226,6 +226,25 @@ class AppProvider extends ChangeNotifier {
     }
   }
 
+  /// True when a Google-only user has not yet set a password.
+  bool get needsPasswordSetup =>
+      currentUser != null &&
+      currentUser!.googleConnected &&
+      !currentUser!.hasPassword;
+
+  /// Sets a password for a Google-only user so email+password sign-in works.
+  Future<String?> setGoogleUserPassword(String password) async {
+    if (currentUser == null) return 'No active session.';
+    try {
+      await SupabaseAuthService.instance.setPassword(password);
+      currentUser = currentUser!.copyWith(hasPassword: true);
+      notifyListeners();
+      return null;
+    } catch (error) {
+      return _friendlySupabaseError(error);
+    }
+  }
+
   Future<String?> doRegister({
     required String name,
     required String email,
@@ -299,10 +318,12 @@ class AppProvider extends ChangeNotifier {
     final lower = message.toLowerCase();
     if (lower.contains('invalid login credentials') ||
         lower.contains('invalid_credentials'))
-      return 'Incorrect email or password.';
+      return 'Incorrect email or password. If you signed up with Google, please use Google Sign-In instead.';
     if (lower.contains('user already registered') ||
-        lower.contains('already been registered'))
-      return 'Email already registered.';
+        lower.contains('already been registered') ||
+        lower.contains('already exists') ||
+        lower.contains('identity_already_exists'))
+      return 'This email already has an account. Please sign in instead, or use Google Sign-In if you signed up with Google.';
     if (lower.contains('password should be') || lower.contains('weak password'))
       return 'Choose a stronger password.';
     if (lower.contains('email not confirmed'))

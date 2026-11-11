@@ -26,6 +26,7 @@ class CustomerShell extends StatefulWidget {
 class _CustomerShellState extends State<CustomerShell> {
   int _tabIdx = 0;
   bool _notifOpen = false;
+  bool _passwordPromptShown = false;
 
   static const _tabs = [
     (Icons.receipt_long_outlined, 'My Orders'),
@@ -35,7 +36,107 @@ class _CustomerShellState extends State<CustomerShell> {
     (Icons.person_outline, 'Profile'),
   ];
 
+  void _maybePromptPassword(AppProvider p) {
+    if (_passwordPromptShown) return;
+    if (p.needsPasswordSetup) {
+      _passwordPromptShown = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _showSetPasswordDialog());
+    }
+  }
+
+  void _showSetPasswordDialog() {
+    final passC = TextEditingController();
+    final pass2C = TextEditingController();
+    String? errorText;
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) => AlertDialog(
+          title: const Text('🔑 Set a Password'),
+          content: SizedBox(
+            width: 320,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'You signed in with Google. Set a password so you can also '
+                  'sign in with your email and password next time.',
+                  style: TextStyle(fontSize: 13, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: passC,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'New Password',
+                    hintText: 'Min 8 chars, letters + numbers',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: pass2C,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                if (errorText != null) ...[
+                  const SizedBox(height: 8),
+                  Text(errorText!,
+                      style: const TextStyle(color: Colors.red, fontSize: 12)),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Skip'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                final pass = passC.text;
+                final pass2 = pass2C.text;
+                if (pass.isEmpty) {
+                  setState(() => errorText = 'Enter a password.');
+                  return;
+                }
+                if (pass.length < 8) {
+                  setState(() => errorText = 'Password must be at least 8 characters.');
+                  return;
+                }
+                if (!RegExp(r'[A-Za-z]').hasMatch(pass) ||
+                    !RegExp(r'\d').hasMatch(pass)) {
+                  setState(() => errorText = 'Password must include letters and numbers.');
+                  return;
+                }
+                if (pass != pass2) {
+                  setState(() => errorText = 'Passwords do not match.');
+                  return;
+                }
+                final provider = context.mounted
+                    ? context.read<AppProvider>()
+                    : ctx.read<AppProvider>();
+                final err = await provider.setGoogleUserPassword(pass);
+                if (err != null) {
+                  setState(() => errorText = err);
+                } else {
+                  if (ctx.mounted) Navigator.pop(ctx);
+                }
+              },
+              child: const Text('Set Password'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _page(AppProvider p) {
+    _maybePromptPassword(p);
     switch (_tabIdx) {
       case 0:
         return CustOrdersPage(
@@ -393,7 +494,10 @@ class _CustOrdersPageState extends State<CustOrdersPage> {
         .where(
           (o) =>
               o.status == OrderStatus.received ||
-              o.status == OrderStatus.processing,
+              o.status == OrderStatus.processing ||
+              o.status == OrderStatus.washing ||
+              o.status == OrderStatus.drying ||
+              o.status == OrderStatus.folding,
         )
         .length;
     final ready = allOrders.where((o) => o.status == OrderStatus.ready).length;
@@ -409,7 +513,10 @@ class _CustOrdersPageState extends State<CustOrdersPage> {
           (_filter == 'Active' &&
               (o.status == OrderStatus.pending ||
                   o.status == OrderStatus.received ||
-                  o.status == OrderStatus.processing)) ||
+                  o.status == OrderStatus.processing ||
+                  o.status == OrderStatus.washing ||
+                  o.status == OrderStatus.drying ||
+                  o.status == OrderStatus.folding)) ||
           (_filter == 'Ready' && o.status == OrderStatus.ready) ||
           (_filter == 'Completed' && o.status == OrderStatus.released);
       return matchesQuery && matchesFilter;

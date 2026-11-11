@@ -10,6 +10,12 @@ verify_jwt = false
 [functions.send-notification]
 verify_jwt = false
 
+[functions.rfid-scan]
+verify_jwt = false
+
+[functions.notify-status-change]
+verify_jwt = false
+
 [api]
 enabled = true
 # Port to use for the API URL.

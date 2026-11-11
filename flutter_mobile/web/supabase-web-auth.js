@@ -68,6 +68,7 @@
     const googleIdentity = identities.find(i => i.provider === 'google')?.identity_data || {};
     const email = String(row.email || authUser.email || metadata.email || googleIdentity.email || '').trim();
     const hasGoogleIdentity = providers.includes('google') || identities.some(i => i.provider === 'google') || Boolean(metadata.avatar_url || metadata.picture || googleIdentity.picture || googleIdentity.avatar_url);
+    const hasPasswordIdentity = providers.includes('email') || identities.some(i => i.provider === 'email');
     const googleName = metadata.full_name || metadata.name || googleIdentity.full_name || googleIdentity.name || row.full_name || 'Customer';
     const resolvedPic = resolveGoogleAvatar(row, authUser);
     const oauthOnlyPhoto = normalizeGooglePhotoUrl(
@@ -85,7 +86,8 @@
       googlePhoto: oauthOnlyPhoto || resolvedPic || null,
       googleName: googleName || row.full_name || '',
       googleEmail: googleIdentity.email || metadata.email || email,
-      googleConnected: hasGoogleIdentity || Boolean(oauthOnlyPhoto || (resolvedPic && /googleusercontent\.com/i.test(resolvedPic)))
+      googleConnected: hasGoogleIdentity || Boolean(oauthOnlyPhoto || (resolvedPic && /googleusercontent\.com/i.test(resolvedPic))),
+      hasPassword: hasPasswordIdentity
     };
   }
   async function fetchLiveGoogleUserInfo(providerToken) {
@@ -237,7 +239,7 @@
       { phone: '09170000001', email: 'admin@labaday.com' }
     ];
     const defHit = defaults.find(d => normPhone10(d.phone) === p10);
-    return defHit ? defHit.email : ('0' + p10 + '@phone.labaflow.local');
+    return defHit ? defHit.email : null;  // null = phone not registered
   }
   async function phoneRegistered(phone) {
     try { return !!(await emailForPhone(phone)); } catch (_) { return false; }
@@ -249,7 +251,16 @@
       if (!found) throw new Error('Walang nahanap na account gamit ang mobile number na iyan. Mag-register muna o gamitin ang iyong email.');
       email = found.trim().toLowerCase();
     }
-    const result = await request('/auth/v1/token?grant_type=password', {method:'POST', body:JSON.stringify({email, password})}, false);
+    let result;
+    try {
+      result = await request('/auth/v1/token?grant_type=password', {method:'POST', body:JSON.stringify({email, password})}, false);
+    } catch (e) {
+      const msg = String(e?.message || '').toLowerCase();
+      if (msg.includes('invalid login credentials') || msg.includes('invalid_credentials')) {
+        throw new Error('Incorrect email or password. If you signed up with Google, please use "Continue with Google" instead.');
+      }
+      throw e;
+    }
     save(result);
     const prof = await profileByUid(result.user.id);
     if (prof?.phone && prof?.email) syncPhoneEntry(prof.phone, prof.email);
@@ -258,7 +269,16 @@
   async function register({name,email,phone,password}) {
     const cleanPhone = normPhone11(phone || '');
     const cleanEmail = String(email || '').trim().toLowerCase() || (cleanPhone ? `${cleanPhone}@phone.labaflow.local` : '');
-    const result = await request('/auth/v1/signup', {method:'POST', body:JSON.stringify({email:cleanEmail,password,data:{name:name.trim(),phone:cleanPhone}})}, false);
+    let result;
+    try {
+      result = await request('/auth/v1/signup', {method:'POST', body:JSON.stringify({email:cleanEmail,password,data:{name:name.trim(),phone:cleanPhone}})}, false);
+    } catch (e) {
+      const msg = String(e?.message || '').toLowerCase();
+      if (msg.includes('already registered') || msg.includes('already been registered') || msg.includes('user already') || msg.includes('already exists') || msg.includes('identity_already_exists')) {
+        throw new Error('This email already has an account. Please sign in instead, or use "Continue with Google" if you signed up with Google.');
+      }
+      throw e;
+    }
     if (!result.access_token || !result.user) throw new Error('Account created. Confirm your email, then sign in.');
     save(result);
     const prof = await profileByUid(result.user.id);
@@ -268,9 +288,14 @@
   async function sendOtp(channel, target) {
     if (!configured()) return false;
     try {
+      // create_user:false so registration OTP does NOT create a Supabase auth
+      // user prematurely (which would cause /signup to fail with "User already
+      // registered"). The local code generated in sendContactOtp() is the
+      // source of truth for registration; Supabase OTP is only for existing
+      // users (e.g. sign-in OTP).
       const payload = channel === 'email'
-        ? { email: String(target || '').trim().toLowerCase(), create_user: true }
-        : { phone: '+63' + normPhone10(target), create_user: true };
+        ? { email: String(target || '').trim().toLowerCase(), create_user: false }
+        : { phone: '+63' + normPhone10(target), create_user: false };
       await request('/auth/v1/otp', { method: 'POST', body: JSON.stringify(payload) }, false);
       return true;
     } catch (_) {
@@ -362,6 +387,19 @@
     history.replaceState(null,'',location.pathname);
   }
   async function restore() { const s=session(); if (!s?.access_token) return null; const data=await request('/auth/v1/user'); return profileByUid(data.id); }
+  async function setPassword(newPassword) {
+    // Sets or updates the password for the currently signed-in user.
+    // Works for Google users who want to also allow email+password sign-in.
+    if (!newPassword || newPassword.length < 8) throw new Error('Password must be at least 8 characters.');
+    if (/\s/.test(newPassword)) throw new Error('Password must not contain spaces.');
+    if (!/[A-Za-z]/.test(newPassword) || !/\d/.test(newPassword)) throw new Error('Password must include letters and numbers.');
+    const result = await request('/auth/v1/user', {
+      method: 'PUT',
+      body: JSON.stringify({ password: newPassword })
+    });
+    if (result?.access_token) save(result);
+    return true;
+  }
   async function updateProfile(user, {name,email,phone,password,photoUrl}) {
     const old=session();
     const update={email:email.trim().toLowerCase(),data:{name:name.trim(),phone:phone.trim()},...(password?{password}: {})};
@@ -455,5 +493,5 @@
       if (_ws) { try { _ws.close(); } catch (_) {} _ws = null; }
     };
   }
-  global.LabaFlowSupabase={configured,signIn,register,sendOtp,verifyOtpAndRegister,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,syncGoogleProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut};
+  global.LabaFlowSupabase={configured,signIn,register,sendOtp,verifyOtpAndRegister,phoneRegistered,signInWithGoogle,completeGoogleRedirect,restore,updateProfile,syncGoogleProfile,listUsers,inviteUser,updateUser,deleteUser,grantPoints,notifyUser,listNotifications,markNotificationRead,fetchCollections,saveCollection,subscribeRealtime,signOut,setPassword};
 })(window);

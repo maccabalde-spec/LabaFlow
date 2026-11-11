@@ -77,6 +77,22 @@ class SupabaseAuthService {
 
   Future<void> signOut() => _client.auth.signOut();
 
+  /// Sets or updates the password for the currently signed-in user.
+  /// Used by Google-only users who want email+password sign-in too.
+  Future<void> setPassword(String newPassword) async {
+    if (newPassword.length < 8) {
+      throw StateError('Password must be at least 8 characters.');
+    }
+    if (RegExp(r'\s').hasMatch(newPassword)) {
+      throw StateError('Password must not contain spaces.');
+    }
+    if (!RegExp(r'[A-Za-z]').hasMatch(newPassword) ||
+        !RegExp(r'\d').hasMatch(newPassword)) {
+      throw StateError('Password must include letters and numbers.');
+    }
+    await _client.auth.updateUser(UserAttributes(password: newPassword));
+  }
+
   Future<AppUser> updateProfile({
     required AppUser current,
     required String name,
@@ -196,5 +212,7 @@ class SupabaseAuthService {
     points: (row['points'] as num?)?.toInt() ?? 0,
     pic: row['avatar_url'] as String?,
     googleConnected: (user?.appMetadata['providers'] as List?)?.contains('google') ?? false,
+    hasPassword: (user?.appMetadata['providers'] as List?)?.contains('email') ??
+        (user?.identities?.any((i) => i.provider == 'email') ?? true),
   );
 }
