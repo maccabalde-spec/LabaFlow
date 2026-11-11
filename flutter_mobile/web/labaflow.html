@@ -2750,7 +2750,7 @@ input[type="password"]::-ms-clear {
   margin-top: 2px;
 }
 
-/* ── SHORT & EXPANDABLE DETAILS (Panel Suggestion #5) ── */
+/* ── SHORT & EXPANDABLE DETAILS ── */
 .exp-toggle-btn {
   display: inline-flex;
   align-items: center;
@@ -2765,53 +2765,41 @@ input[type="password"]::-ms-clear {
   font-size: 11px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background 0.18s ease, color 0.18s ease,
+              border-color 0.18s ease, transform 0.1s ease;
   user-select: none;
 }
-.exp-toggle-btn:hover {
-  background: #4579EE;
-  color: #FFFFFF;
-  border-color: #4579EE;
-}
-.exp-toggle-btn {
-  transition: all 0.15s ease, transform 0.12s ease;
-}
+.exp-toggle-btn:hover,
 .exp-toggle-btn[aria-expanded="true"] {
   background: #4579EE;
   color: #FFFFFF;
   border-color: #4579EE;
 }
 .exp-panel {
-  display: grid;
-  grid-template-rows: 0fr;
+  max-height: 0;
+  overflow: hidden;
   margin-top: 0;
-  padding: 0 11px;
-  border-radius: 10px;
-  background: #F7F9FF;
-  border: 1px solid transparent;
-  font-size: 12px;
-  color: #334155;
-  overflow: hidden;
-  transition: grid-template-rows 0.32s cubic-bezier(0.4,0,0.2,1),
-              padding 0.32s ease,
-              border-color 0.25s ease,
-              opacity 0.28s ease;
   opacity: 0;
-}
-.exp-panel > .exp-panel-inner {
-  min-height: 0;
-  overflow: hidden;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.6;
+  text-align: left;
+  background: linear-gradient(135deg,#f0f7ff 0%,#f7f9ff 100%);
+  border: 1px solid transparent;
+  padding: 0 12px;
+  transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.3s ease,
+              padding 0.3s ease,
+              margin-top 0.3s ease,
+              border-color 0.25s ease;
 }
 .exp-panel.open {
-  grid-template-rows: 1fr;
-  padding: 9px 11px;
-  border-color: #D7E3FF;
+  max-height: 400px;
   opacity: 1;
-  margin-top: 7px;
-}
-.exp-panel {
-  line-height: 1.55;
-  text-align: left;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border-color: #c7dcff;
 }
 }
 .exp-panel.open {
@@ -5421,6 +5409,8 @@ const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (E
 
 function toggleExpPanel(btn){
   if(!btn)return;
+
+  // ── Find the panel: next sibling or parent's next sibling ──
   const parent=btn.parentElement;
   let panel=btn.nextElementSibling;
   if(!panel||!panel.classList.contains('exp-panel')){
@@ -5431,42 +5421,33 @@ function toggleExpPanel(btn){
   }
   if(!panel)return;
 
-  // ── Accordion: close all siblings in the same section ──
-  const section=btn.closest('.lp-services-grid,.lp-steps-grid,.exp-section,section,table,tbody,.card,.cp');
-  if(section){
-    section.querySelectorAll('.exp-panel.open').forEach(p=>{
-      if(p!==panel){
-        p.classList.remove('open');
-        const sibBtn=p.previousElementSibling?.matches?.('.exp-toggle-btn')
-          ? p.previousElementSibling
-          : section.querySelector(`.exp-toggle-btn[data-panel-id="${p.id}"]`);
-        if(sibBtn){
-          const lbl=sibBtn.dataset.label||'Details';
-          sibBtn.innerHTML=`▾ View ${lbl}`;
-          sibBtn.setAttribute('aria-expanded','false');
-        }
-      }
-    });
-  }
+  const willOpen=!panel.classList.contains('open');
 
-  // ── Wrap panel content in .exp-panel-inner if not already ──
-  if(!panel.querySelector('.exp-panel-inner')){
-    const inner=document.createElement('div');
-    inner.className='exp-panel-inner';
-    while(panel.firstChild) inner.appendChild(panel.firstChild);
-    panel.appendChild(inner);
-  }
+  // ── Accordion: close EVERY other open panel on the whole page ──
+  document.querySelectorAll('.exp-panel.open').forEach(p=>{
+    if(p===panel)return;
+    p.classList.remove('open');
+    // find its button and reset it
+    let b=p.previousElementSibling;
+    if(!b||!b.classList.contains('exp-toggle-btn')){
+      b=p.parentElement?.previousElementSibling?.querySelector('.exp-toggle-btn');
+    }
+    if(b&&b.classList.contains('exp-toggle-btn')){
+      const lbl=b.dataset.label||'Details';
+      b.innerHTML=`▾ View ${lbl}`;
+      b.setAttribute('aria-expanded','false');
+    }
+  });
 
-  const isOpen=panel.classList.toggle('open');
-  const baseLabel=btn.dataset.label||'Details';
+  // ── Toggle this panel ──
+  panel.classList.toggle('open', willOpen);
+  const lbl=btn.dataset.label||'Details';
+  btn.innerHTML=willOpen?`▴ Hide ${lbl}`:`▾ View ${lbl}`;
+  btn.setAttribute('aria-expanded', String(willOpen));
 
-  // ── Button: flip chevron + text with a smooth swap ──
-  btn.style.transform='scale(0.93)';
-  setTimeout(()=>{ btn.style.transform=''; },150);
-  btn.innerHTML=isOpen
-    ? `▴ Hide ${baseLabel}`
-    : `▾ View ${baseLabel}`;
-  btn.setAttribute('aria-expanded', String(isOpen));
+  // ── Micro-bounce on button ──
+  btn.style.transform='scale(0.9)';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ btn.style.transform=''; }));
 }
 
 function showPage(p){
