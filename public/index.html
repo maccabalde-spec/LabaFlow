@@ -9758,9 +9758,52 @@ window.addEventListener('popstate', function() {
   }
 });
 
+/* Override View Details accordion */
+.exp-panel{max-height:0!important;overflow:hidden!important;opacity:0!important;padding:0 12px!important;margin-top:0!important;border:1px solid transparent!important;border-radius:10px!important;background:linear-gradient(135deg,#f0f7ff,#f7f9ff)!important;font-size:12.5px!important;color:#334155!important;line-height:1.6!important;transition:max-height .38s cubic-bezier(.4,0,.2,1),opacity .3s ease,padding .3s ease,margin-top .3s ease,border-color .25s ease!important;display:block!important;}
+.exp-panel.open{max-height:400px!important;opacity:1!important;padding:10px 12px!important;margin-top:8px!important;border-color:#c7dcff!important;}
+.exp-toggle-btn{transition:background .18s,color .18s,border-color .18s,transform .1s!important;}
+.exp-toggle-btn[aria-expanded="true"],.exp-toggle-btn:hover{background:#4579EE!important;color:#fff!important;border-color:#4579EE!important;}
+</style>
+<script>
+// Accordion fix — runs after page load, overrides any existing toggleExpPanel
+(function(){
+  function fixAccordion(){
+    // Remove duplicate buttons — keep only the first .exp-toggle-btn per .lp-svc and .lp-step
+    document.querySelectorAll('.lp-svc, .lp-step').forEach(function(card){
+      var btns = card.querySelectorAll('.exp-toggle-btn');
+      for(var i = 1; i < btns.length; i++) btns[i].remove();
+    });
+    // Override toggleExpPanel globally
+    window.toggleExpPanel = function(btn){
+      if(!btn) return;
+      var parent = btn.parentElement;
+      var panel = btn.nextElementSibling;
+      if(!panel || !panel.classList.contains('exp-panel')) panel = parent && parent.nextElementSibling;
+      if(!panel || !panel.classList.contains('exp-panel')) panel = btn.closest('td,div,article,li') && btn.closest('td,div,article,li').querySelector('.exp-panel');
+      if(!panel) return;
+      var willOpen = !panel.classList.contains('open');
+      // Close all others
+      document.querySelectorAll('.exp-panel.open').forEach(function(p){
+        if(p === panel) return;
+        p.classList.remove('open');
+        var b = p.previousElementSibling;
+        if(!b || !b.classList.contains('exp-toggle-btn')) b = p.parentElement && p.parentElement.previousElementSibling && p.parentElement.previousElementSibling.querySelector('.exp-toggle-btn');
+        if(b && b.classList.contains('exp-toggle-btn')){
+          b.innerHTML = '&#9660; View ' + (b.dataset.label||'Details');
+          b.setAttribute('aria-expanded','false');
+        }
+      });
+      panel.classList.toggle('open', willOpen);
+      btn.innerHTML = willOpen ? '&#9650; Hide '+(btn.dataset.label||'Details') : '&#9660; View '+(btn.dataset.label||'Details');
+      btn.setAttribute('aria-expanded', String(willOpen));
+      btn.style.transform = 'scale(0.9)';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ btn.style.transform = ''; }); });
+    };
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fixAccordion);
+  else fixAccordion();
+})();
 </script>
-</body>
-</html>
 
 
 
