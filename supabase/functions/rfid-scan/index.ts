@@ -8,6 +8,36 @@ const supabase = createClient(
 
 const headers = { 'Content-Type': 'application/json' };
 
+// ── Web Push helper (VAPID) ───────────────────────────────────
+const VAPID_PUBLIC_KEY  = Deno.env.get('VAPID_PUBLIC_KEY')  ?? '';
+const VAPID_PRIVATE_KEY = Deno.env.get('VAPID_PRIVATE_KEY') ?? '';
+
+function b64urlDecode(s: string): Uint8Array {
+  const pad = s.length % 4 === 0 ? '' : '='.repeat(4 - s.length % 4);
+  const b64 = (s + pad).replace(/-/g, '+').replace(/_/g, '/');
+  const bin = atob(b64); return Uint8Array.from(bin, c => c.charCodeAt(0));
+}
+function b64urlEncode(buf: ArrayBuffer): string {
+  return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function sendWebPush(sub: { endpoint: string; p256dh: string; auth_key: string }, payload: object): Promise<void> {
+  if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) return;
+  try {
+    const url = new URL(sub.endpoint);
+    const audience = `${url.protocol}//${url.host}`;
+    const now = Math.floor(Date.now() / 1000);
+    const hdr  = b64urlEncode(new TextEncoder().encode(JSON.stringify({ typ:'JWT', alg:'ES256' })));
+    const pay  = b64urlEncode(new TextEncoder().encode(JSON.stringify({ aud: audience, exp: now + 43200, sub: 'mailto:admin@labaday.com' })));
+    const privKey = await crypto.subtle.importKey('pkcs8', b64urlDecode(VAPID_PRIVATE_KEY).buffer, { name:'ECDSA', namedCurve:'P-256' }, false, ['sign']);
+    const sig  = b64urlEncode(await crypto.subtle.sign({ name:'ECDSA', hash:'SHA-256' }, privKey, new TextEncoder().encode(`${hdr}.${pay}`)));
+    await fetch(sub.endpoint, {
+      method: 'POST',
+      headers: { Authorization: `vapid t=${hdr}.${pay}.${sig},k=${VAPID_PUBLIC_KEY}`, 'Content-Type': 'application/octet-stream', TTL: '86400' },
+      body: new TextEncoder().encode(JSON.stringify(payload)),
+    });
+  } catch (_) {}
+}
+
 // ── Simple in-memory rate limiter ────────────────────────
 // Prevents the same tag from flooding the endpoint (e.g. held near reader).
 const _scanCooldowns = new Map<string, number>();
@@ -72,7 +102,7 @@ async function saveCollection(key: string, items: any[]) {
   if (error) console.error(`saveCollection(${key}) failed:`, error.message);
 }
 
-/** Inserts a notification for the customer, resolving their auth UUID first. */
+/** Inserts a notification for the customer AND sends Web Push to all their devices. */
 async function notifyCustomer(custId: any, type: string, title: string, body: string, icon: string) {
   const authUid = await resolveAuthUid(custId);
   if (!authUid) {
@@ -80,6 +110,7 @@ async function notifyCustomer(custId: any, type: string, title: string, body: st
     return;
   }
   try {
+    // 1. Insert into notifications table (in-app realtime)
     await supabase.from('notifications').insert({
       user_id: authUid,
       type,
@@ -90,6 +121,18 @@ async function notifyCustomer(custId: any, type: string, title: string, body: st
   } catch (e: any) {
     console.error('notifyCustomer: insert failed:', e?.message);
   }
+
+  // 2. Send Web Push to all subscribed browser devices
+  try {
+    const { data: subs } = await supabase
+      .from('push_subscriptions')
+      .select('endpoint, p256dh, auth_key')
+      .eq('user_id', authUid);
+
+    if (subs && subs.length > 0) {
+      await Promise.allSettled(subs.map(s => sendWebPush(s, { title, body, icon, tag: `labaflow-${Date.now()}`, url: '/' })));
+    }
+  } catch (_) {}
 }
 
 serve(async (req) => {
