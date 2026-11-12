@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -105,7 +105,8 @@
 <script src="supabase-web-auth.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,600&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <style>
 /* ═══════════════════════════════════════
    LABAFLOW – LAUNDRY SHOP THEME
@@ -3836,7 +3837,6 @@ img, svg, canvas, video {
     </div>
     <button class="lp-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleLpMenu(this)"><span aria-hidden="true">&#9776;</span></button>
     <div class="lp-nav-cta">
-      <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline" style="text-decoration:none;font-size:12.5px;padding:7px 12px;gap:6px;" title="Download Android Mobile App">📲 App (APK)</a>
       <button class="lp-btn lp-btn-outline" onclick="openAuth('sign')">Sign In</button>
       <button class="lp-btn lp-btn-solid" onclick="openAuth('reg')">Book Now →</button>
     </div>
@@ -3852,7 +3852,6 @@ img, svg, canvas, video {
         <button class="lp-btn lp-btn-solid lp-btn-lg" onclick="openAuth('reg')">Book Now →</button>
         <button class="lp-btn lp-btn-gold lp-btn-lg" onclick="openAuth('sign')">📡 Track My Order</button>
         <button class="lp-btn lp-btn-outline lp-btn-lg" onclick="openAuth('sign')">Sign In</button>
-        <a href="LabaFlow.apk" download="LabaFlow.apk" class="lp-btn lp-btn-outline lp-btn-lg" style="text-decoration:none;gap:6px;" title="Download Android Mobile App">📲 Download APK</a>
       </div>
       <div class="lp-spinzy-hero-cards">
         <div class="lp-spinzy-hcard-blue">
@@ -5450,6 +5449,13 @@ const VAPID_PUBLIC_KEY='BM4puN4zy_p-_wag5qpVcdfjlgH4RDGmvTWDVyb_-vOwN3D2koR5ZE0I
 async function subscribeWebPush(){
   if(!CU?.authUid||!('serviceWorker' in navigator)||!('PushManager' in window))return;
   try{
+    // 1. Ask permission first — required before pushManager.subscribe()
+    if(Notification.permission==='default'){
+      const perm=await Notification.requestPermission();
+      if(perm!=='granted')return;
+    }
+    if(Notification.permission!=='granted')return;
+
     const reg=await navigator.serviceWorker.ready;
     let sub=await reg.pushManager.getSubscription();
     if(!sub){
@@ -5459,15 +5465,14 @@ async function subscribeWebPush(){
       });
     }
     // Save subscription to Supabase
-    const sess=LabaFlowSupabase&&typeof LabaFlowSupabase.getSession==='function'?LabaFlowSupabase.getSession():null;
-    const token=(sess&&sess.access_token)||JSON.parse(localStorage.getItem('labaflow.supabase.session.v1')||'{}')?.access_token;
+    const token=JSON.parse(localStorage.getItem('labaflow.supabase.session.v1')||'{}')?.access_token;
     if(!token)return;
     await fetch('https://sesiygonrbthnwjlpggf.supabase.co/functions/v1/send-notification/subscribe',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+token,'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlc2l5Z29ucmJ0aG53amxwZ2dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM5NTI0NDQsImV4cCI6MjEwOTUyODQ0NH0.YjpCWOqMbp9lZISkx0gZnF-TFF7rHAnnEFSN_JJJkWA'},
       body:JSON.stringify({endpoint:sub.endpoint,keys:{p256dh:arrayBufferToBase64(sub.getKey('p256dh')),auth:arrayBufferToBase64(sub.getKey('auth'))},userAgent:navigator.userAgent})
     });
-  }catch(_){}
+  }catch(e){ console.warn('subscribeWebPush failed:',e?.message); }
 }
 function urlBase64ToUint8Array(b64){
   const pad='='.repeat((4-b64.length%4)%4);
@@ -7171,7 +7176,7 @@ function renderGcashQR(){
   if(dispEl)dispEl.textContent=fmt;
   const el=g("gcashQrPattern");
   if(!el)return;
-  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png\';}">';
+  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://labaflow.netlify.app/gcash_qr.png\';}">';
 }
 function submitPayment(){
   const ordId=parseInt(gv('payOrdSel')),amount=parseFloat(gv('payAmt')),channel=gv('payChan');
@@ -8196,7 +8201,7 @@ function _renderSettingsQR(num){
   const el=g('settingsQrPreview');
   if(!el)return;
   el.style.cssText='display:block;background:#fff;padding:12px;border-radius:14px;width:264px;max-width:100%;margin:0 auto;box-sizing:border-box;overflow:hidden;border:1.5px solid #D7E3FF;';
-  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png\';}">';
+  el.innerHTML='<img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb=\'1\';this.src=\'https://labaflow.netlify.app/gcash_qr.png\';}">';
 }
 
 function saveGcashNumber(){
@@ -8558,7 +8563,7 @@ function ptPayments(){
       <div class="cp" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px;padding:18px;">
         <div class="gcash-qr-wrap" style="width:276px;max-width:100%;margin:0;flex:0 0 auto;">
           <div class="gcash-qr-pattern" style="margin-bottom:8px;">
-            <img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/gcash_qr.png';}">
+            <img src="gcash_qr.png" width="240" alt="GCash QR Code" style="width:240px;max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:12px;" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://labaflow.netlify.app/gcash_qr.png';}">
           </div>
           <div class="gcash-shop-name" style="font-weight:800;color:#0E214E;">Lab-a-Day Laundry</div>
           <div class="gcash-num-display" style="font-family:monospace;font-weight:700;color:#4579EE;">${getGcashNumber().replace(/(\d{4})(\d{3})(\d{4})/,'$1 $2 $3')}</div>
