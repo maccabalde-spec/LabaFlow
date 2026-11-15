@@ -3315,6 +3315,72 @@ img, svg, canvas, video {
   max-width: 100%;
 }
 
+.mob-burger-btn,
+.mob-drawer-close,
+.mob-drawer-backdrop,
+.lp-mob-drawer-head,
+.lp-mob-drawer-extra,
+.pt-mob-drawer-head,
+.pt-mob-drawer-foot {
+  display: none;
+}
+.mob-burger-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  border: 1px solid #D7E3FF;
+  background: #EEF4FF;
+  color: #1D4ED8;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.16s, transform 0.12s;
+}
+.mob-burger-btn:active {
+  transform: scale(0.94);
+}
+.mob-drawer-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid #CBD5E1;
+  background: #F1F5F9;
+  color: #334155;
+  font-size: 22px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mob-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.56);
+  backdrop-filter: blur(2px);
+  z-index: 1200;
+}
+.mob-drawer-backdrop.open {
+  display: block !important;
+}
+.pt-apk-card {
+  background: linear-gradient(135deg, #EFF6FF 0%, #ECFEFF 100%);
+  border: 1.5px solid #BFDBFE;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+}
+
 @media (max-width: 820px) {
   html, body {
     overflow-x: hidden !important;
@@ -3839,6 +3905,323 @@ img, svg, canvas, video {
     width: auto !important;
     max-width: calc(100vw - 20px) !important;
   }
+
+  /* ── Mobile Burger Button & Left Slide-Out Navigation Drawers (Landing, Staff/Admin, Customer) ── */
+  .lp-nav {
+    padding: 0 14px !important;
+    height: 60px !important;
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
+  }
+  .lp-nav-cta {
+    display: none !important;
+  }
+  .lp-nav .lp-menu-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    border-radius: 11px !important;
+    border: 1px solid #D8EAEC !important;
+    background: #FFFFFF !important;
+    color: #0F172A !important;
+    font-size: 20px !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
+  .lp-nav-links {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: auto !important;
+    width: min(276px, 82vw) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    background: #FFFFFF !important;
+    border-right: 1px solid #D8EAEC !important;
+    border-bottom: none !important;
+    padding: 14px 14px 20px !important;
+    gap: 6px !important;
+    z-index: 1201 !important;
+    overflow-y: auto !important;
+    box-shadow: 10px 0 32px rgba(15, 23, 42, 0.22) !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+  .lp-nav-links.is-open {
+    transform: translateX(0) !important;
+  }
+  .lp-nav-links > a {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 11px 14px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #0F172A !important;
+    background: #F8FAFC !important;
+  }
+  .lp-mob-drawer-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 4px 2px 12px !important;
+    margin-bottom: 6px !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+  }
+  .lp-mob-drawer-head .mob-drawer-close {
+    display: inline-flex !important;
+  }
+  .lp-mob-drawer-extra {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-top: auto !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #E2E8F0 !important;
+  }
+
+  #appBurgerBtn {
+    display: inline-flex !important;
+  }
+  #app .tb-quick-actions {
+    display: none !important;
+  }
+  #app .topbar .tb-right > .btn {
+    display: none !important;
+  }
+  #app .topbar {
+    flex-wrap: nowrap !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    height: auto !important;
+    min-height: 58px !important;
+  }
+  #app .tb-left-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+  #app .tb-title {
+    font-size: 16px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #app .tb-live-pill {
+    font-size: 10px !important;
+    padding: 3px 7px !important;
+    flex-shrink: 0 !important;
+  }
+  #app .main-area {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+  }
+  #app .sidebar {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: min(276px, 82vw) !important;
+    min-width: 0 !important;
+    max-width: 276px !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 1201 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: var(--surface, #FFFFFF) !important;
+    border-right: 1px solid var(--border, #E2E8F0) !important;
+    padding: 14px 12px 18px !important;
+    box-shadow: 10px 0 32px rgba(15, 23, 42, 0.25) !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+  #app .sidebar.mob-open {
+    transform: translateX(0) !important;
+  }
+  #app .sb-brand {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 4px 4px 12px !important;
+    border-bottom: 1px solid var(--border, #E2E8F0) !important;
+    margin-bottom: 10px !important;
+  }
+  #app .sb-brand-inner {
+    justify-content: flex-start !important;
+  }
+  #app .sidebar .mob-drawer-close {
+    display: inline-flex !important;
+  }
+  #app .sb-logo,
+  #app .sb-tagline,
+  #app .sb-uname,
+  #app .sb-urole {
+    display: block !important;
+  }
+  #app .sb-user {
+    display: flex !important;
+    justify-content: flex-start !important;
+    padding: 10px 12px !important;
+    margin-bottom: 10px !important;
+  }
+  #app .sb-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow-x: visible !important;
+    overflow-y: auto !important;
+    gap: 4px !important;
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    padding: 2px 0 !important;
+  }
+  #app .sb-nav .nav-item {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    white-space: normal !important;
+    flex-shrink: 0 !important;
+    border-radius: 10px !important;
+  }
+  #app .sb-foot {
+    display: block !important;
+    padding: 12px 0 0 !important;
+    margin-top: 10px !important;
+    border-top: 1px solid var(--border, #E2E8F0) !important;
+  }
+  #app .sb-foot .btn {
+    font-size: 12.5px !important;
+    padding: 10px 14px !important;
+    width: 100% !important;
+  }
+  #app .sb-foot .btn::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  #ptBurgerBtn {
+    display: inline-flex !important;
+  }
+  .pt-nav {
+    flex-wrap: nowrap !important;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+    justify-content: space-between !important;
+  }
+  .pt-nav > div:first-child {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+  .pt-nav .tb-live-pill {
+    display: none !important;
+  }
+  .pt-nav .pt-user {
+    width: auto !important;
+    flex-shrink: 0 !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+  }
+  .pt-nav .pt-user > .btn,
+  #ptLoyaltyPill {
+    display: none !important;
+  }
+  #ptTabsDrawer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: min(276px, 82vw) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 1201 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: #FFFFFF !important;
+    border-right: 1px solid #E2E8F0 !important;
+    border-bottom: none !important;
+    padding: 14px 12px 18px !important;
+    gap: 5px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: 10px 0 32px rgba(15, 23, 42, 0.25) !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  }
+  #ptTabsDrawer.mob-open {
+    transform: translateX(0) !important;
+  }
+  #ptTabsDrawer .pt-mob-drawer-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 4px 2px 12px !important;
+    margin-bottom: 6px !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    flex-shrink: 0 !important;
+  }
+  #ptTabsDrawer .mob-drawer-close {
+    display: inline-flex !important;
+  }
+  #ptTabsDrawer .pt-tab {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    padding: 11px 14px !important;
+    border-radius: 10px !important;
+    white-space: nowrap !important;
+    flex: 0 0 auto !important;
+    font-size: 13.5px !important;
+    border: none !important;
+    text-align: left !important;
+  }
+  #ptTabsDrawer .pt-mob-drawer-foot {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    margin-top: auto !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #E2E8F0 !important;
+    flex-shrink: 0 !important;
+  }
+  .pt-content {
+    padding-top: 14px !important;
+  }
+  .pt-apk-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px !important;
+  }
+  .pt-apk-card > a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
 }
 
 @media (max-width: 420px) {
@@ -3855,8 +4238,8 @@ img, svg, canvas, video {
     grid-template-columns: 1fr !important;
   }
   .pt-user {
-    width: 100% !important;
-    justify-content: space-between !important;
+    width: auto !important;
+    justify-content: flex-end !important;
   }
 }
 </style>
@@ -3899,12 +4282,21 @@ img, svg, canvas, video {
         <span class="lf-brand-sub">Lab-a-Day · RFID Laundry</span>
       </span>
     </a>
-    <div class="lp-nav-links">
+    <div class="lp-nav-links" id="lpNavDrawer">
+      <div class="lp-mob-drawer-head">
+        <span class="lf-brand-title" style="color:#0F172A;font-size:17px;">Laba<span style="color:#078695;">Flow</span></span>
+        <button class="mob-drawer-close" type="button" aria-label="Close navigation menu" onclick="closeMobileNavDrawers()">&times;</button>
+      </div>
       <a href="#how">How It Works</a>
       <a href="#services">Services</a>
       <a href="#pricing">Pricing</a>
       <a href="#reviews">Reviews</a>
       <a href="#faq">FAQ</a>
+      <div class="lp-mob-drawer-extra">
+        <a class="lp-btn lp-btn-outline" href="LabaFlow.apk" download="LabaFlow.apk" onclick="downloadLabaFlowApk(event);closeMobileNavDrawers();" style="text-align:center;text-decoration:none;justify-content:center;">&#x1F4F2; Download Android APK</a>
+        <button class="lp-btn lp-btn-outline" type="button" onclick="closeMobileNavDrawers();openAuth('sign')">Sign In</button>
+        <button class="lp-btn lp-btn-solid" type="button" onclick="closeMobileNavDrawers();openAuth('reg')">Book Now &rarr;</button>
+      </div>
     </div>
     <button class="lp-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleLpMenu(this)"><span aria-hidden="true">&#9776;</span></button>
     <div class="lp-nav-cta">
@@ -4426,14 +4818,16 @@ img, svg, canvas, video {
         </div>
         <div><div class="sb-logo">Laba<span>Flow</span></div><div class="sb-tagline">Lab-a-Day · RFID System</div></div>
       </div>
+      <button class="mob-drawer-close" type="button" aria-label="Close navigation menu" onclick="closeMobileNavDrawers()">&times;</button>
     </div>
     <div class="sb-user" style="cursor:pointer;transition:background .15s;" onclick="showPage('my_profile')" title="View My Gmail & Account Profile"><div class="sb-av" id="sbAv">A</div><div><div class="sb-uname" id="sbName">—</div><div class="sb-urole" id="sbRole">—</div></div></div>
     <nav class="sb-nav" id="sbNav"></nav>
-    <div class="sb-foot"><button class="btn btn-ghost btn-block" style="font-size:12px;" onclick="doLogout()">↩ Sign Out</button></div>
+    <div class="sb-foot"><button class="btn btn-ghost btn-block" style="font-size:12px;" onclick="closeMobileNavDrawers();doLogout()">↩ Sign Out</button></div>
   </div>
   <div class="main-area">
     <div class="topbar">
       <div class="tb-left-wrap">
+        <button class="mob-burger-btn" id="appBurgerBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleAppMobileNav()"><span aria-hidden="true">&#9776;</span></button>
         <span class="tb-title" id="pgTitle">Dashboard</span>
         <span class="tb-live-pill" title="Supabase Realtime Cloud Sync Active"><span class="tb-live-dot"></span>Live Sync</span>
       </div>
@@ -4462,6 +4856,7 @@ img, svg, canvas, video {
 <div class="pt-wrap">
   <div class="pt-nav">
     <div style="display:flex;align-items:center;gap:12px;">
+      <button class="mob-burger-btn" id="ptBurgerBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="togglePtMobileNav()"><span aria-hidden="true">&#9776;</span></button>
       <div class="pt-logo lf-brand-wrap" style="cursor:pointer;" onclick="ptTab('overview')">
         <span class="lf-brand-emblem" style="width:36px;height:36px;border-radius:11px;" aria-hidden="true">
           <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;">
@@ -4491,7 +4886,14 @@ img, svg, canvas, video {
       <button class="btn btn-ghost btn-sm" style="font-size:11px;min-height:34px;" onclick="doLogout()">Sign Out</button>
     </div>
   </div>
-  <div class="pt-tabs">
+  <div class="pt-tabs" id="ptTabsDrawer">
+    <div class="pt-mob-drawer-head">
+      <div class="lf-brand-wrap" style="gap:8px;">
+        <span class="lf-brand-title" style="color:#0F172A;font-size:17px;">Laba<span style="color:#078695;">Flow</span></span>
+        <span style="font-size:11px;color:#64748B;font-weight:600;">Customer Menu</span>
+      </div>
+      <button class="mob-drawer-close" type="button" aria-label="Close navigation menu" onclick="closeMobileNavDrawers()">&times;</button>
+    </div>
     <div class="pt-tab active" id="ptt-overview" onclick="ptTab('overview')">🏠 Overview</div>
     <div class="pt-tab" id="ptt-book" onclick="ptTab('book')">➕ Book a Service</div>
     <div class="pt-tab" id="ptt-orders" onclick="ptTab('orders')">📦 My Orders</div>
@@ -4503,10 +4905,15 @@ img, svg, canvas, video {
     </div>
     <div class="pt-tab" id="ptt-loyalty" onclick="ptTab('loyalty')">⭐ LabaPoints</div>
     <div class="pt-tab" id="ptt-profile" onclick="ptTab('profile')">👤 Profile</div>
+    <div class="pt-mob-drawer-foot">
+      <a class="btn btn-primary btn-block" id="ptDrawerApkBtn" href="LabaFlow.apk" download="LabaFlow.apk" onclick="downloadLabaFlowApk(event);closeMobileNavDrawers();" style="text-decoration:none;justify-content:center;">&#x1F4F2; Download Android APK</a>
+      <button class="btn btn-ghost btn-block" type="button" onclick="closeMobileNavDrawers();doLogout()" style="justify-content:center;">&#x21A9; Sign Out</button>
+    </div>
   </div>
   <div class="pt-content" id="ptContent"></div>
 </div>
 </div>
+<div class="mob-drawer-backdrop" id="mobDrawerBackdrop" onclick="closeMobileNavDrawers()"></div>
 
 <!-- ══ MODALS ══ -->
 
@@ -5580,6 +5987,7 @@ async function doLogout(force=false){
 }
 
 async function executeSecureLogout(){
+  closeMobileNavDrawers();
   showLoader('Signing out securely…');
   try{
     if(window.LabaFlowSupabase&&typeof LabaFlowSupabase.signOut==='function'){
@@ -5842,6 +6250,7 @@ function toggleExpPanel(btn){
 }
 
 function showPage(p){
+  closeMobileNavDrawers();
   curPage=p;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const el=g('nav-'+p);if(el)el.classList.add('active');
@@ -9036,6 +9445,7 @@ let ptOrderFilter='ALL';
 let ptTrackOrderId=null;
 
 function ptTab(t){
+  closeMobileNavDrawers();
   curPtTab=t;
   document.querySelectorAll('.pt-tab').forEach(x=>x.classList.remove('active'));
   const el=g('ptt-'+t);if(el)el.classList.add('active');
@@ -9089,6 +9499,7 @@ function ptOverview(){
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn btn-primary" style="background:#38bdf8;color:#082f49;border:none;font-weight:800;padding:11px 18px;" onclick="ptTab('book')">➕ Book Laundry Service</button>
         <button class="btn btn-ghost" style="color:#ffffff;border-color:rgba(255,255,255,0.28);" onclick="ptTab('track')">📡 Track Active Order</button>
+        <a class="btn btn-ghost" id="ptHeroApkBtn" href="LabaFlow.apk" download="LabaFlow.apk" onclick="downloadLabaFlowApk(event)" style="color:#ffffff;border-color:rgba(125,211,252,0.55);background:rgba(14,165,233,0.2);text-decoration:none;">&#x1F4F2; Download Android APK</a>
       </div>
     </div>
 
@@ -9111,6 +9522,16 @@ function ptOverview(){
       </div>
     </div>
 
+    <div class="pt-apk-card" id="ptApkDownloadCard">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 240px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2563EB,#0EA5E9);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">&#x1F4F1;</div>
+        <div>
+          <div style="font-size:14.5px;font-weight:800;color:#0F172A;">LabaFlow Android App (APK)</div>
+          <div style="font-size:12px;color:#475569;margin-top:2px;">Install LabaFlow on your Android phone for instant RFID laundry tracking, booking, and alerts anytime.</div>
+        </div>
+      </div>
+      <a class="btn btn-primary" id="ptCardApkBtn" href="LabaFlow.apk" download="LabaFlow.apk" onclick="downloadLabaFlowApk(event)" style="text-decoration:none;white-space:nowrap;font-weight:800;">&#x2B07; Download LabaFlow APK</a>
+    </div>
     <div class="pt-quick-grid">
       <div class="pt-quick-card" onclick="ptTab('book')">
         <div class="pt-quick-icon">🧺</div>
@@ -10645,16 +11066,98 @@ document.addEventListener('click',e=>{
   if(cpanel&&cbell&&!cpanel.contains(e.target)&&!cbell.contains(e.target)){cpanel.classList.remove('open');}
 });
 
+/* ── Mobile Navigation Drawers & APK Download ── */
+function downloadLabaFlowApk(evt){
+  const apkUrl='LabaFlow.apk';
+  if(window.location&&window.location.protocol==='file:'){
+    if(evt)evt.preventDefault();
+    window.open('https://maccabalde-spec.github.io/LabaFlow/LabaFlow.apk','_blank');
+  }
+  toast('📲 Starting LabaFlow.apk download…');
+  if(evt&&evt.currentTarget&&!evt.defaultPrevented){
+    return true;
+  }
+  const a=document.createElement('a');
+  a.href=apkUrl;
+  a.download='LabaFlow.apk';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  return true;
+}
+
+function closeMobileNavDrawers(){
+  const lpDrawer=document.querySelector('.lp-nav-links');
+  if(lpDrawer)lpDrawer.classList.remove('is-open');
+  const lpBtn=document.querySelector('.lp-menu-toggle');
+  if(lpBtn){
+    lpBtn.setAttribute('aria-expanded','false');
+    lpBtn.setAttribute('aria-label','Open navigation menu');
+  }
+  const appSidebar=document.querySelector('#app .sidebar');
+  if(appSidebar)appSidebar.classList.remove('mob-open');
+  const appBtn=g('appBurgerBtn');
+  if(appBtn){
+    appBtn.setAttribute('aria-expanded','false');
+    appBtn.setAttribute('aria-label','Open navigation menu');
+  }
+  const ptTabs=g('ptTabsDrawer')||document.querySelector('.pt-tabs');
+  if(ptTabs)ptTabs.classList.remove('mob-open');
+  const ptBtn=g('ptBurgerBtn');
+  if(ptBtn){
+    ptBtn.setAttribute('aria-expanded','false');
+    ptBtn.setAttribute('aria-label','Open navigation menu');
+  }
+  const bd=g('mobDrawerBackdrop');
+  if(bd)bd.classList.remove('open');
+}
+
+function toggleAppMobileNav(){
+  const sb=document.querySelector('#app .sidebar');
+  if(!sb)return;
+  const willOpen=!sb.classList.contains('mob-open');
+  closeMobileNavDrawers();
+  if(willOpen){
+    sb.classList.add('mob-open');
+    const btn=g('appBurgerBtn');
+    if(btn){btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close navigation menu');}
+    const bd=g('mobDrawerBackdrop');
+    if(bd)bd.classList.add('open');
+  }
+}
+
+function togglePtMobileNav(){
+  const drawer=g('ptTabsDrawer')||document.querySelector('.pt-tabs');
+  if(!drawer)return;
+  const willOpen=!drawer.classList.contains('mob-open');
+  closeMobileNavDrawers();
+  if(willOpen){
+    drawer.classList.add('mob-open');
+    const btn=g('ptBurgerBtn');
+    if(btn){btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close navigation menu');}
+    const bd=g('mobDrawerBackdrop');
+    if(bd)bd.classList.add('open');
+  }
+}
+
 /* smooth scroll for landing nav links */
 function toggleLpMenu(button){
   const menu=document.querySelector('.lp-nav-links');
   if(!menu)return;
-  const open=menu.classList.toggle('is-open');
-  button.setAttribute('aria-expanded',String(open));
-  button.setAttribute('aria-label',open?'Close navigation menu':'Open navigation menu');
+  const willOpen=!menu.classList.contains('is-open');
+  closeMobileNavDrawers();
+  if(willOpen){
+    menu.classList.add('is-open');
+    button.setAttribute('aria-expanded','true');
+    button.setAttribute('aria-label','Close navigation menu');
+    const bd=g('mobDrawerBackdrop');
+    if(bd)bd.classList.add('open');
+  }
 }
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNavDrawers();});
+window.addEventListener('resize',()=>{if(window.innerWidth>768)closeMobileNavDrawers();});
 document.querySelectorAll('.lp-nav-links a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{e.preventDefault();const el=document.querySelector(a.getAttribute('href'));if(el)el.scrollIntoView({behavior:'smooth'});const menu=document.querySelector('.lp-nav-links');menu?.classList.remove('is-open');const toggle=document.querySelector('.lp-menu-toggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','Open navigation menu');});
+  a.addEventListener('click',e=>{e.preventDefault();const el=document.querySelector(a.getAttribute('href'));if(el)el.scrollIntoView({behavior:'smooth'});closeMobileNavDrawers();});
 });
 
 if(typeof applyLandingImages==='function')applyLandingImages();

@@ -4,7 +4,7 @@
    minimized, or backgrounded ("app naka-destroy then may push notif").
 ══════════════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'labaflow-sw-v4';
+const CACHE_NAME = 'labaflow-sw-v5';
 let _bgTimer = null;
 let _authInfo = null;
 let _seenNotifIds = new Set();
