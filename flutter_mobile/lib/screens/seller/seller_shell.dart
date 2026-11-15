@@ -1356,6 +1356,25 @@ class _RecordPaymentSheetState extends State<_RecordPaymentSheet> {
     super.dispose();
   }
 
+  void _enforceExactAmount(String raw) {
+    final o = _order;
+    if (o == null) return;
+    final exactStr = o.price.toStringAsFixed(2);
+    final shortStr = o.price == o.price.roundToDouble()
+        ? o.price.toInt().toString()
+        : exactStr;
+    final t = raw.trim();
+    if (t.isEmpty) return;
+    final ok = exactStr.startsWith(t) || shortStr.startsWith(t);
+    final parsed = double.tryParse(t);
+    if (!ok || (parsed != null && parsed > o.price + 0.005)) {
+      _amtC.value = TextEditingValue(
+        text: exactStr,
+        selection: TextSelection.collapsed(offset: exactStr.length),
+      );
+    }
+  }
+
   Future<void> _submit() async {
     final o = _order;
     if (o == null) {
@@ -1365,6 +1384,18 @@ class _RecordPaymentSheetState extends State<_RecordPaymentSheet> {
     final amt = double.tryParse(_amtC.text.trim());
     if (amt == null || amt <= 0) {
       await showErrorDialog(context, 'Enter a valid amount.');
+      return;
+    }
+    if ((amt - o.price).abs() > 0.01) {
+      final exactStr = o.price.toStringAsFixed(2);
+      _amtC.value = TextEditingValue(
+        text: exactStr,
+        selection: TextSelection.collapsed(offset: exactStr.length),
+      );
+      await showErrorDialog(
+        context,
+        'Exact payment required: ₱$exactStr.',
+      );
       return;
     }
     if (_channel == PaymentChannel.gcash && _refC.text.trim().length < 8) {
@@ -1464,10 +1495,12 @@ class _RecordPaymentSheetState extends State<_RecordPaymentSheet> {
             const SizedBox(height: 12),
             _SField(
               controller: _amtC,
-              label: 'AMOUNT (₱)',
-              hint: '0.00',
-              type: TextInputType.number,
-              onChanged: (_) {},
+              label: _order != null
+                  ? 'EXACT AMOUNT DUE (₱${_order!.price.toStringAsFixed(2)})'
+                  : 'EXACT AMOUNT (₱)',
+              hint: _order != null ? _order!.price.toStringAsFixed(2) : '0.00',
+              type: const TextInputType.numberWithOptions(decimal: true),
+              onChanged: _enforceExactAmount,
             ),
             const SizedBox(height: 12),
             const Text(
@@ -1581,10 +1614,12 @@ class _RecordPaymentSheetState extends State<_RecordPaymentSheet> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        'Scan QR code to pay via GCash\nAccount: 09XX XXX XXXX\nLab-a-Day Laundry',
-                        style: TextStyle(fontSize: 12, height: 1.5),
+                        _order != null
+                            ? 'Scan QR code to pay via GCash\nExact Amount Due: ₱${_order!.price.toStringAsFixed(2)}\nAccount: 0961 515 0075 · Lab-a-Day Laundry'
+                            : 'Scan QR code to pay via GCash\nAccount: 0961 515 0075 · Lab-a-Day Laundry',
+                        style: const TextStyle(fontSize: 12, height: 1.5),
                       ),
                     ),
                   ],

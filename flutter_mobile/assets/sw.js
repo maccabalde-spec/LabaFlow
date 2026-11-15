@@ -4,7 +4,7 @@
    minimized, or backgrounded ("app naka-destroy then may push notif").
 ══════════════════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'labaflow-sw-v1';
+const CACHE_NAME = 'labaflow-sw-v3';
 let _bgTimer = null;
 let _authInfo = null;
 let _seenNotifIds = new Set();
@@ -74,6 +74,10 @@ self.addEventListener('message', (event) => {
       data.seenIds.forEach((id) => _seenNotifIds.add(String(id)));
     }
     startBackgroundCheck();
+  } else if (data.type === 'CLEAR_AUTH') {
+    _authInfo = null;
+    if (_bgTimer) { clearInterval(_bgTimer); _bgTimer = null; }
+    _seenNotifIds.clear();
   }
 });
 

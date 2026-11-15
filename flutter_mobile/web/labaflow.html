@@ -4518,7 +4518,11 @@ img, svg, canvas, video {
 <div class="ov" id="mPay"><div class="modal">
   <h3>Record Payment</h3>
   <div class="fg"><label>Order</label><select id="payOrdSel" onchange="fillPayAmt()"></select></div>
-  <div class="fg"><label>Amount (₱)</label><input type="number" id="payAmt" step="0.01" min="1" max="5000" oninput="clampInput(this,5000,2)"></div>
+  <div class="fg">
+    <label>Exact Amount Due (₱)</label>
+    <input type="number" id="payAmt" step="0.01" min="1" max="5000" oninput="enforceExactPayInput(this)" onchange="lockExactPayInput(this)" onblur="lockExactPayInput(this)">
+    <div id="payExactHint" class="text-sm text-muted" style="margin-top:4px;font-size:11.5px;color:var(--success);font-weight:700;"></div>
+  </div>
   <div class="fg"><label>Payment Method</label>
     <select id="payChan" onchange="onPayChanChange()">
       <option value="CASH">💵 Cash</option>
@@ -4531,9 +4535,14 @@ img, svg, canvas, video {
       <div class="gcash-qr-pattern" id="gcashQrPattern"></div>
       <div class="gcash-shop-name">Lab-a-Day Laundry</div>
       <div class="gcash-num-display" id="gcashNumDisplay"></div>
+      <div id="gcashExactBadge" style="margin-top:6px;display:inline-block;padding:4px 10px;border-radius:999px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;font-size:12px;font-weight:800;"></div>
     </div>
-    <div class="gcash-ref-note">📌 Scan the QR or send to the number above, then enter your reference number below.</div>
-    <div class="fg" style="margin-top:10px;"><label>GCash Reference Number</label><input id="gcashRef" placeholder="e.g. 2024091512345678" style="font-family:monospace;"></div>
+    <div class="gcash-ref-note">📌 Scan the QR or send the exact amount above, then confirm the exact GCash amount and reference number below.</div>
+    <div class="fg" style="margin-top:10px;">
+      <label>GCash Exact Amount (₱)</label>
+      <input type="number" id="gcashAmt" step="0.01" min="1" max="5000" oninput="enforceExactPayInput(this)" onchange="lockExactPayInput(this)" onblur="lockExactPayInput(this)">
+    </div>
+    <div class="fg" style="margin-top:10px;"><label>GCash Reference Number</label><input id="gcashRef" maxlength="20" oninput="this.value=this.value.replace(/[^0-9A-Za-z]/g,'').slice(0,20)" placeholder="e.g. 2024091512345678" style="font-family:monospace;"></div>
   </div>
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mPay')">Cancel</button>
@@ -7446,8 +7455,9 @@ function advanceOrder(){
         if(!r.isConfirmed)return;
         closeM('mDetail');
         /* pre-select this order in the payment modal */
-        const eligible=DB.get('orders').filter(ord=>['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(ord.status));
-        g('payOrdSel').innerHTML=eligible.map(ord=>`<option value="${ord.id}" data-p="${ord.finalPrice||ord.price}"${ord.id===o.id?' selected':''}>${ord.num} — ${ord.custName} (${peso(ord.finalPrice||ord.price)})</option>`).join('');
+        const paidIds=new Set(DB.get('transactions').filter(t=>t.status==='COMPLETED').map(t=>Number(t.orderId)));
+        const eligible=DB.get('orders').filter(ord=>(['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(ord.status)&&!paidIds.has(Number(ord.id)))||ord.id===o.id);
+        g('payOrdSel').innerHTML=eligible.map(ord=>{const due=Number(ord.finalPrice!=null&&ord.finalPrice!==''?ord.finalPrice:ord.price);return`<option value="${ord.id}" data-p="${due.toFixed(2)}"${ord.id===o.id?' selected':''}>${ord.num} — ${escapeHtml(ord.custName)} (${peso(due)})</option>`;}).join('');
         g('payChan').value='CASH';
         g('gcashSection').classList.remove('show');
         if(g('gcashRef'))sv('gcashRef','');
@@ -7522,20 +7532,76 @@ function _doAdvance(o,orders,next){
 }
 
 /* ── Payment ── */
+function isValidExactAmountPrefix(raw,exact){
+  const s=String(raw==null?'':raw).trim();
+  if(!s)return true;
+  if(!/^\d*(\.\d{0,2})?$/.test(s))return false;
+  const fixed=Number(exact).toFixed(2);
+  const short=String(parseFloat(fixed));
+  return fixed.startsWith(s)||short.startsWith(s);
+}
+function getSelectedPayOrderExactAmt(){
+  const sel=g('payOrdSel');
+  if(!sel||sel.selectedIndex<0)return null;
+  const opt=sel.options[sel.selectedIndex];
+  if(!opt||!opt.value||opt.dataset.p==null||opt.dataset.p==='')return null;
+  const v=parseFloat(opt.dataset.p);
+  return isFinite(v)&&v>0?parseFloat(v.toFixed(2)):null;
+}
+function _syncPayAmountFields(fx){
+  const payEl=g('payAmt'),gEl=g('gcashAmt');
+  if(payEl){payEl.value=fx;if(fx){payEl.min=fx;payEl.max=fx;}}
+  if(gEl){gEl.value=fx;if(fx){gEl.min=fx;gEl.max=fx;}}
+}
 function openPayModal(){
-  const eligible=DB.get('orders').filter(o=>['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status));
-  g('payOrdSel').innerHTML=eligible.length?eligible.map(o=>`<option value="${o.id}" data-p="${o.finalPrice||o.price}">${o.num} — ${o.custName} (${peso(o.finalPrice||o.price)})</option>`):'<option value="">No eligible orders</option>';
+  const paidIds=new Set(DB.get('transactions').filter(t=>t.status==='COMPLETED').map(t=>Number(t.orderId)));
+  const eligible=DB.get('orders').filter(o=>['READY','RECEIVED','WASHING','PROCESSING','DRYING','FOLDING'].includes(o.status)&&!paidIds.has(Number(o.id)));
+  g('payOrdSel').innerHTML=eligible.length?eligible.map(o=>{const due=Number(o.finalPrice!=null&&o.finalPrice!==''?o.finalPrice:o.price);return`<option value="${o.id}" data-p="${due.toFixed(2)}">${o.num} — ${escapeHtml(o.custName)} (${peso(due)})</option>`;}).join(''):'<option value="">No unpaid eligible orders</option>';
   g('payChan').value='CASH';
   g('gcashSection').classList.remove('show');
   if(g('gcashRef'))sv('gcashRef','');
   fillPayAmt();openM('mPay');
 }
-function fillPayAmt(){const sel=g('payOrdSel'),opt=sel.options[sel.selectedIndex];if(opt&&opt.dataset.p)sv('payAmt',opt.dataset.p);}
+function fillPayAmt(){
+  const exact=getSelectedPayOrderExactAmt();
+  const hint=g('payExactHint'),badge=g('gcashExactBadge');
+  if(exact==null){
+    _syncPayAmountFields('');
+    if(hint)hint.textContent='Select an unpaid order to lock the exact payment amount.';
+    if(badge)badge.textContent='';
+    return;
+  }
+  const fx=exact.toFixed(2);
+  _syncPayAmountFields(fx);
+  if(hint)hint.textContent=`Exact payment required: ${peso(exact)} (only ${fx} can be entered)`;
+  if(badge)badge.textContent=`Exact GCash Amount Due: ${peso(exact)}`;
+}
+function enforceExactPayInput(el){
+  const exact=getSelectedPayOrderExactAmt();
+  if(!el||exact==null)return;
+  const fx=exact.toFixed(2);
+  const raw=String(el.value||'').trim();
+  const other=el.id==='payAmt'?g('gcashAmt'):g('payAmt');
+  if(raw==='')return;
+  if(!isValidExactAmountPrefix(raw,exact)){
+    _syncPayAmountFields(fx);
+    toast(`Only the exact order amount (${peso(exact)}) can be entered.`);
+    return;
+  }
+  const num=parseFloat(raw);
+  if(isFinite(num)&&Math.abs(num-exact)<=0.005&&other)other.value=fx;
+}
+function lockExactPayInput(){
+  const exact=getSelectedPayOrderExactAmt();
+  if(exact==null){_syncPayAmountFields('');return;}
+  _syncPayAmountFields(exact.toFixed(2));
+}
 function onPayChanChange(){
   const ch=gv('payChan');
   const sec=g('gcashSection');
   if(ch==='GCASH'){
     sec.classList.add('show');
+    lockExactPayInput();
     renderGcashQR();
   } else {
     sec.classList.remove('show');
@@ -7568,31 +7634,40 @@ function submitPayment(){
   if(amount>MAX_ORDER_AMOUNT){swalError(`Invalid payment amount. Maximum allowed payment per order is ${peso(MAX_ORDER_AMOUNT)}.`);return;}
   const orders=DB.get('orders'),o=orders.find(x=>x.id===ordId);
   if(!o){swalError('Selected order was not found.');return;}
-  const expectedAmt=Number(o.price)||0;
-  if(expectedAmt>0&&Math.abs(amount-expectedAmt)>0.01){
-    swalError(`Payment amount (${peso(amount)}) must match the order total (${peso(expectedAmt)}).`);
+  const exactAmt=parseFloat(Number((o.finalPrice!=null&&o.finalPrice!=='')?o.finalPrice:o.price).toFixed(2));
+  if(!isFinite(exactAmt)||exactAmt<=0||Math.abs(amount-exactAmt)>0.005){
+    if(exactAmt>0)_syncPayAmountFields(exactAmt.toFixed(2));
+    swalError(`Exact payment required: amount (${peso(amount)}) must match the order total (${peso(exactAmt)}).`);
     return;
   }
   if(channel==='GCASH'){
+    const gAmtEl=g('gcashAmt');
+    const gAmt=gAmtEl?parseFloat(gv('gcashAmt')):amount;
+    if(!isFinite(gAmt)||Math.abs(gAmt-exactAmt)>0.005){
+      _syncPayAmountFields(exactAmt.toFixed(2));
+      swalError(`Exact GCash amount required: GCash payment must match ${peso(exactAmt)}.`);
+      return;
+    }
     const ref=g('gcashRef')?gv('gcashRef').trim():'';
     if(!ref){swalError('Please enter the GCash reference number.');return;}
     if(ref.length<8){swalError('GCash reference number appears too short. Please check and re-enter.');return;}
   }
+  const finalAmount=exactAmt;
   const gcashRef=channel==='GCASH'&&g('gcashRef')?gv('gcashRef').trim():'';
   const txns=DB.get('transactions'),id=DB.nextId('transactions');
-  txns.push({id,num:'TXN-'+String(id).padStart(4,'0'),orderId:ordId,orderNum:o.num,custName:o.custName,amount,channel,gcashRef,status:'COMPLETED',promoCode:o.promoCode||'',rcpt:'RCP-'+ordId+'-'+Date.now(),date:new Date().toISOString()});
-  o.finalPrice=amount;
+  txns.push({id,num:'TXN-'+String(id).padStart(4,'0'),orderId:ordId,orderNum:o.num,custName:o.custName,amount:finalAmount,channel,gcashRef,status:'COMPLETED',promoCode:o.promoCode||'',rcpt:'RCP-'+ordId+'-'+Date.now(),date:new Date().toISOString()});
+  o.finalPrice=finalAmount;
   if(o.status==='READY'){
     o.status='RELEASED';o.pickup=new Date().toISOString();
     const tags=DB.get('rfidTags'),tag=tags.find(t=>t.id===o.tagId);
     if(tag){logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'TAG_RELEASED',result:'SUCCESS',details:'Payment completed; tag released for reuse'});tag.available=true;tag.orderId=null;}DB.set('rfidTags',tags);logOrderStatus(o,'RELEASED','Payment recorded & laundry released');
-    const pts=addPoints(o.custId,amount);
+    const pts=addPoints(o.custId,finalAmount);
     toast(`🌟 +${pts} LabaPoints awarded to ${o.custName}`);
     pushNotif(o.custId,'RELEASED',`Order ${o.num} released`,`Your laundry is ready and paid. +${pts} LabaPoints earned!`,'✅');
   }
   DB.set('transactions',txns);DB.set('orders',orders);
   closeM('mPay');
-  swalSuccess('Payment Recorded',`${peso(amount)} via ${channel}${gcashRef?' (Ref: '+gcashRef+')':''} recorded for ${o.num}.`);
+  swalSuccess('Payment Recorded',`${peso(finalAmount)} via ${channel}${gcashRef?' (Ref: '+gcashRef+')':''} recorded for ${o.num}.`);
   updateSellerBell();pgOrders();
 }
 
@@ -9030,11 +9105,27 @@ function ptPayments(){
           <div class="gcash-shop-name" style="font-weight:800;color:#0E214E;">Lab-a-Day Laundry</div>
           <div class="gcash-num-display" style="font-family:monospace;font-weight:700;color:#4579EE;">${getGcashNumber().replace(/(\d{4})(\d{3})(\d{4})/,'$1 $2 $3')}</div>
         </div>
-        <div style="max-width:320px;font-size:13px;color:var(--text-muted);line-height:1.6;">
-          <div style="font-weight:800;color:var(--text);font-size:15px;margin-bottom:6px;">How to Pay with GCash:</div>
-          <div>1. Open your <b>GCash App</b> and tap <b>QR</b>.</div>
-          <div>2. Scan the QR code inside the frame (or send to <b>${getGcashNumber()}</b>).</div>
-          <div>3. Present your <b>GCash Reference Number</b> at the shop counter upon pickup.</div>
+        <div style="flex:1 1 280px;max-width:380px;font-size:13px;color:var(--text-muted);line-height:1.6;">
+          <div style="font-weight:800;color:var(--text);font-size:15px;margin-bottom:6px;">Pay Exact Order Amount via GCash:</div>
+          <div style="margin-bottom:10px;">1. Scan the QR code (or send to <b>${getGcashNumber()}</b>) for the <b>exact amount due</b> below.<br>2. Enter the exact amount and your GCash Reference Number to confirm payment.</div>
+          ${unpaidActive.length?`<div style="background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:12px;">
+            <div class="fg" style="margin-bottom:8px;">
+              <label style="font-size:11px;font-weight:700;color:var(--text);">Unpaid Order</label>
+              <select id="ptGcashOrdSel" onchange="fillPtGcashAmt()" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12.5px;">
+                ${unpaidActive.map(o=>{const due=Number(o.finalPrice!=null&&o.finalPrice!==''?o.finalPrice:o.price);return`<option value="${o.id}" data-p="${due.toFixed(2)}">${o.num} — ${TYPE_LABEL[o.type]||o.type} (${peso(due)})</option>`;}).join('')}
+              </select>
+            </div>
+            <div class="fg" style="margin-bottom:8px;">
+              <label style="font-size:11px;font-weight:700;color:var(--text);">Exact GCash Amount (₱)</label>
+              <input type="number" id="ptGcashAmt" step="0.01" oninput="enforceExactPtGcashInput(this)" onchange="lockExactPtGcashInput(this)" onblur="lockExactPtGcashInput(this)" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:700;box-sizing:border-box;">
+              <div id="ptGcashHint" style="font-size:11px;font-weight:700;color:var(--success);margin-top:3px;"></div>
+            </div>
+            <div class="fg" style="margin-bottom:10px;">
+              <label style="font-size:11px;font-weight:700;color:var(--text);">GCash Reference Number</label>
+              <input id="ptGcashRef" maxlength="20" oninput="this.value=this.value.replace(/[^0-9A-Za-z]/g,'').slice(0,20)" placeholder="e.g. 2024091512345678" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:monospace;font-size:12.5px;box-sizing:border-box;">
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" style="width:100%;" onclick="submitCustGcashPayment()">Confirm Exact GCash Payment</button>
+          </div>`:`<div style="padding:10px 12px;border-radius:10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:var(--success);font-weight:700;">✓ All your active orders are already paid!</div>`}
         </div>
       </div>
     </div>
@@ -9058,6 +9149,74 @@ function ptPayments(){
       </div>
     </div>
   `;
+  if(unpaidActive.length)fillPtGcashAmt();
+}
+function getSelectedPtGcashExactAmt(){
+  const sel=g('ptGcashOrdSel');
+  if(!sel||sel.selectedIndex<0)return null;
+  const opt=sel.options[sel.selectedIndex];
+  if(!opt||!opt.value||opt.dataset.p==null||opt.dataset.p==='')return null;
+  const v=parseFloat(opt.dataset.p);
+  return isFinite(v)&&v>0?parseFloat(v.toFixed(2)):null;
+}
+function fillPtGcashAmt(){
+  const exact=getSelectedPtGcashExactAmt();
+  const amtEl=g('ptGcashAmt'),hint=g('ptGcashHint');
+  if(!amtEl)return;
+  if(exact==null){amtEl.value='';if(hint)hint.textContent='';return;}
+  const fx=exact.toFixed(2);
+  amtEl.value=fx;amtEl.min=fx;amtEl.max=fx;
+  if(hint)hint.textContent=`Exact GCash amount required: ${peso(exact)} (only ${fx} can be entered)`;
+}
+function enforceExactPtGcashInput(el){
+  const exact=getSelectedPtGcashExactAmt();
+  if(!el||exact==null)return;
+  const raw=String(el.value||'').trim();
+  if(raw==='')return;
+  if(!isValidExactAmountPrefix(raw,exact)){
+    el.value=exact.toFixed(2);
+    toast(`Only the exact order amount (${peso(exact)}) can be entered.`);
+  }
+}
+function lockExactPtGcashInput(el){
+  const exact=getSelectedPtGcashExactAmt();
+  if(!el)return;
+  el.value=exact!=null?exact.toFixed(2):'';
+}
+function submitCustGcashPayment(){
+  const ordId=parseInt(gv('ptGcashOrdSel')),amount=parseFloat(gv('ptGcashAmt'));
+  const orders=DB.get('orders'),o=orders.find(x=>x.id===ordId&&x.custId===CU.id);
+  if(!o){swalError('Selected order was not found.');return;}
+  if(DB.get('transactions').some(t=>Number(t.orderId)===Number(o.id)&&t.status==='COMPLETED')){
+    swalError(`Order ${o.num} is already paid.`);ptPayments();return;
+  }
+  const exactAmt=parseFloat(Number((o.finalPrice!=null&&o.finalPrice!=='')?o.finalPrice:o.price).toFixed(2));
+  if(!isFinite(amount)||Math.abs(amount-exactAmt)>0.005){
+    if(g('ptGcashAmt'))g('ptGcashAmt').value=exactAmt.toFixed(2);
+    swalError(`Exact GCash payment required: amount (${isFinite(amount)?peso(amount):'invalid'}) must match ${peso(exactAmt)} for ${o.num}.`);
+    return;
+  }
+  const ref=g('ptGcashRef')?gv('ptGcashRef').trim():'';
+  if(!ref){swalError('Please enter your GCash reference number.');return;}
+  if(ref.length<8){swalError('GCash reference number appears too short. Please check and re-enter.');return;}
+  const txns=DB.get('transactions'),id=DB.nextId('transactions');
+  txns.push({id,num:'TXN-'+String(id).padStart(4,'0'),orderId:o.id,orderNum:o.num,custName:o.custName,amount:exactAmt,channel:'GCASH',gcashRef:ref,status:'COMPLETED',promoCode:o.promoCode||'',rcpt:'RCP-'+o.id+'-'+Date.now(),date:new Date().toISOString()});
+  o.finalPrice=exactAmt;
+  if(o.status==='READY'){
+    o.status='RELEASED';o.pickup=new Date().toISOString();
+    const tags=DB.get('rfidTags'),tag=tags.find(t=>t.id===o.tagId);
+    if(tag){logRfidScan({uid:tag.uid,orderId:o.id,orderNum:o.num,action:'TAG_RELEASED',result:'SUCCESS',details:'Customer GCash payment completed; tag released'});tag.available=true;tag.orderId=null;}
+    DB.set('rfidTags',tags);logOrderStatus(o,'RELEASED','Customer GCash payment recorded & laundry released');
+    const pts=addPoints(o.custId,exactAmt);
+    pushNotif(o.custId,'RELEASED',`Order ${o.num} paid & released`,`Paid ${peso(exactAmt)} via GCash (Ref: ${ref}). +${pts} LabaPoints earned!`,'✅');
+  }else{
+    pushNotif(o.custId,'PAYMENT',`GCash payment received for ${o.num}`,`Paid ${peso(exactAmt)} via GCash (Ref: ${ref}).`,'💳');
+  }
+  const seller=DB.get('users').find(u=>u.role==='SELLER'||u.role==='ADMIN');
+  if(seller)pushNotif(seller.id,'PAYMENT',`GCash payment from ${CU.name} (${o.num})`,`${peso(exactAmt)} via GCash · Ref: ${ref}`,'📱');
+  DB.set('transactions',txns);DB.set('orders',orders);
+  swalSuccess('GCash Payment Recorded',`${peso(exactAmt)} paid via GCash (Ref: ${ref}) for ${o.num}.`);
+  ptPayments();
 }
 
 function showPortalQR(ordId){
