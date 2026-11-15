@@ -3360,12 +3360,24 @@ img, svg, canvas, video {
 .mob-drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.56);
-  backdrop-filter: blur(2px);
-  z-index: 1200;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  z-index: 9000 !important;
+  pointer-events: none;
 }
 .mob-drawer-backdrop.open {
   display: block !important;
+  pointer-events: auto !important;
+}
+.mob-parent-open {
+  z-index: 9990 !important;
+  overflow: visible !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  transform: none !important;
 }
 .pt-apk-card {
   background: linear-gradient(135deg, #EFF6FF 0%, #ECFEFF 100%);
@@ -3912,6 +3924,11 @@ img, svg, canvas, video {
     height: 60px !important;
     flex-wrap: nowrap !important;
     gap: 10px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    transform: none !important;
+    background: #FFFFFF !important;
   }
   .lp-nav-cta {
     display: none !important;
@@ -3949,7 +3966,11 @@ img, svg, canvas, video {
     border-bottom: none !important;
     padding: 14px 14px 20px !important;
     gap: 6px !important;
-    z-index: 1201 !important;
+    z-index: 9995 !important;
+    pointer-events: auto !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     overflow-y: auto !important;
     box-shadow: 10px 0 32px rgba(15, 23, 42, 0.22) !important;
     transform: translateX(-105%) !important;
@@ -4004,6 +4025,11 @@ img, svg, canvas, video {
     gap: 8px !important;
     height: auto !important;
     min-height: 58px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    transform: none !important;
+    background: #FFFFFF !important;
   }
   #app .tb-left-wrap {
     display: flex !important;
@@ -4040,7 +4066,11 @@ img, svg, canvas, video {
     max-width: 276px !important;
     height: 100dvh !important;
     max-height: 100dvh !important;
-    z-index: 1201 !important;
+    z-index: 9995 !important;
+    pointer-events: auto !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     background: var(--surface, #FFFFFF) !important;
@@ -4125,6 +4155,11 @@ img, svg, canvas, video {
     padding: 10px 12px !important;
     gap: 8px !important;
     justify-content: space-between !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    transform: none !important;
+    background: #FFFFFF !important;
   }
   .pt-nav > div:first-child {
     display: flex !important;
@@ -4158,7 +4193,11 @@ img, svg, canvas, video {
     width: min(276px, 82vw) !important;
     height: 100dvh !important;
     max-height: 100dvh !important;
-    z-index: 1201 !important;
+    z-index: 9995 !important;
+    pointer-events: auto !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     background: #FFFFFF !important;
@@ -4221,6 +4260,14 @@ img, svg, canvas, video {
   .pt-apk-card > a {
     width: 100% !important;
     justify-content: center !important;
+  }
+  .lp-nav-links.is-open,
+  #app .sidebar.mob-open,
+  #ptTabsDrawer.mob-open {
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 }
 
@@ -4287,11 +4334,11 @@ img, svg, canvas, video {
         <span class="lf-brand-title" style="color:#0F172A;font-size:17px;">Laba<span style="color:#078695;">Flow</span></span>
         <button class="mob-drawer-close" type="button" aria-label="Close navigation menu" onclick="closeMobileNavDrawers()">&times;</button>
       </div>
-      <a href="#how">How It Works</a>
-      <a href="#services">Services</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#faq">FAQ</a>
+      <a href="#how" onclick="closeMobileNavDrawers()">How It Works</a>
+      <a href="#services" onclick="closeMobileNavDrawers()">Services</a>
+      <a href="#pricing" onclick="closeMobileNavDrawers()">Pricing</a>
+      <a href="#reviews" onclick="closeMobileNavDrawers()">Reviews</a>
+      <a href="#faq" onclick="closeMobileNavDrawers()">FAQ</a>
       <div class="lp-mob-drawer-extra">
         <a class="lp-btn lp-btn-outline" href="LabaFlow.apk" download="LabaFlow.apk" onclick="downloadLabaFlowApk(event);closeMobileNavDrawers();" style="text-align:center;text-decoration:none;justify-content:center;">&#x1F4F2; Download Android APK</a>
         <button class="lp-btn lp-btn-outline" type="button" onclick="closeMobileNavDrawers();openAuth('sign')">Sign In</button>
@@ -11086,8 +11133,36 @@ function downloadLabaFlowApk(evt){
   return true;
 }
 
+function _restoreLpNavDrawer(){
+  const lpDrawer=g('lpNavDrawer')||document.querySelector('.lp-nav-links');
+  const lpNav=document.querySelector('.lp-nav');
+  if(lpDrawer&&lpNav&&!lpNav.contains(lpDrawer)){
+    const toggle=lpNav.querySelector('.lp-menu-toggle');
+    if(toggle)lpNav.insertBefore(lpDrawer,toggle);
+    else lpNav.appendChild(lpDrawer);
+  }
+}
+
+function _placeBackdropBeforeDrawer(drawer){
+  if(!drawer)return;
+  if(drawer.id==='lpNavDrawer'){
+    if(window.innerWidth<=820&&drawer.parentNode&&drawer.parentNode.classList&&drawer.parentNode.classList.contains('lp-nav')&&drawer.parentNode.parentNode){
+      drawer.parentNode.parentNode.insertBefore(drawer,drawer.parentNode.nextSibling);
+    }else if(window.innerWidth>820){
+      _restoreLpNavDrawer();
+    }
+  }
+  if(drawer.parentNode){
+    if(drawer.parentNode.classList)drawer.parentNode.classList.add('mob-parent-open');
+    const shellRoot=drawer.closest?drawer.closest('#app, #portal, #landing'):null;
+    if(shellRoot&&shellRoot.classList)shellRoot.classList.add('mob-parent-open');
+    const bd=g('mobDrawerBackdrop');
+    if(bd)drawer.parentNode.insertBefore(bd,drawer);
+  }
+}
+
 function closeMobileNavDrawers(){
-  const lpDrawer=document.querySelector('.lp-nav-links');
+  const lpDrawer=g('lpNavDrawer')||document.querySelector('.lp-nav-links');
   if(lpDrawer)lpDrawer.classList.remove('is-open');
   const lpBtn=document.querySelector('.lp-menu-toggle');
   if(lpBtn){
@@ -11110,6 +11185,7 @@ function closeMobileNavDrawers(){
   }
   const bd=g('mobDrawerBackdrop');
   if(bd)bd.classList.remove('open');
+  document.querySelectorAll('.mob-parent-open').forEach(el=>el.classList.remove('mob-parent-open'));
 }
 
 function toggleAppMobileNav(){
@@ -11118,6 +11194,7 @@ function toggleAppMobileNav(){
   const willOpen=!sb.classList.contains('mob-open');
   closeMobileNavDrawers();
   if(willOpen){
+    _placeBackdropBeforeDrawer(sb);
     sb.classList.add('mob-open');
     const btn=g('appBurgerBtn');
     if(btn){btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close navigation menu');}
@@ -11132,6 +11209,7 @@ function togglePtMobileNav(){
   const willOpen=!drawer.classList.contains('mob-open');
   closeMobileNavDrawers();
   if(willOpen){
+    _placeBackdropBeforeDrawer(drawer);
     drawer.classList.add('mob-open');
     const btn=g('ptBurgerBtn');
     if(btn){btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close navigation menu');}
@@ -11142,11 +11220,12 @@ function togglePtMobileNav(){
 
 /* smooth scroll for landing nav links */
 function toggleLpMenu(button){
-  const menu=document.querySelector('.lp-nav-links');
+  const menu=g('lpNavDrawer')||document.querySelector('.lp-nav-links');
   if(!menu)return;
   const willOpen=!menu.classList.contains('is-open');
   closeMobileNavDrawers();
   if(willOpen){
+    _placeBackdropBeforeDrawer(menu);
     menu.classList.add('is-open');
     button.setAttribute('aria-expanded','true');
     button.setAttribute('aria-label','Close navigation menu');
@@ -11155,7 +11234,7 @@ function toggleLpMenu(button){
   }
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileNavDrawers();});
-window.addEventListener('resize',()=>{if(window.innerWidth>768)closeMobileNavDrawers();});
+window.addEventListener('resize',()=>{if(window.innerWidth>820){closeMobileNavDrawers();_restoreLpNavDrawer();}});
 document.querySelectorAll('.lp-nav-links a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{e.preventDefault();const el=document.querySelector(a.getAttribute('href'));if(el)el.scrollIntoView({behavior:'smooth'});closeMobileNavDrawers();});
 });
