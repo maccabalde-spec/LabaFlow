@@ -2887,24 +2887,6 @@ class _ChatPane extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  size: 20,
-                  color: AppColors.success,
-                ),
-                tooltip: 'Audio call',
-                onPressed: () => onCall(false),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.videocam,
-                  size: 20,
-                  color: AppColors.lightAccent2,
-                ),
-                tooltip: 'Video call',
-                onPressed: () => onCall(true),
-              ),
             ],
           ),
         ),

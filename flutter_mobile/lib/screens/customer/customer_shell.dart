@@ -1443,30 +1443,6 @@ class _CustMessagesPageState extends State<CustMessagesPage> {
                   ],
                 ),
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  size: 20,
-                  color: AppColors.success,
-                ),
-                onPressed: () => setState(() {
-                  _callActive = true;
-                  _callVideo = false;
-                }),
-                tooltip: 'Audio call',
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.videocam,
-                  size: 20,
-                  color: AppColors.lightAccent2,
-                ),
-                onPressed: () => setState(() {
-                  _callActive = true;
-                  _callVideo = true;
-                }),
-                tooltip: 'Video call',
-              ),
             ],
           ),
         ),

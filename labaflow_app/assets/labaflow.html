@@ -581,25 +581,8 @@ tbody tr:hover td{background:rgba(56,189,248,.05);}
 .qr-code-num{font-family:monospace;font-size:14px;font-weight:700;color:var(--accent);letter-spacing:1px;}
 .qr-code-sub{font-size:10px;color:var(--text-muted);margin-top:3px;line-height:1.4;}
 
-/* ── CALL BUTTONS ── */
-.msg-call-btns{display:flex;gap:6px;align-items:center;}
-.call-btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-muted);transition:all .15s;white-space:nowrap;}
-.call-btn:hover{background:rgba(56,189,248,.1);border-color:var(--accent2);color:var(--text);}
-.call-btn.video:hover{background:rgba(52,211,153,.1);border-color:var(--success);color:var(--success);}
-/* call overlay */
-.call-overlay{display:none;position:fixed;inset:0;background:rgba(6,16,32,.95);z-index:1000;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
-.call-overlay.active{display:flex;}
-.call-avatar{width:72px;height:72px;border-radius:50%;background:var(--btn);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px;}
-.call-name{font-size:18px;font-weight:700;color:#fff;}
-.call-status{font-size:13px;color:var(--text-muted);}
-.call-pulse{animation:callpulse 1.4s ease-in-out infinite;}
-@keyframes callpulse{0%,100%{opacity:1;}50%{opacity:.45;}}
-.call-actions{display:flex;gap:16px;margin-top:8px;}
-.call-action-btn{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;border:none;transition:transform .15s,opacity .15s;}
-.call-action-btn:hover{transform:scale(1.08);}
-.call-action-btn.end{background:#e53935;}
-.call-action-btn.mute{background:#37474f;}
-.call-action-btn.video-toggle{background:#1565c0;}
+/* ── CALL BUTTONS (DISABLED) ── */
+.msg-call-btns,.call-btn,.call-overlay,#callOverlay{display:none!important;}
 
 /* ── PROFILE PICTURE ── */
 .profile-pic-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;}
@@ -2897,6 +2880,94 @@ input[type="password"]::-ms-clear {
   border-left-color: #10B981;
 }
 
+/* ── USER-FRIENDLY ANALYTICS COLOR INDICATORS & GRAPH GUIDES ── */
+.ana-guide-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 11px 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #F8FAFC 0%, #EFF6FF 100%);
+  border: 1.5px solid #DBEAFE;
+  border-radius: 14px;
+  font-size: 12px;
+  color: #1E293B;
+}
+.ana-guide-title {
+  font-weight: 800;
+  color: #0E214E;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.color-legend-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #E2E8F0;
+}
+.color-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #1E293B;
+}
+.cp-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+}
+.graph-explain {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+  border-radius: 11px;
+  background: #F0F7FF;
+  border-left: 4px solid #2563EB;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #1E3A8A;
+}
+.graph-explain strong {
+  color: #0E214E;
+}
+.ana-takeaway {
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #065F46;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+.svc-bd-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+}
+.svc-bd-row:last-child { border-bottom: none; }
+
 /* ── OWNER READ-ONLY AUDIT & PUSH NOTIFICATION BANNER (Panel Suggestion #3 & #4) ── */
 .owner-ro-banner {
   display: flex;
@@ -4371,7 +4442,7 @@ img, svg, canvas, video {
 <div class="ov" id="mOrd"><div class="modal">
   <h3 id="mOrdTitle">New Order</h3>
   <div id="moWashNote" class="wash-note">⏱ Estimated wash time: <b>2–3 hours</b>, depending on how many loads are in the queue.</div>
-  <div class="fg"><label>Customer</label><select id="moCust"></select></div>
+  <div class="fg"><label>Customer</label><select id="moCust" onchange="calcOrdPrice()"></select></div>
   <div class="fg"><label>Laundry Type</label>
     <select id="moType" onchange="onTypeChange()">
       <option value="CLOTHES">Clothes (Full Wash)</option>
@@ -4382,7 +4453,7 @@ img, svg, canvas, video {
     </select>
   </div>
   <div id="clothesFields">
-    <div class="fg"><label>Weight (kg) — max 9 kg per set; 10+ kg = 2 sets</label><input type="number" id="moKg" min="0.5" step="0.5" placeholder="e.g. 5" oninput="calcOrdPrice()"></div>
+    <div class="fg"><label>Weight (kg) — 0.5 to 27 kg max (9 kg per set; 10+ kg = 2 sets)</label><input type="number" id="moKg" min="0.5" max="27" step="0.5" placeholder="e.g. 5" oninput="clampInput(this,27,1);calcOrdPrice()"></div>
     <div class="fg"><label>Color Distinction</label>
       <select id="moColorDist" onchange="calcOrdPrice()">
         <option value="">Select clothes type…</option><option value="WHITES">Whites Only</option><option value="COLORED">Colored Only</option><option value="MIXED">Mixed (shop not liable for color bleeding)</option>
@@ -4390,15 +4461,15 @@ img, svg, canvas, video {
     </div>
   </div>
   <div id="bedsheetFields" style="display:none">
-    <div class="fg"><label>Weight (kg)</label><input type="number" id="moBsKg" min="0.5" step="0.5" placeholder="e.g. 5" oninput="calcOrdPrice()"></div>
+    <div class="fg"><label>Weight (kg) — 0.5 to 15 kg max</label><input type="number" id="moBsKg" min="0.5" max="15" step="0.5" placeholder="e.g. 5" oninput="clampInput(this,15,1);calcOrdPrice()"></div>
   </div>
   <div id="comforterFields" style="display:none">
-    <div class="fg"><label>Number of Comforters</label><input type="number" id="moComQty" min="1" step="1" placeholder="1" oninput="calcOrdPrice()"></div>
+    <div class="fg"><label>Number of Comforters — 1 to 5 max</label><input type="number" id="moComQty" min="1" max="5" step="1" placeholder="1" oninput="clampInput(this,5,0);calcOrdPrice()"></div>
   </div>
   <div id="washDryFields" style="display:none">
-    <div class="fg"><label>Estimated Weight (kg)</label><input type="number" id="moWdKg" min="0.5" step="0.5" placeholder="e.g. 3" oninput="calcOrdPrice()"></div>
+    <div class="fg"><label>Estimated Weight (kg) — max 9 kg (1 load)</label><input type="number" id="moWdKg" min="0.5" max="9" step="0.5" placeholder="e.g. 3" oninput="clampInput(this,9,1);calcOrdPrice()"></div>
   </div>
-  <div class="fg"><label>Promo Code (optional)</label><input id="moPromo" placeholder="e.g. LABA10" oninput="calcOrdPrice()"></div>
+  <div class="fg"><label>Promo Code (optional)</label><input id="moPromo" maxlength="15" placeholder="e.g. LABA10" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,15);calcOrdPrice()"></div>
   <div class="fg"><label>Calculated Price</label><input id="moPrice" readonly></div>
   <div id="moPriceBreakdown" style="font-size:12px;color:var(--text-muted);margin-top:-8px;margin-bottom:10px;"></div>
   <div class="fg"><label>Special Instructions</label><textarea id="moNotes" rows="2" placeholder="Separate whites, no bleach..."></textarea></div>
@@ -4447,7 +4518,7 @@ img, svg, canvas, video {
 <div class="ov" id="mPay"><div class="modal">
   <h3>Record Payment</h3>
   <div class="fg"><label>Order</label><select id="payOrdSel" onchange="fillPayAmt()"></select></div>
-  <div class="fg"><label>Amount (₱)</label><input type="number" id="payAmt" step="0.01" min="0"></div>
+  <div class="fg"><label>Amount (₱)</label><input type="number" id="payAmt" step="0.01" min="1" max="5000" oninput="clampInput(this,5000,2)"></div>
   <div class="fg"><label>Payment Method</label>
     <select id="payChan" onchange="onPayChanChange()">
       <option value="CASH">💵 Cash</option>
@@ -4572,12 +4643,21 @@ img, svg, canvas, video {
 <!-- Promo Codes (Admin) -->
 <div class="ov" id="mPromo"><div class="modal">
   <h3 id="mPromoTitle">Add Promo Code</h3>
-  <div class="fg"><label>Code</label><input id="pmCode" placeholder="e.g. LABA10" style="text-transform:uppercase;"></div>
+  <div class="fg"><label>Code (3–15 letters/numbers)</label><input id="pmCode" maxlength="15" placeholder="e.g. LABA10" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,15)"></div>
   <div class="row2">
-    <div class="fg"><label>Discount (%)</label><input type="number" id="pmDisc" min="1" max="100" step="1" placeholder="10"></div>
-    <div class="fg"><label>Max Uses</label><input type="number" id="pmMax" min="1" step="1" placeholder="50"></div>
+    <div class="fg"><label>Discount (%) — 1 to 100</label><input type="number" id="pmDisc" min="1" max="100" step="1" placeholder="10" oninput="clampInput(this,100,0);promoFormHint()"></div>
+    <div class="fg"><label>Max Total Uses</label><input type="number" id="pmMax" min="1" max="500" step="1" placeholder="50" oninput="clampInput(this,500,0);promoFormHint()"></div>
   </div>
-  <div class="fg"><label>Description</label><input id="pmDesc" placeholder="e.g. First-timer discount"></div>
+  <div class="row2">
+    <div class="fg"><label>Required Completed Orders</label><input type="number" id="pmMinOrders" min="0" max="100" step="1" placeholder="0" oninput="clampInput(this,100,0);promoFormHint()"></div>
+    <div class="fg"><label>Minimum Order Amount (₱)</label><input type="number" id="pmMinSpend" min="0" max="5000" step="1" placeholder="0" oninput="clampInput(this,5000,0);promoFormHint()"></div>
+  </div>
+  <div class="row2">
+    <div class="fg"><label>Uses per Customer</label><input type="number" id="pmPerCust" min="1" max="10" step="1" placeholder="1" oninput="clampInput(this,10,0);promoFormHint()"></div>
+    <div class="fg"><label>Max Discount Cap (₱, 0 = none)</label><input type="number" id="pmCap" min="0" max="1000" step="1" placeholder="0" oninput="clampInput(this,1000,0);promoFormHint()"></div>
+  </div>
+  <div id="pmRuleHint" style="font-size:12px;line-height:1.5;padding:10px 12px;border-radius:10px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);margin-bottom:12px;"></div>
+  <div class="fg"><label>Description</label><input id="pmDesc" maxlength="120" placeholder="e.g. First-timer discount"></div>
   <div class="mf">
     <button class="btn btn-ghost" onclick="closeM('mPromo')">Cancel</button>
     <button class="btn btn-primary" onclick="submitPromo()">Save Code</button>
@@ -4611,19 +4691,6 @@ img, svg, canvas, video {
 <div class="auth-loader" id="authLoader">
   <div class="auth-spin"></div>
   <div class="auth-loader-msg" id="authLoaderMsg">Signing in…</div>
-</div>
-
-<!-- CALL OVERLAY -->
-<div class="call-overlay" id="callOverlay">
-  <div class="call-avatar" id="callAvatar">?</div>
-  <div class="call-name" id="callName">Connecting…</div>
-  <div class="call-status call-pulse" id="callStatus">Calling…</div>
-  <div style="font-size:11px;color:var(--text-dim);margin-top:-6px;" id="callTimer"></div>
-  <div class="call-actions">
-    <button class="call-action-btn mute" id="callMuteBtn" onclick="toggleCallMute()" title="Mute">🎤</button>
-    <button class="call-action-btn end" onclick="endCall()" title="End Call">📵</button>
-    <button class="call-action-btn video-toggle" id="callVidBtn" style="display:none;" onclick="toggleCallVideo()" title="Toggle Camera">📷</button>
-  </div>
 </div>
 
 <div id="toast"></div>
@@ -4701,8 +4768,8 @@ window._lfSuppressRemote=true;(function seed(){
   if(!DB.has('restockLog'))DB.set('restockLog',[]);
   if(!DB.has('promoCodes')){
     DB.set('promoCodes',[
-      {id:1,code:'WELCOME',disc:10,maxUses:100,uses:0,desc:'Welcome discount for new customers',active:true},
-      {id:2,code:'LABA20',disc:20,maxUses:30,uses:0,desc:'Special promo - limited time',active:true}
+      {id:1,code:'WELCOME',disc:10,maxUses:100,uses:0,minOrders:0,minSpend:0,perCustLimit:1,maxDisc:0,desc:'Welcome discount for new customers',active:true},
+      {id:2,code:'LABA20',disc:20,maxUses:30,uses:0,minOrders:0,minSpend:0,perCustLimit:1,maxDisc:0,desc:'Special promo - limited time',active:true}
     ]);
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
@@ -4736,8 +4803,8 @@ function ts(daysAgo=0){const d=new Date();d.setDate(d.getDate()+daysAgo);return 
 (function ensureAllKeys(){
   if(!DB.has('promoCodes')){
     DB.set('promoCodes',[
-      {id:1,code:'WELCOME',disc:10,maxUses:100,uses:0,desc:'Welcome discount for new customers',active:true},
-      {id:2,code:'LABA20',disc:20,maxUses:30,uses:0,desc:'Special promo - limited time',active:true}
+      {id:1,code:'WELCOME',disc:10,maxUses:100,uses:0,minOrders:0,minSpend:0,perCustLimit:1,maxDisc:0,desc:'Welcome discount for new customers',active:true},
+      {id:2,code:'LABA20',disc:20,maxUses:30,uses:0,minOrders:0,minSpend:0,perCustLimit:1,maxDisc:0,desc:'Special promo - limited time',active:true}
     ]);
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
@@ -4790,15 +4857,205 @@ function calcPrice(type,kg,comQty){
   return{price:0,breakdown:''};
 }
 
-/* ── PROMO ── */
-function applyPromo(code,basePrice){
-  if(!code)return{discount:0,finalAfterPromo:basePrice,promoMsg:''};
-  const pc=DB.get('promoCodes').find(p=>p.code===code.toUpperCase().trim()&&p.active);
-  if(!pc)return{discount:0,finalAfterPromo:basePrice,promoMsg:'❌ Invalid or expired promo code'};
-  if(pc.uses>=pc.maxUses)return{discount:0,finalAfterPromo:basePrice,promoMsg:'❌ Promo code already exhausted'};
-  const disc=parseFloat(((pc.disc/100)*basePrice).toFixed(2));
-  return{discount:disc,finalAfterPromo:parseFloat((basePrice-disc).toFixed(2)),promoMsg:`✅ ${pc.code}: ${pc.disc}% off — saves ₱${disc.toFixed(2)}`};
+/* ══════════════════════════════════════
+   LOAD LIMITS (realistic max per order for Lab-a-Day machines: 9 kg per set)
+══════════════════════════════════════ */
+const LOAD_LIMITS={
+  CLOTHES:  {min:0.5,max:27,unit:'kg', note:'max 3 sets × 9 kg per order'},
+  BEDSHEET: {min:0.5,max:15,unit:'kg', note:'max 15 kg per order'},
+  WASH_ONLY:{min:0.5,max:9, unit:'kg', note:'1 machine load only'},
+  DRY_ONLY: {min:0.5,max:9, unit:'kg', note:'1 machine load only'},
+  COMFORTER:{min:1,  max:5, unit:'pcs',note:'max 5 comforters per order'}
+};
+function validateLoad(type,kg,comQty,opts={}){
+  const L=LOAD_LIMITS[type];if(!L)return '';
+  if(type==='COMFORTER'){
+    const q=Number(comQty);
+    if(!Number.isInteger(q)||q<L.min)return `Please enter at least ${L.min} comforter (whole number).`;
+    if(q>L.max)return `Maximum of ${L.max} comforters per order only (${L.note}).`;
+    return '';
+  }
+  const raw=(kg===null||kg===undefined)?'':String(kg).trim();
+  if(opts.optional&&(raw===''||Number(raw)===0||isNaN(Number(raw))))return '';
+  const v=Number(raw);
+  if(!isFinite(v)||v<L.min)return `Minimum weight is ${L.min} kg.`;
+  if(v>L.max)return `Maximum weight for this service is ${L.max} kg (${L.note}). Please split it into separate orders.`;
+  if(Math.abs(Math.round(v*2)-v*2)>1e-9)return 'Weight must be in 0.5 kg steps (e.g. 5, 5.5, 6).';
+  return '';
 }
+function clampInput(el,max,decimals){
+  if(!el)return;
+  let v=String(el.value||'');
+  if(v==='')return;
+  const n=parseFloat(v);
+  if(isNaN(n)){el.value='';return;}
+  if(n<0)el.value=0;
+  else if(n>max)el.value=max;
+  else if(decimals===0&&v.includes('.'))el.value=Math.floor(n);
+}
+
+/* ══════════════════════════════════════
+   PROMO RULES — bigger discount = stricter customer requirement
+══════════════════════════════════════ */
+const PROMO_LIMITS={codeMin:3,codeMax:15,discMin:1,discMax:100,minSpendMax:5000,minOrdersMax:100,descMax:120};
+function promoTierRule(disc){
+  disc=Number(disc)||0;
+  if(disc<=30) return{tier:'Standard',      color:'b-green', maxUses:500,perCust:10,minOrders:0, minSpend:0,  either:false,capRequired:false,capMax:1000,
+                      text:'1–30% off: no special requirement.'};
+  if(disc<=50) return{tier:'Special',       color:'b-blue',  maxUses:200,perCust:3, minOrders:3, minSpend:300,either:true, capRequired:false,capMax:1000,
+                      text:'31–50% off: customer needs ≥ 3 completed orders OR a minimum order of ₱300.'};
+  if(disc<100) return{tier:'High-Value',    color:'b-yellow',maxUses:50, perCust:2, minOrders:10,minSpend:0,  either:false,capRequired:true, capMax:500,
+                      text:'51–99% off: customer needs ≥ 10 completed orders, max 50 uses, max 2 per customer, and a ₱ discount cap (≤ ₱500).'};
+  return              {tier:'FREE (100% Off)',color:'b-red',   maxUses:20, perCust:1, minOrders:20,minSpend:0,  either:false,capRequired:true, capMax:250,
+                      text:'100% off (FREE): customer needs ≥ 20 completed orders, max 20 uses, 1 per customer, and a ₱ discount cap (≤ ₱250 = about one free load).'};
+}
+function validatePromoDef(p){
+  const errs=[];
+  const code=String(p.code||'').trim().toUpperCase();
+  if(!new RegExp(`^[A-Z0-9]{${PROMO_LIMITS.codeMin},${PROMO_LIMITS.codeMax}}$`).test(code))
+    errs.push(`Code must be ${PROMO_LIMITS.codeMin}–${PROMO_LIMITS.codeMax} letters/numbers only (no spaces or symbols).`);
+  const disc=Number(p.disc);
+  if(!Number.isInteger(disc)||disc<PROMO_LIMITS.discMin||disc>PROMO_LIMITS.discMax){
+    errs.push(`Discount must be a whole number from ${PROMO_LIMITS.discMin}% to ${PROMO_LIMITS.discMax}%.`);
+    return errs;
+  }
+  const r=promoTierRule(disc);
+  const maxUses=Number(p.maxUses),perCust=Number(p.perCustLimit??1);
+  const minOrders=Number(p.minOrders||0),minSpend=Number(p.minSpend||0),cap=Number(p.maxDisc||0);
+  if(!Number.isInteger(maxUses)||maxUses<1||maxUses>r.maxUses)errs.push(`Max Uses must be 1–${r.maxUses} for a ${r.tier} promo.`);
+  if(!Number.isInteger(perCust)||perCust<1||perCust>r.perCust)errs.push(`Uses per customer must be 1–${r.perCust} for a ${r.tier} promo.`);
+  if(!Number.isInteger(minOrders)||minOrders<0||minOrders>PROMO_LIMITS.minOrdersMax)errs.push(`Required completed orders must be 0–${PROMO_LIMITS.minOrdersMax}.`);
+  if(!isFinite(minSpend)||minSpend<0||minSpend>PROMO_LIMITS.minSpendMax)errs.push(`Minimum order amount must be ₱0–₱${PROMO_LIMITS.minSpendMax}.`);
+  if(!isFinite(cap)||cap<0||cap>r.capMax)errs.push(`Discount cap must be ₱0–₱${r.capMax} for a ${r.tier} promo.`);
+  if(r.capRequired&&!(cap>0))errs.push(`A ${r.tier} promo needs a maximum discount cap in ₱ (1–${r.capMax}).`);
+  if(r.either){
+    if(minOrders<r.minOrders&&minSpend<r.minSpend)errs.push(`Customer requirement missing: set ≥ ${r.minOrders} completed orders OR minimum order ≥ ₱${r.minSpend}.`);
+  } else {
+    if(minOrders<r.minOrders)errs.push(`Customer requirement missing: a ${disc}% promo needs at least ${r.minOrders} completed orders before the customer can use it.`);
+    if(minSpend<r.minSpend)errs.push(`Minimum order must be at least ₱${r.minSpend}.`);
+  }
+  if(String(p.desc||'').length>PROMO_LIMITS.descMax)errs.push(`Description is too long (max ${PROMO_LIMITS.descMax} characters).`);
+  return errs;
+}
+function promoReqText(p){
+  const parts=[];
+  if(Number(p.minOrders)>0)parts.push(`≥ ${p.minOrders} completed orders`);
+  if(Number(p.minSpend)>0)parts.push(`min ₱${Number(p.minSpend).toFixed(0)} order`);
+  parts.push(`${p.perCustLimit??1}× per customer`);
+  if(Number(p.maxDisc)>0)parts.push(`cap ₱${Number(p.maxDisc).toFixed(0)}`);
+  return parts.join(' · ');
+}
+
+/* ── PROMO ── */
+function applyPromo(code,basePrice,ctx={}){
+  const none=msg=>({discount:0,finalAfterPromo:basePrice,promoMsg:msg||''});
+  const c=String(code||'').toUpperCase().trim();
+  if(!c)return none();
+  const pc=DB.get('promoCodes').find(p=>p.code===c&&p.active);
+  if(!pc)return none('❌ Invalid or expired promo code');
+  if(validatePromoDef(pc).length)return none('❌ This promo code is blocked (invalid settings). Please ask the shop.');
+  if(!(basePrice>0))return none();
+  if(!ctx.existing&&(Number(pc.uses)||0)>=Number(pc.maxUses))return none('❌ Promo code already exhausted');
+  const minSpend=Number(pc.minSpend)||0;
+  if(minSpend>0&&basePrice<minSpend)return none(`❌ ${pc.code} requires a minimum order of ${peso(minSpend)} (current: ${peso(basePrice)})`);
+  if(!ctx.existing){
+    const minOrders=Number(pc.minOrders)||0;
+    const perCust=Number(pc.perCustLimit??1);
+    if(!ctx.custId)return none(`⚠️ Select the customer first to check ${pc.code} eligibility`);
+    const mine=DB.get('orders').filter(o=>o.custId===ctx.custId&&o.id!==ctx.excludeOrderId);
+    const completed=mine.filter(o=>normStatus(o.status)==='RELEASED').length;
+    if(completed<minOrders)return none(`❌ ${pc.code} is for loyal customers with at least ${minOrders} completed orders (currently ${completed} — ${minOrders-completed} more to go)`);
+    const used=mine.filter(o=>String(o.promoCode||'').toUpperCase()===pc.code&&normStatus(o.status)!=='CANCELLED').length;
+    if(used>=perCust)return none(`❌ ${pc.code} already used ${used}× by this customer (limit ${perCust} per customer)`);
+  }
+  let disc=parseFloat(((pc.disc/100)*basePrice).toFixed(2));
+  const cap=Number(pc.maxDisc)||0;
+  let capped=false;
+  if(cap>0&&disc>cap){disc=cap;capped=true;}
+  disc=Math.min(disc,basePrice);
+  return{discount:disc,finalAfterPromo:parseFloat((basePrice-disc).toFixed(2)),promoMsg:`✅ ${pc.code}: ${pc.disc}% off${capped?` (capped at ${peso(cap)})`:''} — saves ${peso(disc)}`};
+}
+const MAX_ORDER_AMOUNT=5000;
+const BAD_ORDER_CREATED=new Set(['2026-11-11T03:35:02.985Z','2026-11-11T20:04:40.179Z','2026-11-12T05:56:13.713Z','2026-11-12T06:06:45.420Z']);
+const BAD_TXN_DATES=new Set(['2026-11-11T19:24:08.245Z','2026-11-12T05:48:22.768Z','2026-11-12T05:58:48.981Z']);
+const BAD_PROMO_CODES=new Set(['LABA1000000']);
+
+function isValidOrderRecord(o){
+  if(!o||typeof o!=='object')return false;
+  if(o.created&&BAD_ORDER_CREATED.has(String(o.created)))return false;
+  if(o.promoCode&&BAD_PROMO_CODES.has(String(o.promoCode).toUpperCase()))return false;
+  const optLoad=o.type==='WASH_ONLY'||o.type==='DRY_ONLY';
+  if(validateLoad(o.type,o.kg,o.comQty,{optional:optLoad})!=='')return false;
+  const p=Number(o.price);
+  if(!isFinite(p)||p<0||p>MAX_ORDER_AMOUNT)return false;
+  if(o.finalPrice!==null&&o.finalPrice!==undefined){
+    const fp=Number(o.finalPrice);
+    if(!isFinite(fp)||fp<0||fp>MAX_ORDER_AMOUNT)return false;
+  }
+  return true;
+}
+
+function isValidTxnRecord(t,validOrdIds){
+  if(!t||typeof t!=='object')return false;
+  if(t.date&&BAD_TXN_DATES.has(String(t.date)))return false;
+  const amt=Number(t.amount);
+  if(!isFinite(amt)||amt<=0||amt>MAX_ORDER_AMOUNT)return false;
+  if(validOrdIds&&validOrdIds.size>0&&t.orderId&&!validOrdIds.has(Number(t.orderId)))return false;
+  return true;
+}
+
+function cleanCollectionItems(key,items,validOrdIds){
+  if(!Array.isArray(items))return[];
+  if(key==='orders')return items.filter(isValidOrderRecord);
+  if(key==='transactions')return items.filter(t=>isValidTxnRecord(t,validOrdIds));
+  if(key==='promoCodes'){
+    return items.filter(p=>{
+      if(!p||typeof p!=='object')return false;
+      const c=String(p.code||'').toUpperCase().trim();
+      if(BAD_PROMO_CODES.has(c))return false;
+      const d=Number(p.disc),mu=Number(p.maxUses);
+      if(!isFinite(d)||d>100||!isFinite(mu)||mu>500)return false;
+      return true;
+    }).map(p=>{
+      const copy={...p};
+      if(copy.perCustLimit===undefined)copy.perCustLimit=1;
+      if(copy.active&&validatePromoDef(copy).length)copy.active=false;
+      return copy;
+    });
+  }
+  if(key==='rfidTags'){
+    return items.map(t=>{
+      if(t&&!t.available&&t.orderId&&validOrdIds&&validOrdIds.size>0&&!validOrdIds.has(Number(t.orderId))){
+        return{...t,available:true,orderId:null};
+      }
+      return t;
+    });
+  }
+  if(key==='statusHistory'||key==='rfidScanLogs'){
+    return items.filter(x=>!(validOrdIds&&validOrdIds.size>0&&x?.orderId&&!validOrdIds.has(Number(x.orderId))));
+  }
+  return items;
+}
+
+function sanitizePromoCodes(pushRemote=false){
+  try{
+    const rawOrders=DB.get('orders');
+    const cleanOrders=cleanCollectionItems('orders',rawOrders);
+    const validOrdIds=new Set(cleanOrders.map(o=>Number(o.id)));
+    const cols=['orders','transactions','promoCodes','rfidTags','statusHistory','rfidScanLogs'];
+    cols.forEach(k=>{
+      const cur=k==='orders'?rawOrders:DB.get(k);
+      const cleaned=k==='orders'?cleanOrders:cleanCollectionItems(k,cur,validOrdIds);
+      if(JSON.stringify(cur)!==JSON.stringify(cleaned)){
+        DB.set(k,cleaned,!pushRemote);
+        if(pushRemote&&window.LabaFlowSupabase?.saveCollection){
+          window.LabaFlowSupabase.saveCollection(k,cleaned).catch(()=>{});
+        }
+      }
+    });
+  }catch(e){console.warn('Data sanitize skipped',e);}
+}
+sanitizePromoCodes(false);
 
 /* ── LOYALTY ── */
 const TIERS=[
@@ -5291,15 +5548,24 @@ async function refreshRemoteCollections(){
     const rows=await LabaFlowSupabase.fetchCollections();
     let changed=false;
     if(Array.isArray(rows)){
+      const ordRow=rows.find(x=>x?.key==='orders'&&Array.isArray(x.items));
+      const cleanOrdList=ordRow
+        ?(typeof cleanCollectionItems==='function'?cleanCollectionItems('orders',ordRow.items):ordRow.items)
+        :(typeof cleanCollectionItems==='function'?cleanCollectionItems('orders',DB.get('orders')):DB.get('orders'));
+      const validOrdIds=new Set(cleanOrdList.map(o=>Number(o.id)));
       rows.forEach(r=>{
         if(r?.key&&Array.isArray(r.items)){
-          const next=JSON.stringify(r.items);
+          const cleanedItems=typeof cleanCollectionItems==='function'?cleanCollectionItems(r.key,r.items,validOrdIds):r.items;
+          if(JSON.stringify(r.items)!==JSON.stringify(cleanedItems)&&window.LabaFlowSupabase?.saveCollection){
+            LabaFlowSupabase.saveCollection(r.key,cleanedItems).catch(()=>{});
+          }
+          const next=JSON.stringify(cleanedItems);
           const cur=localStorage.getItem('lf3_'+r.key);
           if(cur!==next){
-            if(r.items.length===0&&cur&&cur!=='[]'&&CU){
+            if(cleanedItems.length===0&&cur&&cur!=='[]'&&CU){
               LabaFlowSupabase.saveCollection(r.key,DB.get(r.key)).catch(()=>{});
             }else{
-              DB.set(r.key,r.items,true);
+              DB.set(r.key,cleanedItems,true);
               changed=true;
             }
           }
@@ -5312,6 +5578,7 @@ async function refreshRemoteCollections(){
 }
 async function launchApp(){
   await refreshRemoteCollections();
+  if(typeof sanitizePromoCodes==='function')sanitizePromoCodes(true);
   await refreshRemoteUsers();
   await refreshRemoteNotifications();
   g('landing').style.display='none';
@@ -5522,16 +5789,50 @@ function openQR(ordId){
 ══════════════════════════════════════ */
 /* ── CHART HELPERS ── */
 const CHART_COLORS={
-  orders:'rgba(14,165,233,0.78)',
-  ordersLine:'#0284c7',
-  revenue:'rgba(20,184,166,0.22)',
-  revenueLine:'#0f9f92',
-  clothes:'rgba(2,132,199,0.82)',
-  bedsheet:'rgba(20,184,166,0.78)',
-  comforter:'rgba(99,102,241,0.72)',
-  grid:'rgba(148,163,184,0.20)',
-  ticks:'#64748b'
+  orders:'rgba(37,99,235,0.82)',
+  ordersLine:'#1d4ed8',
+  ordersPeak:'rgba(245,158,11,0.92)',
+  ordersLow:'rgba(16,185,129,0.78)',
+  revenue:'rgba(16,185,129,0.18)',
+  revenueLine:'#059669',
+  clothes:'#2563eb',
+  bedsheet:'#0d9488',
+  comforter:'#7c3aed',
+  washOnly:'#0284c7',
+  dryOnly:'#f59e0b',
+  cash:'#10b981',
+  gcash:'#2563eb',
+  grid:'rgba(148,163,184,0.18)',
+  ticks:'#475569'
 };
+const SVC_COLOR_META=[
+  {key:'CLOTHES',label:'Clothes',color:CHART_COLORS.clothes},
+  {key:'BEDSHEET',label:'Bedsheet',color:CHART_COLORS.bedsheet},
+  {key:'COMFORTER',label:'Comforter',color:CHART_COLORS.comforter},
+  {key:'WASH_ONLY',label:'Wash Only',color:CHART_COLORS.washOnly},
+  {key:'DRY_ONLY',label:'Dry Only',color:CHART_COLORS.dryOnly}
+];
+function colorizeBars(vals,mode='volume'){
+  const max=Math.max(...vals,0);
+  const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+  return vals.map(v=>{
+    if(max>0&&v===max)return 'rgba(245,158,11,0.92)';
+    if(mode==='traffic'){
+      if(v<=avg*0.65)return 'rgba(16,185,129,0.82)';
+      return 'rgba(37,99,235,0.78)';
+    }
+    if(v>=avg*0.8&&v>0)return 'rgba(37,99,235,0.82)';
+    return 'rgba(56,189,248,0.55)';
+  });
+}
+function renderSvcLegendPills(typeMap){
+  const total=SVC_COLOR_META.reduce((s,m)=>s+(typeMap[m.key]||0),0);
+  return SVC_COLOR_META.map(m=>{
+    const cnt=typeMap[m.key]||0;
+    const pct=total>0?Math.round((cnt/total)*100):0;
+    return `<span class="color-pill"><span class="cp-dot" style="background:${m.color};"></span>${m.label}: <b>${cnt}</b> <span style="opacity:.7;">(${pct}%)</span></span>`;
+  }).join('');
+}
 const CHART_DEFAULTS={
   responsive:true,maintainAspectRatio:false,
   plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2942',titleColor:'#fff',bodyColor:'#e2f2fb',borderColor:'#cbdde9',borderWidth:1,padding:10,cornerRadius:8}},
@@ -5629,7 +5930,7 @@ function ordersByDayOfWeek(orders){
 }
 /* orders by service type */
 function ordersByType(orders){
-  const map={CLOTHES:0,BEDSHEET:0,COMFORTER:0};
+  const map={CLOTHES:0,BEDSHEET:0,COMFORTER:0,WASH_ONLY:0,DRY_ONLY:0};
   orders.forEach(o=>{if(o.type in map)map[o.type]++;});
   return map;
 }
@@ -5650,17 +5951,26 @@ function drawAnalyticsCharts(view){
 
   const labels=Object.keys(ordMap);
   const ordData=Object.values(ordMap);
+  const ordBarColors=colorizeBars(ordData,'volume');
 
   /* Orders chart */
-  mkChart('chartOrders',{type:'bar',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:CHART_COLORS.orders,borderColor:CHART_COLORS.ordersLine,borderWidth:1.5,borderRadius:5}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} order${ctx.parsed.y!==1?'s':''}`}}}}});
+  mkChart('chartOrders',{type:'bar',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:ordBarColors,borderColor:ordBarColors.map(c=>c.includes('245,158,11')?'#d97706':c.includes('37,99,235')?'#1d4ed8':'#0284c7'),borderWidth:1.5,borderRadius:6}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} order${ctx.parsed.y!==1?'s':''}`}}}}});
+
+  const ordTakeEl=g('anaOrdersTakeaway');
+  if(ordTakeEl){
+    const maxO=Math.max(...ordData,0);
+    const totalO=ordData.reduce((a,b)=>a+b,0);
+    const peakLbl=maxO>0?labels[ordData.indexOf(maxO)]:'Wala pang peak';
+    ordTakeEl.innerHTML=`<span>📦 Total sa view na ito: <b>${totalO} orders</b></span><span>🟡 Pinakamalakas: <b>${escapeHtml(peakLbl)} (${maxO} orders)</b></span>`;
+  }
 
   /* Revenue chart (skip for week — no week grouping on txns) */
   if(view!=='week'&&Object.keys(revMap).length>0){
     const revLabels=Object.keys(revMap),revData=Object.values(revMap);
-    mkChart('chartRevenue',{type:'line',data:{labels:revLabels,datasets:[{label:'Revenue',data:revData,backgroundColor:'rgba(52,211,153,0.15)',borderColor:CHART_COLORS.revenueLine,borderWidth:2,fill:true,tension:0.4,pointBackgroundColor:CHART_COLORS.revenueLine,pointRadius:4,pointHoverRadius:6}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`₱${ctx.parsed.y.toFixed(2)}`}}}}});
+    mkChart('chartRevenue',{type:'line',data:{labels:revLabels,datasets:[{label:'Revenue',data:revData,backgroundColor:CHART_COLORS.revenue,borderColor:CHART_COLORS.revenueLine,borderWidth:2.5,fill:true,tension:0.4,pointBackgroundColor:revData.map(v=>v===Math.max(...revData,0)&&v>0?'#f59e0b':CHART_COLORS.revenueLine),pointBorderColor:'#ffffff',pointBorderWidth:2,pointRadius:5,pointHoverRadius:7}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`₱${ctx.parsed.y.toFixed(2)}`}}}}});
   } else if(view==='week'){
     /* show weekly order trend as line */
-    mkChart('chartRevenue',{type:'line',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:'rgba(56,189,248,0.12)',borderColor:CHART_COLORS.ordersLine,borderWidth:2,fill:true,tension:0.4,pointBackgroundColor:CHART_COLORS.ordersLine,pointRadius:4}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} orders`}}}}});
+    mkChart('chartRevenue',{type:'line',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:'rgba(37,99,235,0.12)',borderColor:CHART_COLORS.ordersLine,borderWidth:2.5,fill:true,tension:0.4,pointBackgroundColor:CHART_COLORS.ordersLine,pointBorderColor:'#ffffff',pointBorderWidth:2,pointRadius:4}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} orders`}}}}});
   }
 }
 
@@ -5692,18 +6002,18 @@ function pgDashboard(){
     </div>
     <div class="sg sg-5">
       ${[
-        ['PENDING','#b45309',orders.filter(o=>normStatus(o.status)==='PENDING').length,'Pending Bookings'],
+        ['PENDING','#f59e0b',orders.filter(o=>normStatus(o.status)==='PENDING').length,'Pending Bookings'],
         ['RECEIVED','#0284c7',orders.filter(o=>normStatus(o.status)==='RECEIVED').length,'Received (Tagged)'],
         ['WASHING','#0891b2',orders.filter(o=>['WASHING','DRYING','FOLDING'].includes(normStatus(o.status))).length,'In Wash / Dry / Fold'],
         ['READY','#059669',orders.filter(o=>normStatus(o.status)==='READY').length,'Ready for Pickup'],
         ['RELEASED','#7c3aed',orders.filter(o=>normStatus(o.status)==='RELEASED').length,'Completed Orders']
-      ].map(([s,c,cnt,lbl])=>`<div class="sc" style="cursor:pointer;" onclick="oFilter='${s==='WASHING'?'ACTIVE':s}';showPage('orders')"><div class="sc-val" style="color:${c}">${cnt}</div><div class="sc-lbl">${lbl}</div></div>`).join('')}
+      ].map(([s,c,cnt,lbl])=>`<div class="sc" style="cursor:pointer;border-top:4px solid ${c};" onclick="oFilter='${s==='WASHING'?'ACTIVE':s}';showPage('orders')"><div style="display:flex;align-items:center;justify-content:space-between;"><div class="sc-val" style="color:${c}">${cnt}</div><span class="cp-dot" style="background:${c};"></span></div><div class="sc-lbl">${lbl}</div></div>`).join('')}
     </div>
     <div class="two-col">
       <div class="card"><div class="ch"><h4>💰 Revenue</h4></div><div class="cp">
         <div style="margin-bottom:14px;"><div class="text-sm text-muted">Today</div><div style="font-size:28px;font-weight:800;color:var(--success);">${peso(todayRev)}</div></div>
         <div><div class="text-sm text-muted">All-Time</div><div style="font-size:22px;font-weight:800;">${peso(totalRev)}</div></div>
-        ${topType?`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div class="text-sm text-muted">Top Service This Month</div><div style="font-size:14px;font-weight:700;color:var(--accent2);margin-top:3px;">${TYPE_LABEL[topType[0]]} — ${topType[1]} order${topType[1]!==1?'s':''}</div></div>`:''}
+        ${topType&&topType[1]>0?`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><div class="text-sm text-muted">Top Service This Month</div><div style="font-size:14px;font-weight:700;color:var(--accent2);margin-top:3px;">${TYPE_LABEL[topType[0]]||topType[0]} — ${topType[1]} order${topType[1]!==1?'s':''}</div></div>`:''}
       </div></div>
       <div class="card"><div class="ch"><h4>🫧 Inventory Snapshot</h4></div><div class="cp">
         ${DB.get('inventory').map(i=>{const mx=(i.packSize&&i.packQty)?i.packSize*i.packQty:Math.max(i.thresh*4,1);const pct=Math.min(100,Math.round((i.qty/mx)*100));const lw=i.qty<=i.thresh;return`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px;"><span style="color:var(--text-muted)">${i.name}</span><span style="font-weight:700;color:${lw?'var(--danger)':'var(--text)'}">${i.qty} ${i.unit}</span></div><div class="pbar"><div class="pb ${lw?'pb-low':'pb-ok'}" style="width:${pct}%"></div></div></div>`}).join('')}
@@ -5713,7 +6023,7 @@ function pgDashboard(){
     <!-- ORDERS TREND CHART -->
     <div class="card">
       <div class="ch">
-        <h4>� Orders Trend</h4>
+        <h4>📈 Orders Trend</h4>
         <div class="chart-tabs">
           <span class="chart-tab on" id="db-day" onclick="drawDashCharts('day')">14 Days</span>
           <span class="chart-tab" id="db-week" onclick="drawDashCharts('week')">12 Weeks</span>
@@ -5722,10 +6032,14 @@ function pgDashboard(){
         </div>
       </div>
       <div class="cp">
+        <div class="graph-explain"><div>💡 <strong>Para saan ang graph na ito?</strong> Ipinapakita kung ilang laundry orders ang pumapasok kada araw, linggo, o buwan para makita agad kung kailan malakas ang shop.</div></div>
         <div class="chart-wrap"><canvas id="dbChartOrders"></canvas></div>
-        <div class="chart-legend" style="margin-top:10px;">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#38bdf8;"></div>Orders Created</div>
+        <div class="color-legend-pills">
+          <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>Peak (Pinakamaraming Order)</span>
+          <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.82);"></span>Normal Volume</span>
+          <span class="color-pill"><span class="cp-dot" style="background:rgba(56,189,248,0.55);"></span>Mahinang Araw</span>
         </div>
+        <div id="dbOrdersTakeaway" class="ana-takeaway"></div>
       </div>
     </div>
 
@@ -5733,15 +6047,28 @@ function pgDashboard(){
     <div class="two-col">
       <div class="card">
         <div class="ch"><h4>📅 Busiest Days of Week</h4><span class="text-sm text-muted">All-time orders</span></div>
-        <div class="cp"><div class="chart-wrap"><canvas id="dbChartDow"></canvas></div></div>
+        <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Ipinapakita kung anong araw pinakamaraming nagpapalaba (🟡 Peak) at kung anong araw maluwag ang machines (🟢 Maluwag).</div></div>
+          <div class="chart-wrap"><canvas id="dbChartDow"></canvas></div>
+          <div class="color-legend-pills">
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>Peak / Matao</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.78);"></span>Katamtaman</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(16,185,129,0.82);"></span>Maluwag / Mabilis</span>
+          </div>
+          <div id="dbDowTakeaway" class="ana-takeaway"></div>
+        </div>
       </div>
       <div class="card">
         <div class="ch"><h4>🧺 Orders by Service Type</h4><span class="text-sm text-muted">All-time</span></div>
-        <div class="cp"><div style="height:240px;position:relative;display:flex;align-items:center;justify-content:center;"><canvas id="dbChartType"></canvas></div></div>
+        <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Hinahati ang lahat ng orders ayon sa klase ng palaba (Clothes, Bedsheet, Comforter, Wash/Dry Only).</div></div>
+          <div style="height:220px;position:relative;display:flex;align-items:center;justify-content:center;"><canvas id="dbChartType"></canvas></div>
+          <div id="dbTypeLegend" class="color-legend-pills" style="justify-content:center;"></div>
+        </div>
       </div>
     </div>
 
-    <div class="card"><div class="ch"><h4>�📋 Recent Orders</h4></div>
+    <div class="card"><div class="ch"><h4>📋 Recent Orders</h4></div>
       <table><thead><tr><th>Order #</th><th>Customer</th><th>Type</th><th>Price</th><th>Status</th><th>Date</th></tr></thead>
       <tbody>${[...orders].reverse().slice(0,8).map(o=>`<tr><td class="fw7">${o.num}</td><td>${o.custName}</td><td>${TYPE_LABEL[o.type]||o.type}</td><td class="fw7">${peso(o.price)}</td><td>${sBadge(o.status)}</td><td class="text-sm text-muted">${fs(o.created)}</td></tr>`).join('')}</tbody>
       </table>
@@ -5763,21 +6090,36 @@ function drawDashCharts(view){
   else ordMap=ordersByYear(orders);
 
   const labels=Object.keys(ordMap),ordData=Object.values(ordMap);
+  const ordColors=colorizeBars(ordData,'volume');
 
-  mkChart('dbChartOrders',{type:'bar',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:CHART_COLORS.orders,borderColor:CHART_COLORS.ordersLine,borderWidth:1.5,borderRadius:6,hoverBackgroundColor:'rgba(56,189,248,1)'}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} order${ctx.parsed.y!==1?'s':''}`,title:ctx=>`📅 ${ctx[0].label}`}}}}});
+  mkChart('dbChartOrders',{type:'bar',data:{labels,datasets:[{label:'Orders',data:ordData,backgroundColor:ordColors,borderColor:ordColors.map(c=>c.includes('245,158,11')?'#d97706':c.includes('37,99,235')?'#1d4ed8':'#0284c7'),borderWidth:1.5,borderRadius:6,hoverBackgroundColor:'rgba(245,158,11,0.95)'}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} order${ctx.parsed.y!==1?'s':''}`,title:ctx=>`📅 ${ctx[0].label}`}}}}});
+  const ordTake=g('dbOrdersTakeaway');
+  if(ordTake){
+    const maxO=Math.max(...ordData,0),totO=ordData.reduce((a,b)=>a+b,0);
+    const pk=maxO>0?labels[ordData.indexOf(maxO)]:'Wala pang peak';
+    ordTake.innerHTML=`<span>📊 Total sa period: <b>${totO} orders</b></span><span>🔥 Peak: <b>${escapeHtml(pk)} (${maxO} orders)</b></span>`;
+  }
 
   /* busiest day of week - horizontal bar */
   const dowMap=ordersByDayOfWeek(orders);
   const dowLabels=Object.keys(dowMap),dowData=Object.values(dowMap);
-  const maxDow=Math.max(...dowData)||1;
-  const dowColors=dowData.map(v=>v===maxDow?'rgba(251,191,36,0.9)':'rgba(56,189,248,0.6)');
-  mkChart('dbChartDow',{type:'bar',data:{labels:dowLabels,datasets:[{label:'Orders',data:dowData,backgroundColor:dowColors,borderRadius:5}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.x} orders`,title:ctx=>`${ctx[0].label}`}}}}});
+  const dowColors=colorizeBars(dowData,'traffic');
+  mkChart('dbChartDow',{type:'bar',data:{labels:dowLabels,datasets:[{label:'Orders',data:dowData,backgroundColor:dowColors,borderRadius:6}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.x} orders`,title:ctx=>`${ctx[0].label}`}}}}});
+  const dowTake=g('dbDowTakeaway');
+  if(dowTake){
+    const maxD=Math.max(...dowData,0),minD=Math.min(...dowData,0);
+    const pkDay=maxD>0?dowLabels[dowData.indexOf(maxD)]:'—';
+    const lowDay=dowLabels[dowData.indexOf(minD)];
+    dowTake.innerHTML=`<span>🔥 Pinakamalakas: <b>${pkDay} (${maxD})</b></span><span>✅ Pinakamaluwag: <b>${lowDay} (${minD})</b></span>`;
+  }
 
   /* service type - doughnut */
   const typeMap=ordersByType(orders);
   destroyChart('dbChartType');
   const ctxType=g('dbChartType');
-  if(ctxType)_charts['dbChartType']=new Chart(ctxType,{type:'doughnut',data:{labels:['Clothes','Bedsheet','Comforter'],datasets:[{data:[typeMap.CLOTHES,typeMap.BEDSHEET,typeMap.COMFORTER],backgroundColor:[CHART_COLORS.clothes,CHART_COLORS.bedsheet,CHART_COLORS.comforter],borderColor:'#0e1f3a',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:true,position:'bottom',labels:{color:'rgba(184,212,240,0.8)',font:{size:11},padding:12}},tooltip:{backgroundColor:'#0e1f3a',titleColor:'#fff',bodyColor:'#b8d4f0',borderColor:'#1c3358',borderWidth:1,padding:10,cornerRadius:8,callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed} orders`}}}}});
+  if(ctxType)_charts['dbChartType']=new Chart(ctxType,{type:'doughnut',data:{labels:SVC_COLOR_META.map(m=>m.label),datasets:[{data:SVC_COLOR_META.map(m=>typeMap[m.key]||0),backgroundColor:SVC_COLOR_META.map(m=>m.color),borderColor:'#ffffff',borderWidth:3,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2942',titleColor:'#fff',bodyColor:'#e2f2fb',borderColor:'#cbdde9',borderWidth:1,padding:10,cornerRadius:8,callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed} orders`}}}}});
+  const typeLeg=g('dbTypeLegend');
+  if(typeLeg)typeLeg.innerHTML=renderSvcLegendPills(typeMap);
 }
 
 /* ══════════════════════════════════════
@@ -5979,6 +6321,15 @@ function pgAnalytics(){
       <button type="button" class="pillar-tab-btn ${_analyticsPillar==='PRESCRIPTIVE'?'active':''}" onclick="setAnalyticsPillar('PRESCRIPTIVE')">💡 3. Prescriptive (What To Do)</button>
     </div>
 
+    <div class="ana-guide-bar">
+      <span class="ana-guide-title">🎨 Color Indicator Guide:</span>
+      <span class="color-pill"><span class="cp-dot" style="background:#10b981;"></span>Green = Kita / Healthy / Maluwag</span>
+      <span class="color-pill"><span class="cp-dot" style="background:#2563eb;"></span>Blue = Regular Orders / GCash</span>
+      <span class="color-pill"><span class="cp-dot" style="background:#f59e0b;"></span>Gold = Peak / #1 Top Suki</span>
+      <span class="color-pill"><span class="cp-dot" style="background:#7c3aed;"></span>Purple = Forecast (Hinaharap)</span>
+      <span class="color-pill"><span class="cp-dot" style="background:#ef4444;"></span>Red = Urgent / Low Stock</span>
+    </div>
+
     ${showDesc?`
       <div class="pillar-section-banner">
         <div>
@@ -5988,14 +6339,14 @@ function pgAnalytics(){
         <span class="badge b-blue">Pillar 1 of 3 · Historical Data</span>
       </div>
       <div class="sg sg-4">
-        <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">Today's Revenue</div></div>
-        <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">This Month</div></div>
-        <div class="sc"><div class="sc-val">${custIds.size}</div><div class="sc-lbl">Active Customers (Month)</div></div>
-        <div class="sc"><div class="sc-val">${peso(sum(txns))}</div><div class="sc-lbl">All-Time Total Revenue</div></div>
+        <div class="sc" style="border-left:4px solid #10b981;"><div class="sc-val" style="color:#059669;">${peso(sum(todayT))}</div><div class="sc-lbl">🟢 Today's Revenue</div></div>
+        <div class="sc" style="border-left:4px solid #2563eb;"><div class="sc-val" style="color:#1d4ed8;">${peso(sum(monthT))}</div><div class="sc-lbl">🔵 This Month</div></div>
+        <div class="sc" style="border-left:4px solid #7c3aed;"><div class="sc-val" style="color:#6d28d9;">${custIds.size}</div><div class="sc-lbl">🟣 Active Customers (Month)</div></div>
+        <div class="sc" style="border-left:4px solid #f59e0b;"><div class="sc-val" style="color:#b45309;">${peso(sum(txns))}</div><div class="sc-lbl">🟡 All-Time Total Revenue</div></div>
       </div>
       <div class="sg sg-2">
-        <div class="sc"><div class="sc-val">${peso(byCh(txns,'CASH'))}</div><div class="sc-lbl">Cash Revenue (All-Time)</div></div>
-        <div class="sc"><div class="sc-val">${peso(byCh(txns,'GCASH'))}</div><div class="sc-lbl">GCash Revenue (All-Time)</div></div>
+        <div class="sc" style="border-left:4px solid #10b981;"><div class="sc-val" style="color:#059669;">${peso(byCh(txns,'CASH'))}</div><div class="sc-lbl">💵 Cash Revenue (All-Time)</div></div>
+        <div class="sc" style="border-left:4px solid #2563eb;"><div class="sc-val" style="color:#1d4ed8;">${peso(byCh(txns,'GCASH'))}</div><div class="sc-lbl">📱 GCash Revenue (All-Time)</div></div>
       </div>
 
       <div class="card">
@@ -6009,9 +6360,17 @@ function pgAnalytics(){
           </div>
         </div>
         <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Orders Graph (Bar):</strong> Bilang ng pumasok na palaba. Ang <b>🟡 Gold bar</b> ang araw na may pinakamaraming tanggap.</div></div>
           <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Orders Created</div>
           <div class="chart-wrap"><canvas id="chartOrders"></canvas></div>
-          <div style="margin-top:18px;margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Revenue (₱)</div>
+          <div class="color-legend-pills">
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>Peak Orders</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.82);"></span>Regular Orders</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(56,189,248,0.55);"></span>Low Volume</span>
+          </div>
+          <div id="anaOrdersTakeaway" class="ana-takeaway"></div>
+          <div class="graph-explain" style="margin-top:16px;border-left-color:#059669;background:#ECFDF5;color:#065F46;"><div>💡 <strong>Revenue Graph (Green Line):</strong> Kabuuang bayad (₱) na pumasok mula sa completed transactions.</div></div>
+          <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.4px;">Revenue (₱)</div>
           <div class="chart-wrap"><canvas id="chartRevenue"></canvas></div>
         </div>
       </div>
@@ -6019,12 +6378,24 @@ function pgAnalytics(){
       <div class="two-col">
         <div class="card">
           <div class="ch"><h4>👥 Customer Order Frequency</h4><span class="text-sm text-muted">Top repeat customers</span></div>
-          <div class="cp"><div class="chart-wrap"><canvas id="chartCustFreq"></canvas></div></div>
+          <div class="cp">
+            <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Listahan ng mga suki na pinakamadalas magpa-laba — basehan din ng Promo Kasunduan eligibility (3, 10, at 20 completed orders).</div></div>
+            <div class="chart-wrap"><canvas id="chartCustFreq"></canvas></div>
+            <div class="color-legend-pills">
+              <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>#1 Top Suki</span>
+              <span class="color-pill"><span class="cp-dot" style="background:rgba(124,58,237,0.82);"></span>Loyal Suki (≥3 Orders)</span>
+              <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.78);"></span>Regular</span>
+            </div>
+          </div>
         </div>
         <div class="card">
           <div class="ch"><h4>💳 Revenue by Channel</h4><span class="text-sm text-muted">Cash vs GCash</span></div>
-          <div class="cp" style="display:flex;align-items:center;justify-content:center;">
-            <div style="height:220px;width:220px;position:relative;"><canvas id="chartChannel"></canvas></div>
+          <div class="cp">
+            <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Paghahambing ng bayad sa <b>🟢 Cash</b> kumpara sa <b>🔵 GCash QR</b>.</div></div>
+            <div style="display:flex;align-items:center;justify-content:center;">
+              <div style="height:210px;width:210px;position:relative;"><canvas id="chartChannel"></canvas></div>
+            </div>
+            <div id="anaChannelLegend" style="margin-top:10px;"></div>
           </div>
           ${topCust?`<div style="padding:12px 18px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);">🏆 Top customer: <span style="font-weight:700;color:var(--accent2);">${escapeHtml(topCust[0])}</span> — ${peso(topCust[1])}</div>`:''}
         </div>
@@ -6032,7 +6403,16 @@ function pgAnalytics(){
 
       <div class="card">
         <div class="ch"><h4>🕐 Order Activity by Hour of Day</h4><span class="text-sm text-muted">Busiest booking hours</span></div>
-        <div class="cp"><div class="chart-wrap-tall"><canvas id="chartHour"></canvas></div></div>
+        <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Oras kung kailan pinakamaraming nagpapa-book. <b>🟡 Amber = Rush Hour</b>, <b>🔵 Blue = Normal</b>, <b>🟢 Green = Maluwag</b>.</div></div>
+          <div class="chart-wrap-tall"><canvas id="chartHour"></canvas></div>
+          <div class="color-legend-pills">
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>Rush Hour (Peak)</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.78);"></span>Normal Hours</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(16,185,129,0.82);"></span>Maluwag / Off-Peak</span>
+          </div>
+          <div id="anaHourTakeaway" class="ana-takeaway"></div>
+        </div>
       </div>
     `:''}
 
@@ -6046,21 +6426,21 @@ function pgAnalytics(){
       </div>
 
       <div class="sg sg-4">
-        <div class="sc">
-          <div class="sc-val" style="color:#4579EE;">${peso(model.proj7Rev)}</div>
-          <div class="sc-lbl">Projected Next 7-Day Revenue (~${model.proj7Orders} Orders)</div>
+        <div class="sc" style="border-left:4px solid #7c3aed;">
+          <div class="sc-val" style="color:#6d28d9;">${peso(model.proj7Rev)}</div>
+          <div class="sc-lbl">🟣 Projected Next 7-Day Revenue (~${model.proj7Orders} Orders)</div>
         </div>
-        <div class="sc">
+        <div class="sc" style="border-left:4px solid #10b981;">
           <div class="sc-val" style="color:#059669;">${peso(model.proj30Rev)}</div>
-          <div class="sc-lbl">Projected 30-Day Revenue (~${model.proj30Orders} Orders)</div>
+          <div class="sc-lbl">🟢 Projected 30-Day Revenue (~${model.proj30Orders} Orders)</div>
         </div>
-        <div class="sc">
+        <div class="sc" style="border-left:4px solid #f59e0b;">
           <div class="sc-val" style="color:#D97706;">${model.dailyOrdRate} / day</div>
-          <div class="sc-lbl">Predicted Daily Order Velocity (${model.growthPct>=0?'+':''}${model.growthPct}% trend)</div>
+          <div class="sc-lbl">🟡 Predicted Daily Order Velocity (${model.growthPct>=0?'+':''}${model.growthPct}% trend)</div>
         </div>
-        <div class="sc">
+        <div class="sc" style="border-left:4px solid #2563eb;">
           <div class="sc-val" style="font-size:18px;color:#0E214E;">${model.estQueueHrs}</div>
-          <div class="sc-lbl">Predicted Wash Turnaround (${model.activeQueue} in Queue)</div>
+          <div class="sc-lbl">🔵 Predicted Wash Turnaround (${model.activeQueue} in Queue)</div>
         </div>
       </div>
 
@@ -6071,7 +6451,13 @@ function pgAnalytics(){
             <span class="text-sm text-muted">Projected daily trajectory</span>
           </div>
           <div class="cp">
+            <div class="graph-explain" style="border-left-color:#7c3aed;background:#F5F3FF;color:#4C1D95;"><div>💡 <strong>Para saan ito?</strong> Tantya ng kita (₱) at dami ng labada sa susunod na <b>7 araw</b>. Ang <b>🟡 Gold dots</b> ay inaasahang Peak Days.</div></div>
             <div class="chart-wrap"><canvas id="chartPredictive"></canvas></div>
+            <div class="color-legend-pills">
+              <span class="color-pill"><span class="cp-dot" style="background:#7c3aed;"></span>Projected Revenue Line</span>
+              <span class="color-pill"><span class="cp-dot" style="background:#f59e0b;"></span>Expected Peak Day</span>
+              <span class="color-pill"><span class="cp-dot" style="background:#2563eb;"></span>Normal Forecast Day</span>
+            </div>
           </div>
         </div>
 
@@ -6084,13 +6470,20 @@ function pgAnalytics(){
             <table>
               <thead><tr><th>Supply Item</th><th>Current Stock</th><th>Est. Loads Left</th><th>Est. Stock-Out</th><th>Risk</th></tr></thead>
               <tbody>
-                ${model.invForecast.map(i=>`<tr>
+                ${model.invForecast.map(i=>{
+                  const pctLeft=Math.min(100,Math.max(6,Math.round((i.loadsRemaining/120)*100)));
+                  const barCol=i.isCritical?'#ef4444':i.daysToDepletion<=7?'#f59e0b':'#10b981';
+                  const dotIco=i.isCritical?'🔴 Critical':i.daysToDepletion<=7?'🟡 Moderate':'🟢 Healthy';
+                  return`<tr>
                   <td class="fw7">${escapeHtml(i.name)}</td>
                   <td>${fmtStock(i)}</td>
-                  <td class="fw7">${i.loadsRemaining} loads</td>
-                  <td class="text-sm fw7" style="color:${i.isCritical?'var(--danger)':'var(--text)'};">~${i.daysToDepletion} day${i.daysToDepletion!==1?'s':''}</td>
-                  <td>${i.isCritical?'<span class="badge b-low">⚠ Restock Soon</span>':'<span class="badge b-ok">✓ Healthy</span>'}</td>
-                </tr>`).join('')}
+                  <td>
+                    <div class="fw7">${i.loadsRemaining} loads</div>
+                    <div style="height:5px;width:90px;background:#e2e8f0;border-radius:999px;margin-top:4px;overflow:hidden;"><div style="height:100%;width:${pctLeft}%;background:${barCol};border-radius:999px;"></div></div>
+                  </td>
+                  <td class="text-sm fw7" style="color:${barCol};">~${i.daysToDepletion} day${i.daysToDepletion!==1?'s':''}</td>
+                  <td><span class="badge ${i.isCritical?'b-low':i.daysToDepletion<=7?'b-yellow':'b-ok'}">${dotIco}</span></td>
+                </tr>`;}).join('')}
               </tbody>
             </table>
           </div>
@@ -6178,6 +6571,7 @@ function drawPredictiveChart(model){
   destroyChart('chartPredictive');
   const ctx=g('chartPredictive');
   if(!ctx)return;
+  const maxR=Math.max(...model.forecastRevSeries,0);
   _charts['chartPredictive']=new Chart(ctx,{
     type:'line',
     data:{
@@ -6186,15 +6580,17 @@ function drawPredictiveChart(model){
         {
           label:'Projected Revenue (₱)',
           data:model.forecastRevSeries,
-          borderColor:'#4579EE',
-          backgroundColor:'rgba(69,121,238,0.16)',
+          borderColor:'#7c3aed',
+          backgroundColor:'rgba(124,58,237,0.14)',
           borderWidth:2.5,
           borderDash:[6,4],
           fill:true,
           tension:0.38,
-          pointBackgroundColor:'#FFB600',
-          pointBorderColor:'#0E214E',
-          pointRadius:5
+          pointBackgroundColor:model.forecastRevSeries.map(v=>v===maxR&&v>0?'#f59e0b':'#2563eb'),
+          pointBorderColor:'#ffffff',
+          pointBorderWidth:2,
+          pointRadius:6,
+          pointHoverRadius:8
         }
       ]
     },
@@ -6220,26 +6616,49 @@ function drawCustFreqChart(){
   const sorted=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(!sorted.length)return;
   const labels=sorted.map(x=>x[0]),data=sorted.map(x=>x[1]);
-  const maxVal=Math.max(...data)||1;
-  const colors=data.map(v=>v===maxVal?'rgba(251,191,36,0.85)':'rgba(56,189,248,0.7)');
-  mkChart('chartCustFreq',{type:'bar',data:{labels,datasets:[{label:'Orders',data,backgroundColor:colors,borderRadius:5}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.x} order${ctx.parsed.x!==1?'s':''}`,title:ctx=>ctx[0].label}}}}});
+  const maxVal=Math.max(...data,0);
+  const colors=data.map(v=>v===maxVal&&v>0?'rgba(245,158,11,0.92)':v>=3?'rgba(124,58,237,0.82)':'rgba(37,99,235,0.78)');
+  mkChart('chartCustFreq',{type:'bar',data:{labels,datasets:[{label:'Orders',data,backgroundColor:colors,borderRadius:6}]},options:{...CHART_DEFAULTS,indexAxis:'y',plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.x} order${ctx.parsed.x!==1?'s':''}`,title:ctx=>ctx[0].label}}}}});
 }
 
 function drawChannelChart(txns,byCh){
   const cashAmt=byCh(txns,'CASH');const gcashAmt=byCh(txns,'GCASH');
+  const tot=cashAmt+gcashAmt;
+  const cashPct=tot>0?Math.round((cashAmt/tot)*100):0;
+  const gcashPct=tot>0?(100-cashPct):0;
   destroyChart('chartChannel');
   const ctx=g('chartChannel');if(!ctx)return;
-  _charts['chartChannel']=new Chart(ctx,{type:'doughnut',data:{labels:['Cash','GCash'],datasets:[{data:[cashAmt,gcashAmt],backgroundColor:['rgba(184,212,240,0.6)','rgba(56,189,248,0.8)'],borderColor:'#0e1f3a',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:true,position:'bottom',labels:{color:'rgba(184,212,240,0.8)',font:{size:11},padding:12}},tooltip:{backgroundColor:'#0e1f3a',titleColor:'#fff',bodyColor:'#b8d4f0',borderColor:'#1c3358',borderWidth:1,padding:10,cornerRadius:8,callbacks:{label:ctx=>`₱${ctx.parsed.toFixed(2)}`}}}}});
+  _charts['chartChannel']=new Chart(ctx,{type:'doughnut',data:{labels:['Cash','GCash'],datasets:[{data:tot>0?[cashAmt,gcashAmt]:[1,1],backgroundColor:tot>0?[CHART_COLORS.cash,CHART_COLORS.gcash]:['#e2e8f0','#cbd5e1'],borderColor:'#ffffff',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2942',titleColor:'#fff',bodyColor:'#e2f2fb',borderColor:'#cbdde9',borderWidth:1,padding:10,cornerRadius:8,callbacks:{label:ctx=>tot>0?`${ctx.label}: ₱${ctx.parsed.toFixed(2)}`:'No payments yet'}}}}});
+  const chLeg=g('anaChannelLegend');
+  if(chLeg){
+    chLeg.innerHTML=`
+      <div style="height:8px;width:100%;background:#e2e8f0;border-radius:999px;overflow:hidden;display:flex;margin-bottom:8px;">
+        <div style="width:${cashPct}%;background:#10b981;"></div>
+        <div style="width:${gcashPct}%;background:#2563eb;"></div>
+      </div>
+      <div class="color-legend-pills" style="margin-top:0;padding-top:0;border-top:none;justify-content:center;">
+        <span class="color-pill"><span class="cp-dot" style="background:#10b981;"></span>Cash: <b>${peso(cashAmt)} (${cashPct}%)</b></span>
+        <span class="color-pill"><span class="cp-dot" style="background:#2563eb;"></span>GCash: <b>${peso(gcashAmt)} (${gcashPct}%)</b></span>
+      </div>`;
+  }
 }
 
 function drawHourChart(orders){
   const hourMap={};for(let h=0;h<24;h++)hourMap[h]=0;
   orders.forEach(o=>{const h=new Date(o.created).getHours();hourMap[h]++;});
-  const labels=Object.keys(hourMap).map(h=>{const n=parseInt(h);const ampm=n<12?'AM':'PM';const disp=n===0?12:n>12?n-12:n;return`${disp}${ampm}`;});
+  const labels=Object.keys(hourMap).map(h=>{const n=parseInt(h,10);const ampm=n<12?'AM':'PM';const disp=n===0?12:n>12?n-12:n;return`${disp}${ampm}`;});
   const data=Object.values(hourMap);
-  const maxH=Math.max(...data)||1;
-  const bgColors=data.map(v=>v===maxH?'rgba(251,191,36,0.85)':v>maxH*0.6?'rgba(56,189,248,0.75)':'rgba(56,189,248,0.3)');
-  mkChart('chartHour',{type:'bar',data:{labels,datasets:[{label:'Orders',data,backgroundColor:bgColors,borderRadius:4}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} orders`,title:ctx=>`Hour: ${ctx[0].label}`}}}}});
+  const bgColors=colorizeBars(data,'traffic');
+  mkChart('chartHour',{type:'bar',data:{labels,datasets:[{label:'Orders',data,backgroundColor:bgColors,borderRadius:5}]},options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} orders`,title:ctx=>`Hour: ${ctx[0].label}`}}}}});
+  const hrTake=g('anaHourTakeaway');
+  if(hrTake){
+    const maxH=Math.max(...data,0);
+    const peakLbl=maxH>0?labels[data.indexOf(maxH)]:'—';
+    const daytime=data.slice(7,21);
+    const minDay=Math.min(...daytime);
+    const bestQuietLbl=labels[7+daytime.indexOf(minDay)];
+    hrTake.innerHTML=`<span>🔥 Rush Hour: <b>${peakLbl} (${maxH} orders)</b></span><span>🟢 Maluwag na Oras (7AM–8PM): <b>${bestQuietLbl}</b></span>`;
+  }
 }
 
 /* ══════════════════════════════════════
@@ -6385,50 +6804,101 @@ function pgPromos(){
       <button class="btn btn-primary btn-sm" style="margin-left:auto;" onclick="openPromoModal(null)">+ Add Promo Code</button>
     </div>
     <div class="card"><div class="ch"><h4>🏷 Promo Codes (List → Search → Filter)</h4><span class="text-sm text-muted">${filtered.length} of ${promos.length} codes</span></div>
-      <table><thead><tr><th>Code</th><th>Discount</th><th>Description</th><th>Uses / Max</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody>${filtered.length?filtered.map(p=>`<tr>
+      <table><thead><tr><th>Code</th><th>Discount</th><th>Customer Requirement (Kasunduan)</th><th>Description</th><th>Uses / Max</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>${filtered.length?filtered.map(p=>{
+        const r=promoTierRule(p.disc);
+        const bad=validatePromoDef(p);
+        return `<tr>
         <td class="fw7" style="font-family:monospace;font-size:14px;">${escapeHtml(p.code)}</td>
-        <td><span class="badge b-green">${p.disc}% off</span></td>
+        <td><span class="badge ${r.color}">${p.disc}% off</span> <span class="text-xs text-muted">${r.tier}</span></td>
+        <td class="text-xs">${escapeHtml(promoReqText(p))}</td>
         <td class="text-muted">${escapeHtml(p.desc||'—')}</td>
         <td>${p.uses} / ${p.maxUses}</td>
-        <td>${p.active?'<span class="badge b-ok">Active</span>':'<span class="badge b-low">Inactive</span>'}</td>
+        <td>${p.active?'<span class="badge b-ok">Active</span>':(bad.length?'<span class="badge b-red">Blocked</span>':'<span class="badge b-low">Inactive</span>')}</td>
         <td><div class="tda">
+          <button class="btn btn-ghost btn-sm" onclick="openPromoModal(${p.id})">Edit</button>
           <button class="btn btn-ghost btn-sm" onclick="togglePromo(${p.id})">${p.active?'Deactivate':'Activate'}</button>
           <button class="btn btn-red btn-sm" onclick="delPromo(${p.id})">Delete</button>
         </div></td>
-      </tr>`).join(''):`<tr><td colspan="6"><div class="empty">No promo codes match your search/filter</div></td></tr>`}
+      </tr>`;}).join(''):`<tr><td colspan="7"><div class="empty">No promo codes match your search/filter</div></td></tr>`}
       </tbody></table>
     </div>`;
 }
 
 let editPromoId=null;
+function readPromoForm(){
+  return {
+    code:gv('pmCode').trim().toUpperCase(),
+    disc:parseInt(gv('pmDisc'),10),
+    maxUses:parseInt(gv('pmMax'),10),
+    minOrders:parseInt(gv('pmMinOrders')||'0',10)||0,
+    minSpend:parseFloat(gv('pmMinSpend')||'0')||0,
+    perCustLimit:parseInt(gv('pmPerCust')||'1',10),
+    maxDisc:parseFloat(gv('pmCap')||'0')||0,
+    desc:gv('pmDesc').trim()
+  };
+}
+function promoFormHint(){
+  const el=g('pmRuleHint');if(!el)return;
+  const p=readPromoForm();
+  const disc=Number(p.disc);
+  if(!disc||disc<1){
+    el.style.background='rgba(56,189,248,.08)';
+    el.style.borderColor='rgba(56,189,248,.25)';
+    el.innerHTML='ℹ️ Enter a discount from <strong>1% to 100%</strong>. Higher discounts enforce stricter customer requirements (kasunduan).';
+    return;
+  }
+  const r=promoTierRule(disc);
+  const errs=validatePromoDef({...p,code:p.code||'TMP1'});
+  if(!errs.length){
+    el.style.background='rgba(34,197,94,.1)';
+    el.style.borderColor='rgba(34,197,94,.35)';
+    el.innerHTML=`✅ <strong>${r.tier} Tier</strong> — ${r.text}<br><span style="opacity:.85;">Customer agreement: ${escapeHtml(promoReqText(p))}</span>`;
+  } else {
+    el.style.background='rgba(245,158,11,.1)';
+    el.style.borderColor='rgba(245,158,11,.35)';
+    el.innerHTML=`⚠️ <strong>${r.tier} Tier Rule:</strong> ${r.text}<br><span style="color:var(--danger);">${errs.map(escapeHtml).join('<br>')}</span>`;
+  }
+}
 function openPromoModal(id){
   editPromoId=id;
   const p=id?DB.get('promoCodes').find(x=>x.id===id):null;
   g('mPromoTitle').textContent=id?'Edit Promo Code':'Add Promo Code';
-  sv('pmCode',p?p.code:'');sv('pmDisc',p?p.disc:'');sv('pmMax',p?p.maxUses:'');sv('pmDesc',p?p.desc:'');
+  sv('pmCode',p?p.code:'');
+  sv('pmDisc',p?p.disc:'');
+  sv('pmMax',p?p.maxUses:100);
+  sv('pmMinOrders',p?(p.minOrders||0):0);
+  sv('pmMinSpend',p?(p.minSpend||0):0);
+  sv('pmPerCust',p?(p.perCustLimit??1):1);
+  sv('pmCap',p?(p.maxDisc||0):0);
+  sv('pmDesc',p?p.desc:'');
+  promoFormHint();
   openM('mPromo');
 }
 function submitPromo(){
-  const code=gv('pmCode').trim().toUpperCase();
-  const disc=parseInt(gv('pmDisc'));
-  const maxUses=parseInt(gv('pmMax'))||100;
-  const desc=gv('pmDesc').trim();
-  if(!code||!disc){swalError('Code and discount are required.');return;}
+  const p=readPromoForm();
+  const errs=validatePromoDef(p);
+  if(errs.length){swalError(errs.join('<br>'));return;}
   const promos=DB.get('promoCodes');
   if(!editPromoId){
-    if(promos.find(p=>p.code===code)){swalError('This code already exists.');return;}
-    promos.push({id:DB.nextId('promoCodes'),code,disc,maxUses,uses:0,desc,active:true});
+    if(promos.find(x=>x.code===p.code)){swalError('This code already exists.');return;}
+    promos.push({id:DB.nextId('promoCodes'),...p,uses:0,active:true});
   } else {
-    const p=promos.find(x=>x.id===editPromoId);
-    if(p){p.code=code;p.disc=disc;p.maxUses=maxUses;p.desc=desc;}
+    if(promos.find(x=>x.code===p.code&&x.id!==editPromoId)){swalError('Another promo code already uses that code.');return;}
+    const cur=promos.find(x=>x.id===editPromoId);
+    if(cur)Object.assign(cur,p);
   }
   DB.set('promoCodes',promos);closeM('mPromo');
   swalSuccess('Saved','Promo code has been saved.');pgPromos();
 }
 function togglePromo(id){
   const promos=DB.get('promoCodes');
-  const p=promos.find(x=>x.id===id);if(p)p.active=!p.active;
+  const p=promos.find(x=>x.id===id);if(!p)return;
+  if(!p.active){
+    const errs=validatePromoDef(p);
+    if(errs.length){swalError('Cannot activate this promo until its rules are fixed:<br>'+errs.join('<br>'));return;}
+  }
+  p.active=!p.active;
   DB.set('promoCodes',promos);pgPromos();
 }
 function delPromo(id){
@@ -6721,43 +7191,61 @@ function onTypeChange(){
   g('washDryFields').style.display=(t==='WASH_ONLY'||t==='DRY_ONLY')?'':'none';
   calcOrdPrice();
 }
+function _ordPromoCtx(promoCode){
+  const custId=parseInt(gv('moCust'),10)||null;
+  const norm=String(promoCode||'').trim().toUpperCase();
+  const prevOrd=editOrdId?DB.get('orders').find(x=>x.id===editOrdId):null;
+  const prevPromo=prevOrd?String(prevOrd.promoCode||'').trim().toUpperCase():'';
+  return{custId,excludeOrderId:editOrdId||null,existing:!!(editOrdId&&norm&&norm===prevPromo)};
+}
 function calcOrdPrice(){
   const t=gv('moType');
-  const kg=t==='BEDSHEET'?parseFloat(gv('moBsKg')):(t==='WASH_ONLY'||t==='DRY_ONLY')?parseFloat(gv('moWdKg')):parseFloat(gv('moKg'));
-  const comQty=parseInt(gv('moComQty'));
-  const {price,breakdown}=calcPrice(t,kg,comQty);
+  const isSimple=t==='WASH_ONLY'||t==='DRY_ONLY';
+  const kg=t==='BEDSHEET'?parseFloat(gv('moBsKg')):isSimple?parseFloat(gv('moWdKg')):parseFloat(gv('moKg'));
+  const comQty=parseInt(gv('moComQty'),10);
+  const loadErr=validateLoad(t,kg,comQty,{optional:isSimple});
+  const {price,breakdown}=calcPrice(t,isNaN(kg)?0:kg,isNaN(comQty)?0:comQty);
   const promoCode=gv('moPromo');
-  const {discount,finalAfterPromo,promoMsg}=applyPromo(promoCode,price);
-  sv('moPrice',price>0?(discount>0?`${peso(finalAfterPromo)} (was ${peso(price)})`:`${peso(price)}`):'');
-  g('moPriceBreakdown').innerHTML=`${breakdown}${promoMsg?`<br><span style="color:${promoMsg.startsWith('✅')?'var(--success)':'var(--danger)'}">${promoMsg}</span>`:''}`;
+  const {discount,finalAfterPromo,promoMsg}=applyPromo(promoCode,price,_ordPromoCtx(promoCode));
+  sv('moPrice',(!loadErr&&price>0)?(discount>0?`${peso(finalAfterPromo)} (was ${peso(price)})`:`${peso(price)}`):'');
+  let html=breakdown;
+  if(loadErr&&(kg>0||comQty>0||!isNaN(kg)||!isNaN(comQty)))html+=`<br><span style="color:var(--danger);">⚠️ ${escapeHtml(loadErr)}</span>`;
+  if(promoMsg)html+=`<br><span style="color:${promoMsg.startsWith('✅')?'var(--success)':'var(--danger)'}">${escapeHtml(promoMsg)}</span>`;
+  g('moPriceBreakdown').innerHTML=html;
 }
 function submitOrder(){
-  const custId=parseInt(gv('moCust'));
+  const custId=parseInt(gv('moCust'),10);
   const type=gv('moType');
   const isSimple=type==='WASH_ONLY'||type==='DRY_ONLY';
-  const kg=type==='BEDSHEET'?parseFloat(gv('moBsKg')):isSimple?parseFloat(gv('moWdKg')):type==='CLOTHES'?parseFloat(gv('moKg')):null;
-  const comQty=type==='COMFORTER'?parseInt(gv('moComQty')):null;
+  const rawKg=type==='BEDSHEET'?parseFloat(gv('moBsKg')):isSimple?parseFloat(gv('moWdKg')):type==='CLOTHES'?parseFloat(gv('moKg')):null;
+  const rawCom=type==='COMFORTER'?parseInt(gv('moComQty'),10):null;
   const colorDist=type==='CLOTHES'?gv('moColorDist'):'';
   if(type==='CLOTHES'&&!colorDist){swalError('Please choose Whites Only, Colored Only or Mixed for the clothes.');return;}
   const notes=gv('moNotes');
   const promoCode=gv('moPromo').trim().toUpperCase();
-  if(type!=='COMFORTER'&&!isSimple&&(!kg||kg<=0)){swalError('Please enter a valid weight in kg.');return;}
-  if(type==='COMFORTER'&&(!comQty||comQty<=0)){swalError('Please enter the number of comforters.');return;}
-  const {price,breakdown}=calcPrice(type,kg,comQty);
-  const {discount,finalAfterPromo}=applyPromo(promoCode,price);
+  const loadErr=validateLoad(type,rawKg,rawCom,{optional:isSimple});
+  if(loadErr){swalError(loadErr);return;}
+  const kg=(type==='COMFORTER')?null:(isSimple&&(!rawKg||isNaN(rawKg))?null:Math.round(rawKg*2)/2);
+  const comQty=(type==='COMFORTER')?Math.round(rawCom):null;
+  const {price,breakdown}=calcPrice(type,kg||0,comQty||0);
+  const ctx=_ordPromoCtx(promoCode);
+  const {discount,finalAfterPromo,promoMsg}=applyPromo(promoCode,price,ctx);
+  if(promoCode&&!(discount>0)){swalError(promoMsg||'Promo code is invalid or customer requirements are not met.');return;}
   const cust=DB.get('users').find(u=>u.id===custId);
   const orders=DB.get('orders');
   const id=editOrdId?null:DB.nextId('orders');
   const newOrderNum=editOrdId?'':`ORD-${String(id).padStart(3,'0')}`;
   if(editOrdId){
     const o=orders.find(x=>x.id===editOrdId);
+    const oldPromo=String(o.promoCode||'').trim().toUpperCase();
     o.custId=custId;o.custName=cust.name;o.type=type;o.kg=kg;o.comQty=comQty;
     o.colorDist=colorDist;o.notes=notes;o.price=finalAfterPromo;o.breakdown=breakdown;o.discount=discount;o.promoCode=promoCode||'';
+    if(promoCode&&promoCode!==oldPromo){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses=(Number(pc.uses)||0)+1;DB.set('promoCodes',prs);}}
   } else {
     const newWalkInOrd={id,num:newOrderNum,custId,custName:cust.name,tagId:null,type,kg,comQty,colorDist,serviceMode:'Walk-in Drop-off',status:'PENDING',inventoryDeducted:false,notes,price:finalAfterPromo,breakdown,discount,promoCode:promoCode||'',finalPrice:null,dropOff:null,ready:null,pickup:null,created:new Date().toISOString()};
     orders.push(newWalkInOrd);
     logOrderStatus(newWalkInOrd,'PENDING','Created by staff ('+(CU?CU.name:'Staff')+') — Supplies will be deducted once Washing starts.');
-    if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
+    if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses=(Number(pc.uses)||0)+1;DB.set('promoCodes',prs);}}
     /* push notification to customer */
     pushNotif(custId,'ORDER_PLACED',`Order ${newOrderNum} placed`,`Your ${TYPE_LABEL[type]} order has been created. Scan RFID tag to begin processing.`,'🧺');
     checkTopbarAlerts();
@@ -7076,14 +7564,21 @@ function renderGcashQR(){
 }
 function submitPayment(){
   const ordId=parseInt(gv('payOrdSel')),amount=parseFloat(gv('payAmt')),channel=gv('payChan');
-  if(!ordId||!amount||amount<=0){swalError('Please fill in all payment fields correctly.');return;}
+  if(!ordId||!isFinite(amount)||amount<=0){swalError('Please fill in all payment fields correctly.');return;}
+  if(amount>MAX_ORDER_AMOUNT){swalError(`Invalid payment amount. Maximum allowed payment per order is ${peso(MAX_ORDER_AMOUNT)}.`);return;}
+  const orders=DB.get('orders'),o=orders.find(x=>x.id===ordId);
+  if(!o){swalError('Selected order was not found.');return;}
+  const expectedAmt=Number(o.price)||0;
+  if(expectedAmt>0&&Math.abs(amount-expectedAmt)>0.01){
+    swalError(`Payment amount (${peso(amount)}) must match the order total (${peso(expectedAmt)}).`);
+    return;
+  }
   if(channel==='GCASH'){
     const ref=g('gcashRef')?gv('gcashRef').trim():'';
     if(!ref){swalError('Please enter the GCash reference number.');return;}
     if(ref.length<8){swalError('GCash reference number appears too short. Please check and re-enter.');return;}
   }
   const gcashRef=channel==='GCASH'&&g('gcashRef')?gv('gcashRef').trim():'';
-  const orders=DB.get('orders'),o=orders.find(x=>x.id===ordId);
   const txns=DB.get('transactions'),id=DB.nextId('transactions');
   txns.push({id,num:'TXN-'+String(id).padStart(4,'0'),orderId:ordId,orderNum:o.num,custName:o.custName,amount,channel,gcashRef,status:'COMPLETED',promoCode:o.promoCode||'',rcpt:'RCP-'+ordId+'-'+Date.now(),date:new Date().toISOString()});
   o.finalPrice=amount;
@@ -7274,17 +7769,17 @@ function pgReports(){
   });
   g('pgContent').innerHTML=`
     <div class="sg sg-3">
-      <div class="sc"><div class="sc-val">${peso(sum(todayT))}</div><div class="sc-lbl">📊 Descriptive: Today's Revenue</div></div>
-      <div class="sc"><div class="sc-val">${peso(sum(monthT))}</div><div class="sc-lbl">🔮 Predictive: Monthly Run-Rate (${peso(Math.round(sum(monthT)*1.18))} proj.)</div></div>
-      <div class="sc"><div class="sc-val">${orders.filter(o=>o.status==='RELEASED').length}</div><div class="sc-lbl">💡 Completed Orders</div></div>
+      <div class="sc" style="border-top:4px solid #10b981;"><div class="sc-val" style="color:#059669;">${peso(sum(todayT))}</div><div class="sc-lbl">📊 Descriptive: Today's Revenue</div></div>
+      <div class="sc" style="border-top:4px solid #7c3aed;"><div class="sc-val" style="color:#6d28d9;">${peso(sum(monthT))}</div><div class="sc-lbl">🔮 Predictive: Monthly Run-Rate (${peso(Math.round(sum(monthT)*1.18))} proj.)</div></div>
+      <div class="sc" style="border-top:4px solid #2563eb;"><div class="sc-val" style="color:#1d4ed8;">${orders.filter(o=>o.status==='RELEASED').length}</div><div class="sc-lbl">💡 Completed Orders</div></div>
     </div>
     <div class="two-col">
-      <div class="card"><div class="ch"><h4>Today — By Channel</h4></div><div class="cp">
-        ${['CASH','GCASH'].map(c=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--text-muted);font-weight:600;">${c}</span><span class="fw7" style="color:var(--text)">${peso(byCh(todayT,c))}</span></div>`).join('')}
+      <div class="card"><div class="ch"><h4>💳 Today — By Channel</h4></div><div class="cp">
+        ${(()=>{const tTot=sum(todayT);return ['CASH','GCASH'].map(c=>{const val=byCh(todayT,c);const pct=tTot>0?Math.round((val/tTot)*100):0;const col=c==='CASH'?'#10b981':'#2563eb';return`<div class="svc-bd-row"><span class="cp-dot" style="background:${col};"></span><div style="flex:1;"><div style="display:flex;justify-content:space-between;"><strong>${c}</strong><span class="fw7">${peso(val)} <span class="text-xs text-muted">(${pct}%)</span></span></div><div style="height:6px;background:#e2e8f0;border-radius:999px;margin-top:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${col};border-radius:999px;"></div></div></div></div>`;}).join('');})()}
         <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:14px;font-weight:800;color:var(--accent2);"><span>Total Today</span><span>${peso(sum(todayT))}</span></div>
       </div></div>
-      <div class="card"><div class="ch"><h4>All-Time — By Service</h4></div><div class="cp">
-        ${Object.entries(byType).map(([t,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--text-muted);font-weight:600;">${TYPE_LABEL[t]||t}</span><span class="fw7" style="color:var(--text)">${peso(v)}</span></div>`).join('')}
+      <div class="card"><div class="ch"><h4>🧺 All-Time — By Service</h4></div><div class="cp">
+        ${(()=>{const tot=sum(txns);const colMap={CLOTHES:CHART_COLORS.clothes,BEDSHEET:CHART_COLORS.bedsheet,COMFORTER:CHART_COLORS.comforter,WASH_ONLY:CHART_COLORS.washOnly,DRY_ONLY:CHART_COLORS.dryOnly};return Object.entries(byType).map(([t,v])=>{const pct=tot>0?Math.round((v/tot)*100):0;const col=colMap[t]||'#2563eb';return`<div class="svc-bd-row"><span class="cp-dot" style="background:${col};"></span><div style="flex:1;"><div style="display:flex;justify-content:space-between;"><span style="color:var(--text);font-weight:600;">${TYPE_LABEL[t]||t}</span><span class="fw7">${peso(v)} <span class="text-xs text-muted">(${pct}%)</span></span></div><div style="height:6px;background:#e2e8f0;border-radius:999px;margin-top:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${col};border-radius:999px;"></div></div></div></div>`;}).join('');})()}
         <div style="display:flex;justify-content:space-between;padding:10px 0 0;font-size:14px;font-weight:800;color:var(--accent2);"><span>Total Revenue</span><span>${peso(sum(txns))}</span></div>
       </div></div>
     </div>
@@ -7377,8 +7872,6 @@ function renderMsgThread(){
         <span class="text-sm text-muted" style="font-weight:400;margin-left:6px;">${cust.phone||cust.email}</span>
       </div>
       <div style="display:flex;gap:6px;align-items:center;">
-        <button class="call-btn" onclick="startCall('${cust.name}','audio')" title="Audio call">📞 Call</button>
-        <button class="call-btn video" onclick="startCall('${cust.name}','video')" title="Video call">🎥 Video</button>
         <button class="btn btn-ghost btn-sm" onclick="openCustProfile(${cust.id})">View Profile</button>
       </div>
     </div>
@@ -7395,6 +7888,7 @@ function sendSellerMsg(){
   const msgs=DB.get('messages');
   msgs.push({id:DB.nextId('messages'),fromId:CU.id,toId:activeMsgCustId,text,date:new Date().toISOString(),read:false});
   DB.set('messages',msgs);input.value='';
+  if(activeMsgCustId)pushNotif(activeMsgCustId,'MESSAGE','Message from Lab-a-Day Shop',text.slice(0,80),'💬');
   g('msgMain').innerHTML=renderMsgThread();
   const body=g('msgBody');if(body)body.scrollTop=body.scrollHeight;
 }
@@ -7579,8 +8073,8 @@ function pgRfidScanner(){
               </div>
               <div class="row2">
                 <div class="fg" style="margin-bottom:8px;">
-                  <label>${selOrd.type==='COMFORTER'?'Verified Pieces (qty)':'Verified Actual Weight (kg)'}</label>
-                  <input type="number" id="scnVerifyLoad" step="${selOrd.type==='COMFORTER'?'1':'0.5'}" min="0.5" value="${selOrd.type==='COMFORTER'?(selOrd.comQty||1):(selOrd.kg||5)}">
+                  <label>${selOrd.type==='COMFORTER'?'Verified Pieces (1–5 pcs)':'Verified Actual Weight (0.5–'+(LOAD_LIMITS[selOrd.type]?.max||27)+' kg)'}</label>
+                  <input type="number" id="scnVerifyLoad" step="${selOrd.type==='COMFORTER'?'1':'0.5'}" min="${selOrd.type==='COMFORTER'?'1':'0.5'}" max="${LOAD_LIMITS[selOrd.type]?.max||27}" value="${selOrd.type==='COMFORTER'?(selOrd.comQty||1):(selOrd.kg||5)}" oninput="clampInput(this,${LOAD_LIMITS[selOrd.type]?.max||27},${selOrd.type==='COMFORTER'?0:1})">
                 </div>
                 <div class="fg" style="margin-bottom:8px;">
                   <label>Calculated Price</label>
@@ -7720,11 +8214,13 @@ function saveVerifiedOrderDetails(ordId){
   const loadVal=parseFloat(gv('scnVerifyLoad'))||0;
   const notesEl=g('scnVerifyNotes');
   const notesVal=notesEl?notesEl.value.trim():(o.notes||'');
-  if(o.type==='COMFORTER'){o.comQty=Math.max(1,Math.round(loadVal));}
-  else{o.kg=Math.max(0.5,loadVal);}
+  const err=validateLoad(o.type,o.type==='COMFORTER'?null:loadVal,o.type==='COMFORTER'?loadVal:null);
+  if(err){swalError(err);return;}
+  if(o.type==='COMFORTER'){o.comQty=Math.round(loadVal);}
+  else{o.kg=Math.round(loadVal*2)/2;}
   o.notes=notesVal;
   const {price,breakdown}=calcPrice(o.type,o.kg,o.comQty);
-  const {discount,finalAfterPromo}=applyPromo(o.promoCode,price);
+  const {discount,finalAfterPromo}=applyPromo(o.promoCode,price,{custId:o.custId,excludeOrderId:o.id,existing:true});
   o.price=finalAfterPromo;o.breakdown=breakdown;o.discount=discount;
   DB.set('orders',orders);
   logOrderStatus(o,o.status,`Verified actual laundry load (${o.type==='COMFORTER'?o.comQty+' pcs':o.kg+' kg'}) — Price: ${peso(o.price)}`);
@@ -7822,11 +8318,13 @@ function processRfidScanInput(forcedUid){
   const loadEl=g('scnVerifyLoad');
   if(loadEl){
     const lv=parseFloat(loadEl.value)||0;
+    const loadErr=validateLoad(selOrd.type,selOrd.type==='COMFORTER'?null:lv,selOrd.type==='COMFORTER'?lv:null);
+    if(loadErr){toast('⚠️ '+loadErr,'error');return;}
     if(lv>0){
-      if(selOrd.type==='COMFORTER')selOrd.comQty=Math.max(1,Math.round(lv));
-      else selOrd.kg=Math.max(0.5,lv);
+      if(selOrd.type==='COMFORTER')selOrd.comQty=Math.round(lv);
+      else selOrd.kg=Math.round(lv*2)/2;
       const {price,breakdown}=calcPrice(selOrd.type,selOrd.kg,selOrd.comQty);
-      const {discount,finalAfterPromo}=applyPromo(selOrd.promoCode,price);
+      const {discount,finalAfterPromo}=applyPromo(selOrd.promoCode,price,{custId:selOrd.custId,excludeOrderId:selOrd.id,existing:true});
       selOrd.price=finalAfterPromo;selOrd.breakdown=breakdown;selOrd.discount=discount;
     }
   }
@@ -8216,6 +8714,43 @@ function ptOverview(){
       </div>
     </div>
 
+    <!-- USER-FRIENDLY SHOP QUEUE & PERSONAL ANALYTICS -->
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card" style="margin-bottom:0;">
+        <div class="ch"><h4>🕐 Kailan Maluwag Magpa-Laba?</h4><span class="badge b-ok">Shop Queue Guide</span></div>
+        <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Ipinapakita kung anong araw maluwag o matao sa shop. Pumunta kapag <b>🟢 Green (Maluwag)</b> para mas mabilis matapos ang labada mo!</div></div>
+          <div style="height:190px;position:relative;"><canvas id="ptChartBusy"></canvas></div>
+          <div class="color-legend-pills">
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(16,185,129,0.82);"></span>Maluwag (Mabilis Pila)</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(37,99,235,0.78);"></span>Katamtaman</span>
+            <span class="color-pill"><span class="cp-dot" style="background:rgba(245,158,11,0.92);"></span>Peak / Matao</span>
+          </div>
+          <div id="ptBusyTakeaway" class="ana-takeaway"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:0;">
+        <div class="ch"><h4>🧺 My Laundry Mix &amp; Promo Kasunduan</h4><span id="ptMixBadge" class="badge b-blue">${myOrders.length>0?`${myOrders.length} My Orders`:'Shop Popularity'}</span></div>
+        <div class="cp">
+          <div class="graph-explain"><div>💡 <strong>Para saan ito?</strong> Hinahati ang iyong mga palaba ayon sa service at ipinapakita kung ilang completed orders na lang bago ma-unlock ang <b>50%–100% OFF Promo Kasunduan</b>.</div></div>
+          <div style="height:165px;position:relative;"><canvas id="ptChartMyMix"></canvas></div>
+          <div id="ptMixLegend" class="color-legend-pills" style="justify-content:center;"></div>
+          <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:#F8FAFC;border:1px solid #E2E8F0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:800;color:#0E214E;margin-bottom:6px;">
+              <span>🎯 Promo Kasunduan Progress (${completedOrders.length}/20 Completed)</span>
+              <span style="color:#059669;">${Math.min(100,Math.round((completedOrders.length/20)*100))}%</span>
+            </div>
+            <div style="height:8px;background:#E2E8F0;border-radius:999px;overflow:hidden;margin-bottom:8px;">
+              <div style="height:100%;width:${Math.min(100,Math.round((completedOrders.length/20)*100))}%;background:linear-gradient(90deg,#10b981,#2563eb,#7c3aed);border-radius:999px;"></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:11px;">
+              ${[[3,'🏷️ 50% Off (3)','#2563eb'],[10,'💎 99% Off (10)','#7c3aed'],[20,'🎁 100% FREE (20)','#f59e0b']].map(([req,lbl,col])=>{const ok=completedOrders.length>=req;return`<span class="color-pill" style="border-color:${ok?'#10b981':'#E2E8F0'};background:${ok?'#ECFDF5':'#fff'};color:${ok?'#065F46':'#475569'};"><span class="cp-dot" style="background:${ok?'#10b981':col};"></span>${lbl}: <b>${ok?'✓ Unlocked':`${completedOrders.length}/${req}`}</b></span>`;}).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CURRENT ACTIVE ORDER PROGRESS -->
     <div class="card">
       <div class="ch">
@@ -8251,7 +8786,7 @@ function ptOverview(){
         <a href="#" onclick="ptTab('notifs');return false;" style="font-size:12px;font-weight:700;color:var(--accent2);">All Notifications →</a>
       </div>
       <div class="cp">
-        ${notifs.length?notifs.map(n=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+        ${notifs.length?notifs.map(n=>`<div onclick="openCustNotifTarget('${escapeHtml(String(n.docId||n.id))}')" style="display:flex;align-items:flex-start;gap:10px;padding:10px 6px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:6px;">
           <span style="font-size:18px;">${n.icon||'🔔'}</span>
           <div style="flex:1;"><div class="fw7" style="font-size:13px;">${escapeHtml(n.title)}</div><div class="text-sm text-muted">${escapeHtml(n.msg)}</div></div>
           <span class="text-sm text-muted">${fs(n.date)}</span>
@@ -8259,6 +8794,51 @@ function ptOverview(){
       </div>
     </div>
   `;
+  setTimeout(()=>drawPtOverviewCharts(),50);
+}
+
+function drawPtOverviewCharts(){
+  const allOrders=DB.get('orders');
+  const myOrders=CU?allOrders.filter(o=>o.custId===CU.id):[];
+  const dowMap=ordersByDayOfWeek(allOrders);
+  const dowLabels=Object.keys(dowMap),dowData=Object.values(dowMap);
+  const busyColors=colorizeBars(dowData,'traffic');
+  mkChart('ptChartBusy',{
+    type:'bar',
+    data:{labels:dowLabels,datasets:[{label:'Shop Orders',data:dowData,backgroundColor:busyColors,borderRadius:6}]},
+    options:{...CHART_DEFAULTS,plugins:{...CHART_DEFAULTS.plugins,tooltip:{...CHART_DEFAULTS.plugins.tooltip,callbacks:{label:ctx=>`${ctx.parsed.y} shop order${ctx.parsed.y!==1?'s':''}`}}}}
+  });
+  const busyTake=g('ptBusyTakeaway');
+  if(busyTake){
+    const maxB=Math.max(...dowData,0),minB=Math.min(...dowData,0);
+    const bestDay=dowLabels[dowData.indexOf(minB)];
+    const peakDay=maxB>0?dowLabels[dowData.indexOf(maxB)]:'Weekend';
+    busyTake.innerHTML=`<span>✅ Pinakamaluwag: <b>${bestDay}</b></span><span>🔥 Pinaka-busy: <b>${peakDay}</b></span>`;
+  }
+
+  const mixSrc=myOrders.length>0?myOrders:allOrders;
+  const typeMap=ordersByType(mixSrc);
+  const totalMix=SVC_COLOR_META.reduce((s,m)=>s+(typeMap[m.key]||0),0);
+  destroyChart('ptChartMyMix');
+  const ctxMix=g('ptChartMyMix');
+  if(ctxMix){
+    _charts['ptChartMyMix']=new Chart(ctxMix,{
+      type:'doughnut',
+      data:{
+        labels:SVC_COLOR_META.map(m=>m.label),
+        datasets:[{
+          data:totalMix>0?SVC_COLOR_META.map(m=>typeMap[m.key]||0):[1,1,1,1,1],
+          backgroundColor:totalMix>0?SVC_COLOR_META.map(m=>m.color):['#e2e8f0','#cbd5e1','#e2e8f0','#cbd5e1','#e2e8f0'],
+          borderColor:'#ffffff',
+          borderWidth:3,
+          hoverOffset:6
+        }]
+      },
+      options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2942',titleColor:'#fff',bodyColor:'#e2f2fb',borderColor:'#cbdde9',borderWidth:1,padding:10,cornerRadius:8,callbacks:{label:ctx=>totalMix>0?`${ctx.label}: ${ctx.parsed} orders`:'No orders yet'}}}}
+    });
+  }
+  const mixLeg=g('ptMixLegend');
+  if(mixLeg)mixLeg.innerHTML=renderSvcLegendPills(typeMap);
 }
 
 /* ─ My Orders (List -> Search -> Filter + Short/Expandable Details) ─ */
@@ -8592,8 +9172,8 @@ function ptBook(){
 
         <div id="bkClothesF">
           <div class="pt-form-group">
-            <label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label>
-            <input type="number" id="bkKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
+            <label class="pt-label" style="color:var(--accent2);">Estimated Weight (0.5–27 kg · max 3 sets × 9 kg)</label>
+            <input type="number" id="bkKg" step="0.5" min="0.5" max="27" placeholder="e.g. 5 (max 27 kg)" oninput="clampInput(this,27,1);bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;">
           </div>
           <div class="pt-form-group">
             <label class="pt-label" style="color:var(--accent2);">Clothes Type / Color Separation <span class="req">*</span></label>
@@ -8622,26 +9202,27 @@ function ptBook(){
         </div>
 
         <div id="bkBsF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg)</label><input type="number" id="bkBsKg" step="0.5" min="0.5" placeholder="e.g. 5" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (0.5–15 kg · max 3 sets × 5 kg)</label><input type="number" id="bkBsKg" step="0.5" min="0.5" max="15" placeholder="e.g. 5 (max 15 kg)" oninput="clampInput(this,15,1);bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
         <div id="bkComF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Number of Comforters</label><input type="number" id="bkComQty" step="1" min="1" placeholder="1" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Number of Comforters (1–5 pcs)</label><input type="number" id="bkComQty" step="1" min="1" max="5" placeholder="1–5 pcs" oninput="clampInput(this,5,0);bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
         <div id="bkWdF" style="display:none">
-          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (kg) — optional</label><input type="number" id="bkWdKg" step="0.5" min="0" placeholder="Optional" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
+          <div class="pt-form-group"><label class="pt-label" style="color:var(--accent2);">Estimated Weight (0.5–9 kg / 1 load) — optional</label><input type="number" id="bkWdKg" step="0.5" min="0" max="9" placeholder="Optional (max 9 kg)" oninput="clampInput(this,9,1);bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;box-sizing:border-box;"></div>
         </div>
 
         <div class="row2" style="margin-bottom:12px;">
           <div class="pt-form-group" style="margin-bottom:0;">
             <label class="pt-label" style="color:var(--accent2);">Promo Code (optional)</label>
-            <input id="bkPromo" placeholder="e.g. WELCOME" oninput="bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;text-transform:uppercase;box-sizing:border-box;">
+            <input id="bkPromo" maxlength="15" placeholder="e.g. WELCOME" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,15);bkCalc()" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;text-transform:uppercase;box-sizing:border-box;">
           </div>
           <div class="pt-form-group" style="margin-bottom:0;">
             <label class="pt-label" style="color:var(--accent2);">Estimated Price</label>
             <input id="bkPrice" readonly placeholder="₱0.00" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--sidebar);color:var(--success);font-size:15px;font-weight:800;outline:none;box-sizing:border-box;">
           </div>
         </div>
-        <div id="bkBreakdown" style="font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:12px;"></div>
+        <div id="bkBreakdown" style="font-size:11.5px;color:var(--text-muted);margin-top:-4px;margin-bottom:8px;"></div>
+        <div id="bkPromoList" style="font-size:11.5px;margin-bottom:12px;"></div>
         <div class="pt-form-group">
           <label class="pt-label" style="color:var(--accent2);">Special Instructions</label>
           <textarea id="bkNotes" rows="2" placeholder="Separate colors, no bleach..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:13px;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box;"></textarea>
@@ -8649,6 +9230,23 @@ function ptBook(){
         <button class="btn btn-primary btn-block" style="padding:13px;font-size:14.5px;" onclick="submitBooking()">Submit Booking →</button>
       </div>
     </div>`;
+  _renderBkPromoList();
+}
+function _renderBkPromoList(){
+  const box=g('bkPromoList');if(!box||!CU)return;
+  const promos=DB.get('promoCodes').filter(p=>p.active&&!validatePromoDef(p).length&&(Number(p.uses)||0)<Number(p.maxUses));
+  if(!promos.length){box.innerHTML='';return;}
+  const mine=DB.get('orders').filter(o=>o.custId===CU.id);
+  const completed=mine.filter(o=>normStatus(o.status)==='RELEASED').length;
+  box.innerHTML=`<div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:6px;">Available Promos (Your completed orders: ${completed}):</div>`+
+    `<div style="display:flex;flex-wrap:wrap;gap:6px;">`+promos.map(p=>{
+      const used=mine.filter(o=>String(o.promoCode||'').toUpperCase()===p.code&&normStatus(o.status)!=='CANCELLED').length;
+      const needOrd=Number(p.minOrders)||0,perCust=Number(p.perCustLimit??1);
+      const okOrders=completed>=needOrd,okUses=used<perCust;
+      const locked=!okOrders||!okUses;
+      const reason=!okUses?`Used ${used}/${perCust}×`:!okOrders?`Need ${needOrd} completed (${completed}/${needOrd})`:(p.minSpend>0?`Min ₱${p.minSpend}`:'Ready to use');
+      return `<button type="button" ${locked?'disabled':''} onclick="sv('bkPromo','${p.code}');bkCalc();" style="border:1px solid ${locked?'var(--border)':'rgba(34,197,94,.4)'};background:${locked?'rgba(148,163,184,.08)':'rgba(34,197,94,.08)'};color:var(--text);border-radius:10px;padding:5px 9px;font-size:11px;cursor:${locked?'not-allowed':'pointer'};opacity:${locked?.6:1};text-align:left;"><strong>${escapeHtml(p.code)}</strong> · ${p.disc}% off <span style="opacity:.75;">(${escapeHtml(reason)})</span></button>`;
+    }).join('')+`</div>`;
 }
 function bkTypeChange(){
   const t=gv('bkType');
@@ -8663,33 +9261,39 @@ function bkCalc(){
   const t=gv('bkType');
   const isSimple=t==='WASH_ONLY'||t==='DRY_ONLY';
   const kg=t==='BEDSHEET'?parseFloat(gv('bkBsKg')):isSimple?(g('bkWdKg')?parseFloat(gv('bkWdKg')):0):parseFloat(gv('bkKg'));
-  const comQty=parseInt(gv('bkComQty'));
-  const {price,breakdown}=calcPrice(t,kg,comQty);
+  const comQty=parseInt(gv('bkComQty'),10);
+  const loadErr=validateLoad(t,kg,comQty,{optional:isSimple});
+  const {price,breakdown}=calcPrice(t,isNaN(kg)?0:kg,isNaN(comQty)?0:comQty);
   const promoCode=g('bkPromo')?gv('bkPromo'):'';
-  const {discount:promoDsc,finalAfterPromo,promoMsg}=applyPromo(promoCode,price);
+  const {discount:promoDsc,finalAfterPromo,promoMsg}=applyPromo(promoCode,price,{custId:CU.id});
   const users=DB.get('users');const cu=users.find(x=>x.id===CU.id);
   const tier=getTier(cu?cu.points||0:0);
   const loyaltyDisc=tier.disc>0?parseFloat(((tier.disc/100)*finalAfterPromo).toFixed(2)):0;
   const grandTotal=parseFloat((finalAfterPromo-loyaltyDisc).toFixed(2));
-  sv('bkPrice',price>0?peso(grandTotal):'');
+  sv('bkPrice',(!loadErr&&price>0)?peso(grandTotal):'');
   let bd=breakdown;
-  if(promoMsg)bd+=`<br><span style="color:${promoMsg.startsWith('✅')?'var(--success)':'var(--danger)'}">${promoMsg}</span>`;
+  if(loadErr&&(kg>0||comQty>0||!isNaN(kg)||!isNaN(comQty)))bd+=`<br><span style="color:var(--danger)">⚠️ ${escapeHtml(loadErr)}</span>`;
+  if(promoMsg)bd+=`<br><span style="color:${promoMsg.startsWith('✅')?'var(--success)':'var(--danger)'}">${escapeHtml(promoMsg)}</span>`;
   if(loyaltyDisc>0)bd+=`<br><span style="color:var(--warn)">🌟 ${tier.name} ${tier.disc}% loyalty discount: -₱${loyaltyDisc.toFixed(2)}</span>`;
   g('bkBreakdown').innerHTML=bd;
+  _renderBkPromoList();
 }
 function submitBooking(){
   const type=gv('bkType');
   const isSimple=type==='WASH_ONLY'||type==='DRY_ONLY';
-  const kg=type==='BEDSHEET'?parseFloat(gv('bkBsKg')):isSimple?(g('bkWdKg')?parseFloat(gv('bkWdKg')):0):type==='CLOTHES'?parseFloat(gv('bkKg')):null;
-  const comQty=type==='COMFORTER'?parseInt(gv('bkComQty')):null;
+  const rawKg=type==='BEDSHEET'?parseFloat(gv('bkBsKg')):isSimple?(g('bkWdKg')?parseFloat(gv('bkWdKg')):0):type==='CLOTHES'?parseFloat(gv('bkKg')):null;
+  const rawCom=type==='COMFORTER'?parseInt(gv('bkComQty'),10):null;
   const colorDist=type==='CLOTHES'&&g('bkColorDist')?gv('bkColorDist'):'';
   if(type==='CLOTHES'&&g('bkColorDist')&&!colorDist){swalError('Please choose Whites Only, Colored Only or Mixed for your clothes.');return;}
   const notes=gv('bkNotes');
   const promoCode=g('bkPromo')?gv('bkPromo').trim().toUpperCase():'';
-  if(type!=='COMFORTER'&&!isSimple&&(!kg||kg<=0)){swalError('Please enter an estimated weight in kg.');return;}
-  if(type==='COMFORTER'&&(!comQty||comQty<=0)){swalError('Please enter the number of comforters.');return;}
-  const {price,breakdown}=calcPrice(type,kg,comQty);
-  const {discount:promoDsc,finalAfterPromo,promoMsg}=applyPromo(promoCode,price);
+  const loadErr=validateLoad(type,rawKg,rawCom,{optional:isSimple});
+  if(loadErr){swalError(loadErr);return;}
+  const kg=(type==='COMFORTER')?null:(isSimple&&(!rawKg||isNaN(rawKg))?0:Math.round(rawKg*2)/2);
+  const comQty=(type==='COMFORTER')?Math.round(rawCom):null;
+  const {price,breakdown}=calcPrice(type,kg||0,comQty||0);
+  const {discount:promoDsc,finalAfterPromo,promoMsg}=applyPromo(promoCode,price,{custId:CU.id});
+  if(promoCode&&!(promoDsc>0)){swalError(promoMsg||'Promo code is invalid or you do not meet its requirements yet.');return;}
   const users=DB.get('users');const cu=users.find(x=>x.id===CU.id);
   const tier=getTier(cu?cu.points||0:0);
   const loyaltyDisc=tier.disc>0?parseFloat(((tier.disc/100)*finalAfterPromo).toFixed(2)):0;
@@ -8703,7 +9307,7 @@ function submitBooking(){
   orders.push(newOrdObj);
   DB.set('orders',orders);
   logOrderStatus(newOrdObj,'PENDING',`Customer booked online (${serviceMode}${prefSchedule?' · '+prefSchedule:''})`);
-  if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses++;DB.set('promoCodes',prs);}}
+  if(promoCode){const prs=DB.get('promoCodes');const pc=prs.find(p=>p.code===promoCode&&p.active);if(pc){pc.uses=(Number(pc.uses)||0)+1;DB.set('promoCodes',prs);}}
   /* self-notification (Supplies will be deducted automatically when staff starts the WASHING cycle) */
   pushNotif(CU.id,'ORDER_PLACED',`Order ${newNum} booked`,`Your ${TYPE_LABEL[type]} booking is confirmed. Drop off at the shop!`,'🧺');
   updateNotifBadge();
@@ -8777,10 +9381,6 @@ function ptMessages(){
   g('ptContent').innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
       <h3 style="font-size:16px;font-weight:800;color:var(--text);">Messages — Lab-a-Day Shop</h3>
-      <div style="display:flex;gap:6px;">
-        <button class="call-btn" onclick="startCall('Lab-a-Day Shop','audio')">📞 Call Shop</button>
-        <button class="call-btn video" onclick="startCall('Lab-a-Day Shop','video')">🎥 Video</button>
-      </div>
     </div>
     <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;height:420px;">
       <div class="msg-body" id="ptMsgBody" style="flex:1;overflow-y:auto;padding:14px;background:var(--bg);border-radius:10px 10px 0 0;">${bubblesHTML}</div>
@@ -8796,7 +9396,9 @@ function sendCustMsg(){
   const text=input.value.trim();if(!text)return;
   const msgs=DB.get('messages');
   msgs.push({id:DB.nextId('messages'),fromId:CU.id,toId:ptActiveSellerId,text,date:new Date().toISOString(),read:false});
-  DB.set('messages',msgs);input.value='';ptMessages();
+  DB.set('messages',msgs);input.value='';
+  if(ptActiveSellerId)pushNotif(ptActiveSellerId,'MESSAGE',`New message from ${CU?.name||'Customer'}`,text.slice(0,80),'💬');
+  ptMessages();
 }
 
 /* ── Straight Centered Profile Container & Real Gmail Profile Picture ─ */
@@ -9091,51 +9693,12 @@ function refreshSidebarAvatar(){
 }
 
 /* ══════════════════════════════════════
-   AUDIO / VIDEO CALL (WebRTC UI stub)
+   AUDIO / VIDEO CALL (DISABLED)
 ══════════════════════════════════════ */
-let _callTimer=null,_callSecs=0,_callMuted=false,_callType='audio';
-
-function startCall(name,type){
-  _callType=type;_callMuted=false;_callSecs=0;
-  const av=g('callAvatar'),nm=g('callName'),st=g('callStatus'),vidBtn=g('callVidBtn');
-  if(av)av.textContent=name[0].toUpperCase();
-  if(nm)nm.textContent=name;
-  if(st){st.textContent=type==='video'?'📹 Starting video call…':'📞 Calling…';st.classList.add('call-pulse');}
-  if(vidBtn)vidBtn.style.display=type==='video'?'':'none';
-  g('callOverlay').classList.add('active');
-  /* simulate ringing → connected after 2s */
-  setTimeout(()=>{
-    const st2=g('callStatus');
-    if(st2){st2.textContent='Connected';st2.classList.remove('call-pulse');}
-    _callTimer=setInterval(()=>{
-      _callSecs++;
-      const m=String(Math.floor(_callSecs/60)).padStart(2,'0');
-      const s=String(_callSecs%60).padStart(2,'0');
-      const timerEl=g('callTimer');if(timerEl)timerEl.textContent=`${m}:${s}`;
-    },1000);
-  },2000);
-}
-
-function endCall(){
-  if(_callTimer){clearInterval(_callTimer);_callTimer=null;}
-  _callSecs=0;_callMuted=false;
-  const timerEl=g('callTimer');if(timerEl)timerEl.textContent='';
-  const st=g('callStatus');if(st){st.textContent='Call ended';st.classList.remove('call-pulse');}
-  setTimeout(()=>g('callOverlay').classList.remove('active'),600);
-}
-
-function toggleCallMute(){
-  _callMuted=!_callMuted;
-  const btn=g('callMuteBtn');
-  if(btn)btn.textContent=_callMuted?'🔇':'🎤';
-  toast(_callMuted?'Microphone muted':'Microphone on');
-}
-
-function toggleCallVideo(){
-  const btn=g('callVidBtn');
-  if(btn)btn.textContent=btn.textContent==='📷'?'📷‍':'📷';
-  toast('Camera toggled');
-}
+function startCall(){}
+function endCall(){}
+function toggleCallMute(){}
+function toggleCallVideo(){}
 
 /* ══════════════════════════════════════
    NOTIFICATIONS, SERVICE WORKER BACKGROUND PUSH & REVIEWS
@@ -9300,7 +9863,7 @@ function renderCustNotifPanel(){
   const list=g('custNotifList');
   if(!list)return;
   if(!notifs.length){list.innerHTML='<div class="notif-empty">No notifications yet</div>';return;}
-  list.innerHTML=notifs.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="markCustNotifRead('${n.docId||n.id}')">
+  list.innerHTML=notifs.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="openCustNotifTarget('${escapeHtml(String(n.docId||n.id))}')">
     <span class="notif-ico">${n.icon}</span>
     <div class="notif-body-txt">
       <div class="notif-title-txt">${escapeHtml(n.title)}</div>
@@ -9308,6 +9871,81 @@ function renderCustNotifPanel(){
       <div class="notif-time-txt">${fs(n.date)}</div>
     </div>
   </div>`).join('');
+}
+function findNotifOrder(n,custOnly){
+  const allOrders=DB.get('orders');
+  const pool=custOnly&&CU?allOrders.filter(o=>o.custId===CU.id):allOrders;
+  if(n?.orderId!=null){
+    const byId=pool.find(o=>String(o.id)===String(n.orderId));
+    if(byId)return byId;
+  }
+  const hay=`${n?.orderNum||''} ${n?.title||''} ${n?.msg||''}`;
+  const m=hay.match(/ORD-\d+/i);
+  if(m){
+    const num=m[0].toUpperCase();
+    const byNum=pool.find(o=>String(o.num||'').toUpperCase()===num);
+    if(byNum)return byNum;
+  }
+  if(n?.orderNum){
+    const byRaw=pool.find(o=>String(o.num||'').toUpperCase()===String(n.orderNum).toUpperCase());
+    if(byRaw)return byRaw;
+  }
+  if(custOnly&&pool.length){
+    return [...pool].sort((a,b)=>new Date(b.updatedAt||b.createdAt||0)-new Date(a.updatedAt||a.createdAt||0))[0];
+  }
+  return null;
+}
+function openCustNotifTarget(id){
+  const item=DB.get('notifs').find(x=>String(x.docId||x.id)===String(id));
+  markCustNotifRead(id);
+  const panel=g('custNotifPanel');
+  if(panel)panel.classList.remove('open');
+  const type=String(item?.type||'').toUpperCase();
+  const hay=`${type} ${item?.title||''} ${item?.msg||''}`;
+  if(type==='MESSAGE'||/\b(message|chat|reply)\b/i.test(hay)){ptTab('messages');return;}
+  if(type==='PAYMENT'||/\b(payment|receipt|gcash)\b/i.test(hay)){ptTab('payments');return;}
+  if(type==='LOYALTY'||/\b(point|loyalty|tier|reward)\b/i.test(hay)){ptTab('loyalty');return;}
+  const ord=findNotifOrder(item,true);
+  if(ord){ptTrackOrderId=ord.id;ptTab('track');}
+  else ptTab('orders');
+}
+function openStaffNotifTarget(id){
+  const sid=String(id);
+  let item=DB.get('notifs').find(x=>String(x.docId||x.id)===sid);
+  if(!item&&sid.startsWith('scn-')){
+    const s=DB.get('rfidScanLogs').find(x=>String(x.id)===sid.slice(4));
+    if(s)item={id:sid,type:'RFID_SCAN',orderNum:s.orderNum,title:`RFID ${s.action}: ${s.uid}`,msg:`Order ${s.orderNum||'—'} · ${s.details||'Scanned at station'}`};
+  }
+  if(CU?.role!=='ADMIN'&&!sid.startsWith('scn-'))markNotifRead(id);
+  const panel=g('notifPanel');
+  if(panel)panel.classList.remove('open');
+  const type=String(item?.type||'').toUpperCase();
+  const hay=`${type} ${item?.title||''} ${item?.msg||''}`;
+  if(type==='MESSAGE'||/\b(message|chat|reply)\b/i.test(hay)){
+    const custs=DB.get('users').filter(u=>u.role==='CUSTOMER');
+    let cust=item?.fromId!=null?custs.find(u=>String(u.id)===String(item.fromId)):null;
+    if(!cust){
+      const lowHay=hay.toLowerCase();
+      cust=custs.filter(u=>u.name&&lowHay.includes(u.name.toLowerCase())).sort((a,b)=>b.name.length-a.name.length)[0]||null;
+    }
+    if(cust)activeMsgCustId=cust.id;
+    showPage('messages_seller');
+    return;
+  }
+  if(type==='LOW_STOCK'||/\b(stock|inventory|detergent|conditioner|bleach|restock)\b/i.test(hay)){
+    showPage(CU?.role==='ADMIN'?'inv_admin':'inventory');
+    return;
+  }
+  const ord=findNotifOrder(item,false);
+  if(ord){
+    oFilter='ALL';oTypeFilter='ALL';oSrch='';
+    showPage('orders');
+    openDetail(ord.id);
+  }else if(sid.startsWith('scn-')){
+    showPage('scan_logs');
+  }else{
+    showPage('orders');
+  }
 }
 function markCustNotifRead(id){
   const notifs=DB.get('notifs');
@@ -9357,7 +9995,7 @@ function renderNotifPanel(){
   if(!list)return;
   const ownerBadge=isOwner?`<div style="padding:6px 12px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-size:10.5px;font-weight:800;color:#0369a1;">🔒 OWNER READ-ONLY FEED — Audit &amp; Push Notifications cannot be deleted</div>`:'';
   if(!combined.length){list.innerHTML=ownerBadge+'<div class="notif-empty">No notifications yet</div>';return;}
-  list.innerHTML=ownerBadge+combined.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="${isOwner?'':`markNotifRead('${n.docId||n.id}')`}">
+  list.innerHTML=ownerBadge+combined.map(n=>`<div class="notif-item${n.read?'':' unread'}" onclick="openStaffNotifTarget('${escapeHtml(String(n.docId||n.id))}')">
     <span class="notif-ico">${n.icon||'🔔'}</span>
     <div class="notif-body-txt">
       <div class="notif-title-txt">${escapeHtml(n.title)} ${isOwner?'<span class="badge b-gray" style="font-size:9px;padding:1px 5px;">READ-ONLY</span>':''}</div>
@@ -9401,7 +10039,7 @@ function ptNotifs(){
       </div>
       <button class="btn btn-primary btn-sm" onclick="triggerDelayedBackgroundPushDemo()">📲 Test Push Notif (5s — Close App)</button>
     </div>
-    ${notifs.length?`<div class="pt-notif-list">${notifs.map(n=>`<div class="pt-notif-card${n.read?'':' unread'}">
+    ${notifs.length?`<div class="pt-notif-list">${notifs.map(n=>`<div class="pt-notif-card${n.read?'':' unread'}" style="cursor:pointer;" onclick="openCustNotifTarget('${escapeHtml(String(n.docId||n.id))}')">
       <span class="pt-notif-ico">${n.icon||'🔔'}</span>
       <div class="pt-notif-body"><div class="pt-notif-title">${escapeHtml(n.title)}</div><div class="pt-notif-msg">${escapeHtml(n.msg)}</div><div class="pt-notif-time">${fs(n.date)}</div></div>
     </div>`).join('')}</div>`:'<div class="empty">No notifications yet</div>'}`;
