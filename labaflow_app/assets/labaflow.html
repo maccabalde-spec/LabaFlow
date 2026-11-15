@@ -3871,7 +3871,7 @@ img, svg, canvas, video {
     </div>
     <div class="lp-hero-right">
       <div class="lp-hero-photo-wrap">
-        <img class="lp-hero-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}">
+        <img id="lp-img-hero_main" data-lp-slot="hero_main" class="lp-hero-photo" src="images/step-drop-off.jpg" alt="Laundry bag at a clean laundromat" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}">
         <div class="lp-hero-float-rfid">📡 RFID Order Tracking</div>
         <div class="lp-hero-float-badge">⭐ Earn LabaPoints</div>
       </div>
@@ -3923,7 +3923,7 @@ img, svg, canvas, video {
     <div class="lp-steps">
       <div class="lp-step">
         <div class="lp-step-num">Step 01</div>
-        <img class="lp-step-photo" src="images/step-drop-off.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}" alt="Laundry bag at a clean laundromat, ready for drop-off" loading="lazy">
+        <img id="lp-img-step_1" data-lp-slot="step_1" class="lp-step-photo" src="images/step-drop-off.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-drop-off.jpg';}" alt="Laundry bag at a clean laundromat, ready for drop-off" loading="lazy">
         <h4>Drop Off Your Laundry</h4>
         <p>Bring your laundry to our shop for weighing and instant RFID tagging.</p>
         <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
@@ -3931,7 +3931,7 @@ img, svg, canvas, video {
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 02</div>
-        <img class="lp-step-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
+        <img id="lp-img-step_2" data-lp-slot="step_2" class="lp-step-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Detergent being used to wash clothes in a washing machine" loading="lazy">
         <h4>Washed With Detergent</h4>
         <p>Auto-dosed Surf detergent &amp; conditioner. Estimated wash time: 2–3 hours.</p>
         <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
@@ -3939,7 +3939,7 @@ img, svg, canvas, video {
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 03</div>
-        <img class="lp-step-photo" src="images/step-ready-alert.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-ready-alert.jpg';}" alt="Customer checking a phone while waiting at a laundromat" loading="lazy">
+        <img id="lp-img-step_3" data-lp-slot="step_3" class="lp-step-photo" src="images/step-ready-alert.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-ready-alert.jpg';}" alt="Customer checking a phone while waiting at a laundromat" loading="lazy">
         <h4>Get a Ready Alert</h4>
         <p>Receive an instant push notification on your device when ready.</p>
         <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
@@ -3947,7 +3947,7 @@ img, svg, canvas, video {
       </div>
       <div class="lp-step">
         <div class="lp-step-num">Step 04</div>
-        <img class="lp-step-photo" src="images/step-pickup-pay.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-pickup-pay.jpg';}" alt="Customer making a contactless payment at a laundromat" loading="lazy">
+        <img id="lp-img-step_4" data-lp-slot="step_4" class="lp-step-photo" src="images/step-pickup-pay.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-pickup-pay.jpg';}" alt="Customer making a contactless payment at a laundromat" loading="lazy">
         <h4>Pick Up &amp; Pay</h4>
         <p>Pay via Cash or GCash QR and earn 1 LabaPoint per ₱1 spent.</p>
         <button type="button" class="exp-toggle-btn" onclick="toggleExpPanel(this)">▾ View Details</button>
@@ -3964,7 +3964,7 @@ img, svg, canvas, video {
       <div class="lp-section-sub">Concise service overview — click <b>View Details</b> on any item to expand full specifications.</div>
       <div class="lp-services-grid">
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-clothes.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-clothes.jpg';}" alt="Clothes being washed with laundry detergent" loading="lazy">
+          <img id="lp-img-svc_clothes" data-lp-slot="svc_clothes" class="lp-svc-photo" src="images/service-clothes.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-clothes.jpg';}" alt="Clothes being washed with laundry detergent" loading="lazy">
           <h4>Clothes Wash</h4>
           <p>Everyday clothes &amp; uniforms — washed, dried, and neatly folded.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -3974,7 +3974,7 @@ img, svg, canvas, video {
           <div class="exp-panel">Includes up to 7 kg base load (+₱25/extra kg; 10 kg+ auto-splits into 2 sets of max 9 kg). Choose Whites Only, Colored Only, or Mixed.</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-bedsheets.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-bedsheets.jpg';}" alt="Fresh white and blue bed linens" loading="lazy">
+          <img id="lp-img-svc_bedsheets" data-lp-slot="svc_bedsheets" class="lp-svc-photo" src="images/service-bedsheets.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-bedsheets.jpg';}" alt="Fresh white and blue bed linens" loading="lazy">
           <h4>Bedsheet Wash</h4>
           <p>Bed linens, fitted sheets, and pillowcases deep-cleaned and sanitized.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -3984,7 +3984,7 @@ img, svg, canvas, video {
           <div class="exp-panel">Includes up to 5 kg base load (+₱38/extra kg). Washed with Surf Liquid Detergent, Fabric Conditioner, and Zonrox Color Safe.</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-comforter.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-comforter.jpg';}" alt="Clean white comforter ready for a fresh night's rest" loading="lazy">
+          <img id="lp-img-svc_comforter" data-lp-slot="svc_comforter" class="lp-svc-photo" src="images/service-comforter.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-comforter.jpg';}" alt="Clean white comforter ready for a fresh night's rest" loading="lazy">
           <h4>Comforter Wash</h4>
           <p>Heavy blankets, duvets, and comforters at a flat per-piece rate.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -3994,7 +3994,7 @@ img, svg, canvas, video {
           <div class="exp-panel">Flat ₱200 per comforter of any thickness or size with heavy-duty deep wash, extra rinse cycle, and controlled drying.</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Laundry detergent and fabric conditioner beside a washing machine" loading="lazy">
+          <img id="lp-img-svc_detergent" data-lp-slot="svc_detergent" class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Laundry detergent and fabric conditioner beside a washing machine" loading="lazy">
           <h4>Surf Liquid Detergent</h4>
           <p>Auto-dosed liquid detergent for deep stain removal.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -4004,7 +4004,7 @@ img, svg, canvas, video {
           <div class="exp-panel">Automatically deducted from shop inventory (100 mL per load) when an order enters the Washing stage.</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Fabric conditioner and laundry detergent ready for a wash" loading="lazy">
+          <img id="lp-img-svc_conditioner" data-lp-slot="svc_conditioner" class="lp-svc-photo" src="images/step-wash-detergent.jpg" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/step-wash-detergent.jpg';}" alt="Fabric conditioner and laundry detergent ready for a wash" loading="lazy">
           <h4>Surf Fabric Conditioner</h4>
           <p>Softens fibers and locks in long-lasting fresh scent.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -4014,7 +4014,7 @@ img, svg, canvas, video {
           <div class="exp-panel">Automatically dosed at 100 mL per wash load and tracked in real-time by the LabaFlow Inventory Monitor.</div>
         </div>
         <div class="lp-svc">
-          <img class="lp-svc-photo" src="images/service-zonrox-colorsafe.png" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-zonrox-colorsafe.png';}" alt="Zonrox ColorSafe bleach product" loading="lazy">
+          <img id="lp-img-svc_bleach" data-lp-slot="svc_bleach" class="lp-svc-photo" src="images/service-zonrox-colorsafe.png" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='https://maccabalde-spec.github.io/LabaFlow/images/service-zonrox-colorsafe.png';}" alt="Zonrox ColorSafe bleach product" loading="lazy">
           <h4>Zonrox Color Safe</h4>
           <p>Sanitizes and brightens fabrics without fading colors.</p>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -4743,7 +4743,7 @@ img, svg, canvas, video {
 ══════════════════════════════════════ */
 const DB={
   get(k){try{let r=localStorage.getItem('lf3_'+k);if(r===null)r=sessionStorage.getItem('lf3_'+k);if(!r||r==='null')return[];const p=JSON.parse(r);return Array.isArray(p)?p:[];}catch{return[];}},
-  set(k,v,skipRemote=false){const s=JSON.stringify(v);const prev=localStorage.getItem('lf3_'+k);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}if(!window._lfSuppressRemote&&!skipRemote&&['inventory','rfidTags','orders','transactions','messages','restockLog','promoCodes','reviews','rfidScanLogs','statusHistory'].includes(k)&&prev!==s&&window.LabaFlowSupabase?.saveCollection){window.LabaFlowSupabase.saveCollection(k,v).catch(err=>console.warn('Sync save skipped:',k,err?.message));}},
+  set(k,v,skipRemote=false){const s=JSON.stringify(v);const prev=localStorage.getItem('lf3_'+k);try{localStorage.setItem('lf3_'+k,s);}catch(e){}try{sessionStorage.setItem('lf3_'+k,s);}catch(e){}if(!window._lfSuppressRemote&&!skipRemote&&['inventory','rfidTags','orders','transactions','messages','restockLog','promoCodes','reviews','rfidScanLogs','statusHistory','settings','landingImages'].includes(k)&&prev!==s&&window.LabaFlowSupabase?.saveCollection){window.LabaFlowSupabase.saveCollection(k,v).catch(err=>console.warn('Sync save skipped:',k,err?.message));}},
   has(k){return localStorage.getItem('lf3_'+k)!==null||sessionStorage.getItem('lf3_'+k)!==null;},
   nextId(k){const a=this.get(k);return a.length?Math.max(...a.map(x=>x.id))+1:1;}
 };
@@ -4783,6 +4783,7 @@ window._lfSuppressRemote=true;(function seed(){
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
   if(!DB.has('reviews'))DB.set('reviews',[]);
+  if(!DB.has('landingImages'))DB.set('landingImages',[]);
   if(!DB.has('rfidScanLogs'))DB.set('rfidScanLogs',[]);
   if(!DB.has('statusHistory'))DB.set('statusHistory',[]);
   if(!DB.has('rfidScanLogs'))DB.set('rfidScanLogs',[]);
@@ -4818,6 +4819,7 @@ function ts(daysAgo=0){const d=new Date();d.setDate(d.getDate()+daysAgo);return 
   }
   if(!DB.has('notifs'))DB.set('notifs',[]);
   if(!DB.has('reviews'))DB.set('reviews',[]);
+  if(!DB.has('landingImages'))DB.set('landingImages',[]);
   window._lfSuppressRemote=false;
 })();
 
@@ -5540,7 +5542,7 @@ function refreshActiveViews(){
   const activeTag=document.activeElement?.tagName;
   const isTyping=['INPUT','TEXTAREA','SELECT'].includes(activeTag);
   const modalOpen=Boolean(document.querySelector('.ov.open'));
-  if(g('landing')&&g('landing').style.display!=='none'){renderLandingReviews();return;}
+  if(g('landing')&&g('landing').style.display!=='none'){if(typeof applyLandingImages==='function')applyLandingImages();renderLandingReviews();return;}
   if(!CU)return;
   if(CU.role==='CUSTOMER'){
     updateLoyaltyPill();updateMsgBadge();updateNotifBadge();
@@ -5657,6 +5659,7 @@ const NAV_ADMIN=[
   {id:'inv_admin',ni:'▦',label:'Inventory Monitor'},
   {id:'promos',ni:'🏷',label:'Promo Codes'},
   {id:'users',ni:'◉',label:'User Accounts'},
+  {id:'landing_cms',ni:'🖼️',label:'Landing Page Images'},
   {id:'my_profile',ni:'👤',label:'My Profile (Gmail)'},
 ];
 const NAV_SELLER=[
@@ -5681,7 +5684,7 @@ function buildSidebar(){
 }
 
 let curPage='';
-const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
+const PG_TITLES={dashboard:'Dashboard',rfid_scanner:'1-Device HF RFID Station (ESP32 + RC522)',scan_logs:'Owner Audit & Notification Logs (Read-Only)',analytics:'3-Pillar Analytics (Descriptive · Predictive · Prescriptive)',inv_admin:'Inventory Monitor (Owner Read-Only)',promos:'Promo Codes',users:'User Accounts',landing_cms:'Landing Page Images (Dynamic CMS)',orders:'Orders',inventory:'Inventory Management',reports:'Reports & Analytics',messages_seller:'Messages',rfid:'RFID Tags',my_profile:'My Account & Gmail Profile',seller_settings:'Settings'};
 
 function toggleExpPanel(btn){
   if(!btn)return;
@@ -5731,7 +5734,7 @@ function showPage(p){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const el=g('nav-'+p);if(el)el.classList.add('active');
   g('pgTitle').textContent=PG_TITLES[p]||p;
-  const R={dashboard:pgDashboard,rfid_scanner:pgRfidScanner,scan_logs:pgScanLogs,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,my_profile:pgMyProfile,seller_settings:pgSellerSettings};
+  const R={dashboard:pgDashboard,rfid_scanner:pgRfidScanner,scan_logs:pgScanLogs,analytics:pgAnalytics,inv_admin:pgInvAdmin,promos:pgPromos,users:pgUsers,landing_cms:pgLandingImages,orders:pgOrders,inventory:pgInventory,reports:pgReports,messages_seller:pgMessages,rfid:pgRFID,my_profile:pgMyProfile,seller_settings:pgSellerSettings};
   if(R[p])R[p]();
 }
 
@@ -6007,6 +6010,7 @@ function pgDashboard(){
       <button class="btn btn-ghost btn-sm" onclick="showPage('scan_logs')">🛡️ View RFID Scan Logs</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('inv_admin')">🫧 Inventory Monitor</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('users')">👥 User Accounts</button>
+      <button class="btn btn-ghost btn-sm" onclick="showPage('landing_cms')">🖼️ Landing Page Images</button>
       <button class="btn btn-ghost btn-sm" onclick="showPage('analytics')">💰 Financial Analytics</button>
     </div>
     <div class="sg sg-5">
@@ -7013,6 +7017,244 @@ function delUser(id){
       swalSuccess('Removed','Supabase account deleted.');pgUsers();
     }).catch(error=>swalError(error.message||'Supabase account removal failed.'));
   });
+}
+
+/* ══════════════════════════════════════
+   ADMIN: DYNAMIC LANDING PAGE IMAGES CMS
+══════════════════════════════════════ */
+const LANDING_IMAGE_SLOTS=[
+  {id:'hero_main',section:'Hero Banner',label:'Hero Banner Main Photo',desc:'Main showcase photo at the top right of the landing page.',defaultSrc:'images/step-drop-off.jpg'},
+  {id:'step_1',section:'How It Works (4 Easy Steps)',label:'Step 01 — Drop Off Your Laundry',desc:'Card photo for Step 01 in How It Works.',defaultSrc:'images/step-drop-off.jpg'},
+  {id:'step_2',section:'How It Works (4 Easy Steps)',label:'Step 02 — Washed With Detergent',desc:'Card photo for Step 02 in How It Works.',defaultSrc:'images/step-wash-detergent.jpg'},
+  {id:'step_3',section:'How It Works (4 Easy Steps)',label:'Step 03 — Get a Ready Alert',desc:'Card photo for Step 03 in How It Works.',defaultSrc:'images/step-ready-alert.jpg'},
+  {id:'step_4',section:'How It Works (4 Easy Steps)',label:'Step 04 — Pick Up & Pay',desc:'Card photo for Step 04 in How It Works.',defaultSrc:'images/step-pickup-pay.jpg'},
+  {id:'svc_clothes',section:'Our Services (6 Cards)',label:'Service — Clothes Wash',desc:'Photo shown on the Clothes Wash service card.',defaultSrc:'images/service-clothes.jpg'},
+  {id:'svc_bedsheets',section:'Our Services (6 Cards)',label:'Service — Bedsheet Wash',desc:'Photo shown on the Bedsheet Wash service card.',defaultSrc:'images/service-bedsheets.jpg'},
+  {id:'svc_comforter',section:'Our Services (6 Cards)',label:'Service — Comforter Wash',desc:'Photo shown on the Comforter Wash service card.',defaultSrc:'images/service-comforter.jpg'},
+  {id:'svc_detergent',section:'Our Services (6 Cards)',label:'Service — Surf Liquid Detergent',desc:'Photo shown on the Surf Liquid Detergent card.',defaultSrc:'images/step-wash-detergent.jpg'},
+  {id:'svc_conditioner',section:'Our Services (6 Cards)',label:'Service — Surf Fabric Conditioner',desc:'Photo shown on the Surf Fabric Conditioner card.',defaultSrc:'images/step-wash-detergent.jpg'},
+  {id:'svc_bleach',section:'Our Services (6 Cards)',label:'Service — Zonrox Color Safe',desc:'Photo shown on the Zonrox Color Safe card.',defaultSrc:'images/service-zonrox-colorsafe.png'}
+];
+let _lpCmsSectionFilter='ALL';
+
+function _requireLandingAdmin(){
+  if(CU&&CU.role!=='ADMIN'){
+    swalError('Only Admin can update landing page images.');
+    return false;
+  }
+  return true;
+}
+function _findLandingSlot(slotId){
+  return LANDING_IMAGE_SLOTS.find(s=>s.id===slotId)||null;
+}
+function getLandingImagesMap(){
+  const list=DB.get('landingImages');
+  const map={};
+  if(Array.isArray(list)){
+    list.forEach(item=>{
+      if(item&&item.id)map[item.id]=item;
+    });
+  }
+  return map;
+}
+function getLandingImageSrc(slotId){
+  const slot=_findLandingSlot(slotId);
+  const map=getLandingImagesMap();
+  const rec=map[slotId];
+  const custom=rec&&typeof rec.src==='string'?rec.src.trim():'';
+  return custom||(slot?slot.defaultSrc:'');
+}
+function applyLandingImages(){
+  LANDING_IMAGE_SLOTS.forEach(slot=>{
+    const src=getLandingImageSrc(slot.id);
+    if(!src)return;
+    const targets=new Set();
+    const byId=g('lp-img-'+slot.id);
+    if(byId)targets.add(byId);
+    if(typeof document!=='undefined'&&document.querySelectorAll){
+      document.querySelectorAll('[data-lp-slot="'+slot.id+'"]').forEach(el=>targets.add(el));
+    }
+    targets.forEach(el=>{
+      if(el.dataset)delete el.dataset.fb;
+      const curAttr=el.getAttribute?el.getAttribute('src'):el.src;
+      if(curAttr!==src||el.src!==src){
+        el.src=src;
+        if(el.setAttribute)el.setAttribute('src',src);
+      }
+    });
+  });
+}
+function _upsertLandingImageRecord(slotId,src){
+  const list=DB.get('landingImages');
+  const next=Array.isArray(list)?list.map(x=>({...x})):[];
+  const rec={id:slotId,src,updatedAt:new Date().toISOString(),updatedBy:CU?.name||'Admin'};
+  const idx=next.findIndex(x=>x&&x.id===slotId);
+  if(idx>=0)next[idx]=rec;
+  else next.push(rec);
+  DB.set('landingImages',next);
+}
+function saveLandingImageSlot(slotId,newSrc){
+  if(!_requireLandingAdmin())return false;
+  const slot=_findLandingSlot(slotId);
+  if(!slot){swalError('Unknown landing image slot.');return false;}
+  const trimmed=String(newSrc||'').trim();
+  if(!trimmed||!/^(data:image\/[a-zA-Z0-9.+-]+;base64,|https?:\/\/|images\/)/i.test(trimmed)){
+    swalError('Please provide a valid image file, https:// URL, or images/... path.');
+    return false;
+  }
+  _upsertLandingImageRecord(slot.id,trimmed);
+  applyLandingImages();
+  if(curPage==='landing_cms')pgLandingImages();
+  toast('🖼️ Landing page image updated!');
+  return true;
+}
+function saveLandingImageFromInput(slotId){
+  const val=gv('lpUrl_'+slotId).trim();
+  if(!val){swalError('Please enter an image URL or path before saving.');return false;}
+  return saveLandingImageSlot(slotId,val);
+}
+function handleLandingImageUpload(slotId,inputEl){
+  if(!_requireLandingAdmin())return;
+  const file=inputEl?.files?.[0];
+  if(!file)return;
+  if(!file.type||!file.type.startsWith('image/')){swalError('Please select a valid image file.');inputEl.value='';return;}
+  if(file.size>8*1024*1024){swalError('Image is too large (max 8 MB).');inputEl.value='';return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const rawUrl=String(e?.target?.result||'');
+    inputEl.value='';
+    if(!rawUrl){swalError('Unable to read the selected image.');return;}
+    if(typeof Image!=='undefined'&&typeof document!=='undefined'&&document.createElement){
+      const img=new Image();
+      img.onload=()=>{
+        try{
+          const maxW=960,maxH=640;
+          const scale=Math.min(1,maxW/(img.width||maxW),maxH/(img.height||maxH));
+          const w=Math.max(1,Math.round((img.width||maxW)*scale));
+          const h=Math.max(1,Math.round((img.height||maxH)*scale));
+          const canvas=document.createElement('canvas');
+          canvas.width=w;canvas.height=h;
+          const ctx=canvas.getContext&&canvas.getContext('2d');
+          if(ctx){
+            ctx.fillStyle='#ffffff';
+            ctx.fillRect(0,0,w,h);
+            ctx.drawImage(img,0,0,w,h);
+            const compressed=canvas.toDataURL('image/jpeg',0.82);
+            saveLandingImageSlot(slotId,compressed||rawUrl);
+            return;
+          }
+        }catch(_){}
+        saveLandingImageSlot(slotId,rawUrl);
+      };
+      img.onerror=()=>saveLandingImageSlot(slotId,rawUrl);
+      img.src=rawUrl;
+    }else{
+      saveLandingImageSlot(slotId,rawUrl);
+    }
+  };
+  reader.readAsDataURL(file);
+}
+function resetLandingImageSlot(slotId){
+  if(!_requireLandingAdmin())return false;
+  const slot=_findLandingSlot(slotId);
+  if(!slot)return false;
+  _upsertLandingImageRecord(slot.id,'');
+  applyLandingImages();
+  if(curPage==='landing_cms')pgLandingImages();
+  toast('↺ Image restored to default');
+  return true;
+}
+function resetAllLandingImages(){
+  if(!_requireLandingAdmin())return false;
+  const now=new Date().toISOString();
+  const cleared=LANDING_IMAGE_SLOTS.map(s=>({id:s.id,src:'',updatedAt:now,updatedBy:CU?.name||'Admin'}));
+  DB.set('landingImages',cleared);
+  applyLandingImages();
+  if(curPage==='landing_cms')pgLandingImages();
+  swalSuccess('Reset Complete','All landing page images have been restored to default.');
+  return true;
+}
+function previewLandingFromAdmin(){
+  if(g('app'))g('app').style.display='none';
+  if(g('landing'))g('landing').style.display='block';
+  applyLandingImages();
+  const oldBar=g('adminLpPreviewBar');
+  if(oldBar&&oldBar.remove)oldBar.remove();
+  if(typeof document!=='undefined'&&document.createElement&&document.body){
+    const bar=document.createElement('div');
+    bar.id='adminLpPreviewBar';
+    bar.style.cssText='position:fixed;bottom:18px;right:18px;z-index:9999;background:#0e1f3a;color:#fff;padding:12px 16px;border-radius:14px;border:1px solid rgba(56,189,248,.45);box-shadow:0 14px 34px rgba(14,31,58,.35);display:flex;align-items:center;gap:12px;flex-wrap:wrap;';
+    bar.innerHTML='<span style="font-size:12.5px;font-weight:700;">👁 Admin Preview Mode — Live Landing Page Images</span><button type="button" class="btn btn-primary btn-sm" onclick="exitLandingAdminPreview()">← Back to Admin Panel</button>';
+    document.body.appendChild(bar);
+  }
+  if(typeof window!=='undefined'&&window.scrollTo)window.scrollTo({top:0,behavior:'smooth'});
+}
+function exitLandingAdminPreview(){
+  const bar=g('adminLpPreviewBar');
+  if(bar&&bar.remove)bar.remove();
+  if(g('landing'))g('landing').style.display='none';
+  if(g('app'))g('app').style.display='block';
+  showPage('landing_cms');
+}
+function pgLandingImages(){
+  const map=getLandingImagesMap();
+  const customCount=LANDING_IMAGE_SLOTS.filter(s=>Boolean(map[s.id]&&String(map[s.id].src||'').trim())).length;
+  const sections=['ALL','Hero Banner','How It Works (4 Easy Steps)','Our Services (6 Cards)'];
+  const filtered=LANDING_IMAGE_SLOTS.filter(s=>_lpCmsSectionFilter==='ALL'||s.section===_lpCmsSectionFilter);
+  g('pgContent').innerHTML=`
+    <div class="card" style="margin-bottom:16px;">
+      <div class="ch">
+        <div>
+          <h4 style="margin:0;">🖼️ Dynamic Landing Page Image Manager</h4>
+          <div class="text-sm text-muted" style="margin-top:3px;">Upload photos or paste URLs to replace any landing page image in real time (${customCount} / ${LANDING_IMAGE_SLOTS.length} customized).</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="btn btn-primary btn-sm" onclick="previewLandingFromAdmin()">👁 Preview Live Landing Page</button>
+          <button type="button" class="btn btn-red btn-sm" onclick="resetAllLandingImages()">↺ Reset All to Default</button>
+        </div>
+      </div>
+      <div class="cp" style="padding-top:12px;padding-bottom:12px;">
+        <div class="toolbar" style="margin-bottom:0;">
+          ${sections.map(sec=>`<span class="chip${_lpCmsSectionFilter===sec?' on':''}" onclick="_lpCmsSectionFilter='${sec}';pgLandingImages()">${sec==='ALL'?`All Images (${LANDING_IMAGE_SLOTS.length})`:escapeHtml(sec)}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;">
+      ${filtered.map(s=>{
+        const rec=map[s.id];
+        const rawCustom=rec&&typeof rec.src==='string'?rec.src.trim():'';
+        const isCustom=Boolean(rawCustom);
+        const curSrc=rawCustom||s.defaultSrc;
+        return`<div class="card" style="margin-bottom:0;display:flex;flex-direction:column;">
+          <div class="ch" style="align-items:flex-start;gap:8px;">
+            <div>
+              <div style="font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;color:var(--accent2);">${escapeHtml(s.section)}</div>
+              <h4 style="margin:2px 0 0;font-size:14px;">${escapeHtml(s.label)}</h4>
+            </div>
+            <span class="badge ${isCustom?'b-green':'b-blue'}" style="white-space:nowrap;">${isCustom?'Custom Image':'Default Asset'}</span>
+          </div>
+          <div class="cp" style="display:flex;flex-direction:column;gap:10px;flex:1;">
+            <div style="width:100%;height:170px;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:#f1f5f9;">
+              <img src="${escapeHtml(curSrc)}" alt="${escapeHtml(s.label)}" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+            <div class="text-sm text-muted" style="line-height:1.45;">${escapeHtml(s.desc)}</div>
+            <div style="font-size:11px;color:var(--text-muted);">Default: <code>${escapeHtml(s.defaultSrc)}</code>${isCustom&&rec.updatedAt?` · Updated ${fd(rec.updatedAt)}`:''}</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <label class="btn btn-primary btn-sm" for="lpFile_${s.id}" style="cursor:pointer;">📁 Upload Photo</label>
+              <input type="file" id="lpFile_${s.id}" accept="image/*" style="display:none;" onchange="handleLandingImageUpload('${s.id}',this)">
+              <button type="button" class="btn btn-ghost btn-sm" onclick="resetLandingImageSlot('${s.id}')" ${isCustom?'':'disabled style="opacity:.5;cursor:not-allowed;"'}>↺ Reset to Default</button>
+            </div>
+            <div class="fg" style="margin:0;">
+              <label style="font-size:11.5px;">Or paste Image URL / Path</label>
+              <div style="display:flex;gap:6px;">
+                <input id="lpUrl_${s.id}" value="${escapeHtml(isCustom?rawCustom:'')}" placeholder="https://... or images/..." style="flex:1;min-width:0;">
+                <button type="button" class="btn btn-ghost btn-sm" onclick="saveLandingImageFromInput('${s.id}')" style="white-space:nowrap;">💾 Save URL</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
 }
 </script>
 
@@ -10306,6 +10548,7 @@ document.querySelectorAll('.lp-nav-links a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{e.preventDefault();const el=document.querySelector(a.getAttribute('href'));if(el)el.scrollIntoView({behavior:'smooth'});const menu=document.querySelector('.lp-nav-links');menu?.classList.remove('is-open');const toggle=document.querySelector('.lp-menu-toggle');toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','Open navigation menu');});
 });
 
+if(typeof applyLandingImages==='function')applyLandingImages();
 renderLandingReviews();
 refreshRemoteCollections();
 if(window.LabaFlowSupabase?.subscribeRealtime){
