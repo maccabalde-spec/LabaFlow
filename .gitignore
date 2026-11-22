@@ -35,6 +35,9 @@ replay_pid*.log
 *.idsig
 android/debug.keystore
 android/local.properties
+*.jks
+*.keystore
+android/keystore.properties
 '
 10}
 DB.get('users')

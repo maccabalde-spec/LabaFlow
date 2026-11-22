@@ -7,7 +7,7 @@ $studio   = "C:\Program Files\Android\Android Studio\bin\studio64.exe"
 $apkPath  = "$root\LabaFlow-debug.apk"
 
 if (-not (Test-Path $apkPath)) {
-  powershell -ExecutionPolicy Bypass -File "$root\build-android-apk.ps1"
+  powershell -ExecutionPolicy Bypass -File "$root\build-android-apk.ps1" -BuildType debug
 }
 
 & $adb start-server | Out-Null
